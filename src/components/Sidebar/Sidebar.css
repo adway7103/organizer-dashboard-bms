@@ -1,0 +1,10 @@
+.sidebar {
+    background-color: #b1b1b181;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    height: fit-content;
+}
+
+li {
+    list-style: none;
+}
