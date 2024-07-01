@@ -1,0 +1,22 @@
+.event-form {
+    width: 70%;
+}
+.event-form * {
+    border-radius: 10px !important;
+    border-color: #000 !important;
+}
+.event-form #tags {
+    border: none !important;
+}
+
+.event-timing input, .loacation input {
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: .5rem 1rem;
+}
+
+@media screen and (max-width: 767px) {
+    .event-form {
+        width: 100%;
+    }
+}
