@@ -12,3 +12,20 @@ html, body {
     width: 100%;
     height: 100%;
 }
+.btn {
+  background-color: #964b7d;
+}
+span {
+  color: #60769d;
+  margin: 0 3px;
+}
+.follow {
+  /* background-color: #60769d; */
+  accent-color: #60769d;
+}
+.ad {
+  color: #964b7d;
+}
+.check {
+  color: grey;
+}
