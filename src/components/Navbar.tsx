@@ -17,14 +17,16 @@ const Navbar = () => {
         <img src="/Group.png" />
         <button
           type="button"
-          className="inline-flex items-center px-4 py-1 border border-gray-600 rounded-2xl hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
+          className="inline-flex items-center px-4 py-1 border border-gray-600 rounded-2xl hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+        >
           <img src="/user.png" className="pr-2" />
           profile
         </button>
         <div className="relative">
           <button
             type="button"
-            className="btn inline-flex items-center px-4 py-1 text-white border border-gray-600 rounded-2xl hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
+            className="btn inline-flex items-center px-4 py-1 text-white border border-gray-600 rounded-2xl hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+          >
             CREATE EVENT
           </button>
         </div>
