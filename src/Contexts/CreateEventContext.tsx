@@ -1,51 +1,61 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from "react";
+import { Dayjs } from 'dayjs';
 
-interface EventInfos {
-  eventName: string | null;
-  eventCategory: string | null;
-  eventPeriodicity: string | null;
-  eventDescription: string | null;
-  eventImage: string | null;
-  eventTags: string[];
-  eventCurrency: string | null;
-  eventStartDate: string | null;
-  eventStartTime: string | null;
-  eventEndDate: string | null;
-  eventEndTime: string | null;
-  eventLocation: string | null;
+interface EventInfo {
+  eventName: string;
+  category: string;
+  periodicity: string;
+  description: string;
+  tags: string[];
+  currency: string;
+  eventStartDate: Dayjs | null;
+  eventStartTime: Dayjs | null;
+  eventEndDate: Dayjs | null;
+  eventEndTime: Dayjs | null;
+  locationType: string;
+  location: string;
+  repEvent: boolean;
+  eventPolicy: boolean;
+  allRefundsApproved: boolean;
 }
 
 interface EventContextProps {
-  eventInfos: EventInfos;
-  setEventInfos: React.Dispatch<React.SetStateAction<EventInfos>>;
+  eventInfo: EventInfo;
+  setEventInfo: React.Dispatch<React.SetStateAction<EventInfo>>;
 }
 
-export const EventContext = createContext<EventContextProps | undefined>(undefined);
+const defaultEventInfo: EventInfo = {
+  eventName: "",
+  category: "",
+  periodicity: "",
+  description: "",
+  tags: [],
+  currency: "",
+  eventStartDate: null,
+  eventStartTime: null,
+  eventEndDate: null,
+  eventEndTime: null,
+  locationType: "",
+  location: "",
+  repEvent: false,
+  eventPolicy: false,
+  allRefundsApproved: false,
+};
 
-interface EventProviderProps {
-  children: ReactNode;
-}
+const EventContext = createContext<EventContextProps | undefined>(undefined);
 
-export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
-  const [eventInfos, setEventInfos] = useState<EventInfos>({
-    eventName: null,
-    eventCategory: null,
-    eventPeriodicity: null,
-    eventDescription: null,
-    eventImage: null,
-    eventTags: [],
-    eventCurrency: null,
-    eventStartDate: null,
-    eventStartTime: null,
-    eventEndDate: null,
-    eventEndTime: null,
-    eventLocation: null,
-  });
+export const useEventContext = () => {
+  const context = useContext(EventContext);
+  if (!context) {
+    throw new Error("useEventContext must be used within an EventProvider");
+  }
+  return context;
+};
 
-  const providerValue = { eventInfos, setEventInfos };
-
+export const EventProvider = ({ children }: { children: ReactNode }) => {
+  const [eventInfo, setEventInfo] = useState<EventInfo>(defaultEventInfo);
   return (
-    <EventContext.Provider value={providerValue}>
+    <EventContext.Provider value={{ eventInfo, setEventInfo }}>
       {children}
     </EventContext.Provider>
   );
