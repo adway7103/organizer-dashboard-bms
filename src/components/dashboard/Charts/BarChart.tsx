@@ -10,8 +10,8 @@ import {
 
 const BarChartHome = ({ data }: any) => {
   return (
-    <HomeContainerCard className="col-span-2 h-full">
-      <div className="flex items-center gap-4">
+    <HomeContainerCard className="col-span-2 h-[55vh]">
+      <div className="flex items-center gap-4 p-6">
         <svg
           width="32"
           height="33"
