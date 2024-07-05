@@ -5,6 +5,14 @@
     height: fit-content;
 }
 
-li {
-    list-style: none;
+.sidebar-navigations {
+    color: #000;
+}
+
+.active-sidebar {
+    background-color: #60769D;
+    border-radius: 20px;
+}
+.active-sidebar > .sidebar-navigations {
+    color: #fff;
 }
