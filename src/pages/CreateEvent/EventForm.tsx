@@ -17,6 +17,7 @@ import { useEventContext } from "../../Contexts/CreateEventContext";
 import { tagsOptions } from "../../utils/Constant";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Dayjs } from "dayjs";
+import EventMap from "../../components/Map/EventMap";
 
 const EventForm: React.FC = () => {
   const { eventInfo, setEventInfo } = useEventContext();
@@ -181,7 +182,7 @@ const EventForm: React.FC = () => {
         >
           Location
         </label>
-        <div className="flex gap-1 items-center">
+        <div className="flex gap-1 items-center pb-3">
           <input
             id="offline"
             type="radio"
@@ -208,10 +209,14 @@ const EventForm: React.FC = () => {
           name="location"
           id="location-search"
           placeholder="Search Venue"
-          className="border w-full h-10 my-2 px-4 py-2"
+          className="border w-full h-10 px-4 py-2"
           value={eventInfo.location}
           onChange={handleChange}
         />
+      </div>
+
+      <div className="py-4">
+        <EventMap/>
       </div>
 
       <div className="flex items-center">
