@@ -1,0 +1,9 @@
+.drop-zone {
+    border: 1px solid black;
+    height: 20rem;
+    /* height: 332px; */
+}
+
+.drop-zone span {
+    border-radius: 50% !important;
+}

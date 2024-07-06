@@ -6,6 +6,7 @@ interface EventInfo {
   category: string;
   periodicity: string;
   description: string;
+  image: File | null;
   tags: string[];
   currency: string;
   eventStartDate: Dayjs | null;
@@ -29,6 +30,7 @@ const defaultEventInfo: EventInfo = {
   category: "",
   periodicity: "",
   description: "",
+  image: null,
   tags: [],
   currency: "",
   eventStartDate: null,

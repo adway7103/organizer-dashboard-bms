@@ -18,6 +18,7 @@ import { tagsOptions } from "../../utils/Constant";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Dayjs } from "dayjs";
 import EventMap from "../../components/Map/EventMap";
+import FileDragNDrop from "../../components/DragNDrop/FileDragNDrop";
 
 const EventForm: React.FC = () => {
   const { eventInfo, setEventInfo } = useEventContext();
@@ -96,6 +97,10 @@ const EventForm: React.FC = () => {
         value={eventInfo.description}
         onChange={handleChange}
       />
+
+      {/* <div> */}
+        <FileDragNDrop />
+      {/* </div> */}
 
       <Autocomplete
         multiple
