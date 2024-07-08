@@ -1,18 +1,21 @@
+import "./AddTicket.css";
 import React, { useState } from "react";
 import { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-// import { TextFieldProps } from "@mui/material";
-
+import { Button } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import ASTable from "../../components/AdvancedSettings/ASTable";
 interface Ticket {
   name: string;
+  numberOfTables: string | number;
   numberOfTickets: string;
   type: string;
   price: string | number;
   deductFees: boolean;
+  spend: string | number;
   saleOption: string;
   saleStartDate: Dayjs | null;
   saleStartTime: Dayjs | null;
@@ -21,19 +24,23 @@ interface Ticket {
   lastEntryDate: Dayjs | null;
   lastEntryTime: Dayjs | null;
   isVisible: boolean;
-  minTickets: number;
-  maxTickets: number;
+  addInfo: string;
+  maxTickets: string | number;
+  girlsTickets: string | number;
+  guysTickets: string | number;
   promoCodeRequired: boolean;
   visible: boolean;
 }
 
-const AddTicket: React.FC = () => {
-  const [formData, setFormData] = useState<Ticket>({
+const Table: React.FC = () => {
+  const [tableData, setTableData] = useState<Ticket>({
     name: "",
+    numberOfTables: "",
     numberOfTickets: "",
     type: "",
     price: "",
     deductFees: false,
+    spend: "",
     saleOption: "",
     saleStartDate: null,
     saleStartTime: null,
@@ -42,20 +49,22 @@ const AddTicket: React.FC = () => {
     lastEntryDate: null,
     lastEntryTime: null,
     isVisible: true,
-    minTickets: 1,
-    maxTickets: 10,
+    addInfo: "",
+    maxTickets: "",
+    girlsTickets: "",
+    guysTickets: "",
     promoCodeRequired: false,
     visible: false,
   });
-
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     const { name, value, type } = event.target;
-
-    setFormData((prevData) => {
+    setTableData((prevData) => {
       let updatedValue: string | number | boolean = value;
 
       if (type === "checkbox") {
@@ -63,7 +72,6 @@ const AddTicket: React.FC = () => {
       } else if (type === "number" && name === "price") {
         updatedValue = parseFloat(value);
       }
-
       return {
         ...prevData,
         [name]: updatedValue,
@@ -72,7 +80,7 @@ const AddTicket: React.FC = () => {
   };
 
   const handleDateChange = (date: Dayjs | null, name: string) => {
-    setFormData((prevData) => ({
+    setTableData((prevData) => ({
       ...prevData,
       [name]: date,
     }));
@@ -80,19 +88,18 @@ const AddTicket: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     console.log("Form data:", {
-      ...formData,
-      price: formData.type === "Free" ? 0 : formData.price,
+      ...tableData,
+      price: tableData.type === "Free" ? 0 : tableData.price,
     });
-
-    // Reset form fields
-    setFormData({
+    setTableData({
       name: "",
+      numberOfTables: "",
       numberOfTickets: "",
       type: "",
       price: "",
       deductFees: false,
+      spend: "",
       saleOption: "",
       saleStartDate: null,
       saleStartTime: null,
@@ -101,8 +108,11 @@ const AddTicket: React.FC = () => {
       lastEntryDate: null,
       lastEntryTime: null,
       isVisible: true,
-      minTickets: 1,
-      maxTickets: 10,
+      addInfo: "",
+      maxTickets: "",
+
+      girlsTickets: "",
+      guysTickets: "",
       promoCodeRequired: false,
       visible: false,
     });
@@ -116,43 +126,55 @@ const AddTicket: React.FC = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="space-y-4 mx-auto max-w-md pt-24 p-5">
+        className="ticket-form space-y-4 mx-auto max-w-2xl pt-9 p-5">
         <h1 className="text-3xl font-bold">Add Ticket</h1>
         <h3 className="font-medium text-lg">Basic Information</h3>
         <div className="grid gap-4">
-          <input
-            type="text"
+          <TextField
             id="name"
             name="name"
-            value={formData.name}
+            label="Table Name"
+            placeholder="General Admission"
+            variant="outlined"
+            value={tableData.name}
             onChange={handleChange}
-            placeholder="Ticket Name"
-            className="col-span-1 max-w-full rounded-md border border-gray-600 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            required
+            className="border border-gray-600"
           />
-          <input
-            type="number"
-            id="numberOfTickets"
-            name="numberOfTickets"
-            value={formData.numberOfTickets}
-            onChange={handleChange}
-            placeholder="Number of tickets"
-            className="col-span-1 rounded-md border border-gray-600 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            required
-          />
+          <div className="flex gap-5">
+            <TextField
+              id="numberOfTables"
+              name="numberOfTables"
+              label="Number of Tables"
+              placeholder="Quantity"
+              variant="outlined"
+              value={tableData.numberOfTables}
+              onChange={handleChange}
+              className="w-full"
+            />
+            <TextField
+              id="numberOfTickets"
+              name="numberOfTickets"
+              label="Number of seats per table"
+              placeholder="Quantity"
+              variant="outlined"
+              value={tableData.numberOfTickets}
+              onChange={handleChange}
+              className="w-full"
+            />
+          </div>
         </div>
         <div className="grid gap-4">
           <label htmlFor="type" className="col-span-1 text-lg font-medium">
-            Ticket Type
+            Table Type
           </label>
-          <div className="grid grid-cols-2 gap-0">
+          <div className="flex gap-10">
             <label htmlFor="paid" className="follow">
               <input
                 type="radio"
                 id="paid"
                 name="type"
                 value="Paid"
-                checked={formData.type === "Paid"}
+                checked={tableData.type === "Paid"}
                 onChange={handleChange}
                 className="mr-2 focus:ring-1 focus:ring-offset-2 focus:ring-white"
               />
@@ -164,7 +186,7 @@ const AddTicket: React.FC = () => {
                 id="free"
                 name="type"
                 value="Free"
-                checked={formData.type === "Free"}
+                checked={tableData.type === "Free"}
                 onChange={handleChange}
                 className="mr-2 focus:ring-1 focus:ring-offset-2 focus:ring-white"
               />
@@ -172,20 +194,19 @@ const AddTicket: React.FC = () => {
             </label>
           </div>
         </div>
-        {formData.type === "Paid" && (
-          <div className="grid grid-cols-2 gap-4">
-            <input
-              type="number"
+        {tableData.type === "Paid" && (
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-2">
+            <TextField
               id="price"
               name="price"
-              value={formData.price}
+              label="Table Price"
+              variant="outlined"
+              value={tableData.price}
               onChange={handleChange}
-              placeholder="Ticket Price"
-              className="col-span-1 rounded-md border border-gray-600 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-offset-2"
+              className="flex-grow w-full mr-2 md:mr-4"
             />
-
-            <p className="flex items-center">
-              Buyer Pays: <span>${formData.price}</span> Per ticket
+            <p className="flex items-center text-xs md:text-sm">
+              Buyer Pays : <span> ${tableData.price}</span> Per ticket
             </p>
           </div>
         )}
@@ -194,7 +215,7 @@ const AddTicket: React.FC = () => {
             type="checkbox"
             id="deductFees"
             name="deductFees"
-            checked={formData.deductFees}
+            checked={tableData.deductFees}
             onChange={handleChange}
             className="follow rounded mx-0 w-6 h-4"
           />
@@ -204,39 +225,49 @@ const AddTicket: React.FC = () => {
             Deduct Fees from Ticket Price
           </label>
         </div>
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-2">
+          <TextField
+            id="spend"
+            name="spend"
+            label="Minimum Spend"
+            variant="outlined"
+            value={tableData.spend}
+            onChange={handleChange}
+            className="flex-grow w-full mr-2 md:mr-4"
+          />
+        </div>
         <div className="grid gap-4">
           <label
             htmlFor="saleOption"
             className="col-span-2 text-lg font-medium">
-            When should this ticket go on sale?
+            When should this table go on sale?
           </label>
-          <div className="grid grid-cols-1 gap-2">
-            <label htmlFor="setStartDate" className="follow">
+          <div className="grid grid-cols-2 md:grid-cols-2">
+            <label htmlFor="setStartDate">
               <input
                 type="radio"
                 id="setStartDate"
                 name="saleOption"
                 value="setStartDate"
-                checked={formData.saleOption === "setStartDate"}
+                checked={tableData.saleOption === "setStartDate"}
                 onChange={handleChange}
-                className="mr-2"
+                className="mr-2 self-center"
               />
               Set start date
             </label>
-            <label htmlFor="followOnSale" className="follow">
+            <label htmlFor="followOnSale">
               <input
                 type="radio"
                 id="followOnSale"
                 name="saleOption"
                 value="followOnSale"
-                checked={formData.saleOption === "followOnSale"}
+                checked={tableData.saleOption === "followOnSale"}
                 onChange={handleChange}
-                className="mr-2"
+                className="mr-2 self-center"
               />
               Follow on
-              <p className="font-light ml-5">
-                This ticket should become available once another ticket sells
-                out
+              <p className="font-thin ml-2 md:ml-5 md:mt-0 md:text-xs">
+                This table should become available once another ticket sells out
               </p>
             </label>
           </div>
@@ -247,17 +278,16 @@ const AddTicket: React.FC = () => {
           Sale starts
         </label>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-6">
             <DatePicker
-              value={formData.saleStartDate}
+              value={tableData.saleStartDate}
               onChange={(newValue) =>
                 handleDateChange(newValue, "saleStartDate")
               }
-              // renderInput={(params: TextFieldProps) => (<TextField {...params} className="rounded-md border border-gray-600 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"/>)}
             />
             <p className="font-medium">at</p>
             <TimePicker
-              value={formData.saleStartTime}
+              value={tableData.saleStartTime}
               onChange={(newValue) =>
                 handleDateChange(newValue, "saleStartTime")
               }
@@ -270,14 +300,14 @@ const AddTicket: React.FC = () => {
           Sale ends
         </label>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-6">
             <DatePicker
-              value={formData.saleEndDate}
+              value={tableData.saleEndDate}
               onChange={(newValue) => handleDateChange(newValue, "saleEndDate")}
             />
             <p className="font-medium">at</p>
             <TimePicker
-              value={formData.saleEndTime}
+              value={tableData.saleEndTime}
               onChange={(newValue) => handleDateChange(newValue, "saleEndTime")}
             />
           </div>
@@ -288,16 +318,16 @@ const AddTicket: React.FC = () => {
           Last entry
         </label>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-6">
             <DatePicker
-              value={formData.lastEntryDate}
+              value={tableData.lastEntryDate}
               onChange={(newValue) =>
                 handleDateChange(newValue, "lastEntryDate")
               }
             />
             <p className="font-medium">at</p>
             <TimePicker
-              value={formData.lastEntryTime}
+              value={tableData.lastEntryTime}
               onChange={(newValue) =>
                 handleDateChange(newValue, "lastEntryTime")
               }
@@ -343,83 +373,32 @@ const AddTicket: React.FC = () => {
           )}
         </div>
         {showAdvanced && (
-          <div className="flex flex-col space-y-4">
-            <div className="flex flex-col space-y-2">
-              <label htmlFor="minmaxTickets" className="font-medium">
-                MIN and MAX Tickets
-              </label>
-              <div className="flex items-center justify-between">
-                <label htmlFor="minTickets">
-                  Minimum tickets per transaction
-                </label>
-                <input
-                  type="number"
-                  id="minTickets"
-                  name="minTickets"
-                  className="rounded-md border border-gray-600 px-3 py-2"
-                  value={formData.minTickets}
-                  onChange={handleChange}
-                  placeholder="Minimum tickets per transaction"
-                />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <label htmlFor="maxTickets">Maximum tickets per user</label>
-                <input
-                  type="number"
-                  id="maxTickets"
-                  name="maxTickets"
-                  className="rounded-md border border-gray-600 px-3 py-2"
-                  value={formData.maxTickets}
-                  onChange={handleChange}
-                  placeholder="Maximum tickets per user"
-                />
-              </div>
-            </div>
-
-            <div className="text-lg font-medium">Promo code</div>
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="promoCodeRequired"
-                name="promoCodeRequired"
-                checked={formData.promoCodeRequired}
-                onChange={handleChange}
-                className="follow rounded mx-0 w-6 h-4"
-              />
-              <label htmlFor="promoCodeRequired" className="check">
-                Prevent customers from purchasing this ticket without a valid
-                promo code
-              </label>
-            </div>
-
-            <div className="text-lg font-medium">Toggle ticket visibility</div>
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="visible"
-                name="visible"
-                checked={formData.visible}
-                onChange={handleChange}
-                className="follow rounded mx-0 w-6 h-4"
-              />
-              <label htmlFor="visible" className="check">
-                This ticket should be visible on your event page, You can change
-                this at any time.
-              </label>
-            </div>
-          </div>
+          <ASTable tableData={tableData} handleChange={handleChange} />
         )}
-        <div className="grid grid-cols-2 gap-4">
-          <button
-            type="button"
-            className=" items-center px-4 py-2 bg-black text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
+        <div className="hidden md:grid grid-cols-3 gap-4">
+          <Button
+            href="/"
+            style={{
+              backgroundColor: "#60769D",
+              color: "black",
+              fontWeight: "medium",
+              border: "none",
+              cursor: "pointer",
+              outline: "none",
+            }}>
             CANCEL
-          </button>
+          </Button>
           <button
             type="submit"
             className=" items-center px-4 py-2 bg-black text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
             CREATE TICKET
+          </button>
+        </div>
+        <div className="flex justify-center items-center md:hidden">
+          <button
+            type="submit"
+            className="items-center max-w-md my-4 px-16 py-3 bg-black text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
+            Create Ticket
           </button>
         </div>
       </form>
@@ -427,4 +406,4 @@ const AddTicket: React.FC = () => {
   );
 };
 
-export default AddTicket;
+export default Table;

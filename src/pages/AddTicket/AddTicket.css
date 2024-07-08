@@ -1,0 +1,22 @@
+.btn {
+  background-color: #964b7d;
+}
+span {
+  color: #60769d;
+}
+.follow {
+  accent-color: #60769d;
+}
+.ad {
+  color: #964b7d;
+}
+.check {
+  color: grey;
+}
+.ticket-form * {
+  border-radius: 10px !important;
+  border-color: #4b4b4b !important;
+}
+::placeholder {
+  color: black;
+}
