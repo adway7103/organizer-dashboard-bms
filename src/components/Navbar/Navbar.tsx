@@ -5,7 +5,7 @@ const Navbar = () => {
       <div className="flex items-center">
         <Link to="/">
           <img
-            src="logo.png"
+            src="/logo.png"
             alt="Organizer Logo"
             className="w-10 h-10 mr-4 rounded-full"
           />
