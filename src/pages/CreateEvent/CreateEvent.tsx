@@ -1,5 +1,6 @@
 import "./CreateEvent.css";
 import EventForm from "./EventForm";
+import { Outlet } from "react-router-dom";
 
 const CreateEvent = () => {
   return (
@@ -9,7 +10,7 @@ const CreateEvent = () => {
         <span className="page-top bg-neutral-300"></span>
       </div>
       <h1 className="font-semibold text-2xl pb-4">Create Event</h1>
-      <EventForm />
+      <Outlet />
     </section>
   );
 };

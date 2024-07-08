@@ -292,7 +292,7 @@ const EventForm: React.FC = () => {
           SAVE CHANGES
         </button>
         <Link
-          to={"/new-event-p2"}
+          to={"/create-events/2"}
           className="event-form-btn bg-black text-white"
         >
           NEXT PAGE
