@@ -22,7 +22,7 @@ const CE_Page2 = () => {
 
       
 
-      <div className="flex gap-x-8">
+      <div className="flex flex-wrap gap-5 md:justify-normal justify-center">
         <button type="submit" className="event-form-btn">
           SAVE CHANGES
         </button>

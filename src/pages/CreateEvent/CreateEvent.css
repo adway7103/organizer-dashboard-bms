@@ -20,8 +20,8 @@
 
 
 .event-form-btn {
-    font-size: 1.1rem;
     font-weight:light;
+    text-align: center;
     padding: .5rem 3rem;
     border-radius: 0px !important;
     background-color: #CFD6E2;
@@ -33,7 +33,7 @@
 }
 
 @media screen and (max-width: 767px) {
-    .event-form {
+    .event-form, .event-form-btn {
         width: 100%;
     }
 }
