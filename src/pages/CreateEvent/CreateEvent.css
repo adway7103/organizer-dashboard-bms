@@ -37,3 +37,20 @@
         width: 100%;
     }
 }
+
+
+.add-ticket-btn {
+    background-color: #60769D;
+    color: #fff;
+    padding: .7rem 1.5rem;
+    border-radius: 10px;
+}
+.add-ticket-btn:hover {
+    background-color: #556b91;
+}
+
+.tickets-display {
+    background-color: #EFF1F5;
+    min-height: 24rem;
+    border-radius: 10px;
+}
