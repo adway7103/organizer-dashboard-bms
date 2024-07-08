@@ -5,6 +5,8 @@ import Error from "../pages/Error/Error";
 import Individual from "../pages/AddTicket/Individual";
 import Groups from "../pages/AddTicket/Groups";
 import Table from "../pages/AddTicket/Table";
+import CE_Page1 from "../pages/CreateEvent/CE_Page1";
+import CE_Page2 from "../pages/CreateEvent/CE_Page2";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +16,16 @@ export const router = createBrowserRouter([
       {
         path: "/create-events",
         element: <CreateEvent />,
+        children: [
+          {
+            path: "",
+            element: <CE_Page1 />,
+          },
+          {
+            path: "/create-events/2",
+            element: <CE_Page2 />,
+          },
+        ]
       },
       {
         path: "/ind-tickets",
