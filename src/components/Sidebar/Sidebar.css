@@ -1,10 +1,19 @@
 .sidebar {
-    background-color: #b1b1b181;
+    background-color: #b1b1b165;
     border-radius: 20px;
     backdrop-filter: blur(5px);
     height: fit-content;
+    position: fixed;
 }
 
-li {
-    list-style: none;
+.sidebar-navigations {
+    color: #000;
+}
+
+.active-sidebar {
+    background-color: #60769D;
+    border-radius: 20px;
+}
+.active-sidebar > .sidebar-navigations {
+    color: #fff;
 }

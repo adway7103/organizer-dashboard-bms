@@ -1,6 +1,9 @@
-.event-form {
-    width: 70%;
+.page-top {
+    border-radius: 1rem;
+    height: .75rem;
+    width: 45%;
 }
+
 .event-form * {
     border-radius: 10px !important;
     border-color: #000 !important;
@@ -15,8 +18,39 @@
     padding: .5rem 1rem;
 }
 
+
+.event-form-btn {
+    font-weight:light;
+    text-align: center;
+    padding: .5rem 3rem;
+    border-radius: 0px !important;
+    background-color: #CFD6E2;
+    transition: all ease .15s;
+}
+.event-form-btn:hover, .event-form-btn:focus, .event-form-btn:active {
+    background-color: #60769D;
+    color: #fff;
+}
+
 @media screen and (max-width: 767px) {
-    .event-form {
+    .event-form, .event-form-btn {
         width: 100%;
     }
+}
+
+
+.add-ticket-btn {
+    background-color: #60769D;
+    color: #fff;
+    padding: .7rem 1.5rem;
+    border-radius: 10px;
+}
+.add-ticket-btn:hover {
+    background-color: #556b91;
+}
+
+.tickets-display {
+    background-color: #EFF1F5;
+    min-height: 24rem;
+    border-radius: 10px;
 }

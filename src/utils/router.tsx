@@ -11,6 +11,8 @@ import FollowerHome from "../components/dashboard/FollowerHome";
 import CustomerHome from "../components/dashboard/CustomerHome";
 import PayoutHome from "../components/dashboard/PayoutHome";
 import { PaymentDetails } from "../components/dashboard/PayOut/PaymentDetails";
+import CE_Page1 from "../pages/CreateEvent/CE_Page1";
+import CE_Page2 from "../pages/CreateEvent/CE_Page2";
 
 export const router = createBrowserRouter([
   {
@@ -18,8 +20,18 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/events",
+        path: "/create-events",
         element: <CreateEvent />,
+        children: [
+          {
+            path: "",
+            element: <CE_Page1 />,
+          },
+          {
+            path: "/create-events/2",
+            element: <CE_Page2 />,
+          },
+        ]
       },
       {
         path: "/ind-tickets",

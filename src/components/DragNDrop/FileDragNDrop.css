@@ -1,0 +1,27 @@
+.drop-zone {
+    border: 1px solid black;
+    height: 20rem;
+    /* height: 332px; */
+}
+
+.drop-zone span {
+    border-radius: 50% !important;
+}
+
+.drop-zone .delete-btn {
+    transition: all 0.1s linear;
+}
+.drop-zone .delete-btn:hover{
+    transform: scale(1.1);
+}
+.drop-zone .delete-btn:active {
+    transform: scale(1);
+}
+
+.event-image-preview {
+    width: 85%;
+    height: 90%;
+}
+.event-image-preview img{
+    border-radius: 0 !important;
+}

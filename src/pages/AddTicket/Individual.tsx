@@ -352,7 +352,7 @@ const Individual: React.FC = () => {
               fontWeight: "medium",
               border: "none",
               cursor: "pointer",
-              outline: "none",
+              outline: "none",  
             }}>
             CANCEL
           </Button>
