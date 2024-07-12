@@ -18,6 +18,11 @@ interface EventInfo {
   repEvent: boolean;
   eventPolicy: boolean;
   allRefundsApproved: boolean;
+  lastEntry: boolean;
+  entryCondition: boolean;
+  eventIsPrivate: boolean;
+  separateBooking: boolean;
+  limitTotal: boolean;
 }
 
 interface EventContextProps {
@@ -42,6 +47,11 @@ const defaultEventInfo: EventInfo = {
   repEvent: false,
   eventPolicy: false,
   allRefundsApproved: false,
+  lastEntry: false,
+  entryCondition: false,
+  eventIsPrivate: false,
+  separateBooking: false,
+  limitTotal: false,
 };
 
 const EventContext = createContext<EventContextProps | undefined>(undefined);
