@@ -2,7 +2,13 @@
 export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        purpleCustom: {
+          300: "#964B7D", // Adjust the shade number and color code as needed
+        },
+      },
+    },
   },
   plugins: [],
 };
