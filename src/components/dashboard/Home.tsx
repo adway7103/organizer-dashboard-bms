@@ -20,7 +20,7 @@ const Home = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-9 gap-2 2xl:gap-4 w-full min-h-[85vh] pl-4 pr-4">
+    <div className="grid grid-cols-2 lg:grid-cols-9 gap-2 2xl:gap-4 min-h-[85vh] pl-4 pr-4">
       <div className="col-span-4">
         <BarChartHome data={dummyData} />
       </div>
