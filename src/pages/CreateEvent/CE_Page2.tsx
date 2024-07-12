@@ -18,6 +18,11 @@ const CE_Page2: React.FC = () => {
     console.log(eventInfo);
   };
 
+  function createEvent() {
+    // Send data to backend...
+    console.log("Event created successfully!");
+  }
+
   return (
     <form onSubmit={handleOnSubmit}>
       <div className="flex items-center justify-between pb-8 p-1">
@@ -139,12 +144,12 @@ const CE_Page2: React.FC = () => {
         <button type="submit" className="event-form-btn">
           SAVE CHANGES
         </button>
-        <Link
-          to={"/create-events/2"}
+        <button
+        onClick={createEvent}
           className="event-form-btn bg-black text-white"
         >
           CREATE THIS EVENT
-        </Link>
+        </button>
       </div>
     </form>
   );
