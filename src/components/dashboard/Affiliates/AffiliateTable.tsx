@@ -22,76 +22,160 @@ import {
   TableRow,
 } from "../../ui/Table";
 import { MenuItem, Select } from "@mui/material";
-import { Link } from "react-router-dom";
+import Message from "./Message";
 
-const data:TableType[] = [
+const data: Follower[] = [
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
+    id: "xueh0xpf",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    commission: "100",
+    revenue: "500",
+    email: "Sarahhhhhhhhhhhhhh@gmail.com",
     ticketSold: "200",
   },
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
+    id: "atzmz950",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    commission: "100",
+    revenue: "500",
+    email: "Sarah@gmail.com",
     ticketSold: "200",
   },
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
+    id: "6nn1ww0c",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    commission: "100",
+    revenue: "500",
+    email: "Sarah@gmail.com",
     ticketSold: "200",
   },
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
+    id: "043gpwfr",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    commission: "100",
+    revenue: "500",
+    email: "Sarah@gmail.com",
     ticketSold: "200",
   },
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
+    id: "6skmearr",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    commission: "100",
+    revenue: "500",
+    email: "Sarah@gmail.com",
+    ticketSold: "200",
+  },
+  {
+    id: "xvmc7ya9",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    commission: "100",
+    revenue: "500",
+    email: "Sarah@gmail.com",
+    ticketSold: "200",
+  },
+  {
+    id: "q3hk0roa",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    commission: "100",
+    revenue: "500",
+    email: "Sarah@gmail.com",
+    ticketSold: "200",
+  },
+  {
+    id: "4dd5ykmx",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    commission: "100",
+    revenue: "500",
+    email: "Sarah@gmail.com",
+    ticketSold: "200",
+  },
+  {
+    id: "07yjag41",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    commission: "100",
+    revenue: "500",
+    email: "Sarah@gmail.com",
+    ticketSold: "200",
+  },
+  {
+    id: "4nnd81pn",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    commission: "100",
+    revenue: "500",
+    email: "Sarah@gmail.com",
     ticketSold: "200",
   },
 ];
 
-export type TableType = {
-  eventName:string
-  date:Date;
-  paymentAmount:string;
-  ticketSold:string;
+export type Follower = {
+  id: string;
+  fName: string;
+  lName: string;
+  commission: string;
+  revenue: string;
+  email: string;
+  ticketSold: string;
 };
 
-export const columns: ColumnDef<TableType>[] = [
+export const columns: ColumnDef<Follower>[] = [
   {
-    accessorKey: "eventName",
-    header: "Event Name",
-    cell: ({ row }) => <div className="">{row.getValue("eventName")}</div>,
+    accessorKey: "fName",
+    header: "Name",
+    cell: ({ row }) => <div className="">{row.getValue("fName")}</div>,
   },
   {
-    accessorKey: "date",
-    header: "Date",
-    cell: ({ row }) => {
-      const date = row.getValue("date") as Date;
-      const formattedDate = new Date(date).toLocaleDateString();
-      return <div className="">{formattedDate}</div>
-    },
+    accessorKey: "lName",
+    header: "Last Name",
+    cell: ({ row }) => <div className="">{row.getValue("lName")}</div>,
   },
   {
-    accessorKey: "paymentAmount",
-    header: "Payment Amount",
-    cell: ({ row }) => <div className="">{row.getValue("paymentAmount")}</div>,
+    accessorKey: "commission",
+    header: "Commission",
+    cell: ({ row }) => <div className="pl-6">{row.getValue("commission")}</div>,
+  },
+  {
+    accessorKey: "revenue",
+    header: "Revenue",
+    cell: ({ row }) => <div className="pl-3">{row.getValue("revenue")}</div>,
+  },
+  {
+    accessorKey: "email",
+    header: "Email Address",
+    cell: ({ row }) => (
+      <div className="underline ">{row.getValue("email")}</div>
+    ),
   },
   {
     accessorKey: "ticketSold",
-    header: "Tickets sold",
-    cell: ({ row }) => <div className="">{row.getValue("ticketSold")}</div>,
+    header: "Ticket Sold",
+    cell: ({ row }) => (
+      <div className="bg-[#A8F5FF] text-center rounded-full w-16 py-1">
+        {row.getValue("ticketSold")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "*",
+    header: "",
+    cell: () => (
+      <div>
+        <Message />
+      </div>
+    ),
   },
 ];
 
-export function TableP() {
+export function AffiliateTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -116,21 +200,14 @@ export function TableP() {
       sorting,
       columnFilters,
       columnVisibility,
+
       rowSelection,
     },
   });
 
   return (
-    <div className="w-full m-10">
-      <div className="flex justify-between ">
-      <h3 className="text-2xl font-semibold px-4">Payouts List</h3>
-      <Link
-        to="/payouts/payment-details"
-        className="text-base px-4 bg-yellow-600 border-none rounded-full p-2 text-center font-medium w-48"
-      >
-        Payment Details
-      </Link>
-      </div>
+    <div className=" m-6 py-14">
+      <h3 className="text-2xl font-medium px-4">Affiliates List</h3>
       <div className="border border-gray-300 rounded-3xl px-6 mt-4">
         <div className="mt-4 flex w-full justify-between items-center p-2 px-4">
           <div className="relative w-1/2 flex items-center">
@@ -188,7 +265,7 @@ export function TableP() {
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="px-14">
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext()
@@ -206,7 +283,7 @@ export function TableP() {
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell key={cell.id} className="px-12">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

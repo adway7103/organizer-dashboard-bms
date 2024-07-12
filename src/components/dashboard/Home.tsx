@@ -1,8 +1,9 @@
 import BarChartHome from "./Charts/BarChart";
 import AreaChartHome from "./Charts/AreaChart";
 import Payouts from "./Home/Payouts";
-import TicketSold from "./Home/TicketSold";
 import CurrentlyEvent from "./Home/CurrentlyEvent";
+import Affilliates from "./Home/Affilliates";
+import PieChart from "./Charts/PieChart";
 
 const Home = () => {
   const dummyData = [
@@ -19,14 +20,22 @@ const Home = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 2xl:gap-4 w-full min-h-[85vh] pl-4">
-      <BarChartHome data={dummyData} />
-      <AreaChartHome data={dummyData} />
-      <AreaChartHome data={dummyData} />
-
-      <Payouts />
-      <TicketSold />
-      <CurrentlyEvent />
+    <div className="grid grid-cols-2 lg:grid-cols-9 gap-2 2xl:gap-4 w-full min-h-[85vh] pl-4 pr-4">
+      <div className="col-span-4">
+        <BarChartHome data={dummyData} />
+      </div>
+      <div className="col-span-3">
+        <AreaChartHome data={dummyData} />
+      </div>
+      <div className="col-span-2">
+        <PieChart />
+      </div>
+      <div className="col-span-3"><Affilliates /></div>
+      <div className="col-span-2">
+        <Payouts />
+      </div>
+        <div className="col-span-4 "><CurrentlyEvent /></div>
+       
     </div>
   );
 };

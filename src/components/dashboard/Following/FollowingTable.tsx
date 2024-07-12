@@ -20,7 +20,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "../../ui/Table";
 import { Link } from "react-router-dom";
 import { MenuItem, Select } from "@mui/material";
 

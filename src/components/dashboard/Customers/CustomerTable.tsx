@@ -22,76 +22,228 @@ import {
   TableRow,
 } from "../../ui/Table";
 import { MenuItem, Select } from "@mui/material";
-import { Link } from "react-router-dom";
+import Message from "../Affiliates/Message";
 
-const data:TableType[] = [
+const data: Follower[] = [
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
+    id: "xueh0xpf",
+    activity:"?",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarahhhhhhhhhhhhhh@gmail.com",
+    mobile: "1234567890",
+    gender: "male",
+    revenue: "40",
+    eventsAttented: "10",
+    affliationStatus: "Yes",
   },
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
+    id: "atzmz950",
+    activity:"?",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    mobile: "1234567890",
+    gender: "male",
+    revenue: "40",
+    eventsAttented: "10",
+    affliationStatus: "Yes",
   },
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
+    id: "6nn1ww0c",
+    activity:"?",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    mobile: "1234567890",
+    gender: "male",
+    revenue: "40",
+    eventsAttented: "10",
+    affliationStatus: "Yes",
   },
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
+    id: "043gpwfr",
+    activity:"?",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    mobile: "1234567890",
+    gender: "male",
+    revenue: "40",
+    eventsAttented: "10",
+    affliationStatus: "Yes",
   },
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
+    id: "6skmearr",
+    activity:"?",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    mobile: "1234567890",
+    gender: "male",
+    revenue: "40",
+    eventsAttented: "10",
+    affliationStatus: "Yes",
+  },
+  {
+    id: "xvmc7ya9",
+    activity:"?",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    mobile: "1234567890",
+    gender: "male",
+    revenue: "40",
+    eventsAttented: "10",
+    affliationStatus: "Yes",
+  },
+  {
+    id: "q3hk0roa",
+    activity:"?",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    mobile: "1234567890",
+    gender: "male",
+    revenue: "40",
+    eventsAttented: "10",
+    affliationStatus: "Yes",
+  },
+  {
+    id: "4dd5ykmx",
+    activity:"?",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    mobile: "1234567890",
+    gender: "male",
+    revenue: "40",
+    eventsAttented: "10",
+    affliationStatus: "Yes",
+  },
+  {
+    id: "07yjag41",
+    activity:"?",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    mobile: "1234567890",
+    gender: "male",
+    revenue: "40",
+    eventsAttented: "10",
+    affliationStatus: "Yes",
+  },
+  {
+    id: "4nnd81pn",
+    activity:"?",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    mobile: "1234567890",
+    gender: "male",
+    revenue: "40",
+    eventsAttented: "10",
+    affliationStatus: "Yes",
   },
 ];
 
-export type TableType = {
-  eventName:string
-  date:Date;
-  paymentAmount:string;
-  ticketSold:string;
+export type Follower = {
+  id: string;
+  activity: string;
+  fName: string;
+  lName: string;
+  age: string;
+  email: string;
+  mobile: string;
+  gender: string;
+  revenue: string;
+  eventsAttented: string;
+  affliationStatus: string;
 };
 
-export const columns: ColumnDef<TableType>[] = [
+export const columns: ColumnDef<Follower>[] = [
   {
-    accessorKey: "eventName",
-    header: "Event Name",
-    cell: ({ row }) => <div className="">{row.getValue("eventName")}</div>,
+    accessorKey: "activity",
+    header: "Activity",
+    cell: ({ row }) => <div className="">{row.getValue("activity")}</div>,
   },
   {
-    accessorKey: "date",
-    header: "Date",
-    cell: ({ row }) => {
-      const date = row.getValue("date") as Date;
-      const formattedDate = new Date(date).toLocaleDateString();
-      return <div className="">{formattedDate}</div>
-    },
+    accessorKey: "fName",
+    header: "Name",
+    cell: ({ row }) => <div className="">{row.getValue("fName")}</div>,
   },
   {
-    accessorKey: "paymentAmount",
-    header: "Payment Amount",
-    cell: ({ row }) => <div className="">{row.getValue("paymentAmount")}</div>,
+    accessorKey: "lName",
+    header: "Last Name",
+    cell: ({ row }) => <div className="">{row.getValue("lName")}</div>,
   },
   {
-    accessorKey: "ticketSold",
-    header: "Tickets sold",
-    cell: ({ row }) => <div className="">{row.getValue("ticketSold")}</div>,
+    accessorKey: "age",
+    header: "Age",
+    cell: ({ row }) => <div className="">{row.getValue("age")}</div>,
+  },
+  {
+    accessorKey: "email",
+    header: "Email Address",
+    cell: ({ row }) => (
+      <div className="underline ">{row.getValue("email")}</div>
+    ),
+  },
+  {
+    accessorKey: "mobile",
+    header: "Mobile",
+    cell: ({ row }) => <div className="">{row.getValue("mobile")}</div>,
+  },
+  {
+    accessorKey: "gender",
+    header: "Gender",
+    cell: ({ row }) => <div className="">{row.getValue("gender")}</div>,
+  },
+  {
+    accessorKey: "revenue",
+    header: "Revenue",
+    cell: ({ row }) => <div className="">{row.getValue("gender")}</div>,
+  },
+  {
+    accessorKey: "eventsAttented",
+    header: "Events Attended",
+    cell: ({ row }) => (
+      <div className="bg-purpleCustom-300 text-center text-white rounded-full w-16 py-1">
+        {row.getValue("eventsAttented")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "affliationStatus",
+    header: "Affiliation Status",
+    cell: ({ row }) => (
+      <div className="text-center text-green-400 rounded-full w-16 py-1">
+        {row.getValue("affliationStatus")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "*",
+    header: "",
+    cell: () => (
+      <div>
+        <Message />
+      </div>
+    ),
   },
 ];
 
-export function TableP() {
+export function CustomerTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -116,21 +268,14 @@ export function TableP() {
       sorting,
       columnFilters,
       columnVisibility,
+
       rowSelection,
     },
   });
 
   return (
-    <div className="w-full m-10">
-      <div className="flex justify-between ">
-      <h3 className="text-2xl font-semibold px-4">Payouts List</h3>
-      <Link
-        to="/payouts/payment-details"
-        className="text-base px-4 bg-yellow-600 border-none rounded-full p-2 text-center font-medium w-48"
-      >
-        Payment Details
-      </Link>
-      </div>
+    <div className="m-6">
+      <h3 className="text-2xl font-medium px-4">Customers List</h3>
       <div className="border border-gray-300 rounded-3xl px-6 mt-4">
         <div className="mt-4 flex w-full justify-between items-center p-2 px-4">
           <div className="relative w-1/2 flex items-center">

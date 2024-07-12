@@ -9,9 +9,13 @@ import {
 } from "recharts";
 import HomeContainerCard from "../HomeContainerCard";
 
-function AreaChartHome({ data }: any) {
+type AreaChartHomeTypes = {
+  data: any;
+  heading?: string;
+};
+function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
   return (
-    <HomeContainerCard className="h-full col-span-2 md:col-span-1">
+    <HomeContainerCard className="h-full col-span-2 md:col-span-1 border border-gray-300 rounded-3xl p-4 h-[55vh]">
       <div className="flex gap-1 items-center">
         <svg
           width="32"
@@ -33,7 +37,7 @@ function AreaChartHome({ data }: any) {
             fill="black"
           />
         </svg>
-        <h1>Ticket Sale per Month</h1>
+        {heading ? <h1>{heading}</h1> : <h1>Ticket Sale per Month</h1>}
       </div>
       <div className="flex justify-between px-5 py-2 ">
         <div className="flex gap-2 items-center">

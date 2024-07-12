@@ -22,76 +22,184 @@ import {
   TableRow,
 } from "../../ui/Table";
 import { MenuItem, Select } from "@mui/material";
-import { Link } from "react-router-dom";
+import Message from "../Affiliates/Message";
 
-const data:TableType[] = [
+const data: Follower[] = [
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
+    id: "xueh0xpf",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarahhhhhhhhhhhhhh@gmail.com",
+    followedOn: new Date("2024-02-24"),
+    eventsAttented: "10",
+    affliationStatus: "Yes",
   },
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
+    id: "atzmz950",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    followedOn: new Date("2024-02-24"),
+    eventsAttented: "10",
+    affliationStatus: "Yes",
   },
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
+    id: "6nn1ww0c",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    followedOn: new Date("2024-02-24"),
+    eventsAttented: "10",
+    affliationStatus: "Yes",
   },
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
+    id: "043gpwfr",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    followedOn: new Date("2024-02-24"),
+    eventsAttented: "10",
+    affliationStatus: "Yes",
   },
   {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
+    id: "6skmearr",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    followedOn: new Date("2024-02-24"),
+    eventsAttented: "10",
+    affliationStatus: "Yes",
+  },
+  {
+    id: "xvmc7ya9",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    followedOn: new Date("2024-02-24"),
+    eventsAttented: "10",
+    affliationStatus: "Yes",
+  },
+  {
+    id: "q3hk0roa",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    followedOn: new Date("2024-02-24"),
+    eventsAttented: "10",
+    affliationStatus: "Yes",
+  },
+  {
+    id: "4dd5ykmx",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    followedOn: new Date("2024-02-24"),
+    eventsAttented: "10",
+    affliationStatus: "Yes",
+  },
+  {
+    id: "07yjag41",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    followedOn: new Date("2024-02-24"),
+    eventsAttented: "10",
+    affliationStatus: "Yes",
+  },
+  {
+    id: "4nnd81pn",
+    fName: "Sarah",
+    lName: "Rodriguez",
+    age: "20",
+    email: "Sarah@gmail.com",
+    followedOn: new Date("2024-02-24"),
+    eventsAttented: "10",
+    affliationStatus: "Yes",
   },
 ];
 
-export type TableType = {
-  eventName:string
-  date:Date;
-  paymentAmount:string;
-  ticketSold:string;
+export type Follower = {
+  id: string;
+  fName: string;
+  lName: string;
+  age: string;
+  email: string;
+  followedOn: Date;
+  eventsAttented: string;
+  affliationStatus: string;
 };
 
-export const columns: ColumnDef<TableType>[] = [
+export const columns: ColumnDef<Follower>[] = [
   {
-    accessorKey: "eventName",
-    header: "Event Name",
-    cell: ({ row }) => <div className="">{row.getValue("eventName")}</div>,
+    accessorKey: "fName",
+    header: "Name",
+    cell: ({ row }) => <div className="">{row.getValue("fName")}</div>,
   },
   {
-    accessorKey: "date",
-    header: "Date",
+    accessorKey: "lName",
+    header: "Last Name",
+    cell: ({ row }) => <div className="">{row.getValue("lName")}</div>,
+  },
+  {
+    accessorKey: "age",
+    header: "Age",
+    cell: ({ row }) => <div className="">{row.getValue("age")}</div>,
+  },
+  {
+    accessorKey: "email",
+    header: "Email Address",
+    cell: ({ row }) => (
+      <div className="underline ">{row.getValue("email")}</div>
+    ),
+  },
+  {
+    accessorKey: "followedOn",
+    header: "Followed On",
     cell: ({ row }) => {
-      const date = row.getValue("date") as Date;
-      const formattedDate = new Date(date).toLocaleDateString();
-      return <div className="">{formattedDate}</div>
+      const date = row.getValue("followedOn") as Date;
+      const formattedDate = new Date(date).toLocaleDateString(); // Format the date as needed
+      return <div className="">{formattedDate}</div>;
     },
   },
   {
-    accessorKey: "paymentAmount",
-    header: "Payment Amount",
-    cell: ({ row }) => <div className="">{row.getValue("paymentAmount")}</div>,
+    accessorKey: "eventsAttented",
+    header: "Events Attended",
+    cell: ({ row }) => (
+      <div className="bg-purpleCustom-300 text-center text-white rounded-full w-16 py-1">
+        {row.getValue("eventsAttented")}
+      </div>
+    ),
   },
   {
-    accessorKey: "ticketSold",
-    header: "Tickets sold",
-    cell: ({ row }) => <div className="">{row.getValue("ticketSold")}</div>,
+    accessorKey: "affliationStatus",
+    header: "Affiliation Status",
+    cell: ({ row }) => (
+      <div className="text-center text-green-400 rounded-full w-16 py-1">
+        {row.getValue("affliationStatus")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "*",
+    header: "",
+    cell: () => (
+      <div>
+        <Message />
+      </div>
+    ),
   },
 ];
 
-export function TableP() {
+export function FollowerTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -116,21 +224,14 @@ export function TableP() {
       sorting,
       columnFilters,
       columnVisibility,
+
       rowSelection,
     },
   });
 
   return (
-    <div className="w-full m-10">
-      <div className="flex justify-between ">
-      <h3 className="text-2xl font-semibold px-4">Payouts List</h3>
-      <Link
-        to="/payouts/payment-details"
-        className="text-base px-4 bg-yellow-600 border-none rounded-full p-2 text-center font-medium w-48"
-      >
-        Payment Details
-      </Link>
-      </div>
+    <div className="m-6">
+      <h3 className="text-2xl font-medium px-4">Followers List</h3>
       <div className="border border-gray-300 rounded-3xl px-6 mt-4">
         <div className="mt-4 flex w-full justify-between items-center p-2 px-4">
           <div className="relative w-1/2 flex items-center">
@@ -188,7 +289,7 @@ export function TableP() {
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="px-8">
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext()
@@ -206,7 +307,7 @@ export function TableP() {
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell key={cell.id} className="px-8">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
