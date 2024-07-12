@@ -3,6 +3,7 @@ import AreaChartHome from "./Charts/AreaChart";
 import Payouts from "./Home/Payouts";
 import CurrentlyEvent from "./Home/CurrentlyEvent";
 import Affilliates from "./Home/Affilliates";
+import PieChart from "./Charts/PieChart";
 
 const Home = () => {
   const dummyData = [
@@ -27,14 +28,14 @@ const Home = () => {
         <AreaChartHome data={dummyData} />
       </div>
       <div className="col-span-2">
-        <AreaChartHome data={dummyData} />
+        <PieChart />
       </div>
       <div className="col-span-3"><Affilliates /></div>
       <div className="col-span-2">
         <Payouts />
       </div>
         <div className="col-span-4 "><CurrentlyEvent /></div>
-          
+       
     </div>
   );
 };

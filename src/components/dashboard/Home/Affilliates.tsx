@@ -3,25 +3,25 @@ import HomeContainerCard from "../HomeContainerCard";
 const Data = [
   {
     title: "Affiliates",
-    size: "300",
+    count: "300",
     percentage: "5%",
     days: "vs last 7 days",
   },
   {
     title: "Customers",
-    size: "5000",
+    count: "5000",
     percentage: "5%",
     days: "vs last 7 days",
   },
   {
     title: "Views",
-    size: "6000",
+    count: "6000",
     percentage: "5%",
     days: "vs last 7 days",
   },
   {
     title: "Followers",
-    size: "8000",
+    count: "8000",
     percentage: "5%",
     days: "vs last 7 days",
   },
@@ -32,7 +32,7 @@ const Data = [
 const Affilliates = () => {
   return (
     <HomeContainerCard className="h-[55vh]">
-    <div className="grid grid-cols-2 pt-4 gap-3">
+    <div className="grid grid-cols-2 gap-4 h-[55vh]">
       {Data.map((item) => (
           <div className="border border-gray-300 rounded-2xl shadow-md">
           <div className="flex p-2 px-8 items-center">
@@ -40,7 +40,7 @@ const Affilliates = () => {
             <p className="pl-6 ">{item.title}</p>
           </div>
           <div className="flex justify-center pl-4 text-[1.8rem] font-bold">
-            {item.size}
+            {item.count}
           </div>
           <div className="flex p-4 px-12 items-center">
             <div className="text-xs  2xl:text-[0.7rem] px-1 py-1 bg-green-200 rounded-lg text-green-600">

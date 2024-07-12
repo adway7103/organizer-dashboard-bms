@@ -2,7 +2,7 @@ import HomeContainerCard from "../HomeContainerCard";
 
 function Payouts() {
   return (
-    <HomeContainerCard className="h-[55vh] w-65 p-2">
+    <HomeContainerCard className="h-[55vh] w-65 p-2 bg-gray-200">
       <div className="flex gap-1 items-center p-4">
         <svg
           width="32"
@@ -38,6 +38,7 @@ function Payouts() {
             </span>
           </div>
         </div>
+        
        <div className="px-4"> <p>Next Payout</p>
         <div className="flex items-center gap-8 py-3">
           <h1 className="text-[32px] 2xl:text-[2rem] font-semibold">$43,000</h1>
