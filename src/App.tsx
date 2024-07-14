@@ -6,11 +6,13 @@ function App() {
   return (
     <>
       <Navbar />
-      
-      <main className="p-2 py-16 flex">
+
+      <div className="p-2 py-16">
         <Sidebar />
+        <main className="pl-[90px] md:pl-[220px]">
         <Outlet />
-      </main>
+        </main>
+      </div>
     </>
   );
 }

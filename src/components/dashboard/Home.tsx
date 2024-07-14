@@ -20,22 +20,25 @@ const Home = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-9 gap-2 2xl:gap-4 min-h-[85vh] pl-4 pr-4">
-      <div className="col-span-4">
+    <div className="grid grid-cols-1 grid-row-6 md:grid-row-3 lg:grid-row-2 lg:grid-cols-9 gap-4 lg:gap-8 min-h-[85vh] pl-4 pr-4">
+      <div className="col-span-9 lg:col-span-9 xl:col-span-4">
         <BarChartHome data={dummyData} />
       </div>
-      <div className="col-span-3">
+      <div className="col-span-9 lg:col-span-6 xl:col-span-3">
         <AreaChartHome data={dummyData} />
       </div>
-      <div className="col-span-2">
+      <div className="col-span-9 lg:col-span-3 xl:col-span-2">
         <PieChart />
       </div>
-      <div className="col-span-3"><Affilliates /></div>
-      <div className="col-span-2">
+      <div className="col-span-9 md:col-span-7 lg:col-span-5 xl:col-span-3">
+        <Affilliates />
+      </div>
+      <div className="col-span-9 md:col-span-2 lg:col-span-4 xl:col-span-2 pt-6 sm:pt-0">
         <Payouts />
       </div>
-        <div className="col-span-4 "><CurrentlyEvent /></div>
-       
+      <div className="col-span-9 md:col-span-9 lg:col-span-9 xl:col-span-4 ">
+        <CurrentlyEvent />
+      </div>
     </div>
   );
 };
