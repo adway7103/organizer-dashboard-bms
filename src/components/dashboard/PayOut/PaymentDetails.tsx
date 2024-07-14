@@ -85,6 +85,27 @@ export const columns: ColumnDef<TableType>[] = [
     header: "Account number",
     cell: ({ row }) => <div className="">{row.getValue("accountNumber")}</div>,
   },
+  {
+    accessorKey: "*",
+    header: "*",
+    cell: () => (
+      <div className="">
+        <svg
+          className="h-6 w-6 text-slate-900"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+          />
+        </svg>
+      </div>
+    ),
+  },
 ];
 
 export function PaymentDetails() {
@@ -124,52 +145,54 @@ export function PaymentDetails() {
         <PaymentMethodDetails />
       ) : (
         <div className="m-10">
-          <div className="flex justify-between ">
-            <h3 className="text-2xl font-semibold px-4">Payment methods</h3>
+       
+          <div className="flex justify-between items-center p-4 gap-4">
+            <h3 className="text-[1.6rem] lg:text-[2rem] font-semibold">
+              Payment methods
+            </h3>
             <button
               onClick={() => setShowPaymentMethodDetails(true)}
-              className="text-base px-4 bg-yellow-600 border-none rounded-full p-2 text-center font-medium w-48"
+               className="text-xs sm:text-sm md:text-base px-4 bg-yellow-600 border-none rounded-full p-2 text-center font-medium h-12 sm:h-12 md:h-14 w-48 md:w-58 sm:w-48"
             >
               Add payment method
             </button>
           </div>
-          <div className="border border-gray-300 rounded-3xl px-6 mt-4">
-            <div className="mt-4 flex w-full justify-between items-center p-2 px-4">
-              <div className="relative w-1/2 flex items-center">
-                <Search className="absolute left-6 size-5 text-gray-400 pointer-events-none" />
+          <div className="border border-gray-300 rounded-3xl px-6 mt-2">
+            <div className="mt-4 flex flex-col sm:flex-row justify-between items-center p-2 px-4 gap-4 sm:gap-0">
+              <div className="relative flex items-center w-full sm:w-auto">
+                <Search className="absolute left-4 text-gray-400 pointer-events-none" />
                 <input
                   value={
                     (table
-                      .getColumn("eventName")
+                      .getColumn("name")
                       ?.getFilterValue() as string) ?? ""
                   }
                   onChange={(event) =>
                     table
-                      .getColumn("eventName")
+                      .getColumn("name")
                       ?.setFilterValue(event.target.value)
                   }
-                  className="!pl-14 !h-12 !rounded-full !bg-[#E6E6E682] max-w-sm w-80 py-3 pl-[20px] border-none"
+                  className="w-full sm:w-auto !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm lg:w-80"
                   placeholder="Search"
                 />
               </div>
-              <div className="flex w-1/2 items-center justify-end gap-6 md:gap-10 ">
-                
-
+              <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4">
                 <span>Show</span>
 
                 <Select
-                  defaultValue={5}
+                  defaultValue={20}
                   size="small"
+                  className="block md:hidden lg:block"
                   sx={{
                     backgroundColor: "#E6E6E682",
                     paddingX: 2,
                     borderRadius: 6,
                   }}
                 >
-                  <MenuItem value={5}>5</MenuItem>
                   <MenuItem value={10}>10</MenuItem>
-                  <MenuItem value={15}>15</MenuItem>
                   <MenuItem value={20}>20</MenuItem>
+                  <MenuItem value={30}>30</MenuItem>
+                  <MenuItem value={40}>40</MenuItem>
                 </Select>
               </div>
             </div>
