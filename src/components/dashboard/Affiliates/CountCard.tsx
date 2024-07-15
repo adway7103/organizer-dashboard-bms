@@ -7,7 +7,7 @@ interface CountCardType {
 
 const CountCard = ({ heading, count }: CountCardType) => {
   return (
-    <HomeContainerCard className="h-[22vh] shadow-none border border-gray-300 rounded-3xl ml-8">
+    <HomeContainerCard className="h-[22vh] shadow-none border border-gray-300 rounded-3xl">
       <div className="py-5 m-4">
         <div className="flex px-5 items-center">
           <div className="h-10 w-10 rounded-full bg-yellow-500 "></div>
