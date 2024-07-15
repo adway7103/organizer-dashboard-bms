@@ -3,7 +3,7 @@ import { TableP } from "./PayOut/TableP";
 
 function PayoutHome() {
   return (
-    <div className="pl-8">
+    <div className="ml-8">
       <h1 className="font-semibold text-[2rem] pl-4">Payouts</h1>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mr-12">
         <div className="lg:col-span-1">
