@@ -136,8 +136,9 @@ const EventForm: React.FC = () => {
           Event Starts
         </label>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <div className="flex items-center justify-between space-x-2">
+          <div className="flex items-center space-x-5">
             <DatePicker
+              className="w-1/2"
               value={eventInfo.eventStartDate}
               onChange={(newValue) =>
                 handleDateChange(newValue, "eventStartDate")
@@ -145,6 +146,7 @@ const EventForm: React.FC = () => {
             />
             <p className="font-medium">at</p>
             <TimePicker
+              className="w-1/2"
               value={eventInfo.eventStartTime}
               onChange={(newValue) =>
                 handleDateChange(newValue, "eventStartTime")
@@ -162,8 +164,9 @@ const EventForm: React.FC = () => {
           Event Ends
         </label>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <div className="flex items-center justify-between space-x-2">
+          <div className="flex items-center w-full space-x-5">
             <DatePicker
+            className="w-1/2"
               value={eventInfo.eventEndDate}
               onChange={(newValue) =>
                 handleDateChange(newValue, "eventEndDate")
@@ -171,6 +174,7 @@ const EventForm: React.FC = () => {
             />
             <p className="font-medium">at</p>
             <TimePicker
+              className="w-1/2"
               value={eventInfo.eventEndTime}
               onChange={(newValue) =>
                 handleDateChange(newValue, "eventEndTime")
