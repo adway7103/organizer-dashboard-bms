@@ -22,7 +22,7 @@ import {
   TableRow,
 } from "../../ui/Table";
 import { MenuItem, Select } from "@mui/material";
-import PaymentMethodDetails from "./PaymentMethodDetails";
+import AddMethodDetails from "./AddPaymentMethod";
 
 const data: TableType[] = [
   {
@@ -116,8 +116,7 @@ export function PaymentDetails() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const [showPaymentMethodDetails, setShowPaymentMethodDetails] =
-    React.useState(false);
+  const [showAddPaymentMethod, setShowAddPaymentMethod] = React.useState(false);
   const table = useReactTable({
     data,
     columns,
@@ -141,18 +140,17 @@ export function PaymentDetails() {
 
   return (
     <div className="w-full">
-      {showPaymentMethodDetails ? (
-        <PaymentMethodDetails />
+      {showAddPaymentMethod ? (
+        <AddMethodDetails />
       ) : (
         <div className="m-10">
-       
           <div className="flex justify-between items-center p-4 gap-4">
             <h3 className="text-[1.6rem] lg:text-[2rem] font-semibold">
               Payment methods
             </h3>
             <button
-              onClick={() => setShowPaymentMethodDetails(true)}
-               className="text-xs sm:text-sm md:text-base px-4 bg-yellow-600 border-none rounded-full p-2 text-center font-medium h-12 sm:h-12 md:h-14 w-48 md:w-58 sm:w-48"
+              onClick={() => setShowAddPaymentMethod(true)}
+              className="text-xs sm:text-sm md:text-base px-4 bg-yellow-600 border-none rounded-full p-2 text-center font-medium h-12 sm:h-12 md:h-14 w-48 md:w-58 sm:w-48"
             >
               Add payment method
             </button>
@@ -163,14 +161,10 @@ export function PaymentDetails() {
                 <Search className="absolute left-4 text-gray-400 pointer-events-none" />
                 <input
                   value={
-                    (table
-                      .getColumn("name")
-                      ?.getFilterValue() as string) ?? ""
+                    (table.getColumn("name")?.getFilterValue() as string) ?? ""
                   }
                   onChange={(event) =>
-                    table
-                      .getColumn("name")
-                      ?.setFilterValue(event.target.value)
+                    table.getColumn("name")?.setFilterValue(event.target.value)
                   }
                   className="w-full sm:w-auto !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm lg:w-80"
                   placeholder="Search"
