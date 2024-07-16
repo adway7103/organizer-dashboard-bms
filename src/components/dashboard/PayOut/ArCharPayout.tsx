@@ -2,8 +2,9 @@ import { AreaChart, Area, Tooltip } from "recharts";
 
 type ArCharPayoutProps = {
   color: string;
+  heading: string;
 };
-const ArCharPayout = ({ color }: ArCharPayoutProps) => {
+const ArCharPayout = ({ color, heading }: ArCharPayoutProps) => {
   const data = [
     {
       name: "Page A",
@@ -23,9 +24,9 @@ const ArCharPayout = ({ color }: ArCharPayoutProps) => {
     },
   ];
   return (
-    <div className="mt-2 flex border justify-between items-center h-[220px] bg-blue-box rounded-3xl shadow-xl p-6">
+    <div className="flex border justify-between items-center h-[220px] bg-blue-box rounded-3xl shadow-xl p-6">
       <div className="flex flex-col h-full justify-around">
-        <p className="text-2xl font-semibold">Revenue earned</p>
+        <p className="text-2xl font-semibold">{heading}</p>
         <p className="font-bold text-3xl text-[#60769D]">$43,000</p>
 
         <p className="text-sm">All past events</p>
