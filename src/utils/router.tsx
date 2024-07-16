@@ -14,6 +14,7 @@ import { PaymentDetails } from "../components/dashboard/PayOut/PaymentDetails";
 import CE_Page1 from "../pages/CreateEvent/CE_Page1";
 import CE_Page2 from "../pages/CreateEvent/CE_Page2";
 import Profile from "../pages/Profile/Profile";
+import EditProfile from "../pages/Profile/EditProfile";
 
 export const router = createBrowserRouter([
   {
@@ -72,7 +73,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <Profile/>,
+        children: [
+          {
+            path: "",
+            element: <Profile />,
+          },
+          {
+            path: "/profile/edit",
+            element: <EditProfile />,
+          }
+        ]
       },
       {
         path: "*",
