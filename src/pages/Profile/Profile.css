@@ -1,0 +1,18 @@
+.profile-border {
+    border: .5px solid #898989d4;
+    border-radius: 10px;
+}
+
+.pfp {
+    width: 150px;
+    aspect-ratio: 1/1;
+}
+
+.profile-desc {
+    height: 8.75rem;
+}
+
+.social-img {
+    width: 32px;
+    aspect-ratio: 1/1;
+}
