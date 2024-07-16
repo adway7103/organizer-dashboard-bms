@@ -13,7 +13,6 @@ import PayoutHome from "../components/dashboard/PayoutHome";
 import { PaymentDetails } from "../components/dashboard/PayOut/PaymentDetails";
 import CE_Page1 from "../pages/CreateEvent/CE_Page1";
 import CE_Page2 from "../pages/CreateEvent/CE_Page2";
-import MessagingHome from "../components/dashboard/MessagingHome";
 
 export const router = createBrowserRouter([
   {
@@ -69,10 +68,6 @@ export const router = createBrowserRouter([
       {
         path: "/customers",
         element: <CustomerHome />,
-      },
-      {
-        path: "/messaging",
-        element: <MessagingHome />,
       },
       {
         path: "*",
