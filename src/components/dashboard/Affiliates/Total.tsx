@@ -3,27 +3,27 @@ import HomeContainerCard from "../HomeContainerCard";
 interface PropsType {
   heading: string;
 }
-const TotalRevenue = ({ heading }: PropsType) => {
+const Total = ({ heading }: PropsType) => {
   return (
-    <HomeContainerCard className="h-[25vh] border border-gray-300 rounded-3xl ml-4">
-      <div className="grid grid-cols-2">
-        <div>pie chart</div>
-        <div className="flex flex-col items-center ">
-          <div className="p-4 font-semibold text-xl">{heading}</div>
-          <div>
-            <div className="flex p-1">
-              <div className="pr-1">Logo</div>
-              <div className="pl-1 pr-8">WEFVWRFWE</div>
+    <HomeContainerCard className="h-auto md:h-[25vh] border border-gray-300 rounded-3xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="place-self-center">pie chart</div>
+        <div className="flex flex-col justify-center items-center ">
+          <div className="p-2 xl:p-4 font-semibold text-base md:text-xl">{heading}</div>
+          <div className="text-xs md:text-sm">
+            <div className="flex p-1 gap-4 items-center justify-between">
+              <div className="">Logo</div>
+              <div className="">WEFVWRFWE</div>
+              <div className="">2,000</div>
+            </div>
+            <div className="flex p-1 items-center justify-between">
+              <div className="">Logo</div>
+              <div className="">WEFVWRFWE</div>
               <div>2,000</div>
             </div>
-            <div className="flex p-1">
-              <div className="pr-1">Logo</div>
-              <div className="pl-1 pr-8">WEFVWRFWE</div>
-              <div>2,000</div>
-            </div>
-            <div className="flex p-1">
-              <div className="pr-1">Logo</div>
-              <div className="pl-1 pr-8">WEFVWRFWE</div>
+            <div className="flex p-1 items-center justify-between">
+              <div className="">Logo</div>
+              <div className="">WEFVWRFWE</div>
               <div>2,000</div>
             </div>
           </div>
@@ -33,4 +33,4 @@ const TotalRevenue = ({ heading }: PropsType) => {
   );
 };
 
-export default TotalRevenue;
+export default Total;

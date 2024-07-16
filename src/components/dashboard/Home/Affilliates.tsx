@@ -27,31 +27,27 @@ const Data = [
   },
 ];
 
-
-
 const Affilliates = () => {
   return (
-    <HomeContainerCard className="h-[55vh]">
-    <div className="grid grid-cols-2 gap-4 h-[55vh]">
+    <div className="grid grid-cols-2 gap-4">
       {Data.map((item) => (
-          <div className="border border-gray-300 rounded-2xl shadow-md">
-          <div className="flex p-2 px-8 items-center">
-            <div className="h-10 w-10 rounded-full bg-yellow-500"></div>
-            <p className="pl-6 ">{item.title}</p>
-          </div>
-          <div className="flex justify-center pl-4 text-[1.8rem] font-bold">
-            {item.count}
-          </div>
-          <div className="flex p-4 px-12 items-center">
-            <div className="text-xs  2xl:text-[0.7rem] px-1 py-1 bg-green-200 rounded-lg text-green-600">
-              +{item.percentage}
+        <HomeContainerCard  className="border border-gray-300 rounded-2xl shadow-md  h-[27vh]">
+            <div className="flex pt-4 justify-center items-center">
+              <div className="h-10 w-10 rounded-full bg-yellow-500"></div>
+              <p className="pl-6">{item.title}</p>
             </div>
-            <p className="text-xs pl-3">{item.days}</p>
-          </div>
-        </div>
+            <div className="flex justify-center items-center text-[1.8rem] font-bold">
+              {item.count}
+            </div>
+            <div className="flex xl:p-2 justify-center items-center">
+              <div className="text-xs sm:text-sm md:text-[0.7rem] lg:text-[0.7rem] px-1 py-1 bg-green-200 rounded-lg text-green-600">
+                +{item.percentage}
+              </div>
+              <p className="text-xs md:text-[0.8rem] lg:text-xs pl-3">{item.days}</p>
+            </div>
+        </HomeContainerCard>
       ))}
     </div>
-    </HomeContainerCard>
   );
 };
 

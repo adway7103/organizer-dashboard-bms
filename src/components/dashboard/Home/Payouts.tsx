@@ -2,7 +2,7 @@ import HomeContainerCard from "../HomeContainerCard";
 
 function Payouts() {
   return (
-    <HomeContainerCard className="h-[55vh] w-65 p-2 bg-gray-200">
+    <HomeContainerCard className="h-[55vh] w-auto p-2 bg-gray-200">
       <div className="flex gap-1 items-center p-4">
         <svg
           width="32"
@@ -32,8 +32,8 @@ function Payouts() {
         <div className="py-6 px-4">
           <p>Previous Payout</p>
           <div className="flex items-center gap-14 py-3">
-            <h1 className="text-[32px] 2xl:text-[2rem] font-semibold">$43,000</h1>
-            <span className="text-xs  2xl:text-[1rem] px-4 py-1 bg-green-300 rounded-md text-green-600">
+            <h1 className="text-[32px] lg:text-[2rem] font-semibold">$43,000</h1>
+            <span className="text-xs  lg:text-[1rem] px-3 py-1 bg-green-300 rounded-md text-green-600">
               paid
             </span>
           </div>
@@ -41,8 +41,8 @@ function Payouts() {
         
        <div className="px-4"> <p>Next Payout</p>
         <div className="flex items-center gap-8 py-3">
-          <h1 className="text-[32px] 2xl:text-[2rem] font-semibold">$43,000</h1>
-          <span className="text-xs 2xl:text-[1rem] p-1 bg-red-200 px-4 py-1 text-red-600 rounded-md">
+          <h1 className="text-[32px] lg:text-[2rem] font-semibold">$43,000</h1>
+          <span className="text-xs lg:text-[1rem] p-1 bg-red-200 px-3 py-1 text-red-600 rounded-md">
             pending
           </span>
         </div></div>
