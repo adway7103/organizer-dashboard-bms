@@ -230,7 +230,7 @@ export function FollowerTable() {
   });
 
   return (
-    <div className="m-6">
+    <div className="mt-6">
       <h3 className="text-2xl font-medium px-4">Followers List</h3>
       <div className="border border-gray-300 rounded-3xl px-6 mt-4">
         <div className="mt-4 flex w-full justify-between items-center p-2 px-4">
@@ -238,10 +238,10 @@ export function FollowerTable() {
             <Search className="absolute left-6 size-5 text-gray-400 pointer-events-none" />
             <input
               value={
-                (table.getColumn("name")?.getFilterValue() as string) ?? ""
+                (table.getColumn("fName")?.getFilterValue() as string) ?? ""
               }
               onChange={(event) =>
-                table.getColumn("name")?.setFilterValue(event.target.value)
+                table.getColumn("fName")?.setFilterValue(event.target.value)
               }
               className="!pl-14 !h-12 !rounded-full !bg-[#E6E6E682] max-w-sm w-80 py-3 pl-[20px] border-none"
               placeholder="Search"

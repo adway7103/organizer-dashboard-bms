@@ -27,7 +27,7 @@ import Message from "../Affiliates/Message";
 const data: Follower[] = [
   {
     id: "xueh0xpf",
-    activity:"?",
+    activity: "?",
     fName: "Sarah",
     lName: "Rodriguez",
     age: "20",
@@ -40,7 +40,7 @@ const data: Follower[] = [
   },
   {
     id: "atzmz950",
-    activity:"?",
+    activity: "?",
     fName: "Sarah",
     lName: "Rodriguez",
     age: "20",
@@ -53,7 +53,7 @@ const data: Follower[] = [
   },
   {
     id: "6nn1ww0c",
-    activity:"?",
+    activity: "?",
     fName: "Sarah",
     lName: "Rodriguez",
     age: "20",
@@ -66,7 +66,7 @@ const data: Follower[] = [
   },
   {
     id: "043gpwfr",
-    activity:"?",
+    activity: "?",
     fName: "Sarah",
     lName: "Rodriguez",
     age: "20",
@@ -79,7 +79,7 @@ const data: Follower[] = [
   },
   {
     id: "6skmearr",
-    activity:"?",
+    activity: "?",
     fName: "Sarah",
     lName: "Rodriguez",
     age: "20",
@@ -92,7 +92,7 @@ const data: Follower[] = [
   },
   {
     id: "xvmc7ya9",
-    activity:"?",
+    activity: "?",
     fName: "Sarah",
     lName: "Rodriguez",
     age: "20",
@@ -105,7 +105,7 @@ const data: Follower[] = [
   },
   {
     id: "q3hk0roa",
-    activity:"?",
+    activity: "?",
     fName: "Sarah",
     lName: "Rodriguez",
     age: "20",
@@ -118,7 +118,7 @@ const data: Follower[] = [
   },
   {
     id: "4dd5ykmx",
-    activity:"?",
+    activity: "?",
     fName: "Sarah",
     lName: "Rodriguez",
     age: "20",
@@ -131,7 +131,7 @@ const data: Follower[] = [
   },
   {
     id: "07yjag41",
-    activity:"?",
+    activity: "?",
     fName: "Sarah",
     lName: "Rodriguez",
     age: "20",
@@ -144,7 +144,7 @@ const data: Follower[] = [
   },
   {
     id: "4nnd81pn",
-    activity:"?",
+    activity: "?",
     fName: "Sarah",
     lName: "Rodriguez",
     age: "20",
@@ -274,7 +274,7 @@ export function CustomerTable() {
   });
 
   return (
-    <div className="m-6">
+    <div className="mt-6">
       <h3 className="text-2xl font-medium px-4">Customers List</h3>
       <div className="border border-gray-300 rounded-3xl px-6 mt-4">
         <div className="mt-4 flex w-full justify-between items-center p-2 px-4">
@@ -282,10 +282,10 @@ export function CustomerTable() {
             <Search className="absolute left-6 size-5 text-gray-400 pointer-events-none" />
             <input
               value={
-                (table.getColumn("name")?.getFilterValue() as string) ?? ""
+                (table.getColumn("fName")?.getFilterValue() as string) ?? ""
               }
               onChange={(event) =>
-                table.getColumn("name")?.setFilterValue(event.target.value)
+                table.getColumn("fName")?.setFilterValue(event.target.value)
               }
               className="!pl-14 !h-12 !rounded-full !bg-[#E6E6E682] max-w-sm w-80 py-3 pl-[20px] border-none"
               placeholder="Search"
