@@ -5,8 +5,10 @@ import { CustomerTable } from "./Customers/CustomerTable";
 
 const CustomerHome = () => {
   return (
-    <div>
-      <div className="grid grid-cols-5 gap-4">
+    <div className="ml-8">
+      <h1 className="font-semibold text-[2rem] pl-4">Customers</h1>
+
+      <div className="grid grid-cols-5 gap-4 my-3">
         <div className="col-span-1">
           <div>
             <CountCard heading={"Customers"} count={"5000"} />
