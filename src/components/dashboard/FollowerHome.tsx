@@ -1,6 +1,7 @@
 import CountCard from "./Affiliates/CountCard";
 import TextBlast from "./Affiliates/TextBlast";
 import FollowerChart from "./Followers/FollowerChart";
+import FollowerPieChart from "./Followers/FollowerPieChart";
 import { FollowerTable } from "./Followers/FollowerTable";
 
 const FollowerHome = () => {
@@ -19,8 +20,8 @@ const FollowerHome = () => {
         <div className="col-span-2">
           <FollowerChart />
         </div>
-        <div className="col-span-1">pie chart</div>
-        <div className="col-span-1">pie chart</div>
+        <div className="col-span-1"><FollowerPieChart heading={"Attendees By Gender"}/></div>
+        <div className="col-span-1"><FollowerPieChart heading={"Attendees By Age"}/></div>
       </div>
       <FollowerTable />
     </div>
