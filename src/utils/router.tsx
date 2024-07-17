@@ -16,6 +16,8 @@ import CE_Page2 from "../pages/CreateEvent/CE_Page2";
 import Profile from "../pages/Profile/Profile";
 import EditProfile from "../pages/Profile/EditProfile";
 import MessagingHome from "../components/dashboard/MessagingHome";
+import Signup from "../components/auth/Signup";
+import Login from "../components/auth/Login";
 
 export const router = createBrowserRouter([
   {
@@ -94,5 +96,13 @@ export const router = createBrowserRouter([
         element: <Error />,
       },
     ],
+  },
+  {
+    path: "/signup",
+    element: <Signup />, // Standalone login page
+  },
+  {
+    path: "/login",
+    element: <Login />, // Standalone login page
   },
 ]);
