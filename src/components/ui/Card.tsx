@@ -32,7 +32,7 @@ interface CardDescription {
 }
 
 export const Card: React.FC<Card> = ({ children, className = "" }) => (
-  <div className={`bg-white shadow-md rounded-3xl ${className}`}>
+  <div className={`rounded-3xl ${className}`}>
     {children}
   </div>
 );
