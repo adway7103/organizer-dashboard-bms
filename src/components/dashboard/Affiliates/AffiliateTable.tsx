@@ -206,10 +206,10 @@ export function AffiliateTable() {
   });
 
   return (
-    <div className=" mt-6">
+    <div className="mt-6">
       <h3 className="text-2xl font-medium px-4">Affiliates List</h3>
       <div className="border border-gray-300 rounded-3xl px-6 mt-4">
-      <div className="mt-4 flex flex-col sm:flex-row justify-between items-center p-2 px-4 gap-4 sm:gap-0">
+        <div className="mt-4 flex flex-col sm:flex-row justify-between items-center p-2 px-4 gap-4 sm:gap-0">
           <div className="relative flex items-center w-full sm:w-auto">
             <Search className="absolute left-4 text-gray-400 pointer-events-none" />
             <input

@@ -121,26 +121,26 @@ export function TableP() {
   });
 
   return (
-    <div className="mt-10 mr-12">
+    <div className="mt-10">
       <div className="flex justify-between ">
         <h3 className="text-2xl font-semibold pl-4">Payouts List</h3>
         <Link
           to="/payouts/payment-details"
-          className="text-base px-4 bg-yellow-600 border-none rounded-full p-2 text-center font-medium w-48"
+          className="text-base px-4 bg-yellow-600 border-none rounded-full p-2 text-center font-medium w-48 place-self-center"
         >
           Payment Details
         </Link>
       </div>
       <div className="border border-gray-300 rounded-3xl lg:px-6 mt-4">
-        <div className="mt-4 flex flex-col sm:flex-row justify-between items-center p-2 px-4 gap-4 sm:gap-0">
+      <div className="mt-4 flex flex-col sm:flex-row justify-between items-center p-2 px-4 gap-4 sm:gap-0">
           <div className="relative flex items-center w-full sm:w-auto">
             <Search className="absolute left-4 text-gray-400 pointer-events-none" />
             <input
               value={
-                (table.getColumn("eventName")?.getFilterValue() as string) ?? ""
+                (table.getColumn("fName")?.getFilterValue() as string) ?? ""
               }
               onChange={(event) =>
-                table.getColumn("eventName")?.setFilterValue(event.target.value)
+                table.getColumn("fName")?.setFilterValue(event.target.value)
               }
               className="w-full sm:w-auto !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm lg:w-80"
               placeholder="Search"
