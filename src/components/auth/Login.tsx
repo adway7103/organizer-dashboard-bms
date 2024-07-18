@@ -33,12 +33,16 @@ const Login = () => {
     };
     try {
       const response = await useLogin(userData);
-      console.log("Signup successful:", response);
-      const  token  = response.data.accessToken;
+      if (process.env.NODE_ENV === "development") {
+        console.log("Signup successful:", response);
+      }
+      const token = response.data.accessToken;
       login(token);
       navigate("/");
     } catch (error) {
-      console.error("Signup failed:", error);
+      if (process.env.NODE_ENV === "development") {
+        console.error("Signup failed:", error);
+      }
     }
   };
 
