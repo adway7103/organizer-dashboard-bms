@@ -18,6 +18,8 @@ import EditProfile from "../pages/Profile/EditProfile";
 import MessagingHome from "../components/dashboard/MessagingHome";
 import Signup from "../components/auth/Signup";
 import Login from "../components/auth/Login";
+import ProtectedRoute from "./ProtectedRoutes";
+import PublicRoute from "./PublicRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -25,84 +27,103 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/create-events",
-        element: <CreateEvent />,
+        path: "/",
+        element: <ProtectedRoute />, // Protected routes start here
         children: [
           {
-            path: "",
-            element: <CE_Page1 />,
+            path: "/create-events",
+            element: <CreateEvent />,
+            children: [
+              {
+                path: "",
+                element: <CE_Page1 />,
+              },
+              {
+                path: "/create-events/2",
+                element: <CE_Page2 />,
+              },
+            ],
           },
           {
-            path: "/create-events/2",
-            element: <CE_Page2 />,
+            path: "/ind-tickets",
+            element: <Individual />,
+          },
+          {
+            path: "/group-tickets",
+            element: <Groups />,
+          },
+          {
+            path: "/table-tickets",
+            element: <Table />,
+          },
+          {
+            path: "/dashboard",
+            element: <Home />,
+          },
+          {
+            path: "/payouts",
+            element: <PayoutHome />,
+          },
+          {
+            path: "/payouts/payment-details",
+            element: <PaymentDetails />,
+          },
+          {
+            path: "/affiliate",
+            element: <AffiliateHome />,
+          },
+          {
+            path: "/followers",
+            element: <FollowerHome />,
+          },
+          {
+            path: "/customers",
+            element: <CustomerHome />,
+          },
+          {
+            path: "/profile",
+            children: [
+              {
+                path: "",
+                element: <Profile />,
+              },
+              {
+                path: "/profile/edit",
+                element: <EditProfile />,
+              },
+            ],
+          },
+          {
+            path: "/messaging",
+            element: <MessagingHome />,
+          },
+          {
+            path: "*",
+            element: <Error />,
           },
         ],
       },
+    ],
+  },
+
+  {
+    path: "/login/*",
+    element: <PublicRoute />, // Public routes start here
+    children: [
       {
-        path: "/ind-tickets",
-        element: <Individual />,
-      },
-      {
-        path: "/group-tickets",
-        element: <Groups />,
-      },
-      {
-        path: "/table-tickets",
-        element: <Table />,
-      },
-      {
-        path: "/dashboard",
-        element: <Home />,
-      },
-      {
-        path: "/payouts",
-        element: <PayoutHome />,
-      },
-      {
-        path: "/payouts/payment-details",
-        element: <PaymentDetails />,
-      },
-      {
-        path: "/affiliate",
-        element: <AffiliateHome />,
-      },
-      {
-        path: "/followers",
-        element: <FollowerHome />,
-      },
-      {
-        path: "/customers",
-        element: <CustomerHome />,
-      },
-      {
-        path: "/profile",
-        children: [
-          {
-            path: "",
-            element: <Profile />,
-          },
-          {
-            path: "/profile/edit",
-            element: <EditProfile />,
-          },
-        ],
-      },
-      {
-        path: "/messaging",
-        element: <MessagingHome />,
-      },
-      {
-        path: "*",
-        element: <Error />,
+        path: "",
+        element: <Login />,
       },
     ],
   },
   {
-    path: "/signup",
-    element: <Signup />, // Standalone login page
-  },
-  {
-    path: "/login",
-    element: <Login />, // Standalone login page
+    path: "/signup/*",
+    element: <PublicRoute />, // Public routes start here
+    children: [
+      {
+        path: "",
+        element: <Signup />,
+      },
+    ],
   },
 ]);

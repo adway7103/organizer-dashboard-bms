@@ -1,7 +1,6 @@
 // AuthContext.tsx
 
 import { createContext, useState, useContext, useEffect, ReactNode } from 'react';
-import Cookies from 'js-cookie';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -12,25 +11,30 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!Cookies.get('authToken'));
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!localStorage.getItem('accessToken'));
 
-  useEffect(() => {
-    const token = Cookies.get('accessToken');
-    if (token) {
-      setIsAuthenticated(true);
-    }
+  console.log(isAuthenticated)
+ useEffect(() => {
+    const handleStorageChange = () => {
+      const token = localStorage.getItem('accessToken');
+      setIsAuthenticated(!!token);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   const login = (token: string) => {
-    Cookies.set('accessToken', token, { expires: 7 }); // Store token in cookies for 7 days
+    localStorage.setItem('accessToken', token);
     setIsAuthenticated(true);
-    window.location.href = '/';
   };
 
   const logout = () => {
-    Cookies.remove('accessToken');
+    localStorage.removeItem('accessToken');
     setIsAuthenticated(false);
-    window.location.href = '/login';
   };
 
   return (

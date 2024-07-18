@@ -2,11 +2,13 @@ import { useLogin } from "../../api/authApi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../Contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   // const {root:{auth}} = useStore();
   const handleInputChange = (event: any) => {
@@ -32,9 +34,9 @@ const Login = () => {
     try {
       const response = await useLogin(userData);
       console.log("Signup successful:", response);
-      const { token } = response; // Assuming your API returns a token in the response
-
+      const  token  = response.data.accessToken;
       login(token);
+      navigate("/");
     } catch (error) {
       console.error("Signup failed:", error);
     }
