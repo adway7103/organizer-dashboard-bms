@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -38,72 +39,84 @@ const Login = () => {
       }
       const token = response.data.accessToken;
       login(token);
+      toast.success("Login successful!");
       navigate("/");
     } catch (error) {
       if (process.env.NODE_ENV === "development") {
         console.error("Signup failed:", error);
       }
+      toast.error("Login failed. Please check your credentials and try again.");
     }
   };
 
   return (
     <>
-      <div className="md:flex">
-        <div className="h-screen">
-          <div className="py-[7vh] 2xl:py-[12vh] px-[10vw] h-full md:w-[54vw]">
-            <form
-              onSubmit={handleSubmit}
-              className="h-full p-4 flex flex-col justify-around"
-            >
-              <div className="flex flex-col gap-2">
-                <h1 className="text-3xl font-bold">Log In</h1>
-              </div>
-
-              <div className="">
-                <input
-                  type="email"
-                  name="email"
-                  value={email}
-                  placeholder="Email Address"
-                  id="email"
-                  className="w-full"
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <div className="">
-                <input
-                  type="password"
-                  value={password}
-                  placeholder="Password"
-                  name="password"
-                  id="password"
-                  className="w-full"
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="bg-black text-white font-bold py-2 px-4 rounded"
+      <div className="flex">
+        <div className="p-4 pl-8 md:w-[54vw]">
+          <img
+            src="/OrganizerLogin.png"
+            alt=""
+            className="h-screen md:w-[54vw]"
+          />
+        </div>
+        <div className="md:flex">
+          <div className="h-screen">
+            <div className="py-[7vh] 2xl:py-[16vh] px-[4vw] h-full md:w-[54vw]">
+              <form
+                onSubmit={handleSubmit}
+                className="h-full p-4 flex flex-col justify-around"
               >
-                Continue
-              </button>
+                <div className="flex flex-col gap-2">
+                  <h1 className="text-3xl font-bold">Log In</h1>
+                </div>
 
-              <p>
-                Didn't have an account?{" "}
-                <span className="underline">
-                  <Link to={"/signup"}>signup</Link>
-                </span>
-              </p>
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    value={email}
+                    placeholder="Email Address"
+                    id="email"
+                    className="w-full py-2 px-1 border border-white rounded focus:border-[#000000] focus:outline-none"
+                    onChange={handleInputChange}
+                  />
+                </div>
 
-              <div className="flex flex-col gap-1">
-                <div className="h-[2px] bg-black"></div>
-                <p className="text-center text-sm">
-                  By registering, you agree to FIXIR's T&Cs and Privacy Policy.
+                <div>
+                  <input
+                    type="password"
+                    value={password}
+                    placeholder="Password"
+                    name="password"
+                    id="password"
+                    className="w-full py-2 px-1 border border-white rounded focus:border-[#000000] focus:outline-none"
+                    onChange={handleInputChange}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="bg-black text-white font-bold py-2 px-4 rounded"
+                >
+                  Continue
+                </button>
+
+                <p className="text-center">
+                  Didn't have an account?
+                  <span className="underline pl-2">
+                    <Link to={"/signup"}>signup</Link>
+                  </span>
                 </p>
-              </div>
-            </form>
+
+                <div className="flex flex-col gap-1">
+                  <div className="h-[2px] bg-black"></div>
+                  <p className="text-center text-sm">
+                    By registering, you agree to FIXIR's T&Cs and Privacy
+                    Policy.
+                  </p>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>

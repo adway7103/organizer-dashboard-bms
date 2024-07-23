@@ -20,6 +20,8 @@ import Signup from "../components/auth/Signup";
 import Login from "../components/auth/Login";
 import ProtectedRoute from "./ProtectedRoutes";
 import PublicRoute from "./PublicRoutes";
+import Logout from "../components/auth/Logout";
+import { EventHome } from "../components/dashboard/EventHome";
 
 export const router = createBrowserRouter([
   {
@@ -96,6 +98,14 @@ export const router = createBrowserRouter([
           {
             path: "/messaging",
             element: <MessagingHome />,
+          },
+          {
+            path: "/events",
+            element: <EventHome />,
+          },
+          {
+            path: "/logout",
+            element: <Logout />,
           },
           {
             path: "*",
