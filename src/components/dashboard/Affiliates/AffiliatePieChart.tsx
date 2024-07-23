@@ -19,7 +19,7 @@ export function AffiliatePieChart() {
   }, []);
 
   return (
-    <Card className="md:grid md:grid-cols-2 lg:grid-cols-1 xl:h-[25vh] bg-transparent shadow-none rounded ">
+    <Card className="h-auto bg-transparent shadow-none rounded">
       <div className="sm:col-span-1">
         <CardContent className="flex-1 pb-0">
           <div className="mx-auto aspect-square  xl:w-full xl:h-full">
@@ -29,8 +29,8 @@ export function AffiliatePieChart() {
                 data={chartData}
                 dataKey="visitors"
                 nameKey="browser"
-                innerRadius={50}
-                outerRadius={60}
+                innerRadius={60}
+                outerRadius={70}
                 strokeWidth={5}
               >
                 <Label
