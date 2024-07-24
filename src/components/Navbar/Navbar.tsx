@@ -1,29 +1,49 @@
 import { Link } from "react-router-dom";
-const Navbar = () => {
+const Navbar = ({ toggleSidebar }: any) => {
   return (
-    <nav className="fixed left-0 w-full z-50 flex items-center justify-between pl-5 pr-7 py-3 bg-white">
+    <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between pl-5 pr-7 py-3 bg-white min-w-[300px]">
+      <div onClick={toggleSidebar} className="block sm:hidden">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="size-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
+          />
+        </svg>
+      </div>
       <div className="flex items-center">
         <Link to="/">
           <img
             src="/logo.png"
             alt="Organizer Logo"
-            className="w-10 h-10 mr-4 rounded-full"
+            className="w-10 h-10 mr-4 rounded-full hidden sm:block"
           />
         </Link>
-        <span className="text-xl text-black font-semibold">ORGANIZER</span>
+        <span className="text-xl text-black font-semibold hidden sm:block">
+          ORGANIZER
+        </span>
       </div>
       <div className="hidden md:flex items-center space-x-4">
         <img src="/Group.png" />
         <button
           type="button"
-          className="inline-flex items-center px-4 py-1 border border-gray-600 rounded-2xl hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
+          className="inline-flex items-center px-4 py-1 border border-gray-600 rounded-2xl hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+        >
           <img src="/user.png" className="pr-2" />
           profile
         </button>
         <div className="relative">
           <Link
             to="/create-events"
-            className="btn inline-flex items-center px-4 py-1 text-white  rounded-2xl hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
+            className="btn inline-flex items-center px-4 py-1 text-white  rounded-2xl hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+          >
             CREATE EVENT
           </Link>
         </div>
@@ -31,7 +51,8 @@ const Navbar = () => {
       <div className="md:hidden flex items-center space-x-2">
         <Link
           to="/create-events"
-          className="btn inline-flex items-center px-4 py-1 text-white  rounded-2xl hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
+          className="btn inline-flex items-center px-4 py-1 text-white  rounded-2xl hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+        >
           CREATE EVENT
         </Link>
       </div>
