@@ -2,6 +2,7 @@ import { Search } from "lucide-react";
 import EventCard from "../Events/EventCard";
 import { useState } from "react";
 import { MenuItem, Select } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface EventData {
   image: string;
@@ -48,6 +49,11 @@ const events: EventData[] = [
 
 const EventGrid = () => {
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+  const handleEventClick = () => {
+    navigate("event-overview");
+  };
   return (
     <div>
       <h1 className="text-3xl font-semibold mt-10 px-4">Event list</h1>
@@ -57,7 +63,7 @@ const EventGrid = () => {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="min-w-[280px] !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="min-w-[300px] sm:w-[300px] !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Search"
           />
         </div>
@@ -91,6 +97,7 @@ const EventGrid = () => {
             date={i.date}
             revenue={i.revenue}
             ticketsSold={i.ticketsSold}
+            onClick={() => handleEventClick()}
           />
         ))}
       </div>

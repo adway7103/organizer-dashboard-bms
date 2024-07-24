@@ -5,6 +5,7 @@ interface EventCardProps {
   date: string;
   revenue: string;
   ticketsSold: string;
+  onClick: () => void;
 }
 
 const EventCard = ({
@@ -14,14 +15,17 @@ const EventCard = ({
   date,
   revenue,
   ticketsSold,
+  onClick,
 }: EventCardProps) => {
   return (
-    <div className="flex flex-col md:flex-row items-center md:items-start border rounded-3xl p-4 space-x-0 md:space-x-6 min-w-[300px] md:w-[565px]">
+    <div  onClick={onClick} className="flex flex-col md:flex-row items-center md:items-start border rounded-3xl p-4 space-x-0 md:space-x-6 min-w-[300px] sm:w-[300px] md:w-[565px] cursor-pointer">
       <div>
         <img src={image} alt="" className="h-[230px] w-[230px]" />
       </div>
       <div className="">
-        <h1 className="text-3xl font-semibold text-[#a28a02] text-center md:text-start">Rhythms Live</h1>
+        <h1 className="text-3xl font-semibold text-[#a28a02] text-center md:text-start">
+          Rhythms Live
+        </h1>
         <div className="flex text-[#787878] space-x-4 text-sm mt-1 justify-center md:justify-start ">
           <div className="flex">
             <div className="pr-1">
