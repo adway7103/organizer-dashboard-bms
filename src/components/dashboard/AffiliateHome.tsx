@@ -7,7 +7,7 @@ import CountCard from "./Affiliates/CountCard";
 
 const AffiliateHome = () => {
   return (
-<div className='ml-8 mr-16 min-w-[300px]'>
+    <div className="sm:ml-8 sm:mr-16 min-w-[300px]">
       <h2 className="font-semibold text-[2rem] px-4">Affiliates</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full h-auto my-3 pr-7">
         <div className="col-span-1 grid grid-cols-9 gap-4">
@@ -26,11 +26,13 @@ const AffiliateHome = () => {
         <div className="col-span-1">
           <AffiliateChart />
         </div>
-        <div className="col-span-1">
-          <Total heading={"Total Revenue"}/>
-        </div>
-        <div className="col-span-1">
-          <Total heading={"Total tickets sold"}/>
+        <div className="sm:flex gap-8 lg:col-span-2">
+          <div className="lg:col-span-1 mb-8 sm:mb-0">
+            <Total heading={"Total Revenue"} />
+          </div>
+          <div className="lg:col-span-1">
+            <Total heading={"Total tickets sold"} />
+          </div>
         </div>
       </div>
       <div className="h-auto lg:h-[calc(100vh-200px)]">
@@ -38,6 +40,5 @@ const AffiliateHome = () => {
       </div>
     </div>
   );
-};
-
+}; 
 export default AffiliateHome;

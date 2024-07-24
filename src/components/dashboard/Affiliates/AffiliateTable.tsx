@@ -1,4 +1,6 @@
 import * as React from "react";
+import Vector from "../../../../public/affiliates/Vector.png";
+
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -22,7 +24,6 @@ import {
   TableRow,
 } from "../../ui/Table";
 import { MenuItem, Select } from "@mui/material";
-import Message from "./Message";
 
 const data: Follower[] = [
   {
@@ -168,8 +169,9 @@ export const columns: ColumnDef<Follower>[] = [
     accessorKey: "*",
     header: "",
     cell: () => (
-      <div>
-        <Message />
+      <div className="flex">
+        <span className="pr-2">Message</span>
+        <img src={Vector} alt="" />
       </div>
     ),
   },
@@ -208,7 +210,7 @@ export function AffiliateTable() {
   return (
     <div className="mt-6">
       <h3 className="text-2xl font-medium px-4">Affiliates List</h3>
-      <div className="border border-gray-300 rounded-3xl px-1 lg:px-6 mt-4">
+      <div className="border border-gray-300 rounded-3xl mt-4">
         <div className="mt-4 flex flex-col sm:flex-row justify-between items-center lg:p-2 lg:px-4 gap-4 sm:gap-0">
           <div className="relative flex items-center w-full sm:w-auto">
             <Search className="absolute left-4 text-gray-400 pointer-events-none" />

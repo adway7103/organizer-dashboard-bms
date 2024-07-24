@@ -1,4 +1,5 @@
 import HomeContainerCard from "../HomeContainerCard";
+import img from "../../../../public/affiliates/count.png";
 
 interface CountCardType {
   heading: string;
@@ -7,15 +8,19 @@ interface CountCardType {
 
 const CountCard = ({ heading, count }: CountCardType) => {
   return (
-    <HomeContainerCard className="h-[22vh] shadow-none border border-gray-300 rounded-3xl">
-      <div className="py-5 m-4">
-        <div className="flex px-5 items-center">
-          <div className="h-10 w-10 rounded-full bg-yellow-500 "></div>
-          <p className=" font-semibold text-xl pl-2">{heading}</p>
+    <HomeContainerCard className="h-[14vh] sm:h-[22vh] shadow-none border border-gray-300 rounded-3xl sm:flex justify-center sm:items-center">
+      <div className="flex flex-row justify-around items-center sm:flex-col sm:justify-center sm:items-center gap-y-2">
+        <div className="flex justify-center gap-x-4 items-center sm:gap-x-2">
+          <div>
+            <img
+              src={img}
+              alt=""
+              className="border border-black rounded-full bg-[#d8d8d8] p-1"
+            />
+          </div>
+          <div className="font-semibold text-xl">{heading}</div>
         </div>
-        <div className="flex justify-center text-[2rem] font-bold ">
-          {count}
-        </div>
+        <div className="text-[2rem] font-bold ">{count}</div>
       </div>
     </HomeContainerCard>
   );
