@@ -77,7 +77,7 @@ const Login = () => {
                     value={email}
                     placeholder="Email Address"
                     id="email"
-                    className="w-full py-2 px-1 border border-white rounded focus:border-[#000000] focus:outline-none"
+                    className="w-full py-2 px-1 border border-[#000000]"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -89,7 +89,7 @@ const Login = () => {
                     placeholder="Password"
                     name="password"
                     id="password"
-                    className="w-full py-2 px-1 border border-white rounded focus:border-[#000000] focus:outline-none"
+                    className="w-full py-2 px-1 rounded border border-[#000000]"
                     onChange={handleInputChange}
                   />
                 </div>

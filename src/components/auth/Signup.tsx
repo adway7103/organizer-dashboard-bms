@@ -93,7 +93,7 @@ const Signup = () => {
                       id="firstName"
                       value={firstName}
                       placeholder="First name"
-                      className="w-full py-2 px-1 border border-white rounded border-b focus:border-[#000000] focus:outline-none"
+                      className="w-full py-2 px-1 border border-[#000000] rounded"
                       onChange={handleInputChange}
                     />
                   </div>
@@ -104,7 +104,7 @@ const Signup = () => {
                       id="lastName"
                       placeholder="Last name"
                       value={lastName}
-                      className="w-full py-2 px-1 border border-white rounded focus:border-[#000000] focus:outline-none"
+                      className="w-full py-2 px-1 border border-[#000000] rounded"
                       onChange={handleInputChange}
                     />
                   </div>
@@ -139,7 +139,7 @@ const Signup = () => {
                       id="phone"
                       value={phone}
                       placeholder="Phone"
-                      className="w-full py-2 px-1 border border-white rounded focus:border-[#000000] focus:outline-none"
+                      className="w-full py-2 px-1 border border-[#000000] rounded"
                       onChange={handleInputChange}
                     />
                   </div>
@@ -151,7 +151,7 @@ const Signup = () => {
                       value={email}
                       placeholder="Email Address"
                       id="email"
-                      className="w-full py-2 px-1 border border-white rounded focus:border-[#000000] focus:outline-none"
+                      className="w-full py-2 px-1 border border-[#000000] rounded"
                       onChange={handleInputChange}
                     />
                   </div>
@@ -163,7 +163,7 @@ const Signup = () => {
                       placeholder="Password"
                       name="password"
                       id="password"
-                      className="w-full py-2 px-1 border border-white rounded focus:border-[#000000] focus:outline-none"
+                      className="w-full py-2 px-1 border border-[#000000] rounded"
                       onChange={handleInputChange}
                     />
                   </div>
