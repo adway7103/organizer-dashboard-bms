@@ -66,7 +66,7 @@ const Signup = () => {
   return (
     <>
       <div className="flex">
-        <div className="p-4 pl-8 md:w-[54vw]">
+        <div className="p-4 pl-8 md:w-[54vw] hidden md:block">
           <img
             src="/OrganizerLogin.png"
             alt=""
@@ -93,7 +93,7 @@ const Signup = () => {
                       id="firstName"
                       value={firstName}
                       placeholder="First name"
-                      className="w-full py-2 px-1 border border-white rounded focus:border-[#000000] focus:outline-none"
+                      className="w-full py-2 px-1 border border-white rounded border-b focus:border-[#000000] focus:outline-none"
                       onChange={handleInputChange}
                     />
                   </div>

@@ -52,7 +52,7 @@ const Login = () => {
   return (
     <>
       <div className="flex">
-        <div className="p-4 pl-8 md:w-[54vw]">
+        <div className="p-4 pl-8 md:w-[54vw] hidden md:block">
           <img
             src="/OrganizerLogin.png"
             alt=""
