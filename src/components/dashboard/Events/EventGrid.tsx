@@ -63,7 +63,7 @@ const EventGrid = () => {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="min-w-[300px] sm:w-[300px] !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="min-w-[300px] w-full  mr-8 sm:mr-0 sm:w-[300px] !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Search"
           />
         </div>

@@ -18,7 +18,7 @@ const EventCard = ({
   onClick,
 }: EventCardProps) => {
   return (
-    <div  onClick={onClick} className="flex flex-col md:flex-row items-center md:items-start border rounded-3xl p-4 space-x-0 md:space-x-6 min-w-[300px] sm:w-[300px] md:w-[565px] cursor-pointer">
+    <div  onClick={onClick} className="flex flex-col md:flex-row items-center md:items-start border rounded-3xl p-4 space-x-0 md:space-x-6 min-w-[300px] w-full sm:w-[300px] md:w-[565px] mr-8 sm:mr-0 cursor-pointer">
       <div>
         <img src={image} alt="" className="h-[230px] w-[230px]" />
       </div>
