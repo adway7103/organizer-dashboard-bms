@@ -48,20 +48,21 @@ const Register = () => {
     const missingFields = [];
     if (!firstName) missingFields.push("First Name");
     if (!lastName) missingFields.push("Last Name");
-    if (!gender) missingFields.push("Gender");
     if (!phone) missingFields.push("Phone");
     if (!email) missingFields.push("Email");
     if (!password) missingFields.push("Password");
 
-    if (missingFields.length > 0 && missingFields.length < 5) {
-      setError(
-        `${missingFields.join(", ")} ${
-          missingFields.length > 1 ? "are" : "is"
-        } required`
-      );
+    if (missingFields.length > 0) {
+      if (missingFields.length === 5) {
+        setError("All fields are required");
+      } else {
+        setError(
+          `${missingFields.join(", ")} ${
+            missingFields.length > 1 ? "are" : "is"
+          } required`
+        );
+      }
       return;
-    } else {
-      setError("All field are required");
     }
 
     try {
