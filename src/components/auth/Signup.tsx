@@ -45,6 +45,19 @@ const Register = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    const missingFields = [];
+    if (!firstName) missingFields.push('First Name');
+    if (!lastName) missingFields.push('Last Name');
+    if (!gender) missingFields.push('Gender');
+    if (!phone) missingFields.push('Phone');
+    if (!email) missingFields.push('Email');
+    if (!password) missingFields.push('Password');
+
+    if (missingFields.length > 0) {
+      setError(`${missingFields.join(', ')} ${missingFields.length > 1 ? 'are' : 'is'} required`);
+      return;
+    }
+
     try {
       setLoading(true);
       await useSignUp({
@@ -62,6 +75,10 @@ const Register = () => {
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
         setError("Signup failed. Please try again.");
+      } else if (error.response.status === 409) {
+        setError(
+          "Email or phone number already in use. Please try again with a different one."
+        );
       } else {
         console.error("signup error:", error);
       }
