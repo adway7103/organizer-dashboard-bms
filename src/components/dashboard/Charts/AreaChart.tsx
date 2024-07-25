@@ -15,7 +15,7 @@ type AreaChartHomeTypes = {
 };
 function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
   return (
-    <HomeContainerCard className="h-full col-span-2 md:col-span-1 border border-gray-300 rounded-3xl p-4 h-[55vh]">
+    <HomeContainerCard className="h-full col-span-2 md:col-span-1 border border-gray-300 rounded-3xl p-4 xl:h-[55vh]">
       <div className="flex gap-1 items-center">
         <svg
           width="32"

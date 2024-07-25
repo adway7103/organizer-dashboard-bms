@@ -16,21 +16,18 @@ const chartData = [
   { browser: "other", visitors: 4190, fill: "#800080" },
 ];
 
-export function PieChartComponent() {
-  
+export function AffiliatePieChart() {
   const totalVisitors = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
   }, []);
 
   return (
-    <Card className="sm:grid sm:grid-cols-2 lg:grid-cols-1 xl:h-[55vh] border border-gray-300">
+    <Card className="h-[55vh] bg-transparent shadow-none rounded border border-gray-300 flex flex-col justify-center items-center">
       <div className="sm:col-span-1">
-        <CardHeader className="text-center">
-          <CardTitle>Revenue by Event</CardTitle>
-        </CardHeader>
-        <CardContent className="flex-1 pb-0">
-          <div className="mx-auto aspect-square  xl:w-full xl:h-full">
-            <PieChart width={220} height={200}>
+        <div className="text-center font-semibold text-xl">Revenue by Event</div>
+        <CardContent className="">
+          <div className="mx-auto aspect-square flex justidy-center items-center">
+            <PieChart width={180} height={160}>
               <Tooltip cursor={false} />
               <Pie
                 data={chartData}
@@ -53,7 +50,7 @@ export function PieChartComponent() {
                           <tspan
                             x={viewBox.cx}
                             y={viewBox.cy}
-                            className="fill-foreground text-3xl font-bold"
+                            className="text-2xl font-bold"
                           >
                             {totalVisitors.toLocaleString()}
                           </tspan>
@@ -68,21 +65,19 @@ export function PieChartComponent() {
         </CardContent>
       </div>
       <div>
-        <CardFooter className="flex-col text-sm">
-          <div className="flex p-1 items-center justify-between">
-            <div className="">Logo</div>
-            <div className="">WEFVWRFWE</div>
-            <div className="">2,000</div>
-          </div>
-          <div className="flex p-1 items-center justify-between">
-            <div className="">Logo</div>
-            <div className="">WEFVWRFWE</div>
-            <div className="">2,000</div>
-          </div>
-        </CardFooter>
+        <div className="flex p-1 items-center justify-between space-x-4">
+          <div className="">Logo</div>
+          <div className="">WEFVWRFWE</div>
+          <div className="">2,000</div>
+        </div>
+        <div className="flex p-1 items-center justify-between">
+          <div className="">Logo</div>
+          <div className="">WEFVWRFWE</div>
+          <div className="">2,000</div>
+        </div>
       </div>
     </Card>
   );
 }
 
-export default PieChartComponent;
+export default AffiliatePieChart;
