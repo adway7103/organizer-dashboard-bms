@@ -13,7 +13,7 @@ const AffiliateChart = () => {
   
   ];
   return (
-    <HomeContainerCard className="h-[60vh] sm:h-[34vh] shadow-none min-w-[300px] w-full">
+    <HomeContainerCard className="h-[34vh] shadow-none min-w-[300px] w-full">
       <AreaChartHome data={dummyData} heading="Affilates"/>
     </HomeContainerCard>
   );

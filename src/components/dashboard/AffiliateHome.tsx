@@ -40,5 +40,5 @@ const AffiliateHome = () => {
       </div>
     </div>
   );
-}; 
+};
 export default AffiliateHome;
