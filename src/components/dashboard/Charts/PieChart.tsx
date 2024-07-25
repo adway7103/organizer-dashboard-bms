@@ -4,9 +4,6 @@ import { Label, Pie, PieChart, Tooltip } from "recharts";
 import {
   Card,
   CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "../../ui/Card";
 
 const chartData = [
