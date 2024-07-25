@@ -46,16 +46,22 @@ const Register = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const missingFields = [];
-    if (!firstName) missingFields.push('First Name');
-    if (!lastName) missingFields.push('Last Name');
-    if (!gender) missingFields.push('Gender');
-    if (!phone) missingFields.push('Phone');
-    if (!email) missingFields.push('Email');
-    if (!password) missingFields.push('Password');
+    if (!firstName) missingFields.push("First Name");
+    if (!lastName) missingFields.push("Last Name");
+    if (!gender) missingFields.push("Gender");
+    if (!phone) missingFields.push("Phone");
+    if (!email) missingFields.push("Email");
+    if (!password) missingFields.push("Password");
 
-    if (missingFields.length > 0) {
-      setError(`${missingFields.join(', ')} ${missingFields.length > 1 ? 'are' : 'is'} required`);
+    if (missingFields.length > 0 && missingFields.length < 5) {
+      setError(
+        `${missingFields.join(", ")} ${
+          missingFields.length > 1 ? "are" : "is"
+        } required`
+      );
       return;
+    } else {
+      setError("All field are required");
     }
 
     try {
@@ -73,9 +79,7 @@ const Register = () => {
       navigate("/login");
       toast.success("Sign up successfull");
     } catch (error: any) {
-      if (error.response && error.response.status === 400) {
-        setError("Signup failed. Please try again.");
-      } else if (error.response.status === 409) {
+      if (error.response.status === 409) {
         setError(
           "Email or phone number already in use. Please try again with a different one."
         );
