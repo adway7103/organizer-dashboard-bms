@@ -1,20 +1,20 @@
-import { IoEyeOutline, IoLogOutOutline  } from "react-icons/io5";
-import { RiUserSettingsFill, RiCustomerService2Line  } from "react-icons/ri";
+import { IoLogOutOutline  } from "react-icons/io5"; //IoEyeOutline,
+import { RiUserSettingsFill } from "react-icons/ri"; //RiCustomerService2Line
 import { SlCalender } from "react-icons/sl";
 import { RxDashboard } from "react-icons/rx";
 import { GiMoneyStack } from "react-icons/gi";
 import { LuNetwork } from "react-icons/lu";
 import { HiUserGroup } from "react-icons/hi2";
-import { FaBullhorn } from "react-icons/fa6";
-import { MdMessage } from "react-icons/md";
+// import { FaBullhorn } from "react-icons/fa6";
+// import { MdMessage } from "react-icons/md";
 import { PiUsersFourLight } from "react-icons/pi";
 
 export const SidebarNavs = [
-    {
-        name: "Overview",
-        icon: <IoEyeOutline />,
-        link: "/overview",
-    },
+    // {
+    //     name: "Overview",
+    //     icon: <IoEyeOutline />,
+    //     link: "/overview",
+    // },
     {
         name: "Profile",
         icon: <RiUserSettingsFill />,
@@ -50,21 +50,21 @@ export const SidebarNavs = [
         icon: <PiUsersFourLight />,
         link: "/customers",
     },
-    {
-        name: "Marketing",
-        icon: <FaBullhorn />,
-        link: "/marketing",
-    },
-    {
-        name: "Messaging",
-        icon: <MdMessage />,
-        link: "/messaging",
-    },
-    {
-        name: "Help",
-        icon: <RiCustomerService2Line />,
-        link: "/help",
-    },
+    // {
+    //     name: "Marketing",
+    //     icon: <FaBullhorn />,
+    //     link: "/marketing",
+    // },
+    // {
+    //     name: "Messaging",
+    //     icon: <MdMessage />,
+    //     link: "/messaging",
+    // },
+    // {
+    //     name: "Help",
+    //     icon: <RiCustomerService2Line />,
+    //     link: "/help",
+    // },
     {
         name: "Logout",
         icon: <IoLogOutOutline />,
