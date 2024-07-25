@@ -6,7 +6,6 @@ type UserSignupDataType = {
   gender: string;
   phone: string;
   email: string;
-  countryCode: string;
   password: string;
   isTnCAccepted: boolean;
   isPrivacyPolicyAccepted: boolean;
@@ -17,11 +16,28 @@ type UserLoginDataType = {
   password: string;
 };
 
+const extractCountryCode = (phoneNumber: string) => {
+  const countryCode = phoneNumber.split(" ")[0].replace("+", "");
+  return countryCode;
+};
+
 const useSignUp = async (userData: UserSignupDataType) => {
   try {
+    const countryCode = extractCountryCode(userData.phone);
+
+    const phoneWithoutCountryCode = userData.phone.replace(
+      `+${countryCode} `,
+      ""
+    );
+
+    const finalPayload = {
+      ...userData,
+      phone: phoneWithoutCountryCode,
+      countryCode: countryCode,
+    };
     const response = await axios.post(
       `https://kafsbackend-106f.onrender.com/api/v1/users/signup`,
-      userData,
+      finalPayload,
       {
         headers: {
           "Content-Type": "application/json",
