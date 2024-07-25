@@ -63,8 +63,7 @@ const Register = () => {
       if (error.response && error.response.status === 400) {
         setError("Signup failed. Please try again.");
       } else {
-        setError("An error occurred during signup. Please try again later.");
-        console.error("Login error:", error);
+        console.error("signup error:", error);
       }
     } finally {
       setLoading(false);
