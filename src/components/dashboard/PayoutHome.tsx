@@ -3,9 +3,9 @@ import { TableP } from "./PayOut/TableP";
 
 function PayoutHome() {
   return (
-    <div className="ml-8 min-w-[300px]">
+    <div className="sm:ml-8 min-w-[300px]">
       <h1 className="font-semibold text-[2rem] pl-4">Payouts</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 my-3 mr-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 my-3 sm:mr-8">
         <div className="lg:col-span-1">
           <ArCharPayout color="#25CD2599" heading="Total tickets sold"/>
         </div>
