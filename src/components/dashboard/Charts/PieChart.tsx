@@ -23,7 +23,7 @@ export function AffiliatePieChart() {
       <div className="sm:col-span-1">
         <div className="text-center font-semibold text-xl">Revenue by Event</div>
         <CardContent className="">
-          <div className="mx-auto aspect-square flex justidy-center items-center">
+          <div className="mx-auto aspect-square flex items-center">
             <PieChart width={180} height={160}>
               <Tooltip cursor={false} />
               <Pie
