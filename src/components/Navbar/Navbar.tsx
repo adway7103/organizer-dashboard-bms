@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 const Navbar = ({ toggleSidebar }: any) => {
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between pr-7 bg-white min-w-[300px] h-[9vh]">
-      <div onClick={toggleSidebar} className="block sm:hidden pl-5">
+    <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between pr-7 py-3 bg-white min-w-[300px] pl-4">
+      <div onClick={toggleSidebar} className="block sm:hidden pl-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -20,9 +20,9 @@ const Navbar = ({ toggleSidebar }: any) => {
       </div>
       <div className="flex items-center">
            <Link to="/dashboard">
-          <div className="h-[9vh] w-[6vw] flex items-center justify-center">
+          <div className="size-9 w-16 flex">
             <img
-              src="./Kafsco-LOGO.png"
+              src="./kafsco.icon.jpeg"
               alt="Organizer Logo"
               className="hidden sm:block"
             />
