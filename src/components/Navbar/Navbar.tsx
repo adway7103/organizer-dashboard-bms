@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 const Navbar = ({ toggleSidebar }: any) => {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between pr-7 bg-white min-w-[300px] h-[9vh]">
-      <div onClick={toggleSidebar} className="block sm:hidden">
+      <div onClick={toggleSidebar} className="block sm:hidden pl-5">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
