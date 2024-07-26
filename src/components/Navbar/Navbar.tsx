@@ -24,7 +24,7 @@ const Navbar = ({ toggleSidebar }: any) => {
             <img
               src="./Kafsco-LOGO.png"
               alt="Organizer Logo"
-              className=""
+              className="hidden sm:block"
             />
           </div>
         </Link>
