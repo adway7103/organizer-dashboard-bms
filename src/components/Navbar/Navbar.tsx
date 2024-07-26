@@ -20,7 +20,7 @@ const Navbar = ({ toggleSidebar }: any) => {
       </div>
       <div className="flex items-center">
            <Link to="/dashboard">
-          <div className="size-9 w-16 flex">
+          <div className="size-10 w-full flex">
             <img
               src="./kafsco.icon.jpeg"
               alt="Organizer Logo"
