@@ -12,7 +12,7 @@ const FollowerChart = () => {
     { name: "July", value: 90 },
   ];
   return (
-    <HomeContainerCard className="h-[34vh] shadow-none">
+    <HomeContainerCard className="h-[40vh] shadow-none min-w-[300px] w-full">
       <AreaChartHome data={dummyData} heading="Followers" />
     </HomeContainerCard>
   );
