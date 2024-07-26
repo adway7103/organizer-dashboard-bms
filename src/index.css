@@ -166,8 +166,3 @@ body {
   font-weight: 600;
   font-style: normal;
 }
-.payout-image {
-  background-image: url(${../../assets/organizer/BG.png});
-  background-size: cover;
-  background-repeat: no-repeat;
-}
