@@ -9,7 +9,7 @@ const AffiliateHome = () => {
   return (
     <div className="sm:ml-8 sm:mr-16 min-w-[300px]">
       <h2 className="font-semibold text-[2rem] px-4">Affiliates</h2>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full h-auto my-3 pr-7">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full h-auto my-3 ">
         <div className="col-span-1 grid grid-cols-9 gap-4">
           <div className="col-span-9 sm:col-span-4">
             <div>
@@ -26,7 +26,7 @@ const AffiliateHome = () => {
         <div className="col-span-1">
           <AffiliateChart />
         </div>
-        <div className="sm:flex gap-8 lg:col-span-2">
+        <div className="sm:flex gap-4 lg:col-span-2">
           <div className="lg:col-span-1 mb-8 sm:mb-0">
             <Total heading={"Total Revenue"} />
           </div>

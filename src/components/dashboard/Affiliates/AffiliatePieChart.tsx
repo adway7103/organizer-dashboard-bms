@@ -29,7 +29,7 @@ export function AffiliatePieChart() {
                 data={chartData}
                 dataKey="visitors"
                 nameKey="browser"
-                innerRadius={60}
+                innerRadius={58}
                 outerRadius={70}
                 strokeWidth={5}
               >
