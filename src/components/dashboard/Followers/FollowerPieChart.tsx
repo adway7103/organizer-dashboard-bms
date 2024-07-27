@@ -17,7 +17,7 @@ export function FollowerPieChart({ heading }: any) {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
   }, []);
   return (
-    <Card className="h-[40vh] bg-transparent shadow-none rounded border border-gray-300 flex flex-col justify-center items-center">
+    <Card className="h-auto sm:h-[40vh] bg-transparent shadow-none rounded border border-gray-300 flex flex-col justify-between sm:justify-center items-center max-sm:py-4">
       <div className="sm:col-span-1">
         <CardTitle>{heading}</CardTitle>
         <CardContent className="">

@@ -19,7 +19,7 @@ export function AffiliatePieChart() {
   }, []);
 
   return (
-    <Card className="h-auto sm:h-[55vh] bg-transparent shadow-none rounded border border-gray-300 flex flex-col justify-center items-center">
+    <Card className="h-auto sm:h-[55vh] bg-transparent shadow-none rounded border border-gray-300 flex flex-col justify-center items-center max-sm:py-4">
       <div className="sm:col-span-1">
         <div className="text-center font-semibold text-xl">Revenue by Event</div>
         <CardContent className="">

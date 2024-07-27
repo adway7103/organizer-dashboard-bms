@@ -22,7 +22,7 @@ export function AffiliatePieChart() {
     <Card className="h-auto bg-transparent shadow-none rounded">
       <div className="sm:col-span-1">
         <CardContent className="flex-1 pb-0">
-          <div className="mx-auto aspect-square  xl:w-full xl:h-full">
+          <div className="mx-auto aspect-square xl:w-full xl:h-full">
             <PieChart width={180} height={140}>
               <Tooltip cursor={false} />
               <Pie
