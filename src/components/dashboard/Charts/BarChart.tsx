@@ -10,7 +10,7 @@ import {
 
 const BarChartHome = ({ data }: any) => {
   return (
-    <HomeContainerCard className="col-span-2 xl:h-[55vh] bg-gray-200">
+    <HomeContainerCard className="col-span-2 xl:h-[50vh] bg-gray-200 rounded-3xl shadow-none">
       <div className="flex items-center gap-4 p-6">
         <svg
           width="32"
@@ -33,12 +33,12 @@ const BarChartHome = ({ data }: any) => {
           />
         </svg>
         <div>
-          <h1 className="text-xl">Revenue</h1>
+          <h1 className="text-xl font-medium">Revenue</h1>
           <h3 className="text-xs">Revenue Report</h3>
         </div>
       </div>
-
-      <ResponsiveContainer width="95%">
+      {/* 95% */}
+      <ResponsiveContainer width="90%" > 
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="2 2" />
           <XAxis dataKey="name" />

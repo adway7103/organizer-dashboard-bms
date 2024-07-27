@@ -23,7 +23,7 @@ const Home = () => {
     <div className="sm:ml-8 min-w-[300px]">
       <h1 className="font-semibold text-[2rem] pl-4">Dashboard</h1>
 
-      <div className="grid grid-cols-1 grid-row-6 md:grid-row-3 lg:grid-row-2 lg:grid-cols-9 gap-4 lg:gap-7 min-h-[85vh] my-3 pr-4">
+      <div className="grid grid-cols-1 grid-row-6 md:grid-row-3 lg:grid-row-2 lg:grid-cols-9 gap-4 lg:gap-6 min-h-[85vh] my-3 pr-4">
         <div className="col-span-9 lg:col-span-9 xl:col-span-4">
           <BarChartHome data={dummyData} />
         </div>

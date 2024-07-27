@@ -1,10 +1,11 @@
 import * as React from "react";
 import { Label, Pie, PieChart, Tooltip } from "recharts";
+import img from "../../../../public/affiliates/image.png";
+import purple from "../../../../public/affiliates/purple.png";
+import blue from "../../../../public/dashboard/blue.png";
+import money from "../../../../public/dashboard/money.png";
 
-import {
-  Card,
-  CardContent,
-} from "../../ui/Card";
+import { Card, CardContent } from "../../ui/Card";
 
 const chartData = [
   { browser: "chrome", visitors: 8475, fill: "#0088FE" },
@@ -19,9 +20,12 @@ export function AffiliatePieChart() {
   }, []);
 
   return (
-    <Card className="h-auto sm:h-[55vh] bg-transparent shadow-none rounded border border-gray-300 flex flex-col justify-center items-center max-sm:py-4">
+    <Card className="h-auto sm:h-[50vh] bg-transparent shadow-none rounded border border-gray-300 flex flex-col justify-center items-center max-sm:py-4 ">
       <div className="sm:col-span-1">
-        <div className="text-center font-semibold text-xl">Revenue by Event</div>
+        <div className="flex w-full gap-2 items-center justify-center">
+          <img src={money} alt="" className="border border-black rounded-full p-2"/>
+          <h1 className="text-lg font-medium">Revenue by Event</h1>
+        </div>
         <CardContent className="">
           <div className="mx-auto aspect-square flex items-center">
             <PieChart width={180} height={160}>
@@ -61,16 +65,30 @@ export function AffiliatePieChart() {
           </div>
         </CardContent>
       </div>
-      <div>
-        <div className="flex p-1 items-center justify-between space-x-4">
-          <div className="">Logo</div>
+      <div className="flex flex-col">
+        <div className="flex p-1 items-center justify-between gap-x-4">
+          <div className="">
+            <img src={img} alt="" />
+          </div>
           <div className="">WEFVWRFWE</div>
-          <div className="">2,000</div>
+          <div className="flex pl-2 justify-center items center">
+            <div>
+              <img src={blue} alt="" className="mt-1 xl:mt-2" />
+            </div>
+            <div className="pl-1">2,000</div>
+          </div>
         </div>
-        <div className="flex p-1 items-center justify-between">
-          <div className="">Logo</div>
+        <div className="flex p-1 items-center justify-between gap-x-4">
+          <div className="">
+            <img src={img} alt="" />
+          </div>
           <div className="">WEFVWRFWE</div>
-          <div className="">2,000</div>
+          <div className="flex pl-2 justify-center items center">
+            <div>
+              <img src={purple} alt="" className="mt-1 xl:mt-2" />
+            </div>
+            <div className="pl-1">2,000</div>
+          </div>{" "}
         </div>
       </div>
     </Card>

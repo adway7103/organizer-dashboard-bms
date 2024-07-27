@@ -15,8 +15,8 @@ type AreaChartHomeTypes = {
 };
 function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
   return (
-    <HomeContainerCard className="col-span-2 md:col-span-1 border border-gray-300 rounded-3xl p-4 xl:h-[55vh]">
-      <div className="flex gap-1 items-center">
+    <HomeContainerCard className=" shadow-none col-span-2 md:col-span-1 border border-gray-300 rounded-3xl p-4 xl:h-[50vh]">
+      <div className="flex gap-2 items-center text-lg font-medium">
         <svg
           width="32"
           height="33"
@@ -37,7 +37,7 @@ function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
             fill="black"
           />
         </svg>
-        {heading ? <h1>{heading}</h1> : <h1>Ticket Sale per Month</h1>}
+        {heading ? <h1>{heading}</h1> : <h1>Tickets Sale per Month</h1>}
       </div>
       <div className="flex justify-between px-5 py-2 ">
         <div className="flex gap-2 items-center">
@@ -59,7 +59,8 @@ function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
           </div>
         </div>
       </div>
-      <ResponsiveContainer width="100%">
+      {/* 100% */}
+      <ResponsiveContainer width="90%">
         <AreaChart
           data={data}
           margin={{
