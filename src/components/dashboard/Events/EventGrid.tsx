@@ -56,8 +56,8 @@ const EventGrid = () => {
   };
   return (
     <div>
-      <h1 className="text-3xl font-semibold mt-10 px-4">Event list</h1>
-      <div className="mt-4 flex flex-col md:flex-row xl:justify-between xl:pr-14 xl:mr-12  p-2 gap-4 sm:gap-6 ">
+      <h1 className="text-2xl font-semibold mt-10 px-4">Event list</h1>
+      <div className="mt-4 flex flex-col md:flex-row md:justify-between p-2 gap-4 sm:flex-wrap sm:mr-6">
         <div className="relative flex items-center sm:w-auto ">
           <Search className="absolute left-4 text-gray-400 pointer-events-none" />
           <input
@@ -67,7 +67,7 @@ const EventGrid = () => {
             placeholder="Search"
           />
         </div>
-        <div className="pl-16">
+        <div className="max-sm:flex max-sm:justify-center max-sm:items-center">
           <span className="pr-2">Show</span>
           <Select
             defaultValue={10}
