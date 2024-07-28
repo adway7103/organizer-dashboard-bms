@@ -24,11 +24,33 @@ const EventForm: React.FC = () => {
   const { eventInfo, setEventInfo } = useEventContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEventInfo({ ...eventInfo, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setEventInfo((prevEventInfo) => ({
+      ...prevEventInfo,
+      [name]: value,
+    }));
   };
 
-  const handleSelectChange = (e: SelectChangeEvent) => {
-    setEventInfo({ ...eventInfo, [e.target.name]: e.target.value });
+  const handleSelectChange = (event: SelectChangeEvent<string | string[]>) => {
+    const { name, value } = event.target;
+
+    setEventInfo((prevInfo) => {
+      if (name === "currency") {
+        return {
+          ...prevInfo,
+          cheapestTicket: {
+            ...prevInfo.cheapestTicket,
+            currency: value as string,
+          },
+        };
+      } else if (name === "eventCategories") {
+        return {
+          ...prevInfo,
+          eventCategories: value as string[],
+        };
+      }
+      return prevInfo;
+    });
   };
 
   const handleDateChange = (newValue: Dayjs | null, name: string) => {
@@ -47,24 +69,36 @@ const EventForm: React.FC = () => {
     >
       <TextField
         id="eventName"
-        name="eventName"
+        name="title"
         label="Event Name"
         placeholder="Be clear and descriptive with the title that tells people what your event is about."
-        variant="outlined"
-        value={eventInfo.eventName}
+        value={eventInfo.title}
         onChange={handleChange}
+        fullWidth
+        sx={{
+          "& .MuiInputBase-root": {
+            height: "56px", // Adjust height as needed
+          },
+          "& .MuiOutlinedInput-input": {
+            padding: "16px", // Adjust padding as needed
+          },
+        }}
       />
 
       <div>
-        <InputLabel id="category-label">Category</InputLabel>
+        <InputLabel id="periodicity-label">Category</InputLabel>
         <Select
           labelId="category-label"
           id="category"
-          name="category"
-          value={eventInfo.category}
+          name="eventCategories"
+          multiple
+          value={eventInfo.eventCategories}
           onChange={handleSelectChange}
-          className="w-full"
+          fullWidth
         >
+          <MenuItem disabled value="">
+            <em>Select category</em>
+          </MenuItem>
           <MenuItem value="Category 1">Category 1</MenuItem>
           <MenuItem value="Category 2">Category 2</MenuItem>
           <MenuItem value="Category 3">Category 3</MenuItem>
@@ -79,7 +113,7 @@ const EventForm: React.FC = () => {
           name="periodicity"
           value={eventInfo.periodicity}
           onChange={handleSelectChange}
-          className="w-full"
+          fullWidth
         >
           <MenuItem value="Periodicity 1">Periodicity 1</MenuItem>
           <MenuItem value="Periodicity 2">Periodicity 2</MenuItem>
@@ -92,24 +126,31 @@ const EventForm: React.FC = () => {
         name="description"
         label="Description"
         multiline
-        rows={4}
+        rows={2}
         placeholder="Grab people's attention with a short description about your event."
         value={eventInfo.description}
         onChange={handleChange}
       />
 
       {/* <div> */}
-        <FileDragNDrop />
+      <FileDragNDrop />
       {/* </div> */}
 
       <Autocomplete
         multiple
-        id="tags"
+        id="genres"
         options={tagsOptions}
         getOptionLabel={(option) => option.title}
         renderInput={(params) => <TextField {...params} label="Add Tags" />}
-        // value={eventInfo.tags}
-        // onChange={(e, newValue) => setEventInfo({ ...eventInfo, tags: newValue })}
+        value={tagsOptions.filter((option) =>
+          eventInfo.genres.includes(option.title)
+        )}
+        onChange={(_, newValue) =>
+          setEventInfo({
+            ...eventInfo,
+            genres: newValue.map((option) => option.title),
+          })
+        }
       />
 
       <div>
@@ -118,13 +159,14 @@ const EventForm: React.FC = () => {
           labelId="currency-label"
           id="currency"
           name="currency"
-          value={eventInfo.currency}
+          value={eventInfo.cheapestTicket.currency}
           onChange={handleSelectChange}
-          className="w-full"
+          fullWidth
         >
           <MenuItem value="currency 1">INR</MenuItem>
           <MenuItem value="currency 2">USD</MenuItem>
           <MenuItem value="currency 3">AED</MenuItem>
+          <MenuItem value="currency 3">EUR</MenuItem>
         </Select>
       </div>
 
@@ -166,7 +208,7 @@ const EventForm: React.FC = () => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <div className="flex items-center w-full space-x-5">
             <DatePicker
-            className="w-1/2"
+              className="w-1/2"
               value={eventInfo.eventEndDate}
               onChange={(newValue) =>
                 handleDateChange(newValue, "eventEndDate")
@@ -195,9 +237,9 @@ const EventForm: React.FC = () => {
           <input
             id="offline"
             type="radio"
-            name="locationType"
-            value="Offline"
-            checked={eventInfo.locationType === "Offline"}
+            name="eventMode"
+            value="offline"
+            checked={eventInfo.eventMode === "offline"}
             onChange={handleChange}
           />
           <label htmlFor="offline" className="mr-2">
@@ -206,26 +248,34 @@ const EventForm: React.FC = () => {
           <input
             id="online"
             type="radio"
-            name="locationType"
-            value="Online"
-            checked={eventInfo.locationType === "Online"}
+            name="eventMode"
+            value="online"
+            checked={eventInfo.eventMode === "online"}
             onChange={handleChange}
           />
           <label htmlFor="online">Online</label>
         </div>
         <TextField
           type="search"
-          name="location"
+          name="venueAddress"
           id="location-search"
           placeholder="Search Venue"
-          className="border w-full h-10 px-4 py-2"
-          value={eventInfo.location}
+          value={eventInfo.venueAddress.city}
           onChange={handleChange}
+          fullWidth
+          sx={{
+            "& .MuiInputBase-root": {
+              height: "56px", // Adjust height as needed
+            },
+            "& .MuiOutlinedInput-input": {
+              padding: "16px", // Adjust padding as needed
+            },
+          }}
         />
       </div>
 
       <div className="py-4">
-        <EventMap/>
+        <EventMap />
       </div>
 
       <div className="flex items-center">
