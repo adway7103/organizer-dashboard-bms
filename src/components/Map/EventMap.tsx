@@ -8,8 +8,8 @@ import { useEventContext } from "../../Contexts/CreateEventContext";
 const EventMap: FC = () => {
   const { eventInfo } = useEventContext();
   useEffect(() => {
-    console.log("Hello: " + eventInfo.location);
-  }, [eventInfo.location]);
+    console.log("Hello:", eventInfo.venueLocation);
+  }, [eventInfo.venueLocation]);
 
   const marker: { geocode: LatLngExpression } = {
     geocode: [28.0229, 73.3119],
