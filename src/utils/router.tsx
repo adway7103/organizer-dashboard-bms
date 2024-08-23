@@ -22,6 +22,8 @@ import ProtectedRoute from "./ProtectedRoutes";
 import PublicRoute from "./PublicRoutes";
 import Logout from "../components/auth/Logout";
 import { EventHome } from "../components/dashboard/EventHome";
+import EventOverview from "../components/dashboard/Events/events-overview/EventOverview";
+import CreateAnAccount from "../components/auth/CreateAnAccount";
 
 export const router = createBrowserRouter([
   {
@@ -100,8 +102,21 @@ export const router = createBrowserRouter([
             element: <MessagingHome />,
           },
           {
+            path: "/createanaccount",
+            element: <CreateAnAccount />,
+          },
+          {
             path: "/events",
-            element: <EventHome />,
+            children:[
+              {
+                path:"",
+                element: <EventHome />,
+              },
+              {
+                path:"/events/event-overview",
+                element: <EventOverview />,
+              }
+            ]
           },
           {
             path: "/logout",
