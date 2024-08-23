@@ -6,6 +6,7 @@ type UserSignupDataType = {
   gender: string;
   phone: string;
   email: string;
+  fcmToken: string;
   password: string;
   isTnCAccepted: boolean;
   isPrivacyPolicyAccepted: boolean;
