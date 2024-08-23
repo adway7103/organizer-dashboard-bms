@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 function App() {
   const [isSidebarVisible, setSidebarVisible] = useState(false);
   const [isManuallyToggled, setIsManuallyToggled] = useState(false);
+  const location = useLocation();
 
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
@@ -27,16 +28,21 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, [isManuallyToggled]);
 
+  const shouldHideNavAndSidebar = location.pathname === "/createanaccount";
+
   return (
     <>
-      <Navbar toggleSidebar={toggleSidebar} />
-
-      <div className="p-2 py-16">
-        <Sidebar isVisible={isSidebarVisible} />
+      {!shouldHideNavAndSidebar && <Navbar toggleSidebar={toggleSidebar} />}
+      <div className={`p-2 ${shouldHideNavAndSidebar ? 'py-0' : 'py-16'}`}>
+        {!shouldHideNavAndSidebar && <Sidebar isVisible={isSidebarVisible} />}
         <main
           className={`transition-all duration-300 ${
-            isSidebarVisible ? "pl-[70px] sm:pl-[220px]" : "pl-[20px] sm:pl-0"
-          } sm:pl-[50px] md:pl-[220px]`}
+            shouldHideNavAndSidebar
+              ? "w-full"
+              : isSidebarVisible
+              ? "pl-[70px] sm:pl-[220px]"
+              : "pl-[20px] sm:pl-0"
+          }`}
         >
           <Outlet />
         </main>
