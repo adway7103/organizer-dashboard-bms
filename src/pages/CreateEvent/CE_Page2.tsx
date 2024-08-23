@@ -1,80 +1,17 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoTicketOutline } from "react-icons/io5";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
-import { useEventContext } from "../../Contexts/CreateEventContext";
-import createEvent from "../../api/createEventApi";
-import dayjs from "dayjs";
-import { EventInfo } from "../../Contexts/CreateEventContext";
 
 const CE_Page2: React.FC = () => {
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
-  const { eventInfo, setEventInfo } = useEventContext();
-  const navigate = useNavigate();
 
   const toggleAdvancedSettings = () => {
     setShowAdvancedSettings((prevState) => !prevState);
   };
 
-  const eventStart = dayjs(eventInfo.eventStartDate)
-    .hour(dayjs(eventInfo.eventStartTime).hour())
-    .minute(dayjs(eventInfo.eventStartTime).minute())
-    .format("YYYY-MM-DD HH:mm:ss");
-  const eventEnd = dayjs(eventInfo.eventEndDate)
-    .hour(dayjs(eventInfo.eventEndTime).hour())
-    .minute(dayjs(eventInfo.eventEndTime).minute())
-    .format("YYYY-MM-DD HH:mm:ss");
-
-  const handleOnSubmit = async (e: any) => {
-    e.preventDefault();
-    const eventData: EventInfo = {
-      title: eventInfo.title, 
-      organizer: "667f1ad0d77d353dc37dc6aa", //sending manually
-      eventCategories: ["6641bb023e5581b77253fb26"], //sending manually
-      genres: eventInfo.genres, 
-      description: eventInfo.description, 
-      posterUrl: eventInfo.posterUrl, 
-      cheapestTicket: {
-        currency: eventInfo.cheapestTicket.currency,
-        amount: "16",
-      }, //sending manually
-      eventStart:eventStart, 
-      eventEnd:eventEnd, 
-      eventMode: eventInfo.eventMode,
-      venueAddress: {
-        name: "26 Wexford St",
-        city: "Dublin",
-        country: "Ireland",
-        zipcode: "D02 HX93",
-      }, //sending manually
-      venueLocation: {
-        latitude: -6.2682886,
-        longitude: 53.3366763,
-      }, //sending manually
-      trailerUrls: [],
-      timezone: "GMT", //sending manually
-      duration: "2h", //sending manually
-      ageRestriction: "18+", //sending manually
-      isBookingRequired: true, //sending manually
-      bookingOpeningDate: "2024-11-01T00:00:00Z", //sending manually
-      bookingClosingDate: "2024-11-30T23:59:59Z", //sending manually
-      languages: ["english"], //sending manually
-    };
-
-    console.log("Event Data:", eventData);
-
-    try {
-      const response = await createEvent(eventData);
-      console.log("Event created successfully!", response);
-      console.log(response);
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("Failed to create event:", error);
-    }
-  };
-
   return (
-    <form onSubmit={handleOnSubmit}>
+    <form>
       <div className="flex items-center justify-between pb-8 p-1">
         <span className="page-top bg-black"></span>
         <span className="page-top bg-black"></span>
@@ -114,13 +51,13 @@ const CE_Page2: React.FC = () => {
               name="lastEntry"
               id="lastEntry"
               className="follow rounded mx-0 w-6 h-4"
-              checked={eventInfo.lastEntry}
-              onChange={(e) =>
-                setEventInfo({
-                  ...eventInfo,
-                  lastEntry: e.target.checked,
-                })
-              }
+              // checked={eventInfo.lastEntry}
+              // onChange={(e) =>
+              //   setEventInfo({
+              //     ...eventInfo,
+              //     lastEntry: e.target.checked,
+              //   })
+              // }
             />
             <label htmlFor="lastEntry">Last Entry time</label>
           </div>
@@ -130,13 +67,13 @@ const CE_Page2: React.FC = () => {
               name="entryCondition"
               id="entryCondition"
               className="follow rounded mx-0 w-6 h-4"
-              checked={eventInfo.entryCondition}
-              onChange={(e) =>
-                setEventInfo({
-                  ...eventInfo,
-                  entryCondition: e.target.checked,
-                })
-              }
+              // checked={eventInfo.entryCondition}
+              // onChange={(e) =>
+              //   setEventInfo({
+              //     ...eventInfo,
+              //     entryCondition: e.target.checked,
+              //   })
+              // }
             />
             <label htmlFor="entryCondition">Entry Conditions</label>
           </div>
@@ -147,13 +84,13 @@ const CE_Page2: React.FC = () => {
               name="eventIsPrivate"
               id="eventIsPrivate"
               className="follow rounded mx-0 w-6 h-4"
-              checked={eventInfo.eventIsPrivate}
-              onChange={(e) =>
-                setEventInfo({
-                  ...eventInfo,
-                  eventIsPrivate: e.target.checked,
-                })
-              }
+              // checked={eventInfo.eventIsPrivate}
+              // onChange={(e) =>
+              //   setEventInfo({
+              //     ...eventInfo,
+              //     eventIsPrivate: e.target.checked,
+              //   })
+              // }
             />
             <label htmlFor="eventIsPrivate">Event is private</label>
           </div>
@@ -163,13 +100,13 @@ const CE_Page2: React.FC = () => {
               name="separateBooking"
               id="separateBooking"
               className="follow rounded mx-0 w-6 h-4"
-              checked={eventInfo.separateBooking}
-              onChange={(e) =>
-                setEventInfo({
-                  ...eventInfo,
-                  separateBooking: e.target.checked,
-                })
-              }
+              // checked={eventInfo.separateBooking}
+              // onChange={(e) =>
+              //   setEventInfo({
+              //     ...eventInfo,
+              //     separateBooking: e.target.checked,
+              //   })
+              // }
             />
             <label htmlFor="separateBooking">
               Separate bookings of purchases of multiple tickets
@@ -181,13 +118,13 @@ const CE_Page2: React.FC = () => {
               name="limitTotal"
               id="limitTotal"
               className="follow rounded mx-0 w-6 h-4"
-              checked={eventInfo.limitTotal}
-              onChange={(e) =>
-                setEventInfo({
-                  ...eventInfo,
-                  limitTotal: e.target.checked,
-                })
-              }
+              // checked={eventInfo.limitTotal}
+              // onChange={(e) =>
+              //   setEventInfo({
+              //     ...eventInfo,
+              //     limitTotal: e.target.checked,
+              //   })
+              // }
             />
             <label htmlFor="limitTotal">
               Limit total number of tickets that can be purchased for this event
