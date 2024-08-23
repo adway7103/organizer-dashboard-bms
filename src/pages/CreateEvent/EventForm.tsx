@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   InputLabel,
@@ -17,11 +17,38 @@ import { useEventContext } from "../../Contexts/CreateEventContext";
 import { tagsOptions } from "../../utils/Constant";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Dayjs } from "dayjs";
-import EventMap from "../../components/Map/EventMap";
+import Places from "../../components/Map/EventMap";
 import FileDragNDrop from "../../components/DragNDrop/FileDragNDrop";
+import { getCategories } from "../../api/createEventApi";
+import { EventInfo } from "../../Contexts/CreateEventContext";
+import dayjs from "dayjs";
+import createEvent from "../../api/createEventApi";
+import toast from "react-hot-toast";
+import { uploadImage } from "../../api/uploadImage";
 
 const EventForm: React.FC = () => {
   const { eventInfo, setEventInfo } = useEventContext();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isNextPageEnabled, setIsNextPageEnabled] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState<
+    { categoryId: string; categoryName: string }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const fetchedCategories = await getCategories();
+        if (fetchedCategories) {
+          setCategories(fetchedCategories);
+        }
+      } catch (error) {
+        console.error("Failed to fetch categories", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -48,6 +75,11 @@ const EventForm: React.FC = () => {
           ...prevInfo,
           eventCategories: value as string[],
         };
+      } else if (name === "periodicity") {
+        return {
+          ...prevInfo,
+          periodicity: value as string,
+        };
       }
       return prevInfo;
     });
@@ -57,16 +89,69 @@ const EventForm: React.FC = () => {
     setEventInfo({ ...eventInfo, [name]: newValue });
   };
 
-  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const eventStart = dayjs(eventInfo.eventStartDate)
+    .hour(dayjs(eventInfo.eventStartTime).hour())
+    .minute(dayjs(eventInfo.eventStartTime).minute())
+    .format("YYYY-MM-DD HH:mm:ss");
+  const eventEnd = dayjs(eventInfo.eventEndDate)
+    .hour(dayjs(eventInfo.eventEndTime).hour())
+    .minute(dayjs(eventInfo.eventEndTime).minute())
+    .format("YYYY-MM-DD HH:mm:ss");
+
+  const handleFileSelect = (file: File | null) => {
+    setSelectedFile(file);
+  };
+
+  const handleOnSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(eventInfo);
+
+    let imageUrl = "";
+
+    if (selectedFile) {
+      imageUrl = await uploadImage(selectedFile);
+    }
+
+    setLoading(true);
+
+    const eventData: EventInfo = {
+      title: eventInfo.title,
+      organizer: "667f1ad0d77d353dc37dc6aa",
+      eventCategories: eventInfo.eventCategories,
+      genres: eventInfo.genres,
+      description: eventInfo.description,
+      posterUrl: imageUrl,
+      cheapestTicket: {
+        currency: eventInfo.cheapestTicket.currency,
+        amount: "",
+      },
+      eventStart: eventStart,
+      eventEnd: eventEnd,
+      eventMode: eventInfo.eventMode,
+      venueAddress: eventInfo.venueAddress,
+      venueLocation: eventInfo.venueLocation,
+      refundPolicy: {
+        refundTimeframe: "48h",
+        policyType: eventInfo.refundPolicy.policyType,
+        allRefundsApproved: eventInfo.refundPolicy.allRefundsApproved,
+      },
+      isRep: eventInfo.isRep,
+      periodicity: eventInfo.periodicity,
+    };
+
+    try {
+      await createEvent(eventData);
+      toast.success("Event created successfully!");
+      setIsNextPageEnabled(true);
+      setLoading(false);
+    } catch (error) {
+      toast.error("Failed to create event:");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <form
-      className="event-form flex flex-col gap-5 pb-10"
-      onSubmit={handleOnSubmit}
-    >
+    <form className="event-form flex flex-col gap-5 pb-10">
       <TextField
         id="eventName"
         name="title"
@@ -86,7 +171,7 @@ const EventForm: React.FC = () => {
       />
 
       <div>
-        <InputLabel id="periodicity-label">Category</InputLabel>
+        <InputLabel id="category-label">Category</InputLabel>
         <Select
           labelId="category-label"
           id="category"
@@ -95,13 +180,37 @@ const EventForm: React.FC = () => {
           value={eventInfo.eventCategories}
           onChange={handleSelectChange}
           fullWidth
+          MenuProps={{
+            PaperProps: {
+              style: {
+                maxHeight: 200,
+                overflow: "auto",
+                borderRadius: "4px",
+                marginTop: "2px",
+              },
+            },
+          }}
+          sx={{
+            height: "56px",
+            ".MuiSelect-select": {
+              padding: "10px",
+            },
+            ".MuiOutlinedInput-notchedOutline": {
+              borderColor: "gray",
+            },
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "blue",
+            },
+          }}
         >
           <MenuItem disabled value="">
             <em>Select category</em>
           </MenuItem>
-          <MenuItem value="Category 1">Category 1</MenuItem>
-          <MenuItem value="Category 2">Category 2</MenuItem>
-          <MenuItem value="Category 3">Category 3</MenuItem>
+          {categories.map((category) => (
+            <MenuItem key={category.categoryId} value={category.categoryId}>
+              {category.categoryName}
+            </MenuItem>
+          ))}
         </Select>
       </div>
 
@@ -133,7 +242,7 @@ const EventForm: React.FC = () => {
       />
 
       {/* <div> */}
-      <FileDragNDrop />
+      <FileDragNDrop onFileSelect={handleFileSelect} />
       {/* </div> */}
 
       <Autocomplete
@@ -163,10 +272,10 @@ const EventForm: React.FC = () => {
           onChange={handleSelectChange}
           fullWidth
         >
-          <MenuItem value="currency 1">INR</MenuItem>
-          <MenuItem value="currency 2">USD</MenuItem>
-          <MenuItem value="currency 3">AED</MenuItem>
-          <MenuItem value="currency 3">EUR</MenuItem>
+          <MenuItem value="INR">INR</MenuItem>
+          <MenuItem value="USD">USD</MenuItem>
+          <MenuItem value="AED">AED</MenuItem>
+          <MenuItem value="EUR">EUR</MenuItem>
         </Select>
       </div>
 
@@ -255,27 +364,10 @@ const EventForm: React.FC = () => {
           />
           <label htmlFor="online">Online</label>
         </div>
-        <TextField
-          type="search"
-          name="venueAddress"
-          id="location-search"
-          placeholder="Search Venue"
-          value={eventInfo.venueAddress.city}
-          onChange={handleChange}
-          fullWidth
-          sx={{
-            "& .MuiInputBase-root": {
-              height: "56px", // Adjust height as needed
-            },
-            "& .MuiOutlinedInput-input": {
-              padding: "16px", // Adjust padding as needed
-            },
-          }}
-        />
       </div>
 
-      <div className="py-4">
-        <EventMap />
+      <div>
+        <Places />
       </div>
 
       <div className="flex items-center">
@@ -283,9 +375,9 @@ const EventForm: React.FC = () => {
           type="checkbox"
           id="repEvent"
           name="repEvent"
-          checked={eventInfo.repEvent}
+          checked={eventInfo.isRep}
           onChange={(e) =>
-            setEventInfo({ ...eventInfo, repEvent: e.target.checked })
+            setEventInfo({ ...eventInfo, isRep: e.target.checked })
           }
           className="follow rounded mx-0 w-6 h-4"
         />
@@ -307,9 +399,15 @@ const EventForm: React.FC = () => {
               type="checkbox"
               id="eventPolicy"
               name="eventPolicy"
-              checked={eventInfo.eventPolicy}
+              checked={eventInfo.refundPolicy.policyType}
               onChange={(e) =>
-                setEventInfo({ ...eventInfo, eventPolicy: e.target.checked })
+                setEventInfo({
+                  ...eventInfo,
+                  refundPolicy: {
+                    ...eventInfo.refundPolicy,
+                    policyType: e.target.checked,
+                  },
+                })
               }
               className="follow rounded mx-0 w-6 h-4"
             />
@@ -323,11 +421,14 @@ const EventForm: React.FC = () => {
               type="checkbox"
               id="allRefundsApproved"
               name="allRefundsApproved"
-              checked={eventInfo.allRefundsApproved}
+              checked={eventInfo.refundPolicy.allRefundsApproved}
               onChange={(e) =>
                 setEventInfo({
                   ...eventInfo,
-                  allRefundsApproved: e.target.checked,
+                  refundPolicy: {
+                    ...eventInfo.refundPolicy,
+                    allRefundsApproved: e.target.checked,
+                  },
                 })
               }
               className="follow rounded mx-0 w-6 h-4"
@@ -342,15 +443,37 @@ const EventForm: React.FC = () => {
       <hr />
 
       <div className="flex flex-wrap gap-5 md:justify-normal justify-center">
-        <button type="submit" className="event-form-btn">
-          SAVE CHANGES
-        </button>
-        <Link
-          to={"/create-events/2"}
-          className="event-form-btn bg-black text-white"
-        >
-          NEXT PAGE
-        </Link>
+        <div>
+          {" "}
+          <button
+            className="flex justify-center items-center gap-4 event-form-btn"
+            onClick={handleOnSubmit}
+          >
+            {loading ? "Saving Changes.." : "Save Changes"}{" "}
+          </button>
+        </div>
+        <div>
+          <Link
+            to={isNextPageEnabled ? "/create-events/2" : "#"}
+            className={`event-form-btn ${
+              isNextPageEnabled
+                ? "bg-black text-white"
+                : "bg-gray-400 text-gray-700 cursor-not-allowed"
+            }`}
+          >
+            <button
+              type="button"
+              disabled={!isNextPageEnabled}
+              className={`px-4 py-2 rounded ${
+                isNextPageEnabled
+                  ? "hover:bg-secondary-dark"
+                  : "cursor-not-allowed"
+              }`}
+            >
+              Next Page
+            </button>{" "}
+          </Link>
+        </div>
       </div>
     </form>
   );

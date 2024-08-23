@@ -1,7 +1,17 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 import { Dayjs } from "dayjs";
 
-// organizer genres venueLocation[map] trailerUrls timezone duration ageRestriction isBookingRequired bookingOpeningDate bookingClosingDate languages missing
+interface VenueAddress {
+  name: string;
+  city: string;
+  country: string;
+  zipcode: string;
+}
+
+interface VenueLocation {
+  latitude: number;
+  longitude: number;
+}
 
 export interface EventInfo {
   title: string;
@@ -9,9 +19,8 @@ export interface EventInfo {
   eventCategories: string[];
   genres: string[];
   description: string;
-  periodicity?: string;
   posterUrl: string;
-    cheapestTicket: {
+  cheapestTicket: {
     currency: string;
     amount: string;
   };
@@ -20,34 +29,17 @@ export interface EventInfo {
   eventEndDate?: Dayjs | null;
   eventEndTime?: Dayjs | null;
   eventMode: string;
-  venueAddress: {
-    name: string;
-    city: string;
-    country: string;
-    zipcode: string;
+  venueAddress: VenueAddress;
+  venueLocation: VenueLocation;
+  refundPolicy: {
+    refundTimeframe: string;
+    policyType: boolean;
+    allRefundsApproved: boolean;
   };
-  venueLocation: {
-    latitude: number;
-    longitude: number;
-  };
-  trailerUrls: string[];
-  timezone: string;
-  duration: string;
-  ageRestriction: string;
-  isBookingRequired: boolean;
-  bookingOpeningDate: string;
-  bookingClosingDate:string;
-  languages: string[];
-  repEvent?: boolean;
-  eventPolicy?: boolean;
-  allRefundsApproved?: boolean;
-  lastEntry?: boolean;
-  entryCondition?: boolean;
-  eventIsPrivate?: boolean;
-  separateBooking?: boolean;
-  limitTotal?: boolean;
-  eventStart?:string;
-  eventEnd?:string
+  isRep: boolean;
+  periodicity: string;
+  eventStart?: string;
+  eventEnd?: string;
 }
 
 interface EventContextProps {
@@ -61,10 +53,9 @@ const defaultEventInfo: EventInfo = {
   eventCategories: [],
   genres: [],
   description: "",
-  periodicity: "",
   posterUrl: "",
   cheapestTicket: {
-    currency:"currency 1",
+    currency: "",
     amount: "",
   },
   eventStartDate: null,
@@ -72,34 +63,17 @@ const defaultEventInfo: EventInfo = {
   eventEndDate: null,
   eventEndTime: null,
   eventMode: "",
-  venueAddress: {
-    name: "",
-    city: "",
-    country: "",
-    zipcode: "",
+  venueAddress: { name: "", city: "", country: "", zipcode: "" },
+  venueLocation: { latitude: 0, longitude: 0 },
+  refundPolicy: {
+    refundTimeframe: "",
+    policyType: false,
+    allRefundsApproved: false,
   },
-  venueLocation: {
-    latitude: 0,
-    longitude: 0,
-  },
-  trailerUrls: [],
-  timezone: "",
-  duration: "",
-  ageRestriction: "",
-  isBookingRequired: false,
-  bookingOpeningDate: "",
-  bookingClosingDate: "",
-  languages: [],
-  repEvent: false,
-  eventPolicy: false,
-  allRefundsApproved: false,
-  lastEntry: false,
-  entryCondition: false,
-  eventIsPrivate: false,
-  separateBooking: false,
-  limitTotal: false,
-  eventStart:"",
-  eventEnd:"",
+  isRep: false,
+  periodicity: "",
+  eventStart: "",
+  eventEnd: "",
 };
 
 const EventContext = createContext<EventContextProps | undefined>(undefined);

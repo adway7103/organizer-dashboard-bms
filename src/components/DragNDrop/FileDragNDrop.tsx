@@ -1,81 +1,38 @@
-import React, { DragEvent, useEffect, useState } from "react";
+import React, { useState, useRef } from "react";
 import "./FileDragNDrop.css";
 import { MdUpload, MdDeleteForever } from "react-icons/md";
-import { useEventContext } from "../../Contexts/CreateEventContext";
-import axios from "axios";
 
-const FileDragNDrop: React.FC = () => {
-  const [imageFile, setImageFile] = useState<File | null>(null);
+const FileDragNDrop: React.FC<{ onFileSelect: (file: File | null) => void }> = ({ onFileSelect }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const { eventInfo, setEventInfo } = useEventContext();
-  
-  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
   };
 
-  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     const file = e.dataTransfer.files[0];
     if (file) {
-      setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
+      onFileSelect(file);
     }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
+      onFileSelect(file);
     }
   };
 
   const deleteImg = () => {
-    setImageFile(null);
     setImagePreview(null);
+    onFileSelect(null); // Notify parent component of image removal
   };
-
-  const uploadImage = async (file: File) => {
-    try {
-      const formData = new FormData();
-      formData.append("image", file);
-
-      const response = await axios.post("/upload-image", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      return response.data.url; // URL returned by the backend
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      return null;
-    }
-  };
-
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (imageFile) {
-      const imageUrl = await uploadImage(imageFile);
-      if (imageUrl) {
-        setEventInfo((prevEventInfo) => ({
-          ...prevEventInfo,
-          posterUrl: imageUrl,
-        }));
-      }
-    }
-
-    // Handle the rest of the form submission logic here
-  };
-
-  useEffect(() => {
-    if (eventInfo.posterUrl) {
-      setImagePreview(eventInfo.posterUrl);
-    }
-  }, [eventInfo.posterUrl]);
 
   return (
     <div>
@@ -101,6 +58,7 @@ const FileDragNDrop: React.FC = () => {
               hidden
               accept="image/jpeg, image/png, image/jpg"
               onChange={handleFileChange}
+              ref={fileInputRef}
             />
           </label>
         ) : (
@@ -120,9 +78,6 @@ const FileDragNDrop: React.FC = () => {
           </>
         )}
       </div>
-      <button onClick={handleFormSubmit} className="submit-btn">
-        Create Event
-      </button>
     </div>
   );
 };
