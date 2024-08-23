@@ -12,8 +12,8 @@ const Navbar = ({ toggleSidebar }: any) => {
           className="size-6"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
           />
         </svg>
@@ -22,7 +22,7 @@ const Navbar = ({ toggleSidebar }: any) => {
            <Link to="/dashboard">
           <div className="size-10 w-full flex">
             <img
-              src="./kafsco.icon.jpeg"
+              src="../kafsco.icon.jpeg"
               alt="Organizer Logo"
               className="hidden sm:block"
             />
