@@ -14,13 +14,13 @@ import {
 import "@reach/combobox/styles.css";
 import "./EventMap.css";
 import { useEventContext } from "../../Contexts/CreateEventContext";
-const secretKey = import.meta.env.VITE_SECRET_KEY;
+// const secretKey = import.meta.env.VITE_SECRET_KEY;
 console.log(secretKey);
 
 
 export default function Places() {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: secretKey,
+    googleMapsApiKey: "AIzaSyAnliOx4Yo5jCupy2J4j58bvA7jN7EIR5I",
     libraries: ["places"],
   });
 
