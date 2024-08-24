@@ -106,6 +106,7 @@ const EventForm: React.FC = () => {
 
   const handleOnSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
 
     let imageUrl = "";
 
@@ -113,7 +114,6 @@ const EventForm: React.FC = () => {
       imageUrl = await uploadImage(selectedFile);
     }
 
-    setLoading(true);
     if (!organizerProfile) {
       throw new Error("Organizer profile is required to create an event.");
     }
