@@ -32,6 +32,9 @@ const createEvent = async (eventData: any) => {
         },
       }
     );
+    const eventId = response.data.data.eventId;
+    console.log("event id after creating event", eventId);
+    localStorage.setItem("eventId", eventId);
     return response.data;
   } catch (error: any) {
     if (error.response) {
@@ -59,7 +62,7 @@ const createEvent = async (eventData: any) => {
 export const getCategories = async () => {
   try {
     const response = await axios.get(
-      "https://kafsbackend-106f.onrender.com/api/v1//categories/getallcategories"
+      "https://kafsbackend-106f.onrender.com/api/v1/categories/getallcategories"
     );
     const { data } = response.data;
     console.log(data);
@@ -68,7 +71,5 @@ export const getCategories = async () => {
     console.log("failed to fetch categories", error);
   }
 };
-
-
 
 export default createEvent;

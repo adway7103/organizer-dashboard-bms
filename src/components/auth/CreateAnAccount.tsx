@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { AccountInfo } from "../../Contexts/createAnAccountContext";
@@ -231,9 +231,9 @@ const CreateAnAccount = () => {
                   Submit{" "}
                   {loading && <Loader2 className="size-4 animate-spin" />}
                 </button>
-                <Link to={"/profile"} className="text-center">
+                {/* <Link to={"/profile"} className="text-center">
                   skip
-                </Link>
+                </Link> */}
               </div>
             </form>
           </div>

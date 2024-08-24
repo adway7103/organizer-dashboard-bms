@@ -3,11 +3,11 @@ import TextField from "@mui/material/TextField";
 
 interface ASIndividualProps {
   formData: {
-    addInfo: string;
-    minTickets: string | number;
-    maxTickets: string | number;
-    promoCodeRequired: boolean;
-    visible: boolean;
+    additionalInfo: string;
+    minPersonAllowedPerBooking: string | number;
+    maxPersonAllowedPerBooking: string | number;
+    promoCode: boolean;
+    toggleVisibility: boolean;
   };
   handleChange: (
     event: React.ChangeEvent<
@@ -25,9 +25,9 @@ const ASIndividual: React.FC<ASIndividualProps> = ({
       <div className="flex items-center justify-between">
         <TextField
           id="addInfo"
-          name="addInfo"
+          name="additionalInfo"
           label="Additional Ticket information (optional)"
-          value={formData.addInfo}
+          value={formData.additionalInfo}
           onChange={handleChange}
           multiline
           rows={4}
@@ -41,17 +41,17 @@ const ASIndividual: React.FC<ASIndividualProps> = ({
       <div className="grid grid-cols-2 gap-4">
         <TextField
           id="minTickets"
-          name="minTickets"
+          name="minPersonAllowedPerBooking"
           label="Minimum tickets per user"
           variant="outlined"
-          value={formData.minTickets}
+          value={formData.minPersonAllowedPerBooking}
           onChange={handleChange}
           className="w-full "
         />
         <TextField
           id="maxTickets"
-          name="maxTickets"
-          value={formData.maxTickets}
+          name="maxPersonAllowedPerBooking"
+          value={formData.maxPersonAllowedPerBooking}
           onChange={handleChange}
           label="Maximum tickets per user"
           variant="outlined"
@@ -64,8 +64,8 @@ const ASIndividual: React.FC<ASIndividualProps> = ({
         <input
           type="checkbox"
           id="promoCodeRequired"
-          name="promoCodeRequired"
-          checked={formData.promoCodeRequired}
+          name="promoCode"
+          checked={formData.promoCode}
           onChange={handleChange}
           className="follow rounded mx-0 w-6 h-4"
         />
@@ -80,8 +80,8 @@ const ASIndividual: React.FC<ASIndividualProps> = ({
         <input
           type="checkbox"
           id="visible"
-          name="visible"
-          checked={formData.visible}
+          name="toggleVisibility"
+          checked={formData.toggleVisibility}
           onChange={handleChange}
           className="follow rounded mx-0 w-6 h-4"
         />

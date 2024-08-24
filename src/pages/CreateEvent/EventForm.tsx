@@ -25,6 +25,7 @@ import dayjs from "dayjs";
 import createEvent from "../../api/createEventApi";
 import toast from "react-hot-toast";
 import { uploadImage } from "../../api/uploadImage";
+import { useOrganizerContext } from "../../Contexts/OrganizerProfileContext";
 
 const EventForm: React.FC = () => {
   const { eventInfo, setEventInfo } = useEventContext();
@@ -34,6 +35,7 @@ const EventForm: React.FC = () => {
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
   >([]);
+  const { organizerProfile } = useOrganizerContext();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -112,17 +114,20 @@ const EventForm: React.FC = () => {
     }
 
     setLoading(true);
+    if (!organizerProfile) {
+      throw new Error("Organizer profile is required to create an event.");
+    }
 
     const eventData: EventInfo = {
       title: eventInfo.title,
-      organizer: "667f1ad0d77d353dc37dc6aa",
+      organizer: organizerProfile.orgId,
       eventCategories: eventInfo.eventCategories,
       genres: eventInfo.genres,
       description: eventInfo.description,
       posterUrl: imageUrl,
       cheapestTicket: {
         currency: eventInfo.cheapestTicket.currency,
-        amount: "",
+        amount: "10",
       },
       eventStart: eventStart,
       eventEnd: eventEnd,
@@ -143,8 +148,16 @@ const EventForm: React.FC = () => {
       toast.success("Event created successfully!");
       setIsNextPageEnabled(true);
       setLoading(false);
-    } catch (error) {
-      toast.error("Failed to create event:");
+    } catch (error: any) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        // Fallback error message
+      }
     } finally {
       setLoading(false);
     }
@@ -160,6 +173,7 @@ const EventForm: React.FC = () => {
         value={eventInfo.title}
         onChange={handleChange}
         fullWidth
+        required
         sx={{
           "& .MuiInputBase-root": {
             height: "56px", // Adjust height as needed
@@ -180,6 +194,7 @@ const EventForm: React.FC = () => {
           value={eventInfo.eventCategories}
           onChange={handleSelectChange}
           fullWidth
+          required
           MenuProps={{
             PaperProps: {
               style: {
@@ -223,6 +238,7 @@ const EventForm: React.FC = () => {
           value={eventInfo.periodicity}
           onChange={handleSelectChange}
           fullWidth
+          required
         >
           <MenuItem value="Periodicity 1">Periodicity 1</MenuItem>
           <MenuItem value="Periodicity 2">Periodicity 2</MenuItem>
@@ -234,6 +250,7 @@ const EventForm: React.FC = () => {
         id="description"
         name="description"
         label="Description"
+        required
         multiline
         rows={2}
         placeholder="Grab people's attention with a short description about your event."
@@ -250,7 +267,9 @@ const EventForm: React.FC = () => {
         id="genres"
         options={tagsOptions}
         getOptionLabel={(option) => option.title}
-        renderInput={(params) => <TextField {...params} label="Add Tags" />}
+        renderInput={(params) => (
+          <TextField {...params} label="Add Tags" required />
+        )}
         value={tagsOptions.filter((option) =>
           eventInfo.genres.includes(option.title)
         )}
@@ -271,6 +290,7 @@ const EventForm: React.FC = () => {
           value={eventInfo.cheapestTicket.currency}
           onChange={handleSelectChange}
           fullWidth
+          required
         >
           <MenuItem value="INR">INR</MenuItem>
           <MenuItem value="USD">USD</MenuItem>
@@ -350,6 +370,7 @@ const EventForm: React.FC = () => {
             value="offline"
             checked={eventInfo.eventMode === "offline"}
             onChange={handleChange}
+            required
           />
           <label htmlFor="offline" className="mr-2">
             Offline
@@ -361,6 +382,7 @@ const EventForm: React.FC = () => {
             value="online"
             checked={eventInfo.eventMode === "online"}
             onChange={handleChange}
+            required
           />
           <label htmlFor="online">Online</label>
         </div>

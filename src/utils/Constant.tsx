@@ -83,36 +83,3 @@ export const tagsOptions = [
         title: "title 3",
     }
 ]
-
-export const profileSocials = [
-    {
-        site: "Kafsco",
-        link: "/",
-        img: "/kafsco.png",
-    },
-    {
-        site: "Instagram",
-        link: "/ig",
-        img: "/ig_icon.png",
-    },
-    {
-        site: "Tiktok",
-        link: "/tiktok",
-        img: "/tiktok_icon.png",
-    },
-    {
-        site: "Facebook",
-        link: "/fb",
-        img : "/fb_icon.png",
-    },
-    {
-        site: "Twitter",
-        link: "/tweet",
-        img : "/twitter_icon.png",
-    },
-    {
-        site: "Your website",
-        link: "/sdkgfusjg",
-        img: "/link_icon.png",
-    },
-]
