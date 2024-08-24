@@ -15,7 +15,7 @@ import "@reach/combobox/styles.css";
 import "./EventMap.css";
 import { useEventContext } from "../../Contexts/CreateEventContext";
 // const secretKey = import.meta.env.VITE_SECRET_KEY;
-console.log(secretKey);
+// console.log(secretKey);
 
 
 export default function Places() {
