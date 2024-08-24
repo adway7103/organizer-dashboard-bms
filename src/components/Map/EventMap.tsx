@@ -174,10 +174,10 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import "./EventMap.css";
+import "./EventMap.css"; // Ensure this file is correctly styled
 import { useEventContext } from "../../Contexts/CreateEventContext";
 
-export default function Places() {
+const Places = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyAnliOx4Yo5jCupy2J4j58bvA7jN7EIR5I", // Replace with your actual API key
     libraries: ["places"],
@@ -186,7 +186,7 @@ export default function Places() {
   if (!isLoaded) return <div>Loading...</div>;
 
   return <MapComponent />;
-}
+};
 
 const MapComponent = () => {
   const center = { lat: -33.8688, lng: 151.2195 };
@@ -224,22 +224,20 @@ const PlacesAutocomplete = ({
 }: {
   setLocation: (lat: number, lng: number, venueAddress: any) => void;
 }) => {
-  const {
-    ready,
-    value,
-    setValue,
-    suggestions: { status, data },
-    clearSuggestions,
-  } = usePlacesAutocomplete({
+  const { ready, value, setValue, suggestions: { status, data }, clearSuggestions } = usePlacesAutocomplete({
     requestOptions: {
-      location: new google.maps.LatLng(-33.8688, 151.2195),
+      location: new window.google.maps.LatLng(-33.8688, 151.2195),
       radius: 20000,
     },
   });
 
-  
+  console.log("Suggestions status:", status); // Debugging
+  console.log("Suggestions data:", data); // Debugging
+
   const handleSelect = useCallback(
     async (event: React.SyntheticEvent, newValue: { value: string; label: string } | null) => {
+      console.log(event);
+      
       if (newValue) {
         const address = newValue.label;
         setValue(address, false);
@@ -305,7 +303,7 @@ const PlacesAutocomplete = ({
   };
 
   // Map the suggestions to the format expected by Autocomplete
-  const options = data.map(({ place_id, description }: any) => ({
+  const options = data.map(({ description }: any) => ({
     value: description,
     label: description,
   }));
@@ -326,3 +324,5 @@ const PlacesAutocomplete = ({
     />
   );
 };
+
+export default Places;
