@@ -63,12 +63,11 @@ const CE_Page2: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setLoadingButton(buttonType);
-
+  
     console.log("redirectPath", redirectPath);
-    
-
+  
     const eventId = localStorage.getItem("eventId");
-
+  
     const lastEntryTimeFormatted =
       lastEntryDate && lastEntryTime
         ? dayjs(lastEntryDate)
@@ -76,7 +75,7 @@ const CE_Page2: React.FC = () => {
             .minute(dayjs(lastEntryTime).minute())
             .format("YYYY-MM-DD HH:mm")
         : null;
-
+  
     const data: any = {
       isPrivate,
       entryCondition,
@@ -84,25 +83,47 @@ const CE_Page2: React.FC = () => {
       limitTotalTicket,
       lastEntryTime: lastEntryTimeFormatted, // Include formatted time
     };
-
+  
     if (buttonType === "nextPage") {
       data.eventStatus = "Published";
     }
-
+  
     try {
       await updateEvent(data, eventId);
       navigate(redirectPath);
-      toast.success("Event created successfully!");
+      toast.success("Event updated successfully!");
       setLoading(false);
       setLoadingButton(null);
       localStorage.removeItem("eventId");
-    } catch (error) {
-      console.error("Error updating event", error);
-      toast.error("Failed to create the event!");
+    } catch (error: any) {
       setLoading(false);
       setLoadingButton(null);
+  
+      if (error.isAxiosError) {
+        const status = error.response?.status;
+        const data = error.response?.data;
+  
+        if (status === 400 || status === 409) {
+          const errorMessage = data.message;
+  
+          if (typeof errorMessage === "string") {
+            toast.error(errorMessage);
+          } else if (Array.isArray(errorMessage.details)) {
+            errorMessage.details.forEach((detail: { message: string }) => {
+              toast.error(detail.message);
+            });
+          } else {
+            toast.error("Invalid error format from server.");
+          }
+        } else {
+          toast.error("An unexpected error occurred. Please try again.");
+        }
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
+  
 
   const handleDateChange = (newValue: Dayjs | null, type: string) => {
     if (type === "lastEntryDate") {

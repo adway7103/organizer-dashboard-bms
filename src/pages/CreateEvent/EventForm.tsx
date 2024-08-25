@@ -145,6 +145,7 @@ const EventForm: React.FC = () => {
       eventInfo.title &&
       eventInfo.eventCategories.length > 0 &&
       eventInfo.description &&
+      selectedFile &&
       eventInfo.eventStartDate &&
       eventInfo.eventStartTime &&
       eventInfo.eventEndDate &&
@@ -153,7 +154,8 @@ const EventForm: React.FC = () => {
       eventInfo.genres &&
       eventInfo.cheapestTicket &&
       eventInfo.venueAddress &&
-      eventInfo.refundPolicy &&
+      eventInfo.refundPolicy.allRefundsApproved &&
+      eventInfo.refundPolicy.policyType &&
       eventInfo.periodicity &&
       eventInfo.eventMode &&
       eventInfo.isRep
@@ -185,17 +187,27 @@ const EventForm: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setLoadingButton(buttonType);
-
+  
     let imageUrl = "";
-
+  
     if (selectedFile) {
-      imageUrl = await uploadImage(selectedFile);
+      try {
+        imageUrl = await uploadImage(selectedFile);
+      } catch (uploadError) {
+        toast.error("Failed to upload image. Please try again.");
+        setLoading(false);
+        setLoadingButton(null);
+        return;
+      }
     }
-
+  
     if (!profileData) {
-      throw new Error("Organizer profile is required to create an event.");
+      toast.error("Organizer profile is required to create an event.");
+      setLoading(false);
+      setLoadingButton(null);
+      return;
     }
-
+  
     const eventData: EventInfo = {
       title: eventInfo.title,
       organizer: profileData.orgId,
@@ -221,14 +233,11 @@ const EventForm: React.FC = () => {
       periodicity: eventInfo.periodicity,
       duration: eventInfo.duration,
     };
-
+  
     try {
       await createEvent(eventData);
       navigate(redirectPath);
       toast.success("Event created successfully!");
-      setLoading(false);
-      setLoadingButton(null); // Reset loading state for buttons
-
       setEventInfo({
         title: "",
         eventCategories: [],
@@ -257,20 +266,37 @@ const EventForm: React.FC = () => {
         organizer: "",
       });
     } catch (error: any) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message);
+      console.error(error);
+  
+      if (error.isAxiosError) {
+        const status = error.response?.status;
+        const data = error.response?.data;
+  
+        if (status === 400 || status === 409) {
+          const errorMessage = data.message;
+  
+          if (typeof errorMessage === "string") {
+            toast.error(errorMessage);
+          } else if (errorMessage.details) {
+            // Assuming 'details' is an array of error messages
+            errorMessage.details.forEach((detail: { message: string }) => {
+              toast.error(detail.message);
+            });
+          } else {
+            toast.error("Invalid error format from server.");
+          }
+        } else {
+          toast.error("An unexpected error occurred. Please try again.");
+        }
       } else {
-        // Fallback error message
+        toast.error("An unexpected error occurred. Please try again.");
       }
     } finally {
       setLoading(false);
       setLoadingButton(null); // Reset loading state for buttons
     }
   };
+  
 
   return (
     <form className="event-form flex flex-col gap-5 pb-10">
