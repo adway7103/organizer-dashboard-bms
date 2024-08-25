@@ -20,6 +20,7 @@ import axios from "axios";
 // };
 
 const createEvent = async (eventData: any) => {
+    
   const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
