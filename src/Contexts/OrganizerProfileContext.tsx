@@ -7,6 +7,7 @@ interface EventCategory {
 }
 
 interface OrganizerProfile {
+  countryCode: any;
   orgId: string;
   name: string;
   slug: string;

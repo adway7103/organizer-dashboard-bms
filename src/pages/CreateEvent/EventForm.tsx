@@ -12,7 +12,6 @@ import {
   LocalizationProvider,
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Link } from "react-router-dom";
 import { useEventContext } from "../../Contexts/CreateEventContext";
 import { tagsOptions } from "../../utils/Constant";
 import { SelectChangeEvent } from "@mui/material/Select";
@@ -26,12 +25,14 @@ import createEvent from "../../api/createEventApi";
 import toast from "react-hot-toast";
 import { uploadImage } from "../../api/uploadImage";
 import { useOrganizerContext } from "../../Contexts/OrganizerProfileContext";
+import { useNavigate } from "react-router-dom";
 
 const EventForm: React.FC = () => {
+  const navigate = useNavigate();
   const { eventInfo, setEventInfo } = useEventContext();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isNextPageEnabled, setIsNextPageEnabled] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
+  const [loadingButton, setLoadingButton] = useState<string | null>(null); // Track loading state for each button
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
   >([]);
@@ -52,12 +53,28 @@ const EventForm: React.FC = () => {
     fetchCategories();
   }, []);
 
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setEventInfo((prevEventInfo) => ({
+  //     ...prevEventInfo,
+  //     [name]: value,
+  //   }));
+  // };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setEventInfo((prevEventInfo) => ({
-      ...prevEventInfo,
-      [name]: value,
-    }));
+    if (name === "duration") {
+      const numericValue = value.replace(/[^\d]/g, ""); // Extract numeric value
+      setEventInfo((prevEventInfo) => ({
+        ...prevEventInfo,
+        [name]: `${numericValue}h`, // Append "h" to the numeric value
+      }));
+    } else {
+      setEventInfo((prevEventInfo) => ({
+        ...prevEventInfo,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSelectChange = (event: SelectChangeEvent<string | string[]>) => {
@@ -104,9 +121,34 @@ const EventForm: React.FC = () => {
     setSelectedFile(file);
   };
 
-  const handleOnSubmit = async (e: any) => {
+  const validateForm = () => {
+    return (
+      eventInfo.title &&
+      eventInfo.eventCategories.length > 0 &&
+      eventInfo.description &&
+      eventInfo.eventStartDate &&
+      eventInfo.eventStartTime &&
+      eventInfo.eventEndDate &&
+      eventInfo.eventEndTime &&
+      eventInfo.duration &&
+      eventInfo.genres &&
+      eventInfo.cheapestTicket &&
+      eventInfo.venueAddress &&
+      eventInfo.refundPolicy &&
+      eventInfo.periodicity &&
+      eventInfo.eventMode &&
+      eventInfo.isRep
+    );
+  };
+
+  const handleOnSubmit = async (
+    e: any,
+    redirectPath: string,
+    buttonType: string
+  ) => {
     e.preventDefault();
     setLoading(true);
+    setLoadingButton(buttonType);
 
     let imageUrl = "";
 
@@ -141,13 +183,43 @@ const EventForm: React.FC = () => {
       },
       isRep: eventInfo.isRep,
       periodicity: eventInfo.periodicity,
+      duration: eventInfo.duration,
     };
 
     try {
       await createEvent(eventData);
+      navigate(redirectPath);
       toast.success("Event created successfully!");
-      setIsNextPageEnabled(true);
       setLoading(false);
+      setLoadingButton(null); // Reset loading state for buttons
+
+      setEventInfo({
+        title: "",
+        eventCategories: [],
+        genres: [],
+        description: "",
+        posterUrl: "",
+        cheapestTicket: {
+          currency: "",
+          amount: "",
+        },
+        eventStartDate: null,
+        eventStartTime: null,
+        eventEndDate: null,
+        eventEndTime: null,
+        eventMode: "",
+        venueAddress: { name: "", city: "", country: "", zipcode: "" },
+        venueLocation: { latitude: 0, longitude: 0 },
+        refundPolicy: {
+          refundTimeframe: "",
+          policyType: false,
+          allRefundsApproved: false,
+        },
+        isRep: false,
+        periodicity: "",
+        duration: "",
+        organizer: "",
+      });
     } catch (error: any) {
       if (
         error.response &&
@@ -160,6 +232,7 @@ const EventForm: React.FC = () => {
       }
     } finally {
       setLoading(false);
+      setLoadingButton(null); // Reset loading state for buttons
     }
   };
 
@@ -355,6 +428,32 @@ const EventForm: React.FC = () => {
         </LocalizationProvider>
       </div>
 
+      <div>
+        <label
+          htmlFor="eventStart"
+          className="flex space-x-2 text-lg font-medium pb-2"
+        >
+          Duration{" "}
+        </label>
+        <TextField
+          id="duration"
+          name="duration"
+          placeholder="Enter duration in hours (e.g., 2 for 2 hours)"
+          value={eventInfo.duration.replace("h", "")} // Remove "h" for display
+          onChange={handleChange}
+          type="number" // Use number input for numeric values
+          fullWidth
+          sx={{
+            "& .MuiInputBase-root": {
+              height: "56px", // Adjust height as needed
+            },
+            "& .MuiOutlinedInput-input": {
+              padding: "16px", // Adjust padding as needed
+            },
+          }}
+        />
+      </div>
+
       <div className="location">
         <label
           htmlFor="location-search"
@@ -466,35 +565,26 @@ const EventForm: React.FC = () => {
 
       <div className="flex flex-wrap gap-5 md:justify-normal justify-center">
         <div>
-          {" "}
           <button
-            className="flex justify-center items-center gap-4 event-form-btn"
-            onClick={handleOnSubmit}
+            disabled={!validateForm() || loading}
+            className={`flex justify-center items-center gap-4 event-form-btn ${
+              !validateForm() || loading ? "cursor-not-allowed" : ""
+            }`}
+            onClick={(e) => handleOnSubmit(e, "/events", "saveChanges")}
           >
-            {loading ? "Saving Changes.." : "Save Changes"}{" "}
+            {loadingButton === "saveChanges" ? "Loading..." : "Save Changes"}
           </button>
         </div>
         <div>
-          <Link
-            to={isNextPageEnabled ? "/create-events/2" : "#"}
-            className={`event-form-btn ${
-              isNextPageEnabled
-                ? "bg-black text-white"
-                : "bg-gray-400 text-gray-700 cursor-not-allowed"
+          <button
+            disabled={!validateForm() || loading}
+            className={`px-14 py-2 rounded event-form-btn ${
+              !validateForm() || loading ? "cursor-not-allowed" : ""
             }`}
+            onClick={(e) => handleOnSubmit(e, "/create-events/2", "nextPage")}
           >
-            <button
-              type="button"
-              disabled={!isNextPageEnabled}
-              className={`px-4 py-2 rounded ${
-                isNextPageEnabled
-                  ? "hover:bg-secondary-dark"
-                  : "cursor-not-allowed"
-              }`}
-            >
-              Next Page
-            </button>{" "}
-          </Link>
+            {loadingButton === "nextPage" ? "Loading..." : "Next Page"}
+          </button>
         </div>
       </div>
     </form>
