@@ -313,9 +313,9 @@ const EventForm: React.FC = () => {
           fullWidth
           required
         >
-          <MenuItem value="Periodicity 1">Periodicity 1</MenuItem>
-          <MenuItem value="Periodicity 2">Periodicity 2</MenuItem>
-          <MenuItem value="Periodicity 3">Periodicity 3</MenuItem>
+          <MenuItem value="daily">daily</MenuItem>
+          <MenuItem value="weekly">weekly</MenuItem>
+          <MenuItem value="monthly">monthly</MenuItem>
         </Select>
       </div>
 

@@ -44,6 +44,7 @@ const ASIndividual: React.FC<ASIndividualProps> = ({
           name="minPersonAllowedPerBooking"
           label="Minimum tickets per user"
           variant="outlined"
+          type="number"
           value={formData.minPersonAllowedPerBooking}
           onChange={handleChange}
           className="w-full "
@@ -55,6 +56,7 @@ const ASIndividual: React.FC<ASIndividualProps> = ({
           onChange={handleChange}
           label="Maximum tickets per user"
           variant="outlined"
+          type="number"
           className="w-full "
         />
       </div>

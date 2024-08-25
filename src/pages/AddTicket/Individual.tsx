@@ -130,8 +130,7 @@ const Individual: React.FC = () => {
     try {
       await createTicket(ticketData);
       toast.success("Ticket created successfully:");
-      navigate("/profile");
-      localStorage.removeItem("eventId");
+      navigate("/create-events/2");
     } catch (error) {
       toast.error("failed to creating ticket");
     }
@@ -188,6 +187,7 @@ const Individual: React.FC = () => {
             label="Number of tickets"
             placeholder="Quantity"
             variant="outlined"
+            type="number"
             value={formData.totalSeats}
             onChange={handleChange}
           />

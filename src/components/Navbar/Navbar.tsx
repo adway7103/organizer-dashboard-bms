@@ -19,7 +19,7 @@ const Navbar = ({ toggleSidebar }: any) => {
         </svg>
       </div>
       <div className="flex items-center">
-           <Link to="/dashboard">
+        <Link to="/dashboard">
           <div className="size-10 w-full flex">
             <img
               src="../kafsco.icon.jpeg"
@@ -34,13 +34,15 @@ const Navbar = ({ toggleSidebar }: any) => {
       </div>
       <div className="hidden md:flex items-center space-x-4">
         <img src="/Group.png" />
-        <button
-          type="button"
-          className="inline-flex items-center px-4 py-1 border border-gray-600 rounded-2xl hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
-        >
-          <img src="/user.png" className="pr-2" />
-          profile
-        </button>
+        <Link to={"/profile"}>
+          <button
+            type="button"
+            className="inline-flex items-center px-4 py-1 border border-gray-600 rounded-2xl hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+          >
+            <img src="/user.png" className="pr-2" />
+            profile
+          </button>
+        </Link>
         <div className="relative">
           <Link
             to="/create-events"
