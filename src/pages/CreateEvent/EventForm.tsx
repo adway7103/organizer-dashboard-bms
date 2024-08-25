@@ -24,8 +24,28 @@ import dayjs from "dayjs";
 import createEvent from "../../api/createEventApi";
 import toast from "react-hot-toast";
 import { uploadImage } from "../../api/uploadImage";
-import { useOrganizerContext } from "../../Contexts/OrganizerProfileContext";
 import { useNavigate } from "react-router-dom";
+import { fetchOrganizationProfile } from "../../api/fetchProfileApi.ts";
+interface EventCategory {
+  _id: string;
+  categoryName: string;
+}
+
+interface OrganizerProfile {
+  countryCode: any;
+  orgId: string;
+  name: string;
+  slug: string;
+  logoUrl: string;
+  eventCategories: EventCategory[];
+  facebookAccUrl: string;
+  instagramAccUrl: string;
+  twiiterAccUrl: string;
+  followersCount: number;
+  followingCount: number;
+  phone: string;
+  tiktokAccUrl: string;
+}
 
 const EventForm: React.FC = () => {
   const navigate = useNavigate();
@@ -36,7 +56,6 @@ const EventForm: React.FC = () => {
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
   >([]);
-  const { organizerProfile } = useOrganizerContext();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -141,6 +160,23 @@ const EventForm: React.FC = () => {
     );
   };
 
+  const [profileData, setProfileData] = useState<OrganizerProfile>();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const fetchedCategories = await fetchOrganizationProfile();
+        if (fetchedCategories) {
+          setProfileData(fetchedCategories);
+        }
+      } catch (error) {
+        console.error("Failed to fetch categories", error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
   const handleOnSubmit = async (
     e: any,
     redirectPath: string,
@@ -156,13 +192,13 @@ const EventForm: React.FC = () => {
       imageUrl = await uploadImage(selectedFile);
     }
 
-    if (!organizerProfile) {
+    if (!profileData) {
       throw new Error("Organizer profile is required to create an event.");
     }
 
     const eventData: EventInfo = {
       title: eventInfo.title,
-      organizer: organizerProfile.orgId,
+      organizer: profileData.orgId,
       eventCategories: eventInfo.eventCategories,
       genres: eventInfo.genres,
       description: eventInfo.description,

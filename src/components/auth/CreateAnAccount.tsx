@@ -99,8 +99,34 @@ const CreateAnAccount = () => {
         twiiterAccUrl: "",
       });
       navigate("/profile");
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+
+      // Check if the error is an AxiosError
+      if (error.isAxiosError) {
+        const status = error.response?.status;
+        const data = error.response?.data;
+
+        // Handle error based on status code and data
+        if (status === 400 || status === 409) {
+          const errorMessage = data.message;
+
+          if (typeof errorMessage === "string") {
+            toast.error(errorMessage);
+          } else if (errorMessage.details) {
+            // Assuming 'details' is an array of error messages
+            errorMessage.details.forEach((detail: { message: string }) => {
+              toast.error(detail.message);
+            });
+          } else {
+            toast.error("Invalid error format from server.");
+          }
+        } else {
+          toast.error("An unexpected error occurred. Please try again.");
+        }
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     } finally {
       setLoading(false);
     }

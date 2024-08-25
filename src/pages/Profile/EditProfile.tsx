@@ -9,14 +9,36 @@ import { useEffect, useState } from "react";
 import { getCategories } from "../../api/createEventApi";
 import { MuiTelInput } from "mui-tel-input";
 import FileDragNDrop from "../../components/DragNDrop/FileDragNDrop";
-import { useOrganizerContext } from "../../Contexts/OrganizerProfileContext.tsx";
 import toast from "react-hot-toast";
 import { updateProfile, UpdateDataType } from "../../api/updateProfile.ts";
 import { uploadImage } from "../../api/uploadImage.ts";
 import FormDialog from "./Dialog.tsx";
+import { fetchOrganizationProfile } from "../../api/fetchProfileApi.ts";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+interface EventCategory {
+  _id: string;
+  categoryName: string;
+}
+
+interface OrganizerProfile {
+  countryCode: any;
+  orgId: string;
+  name: string;
+  slug: string;
+  logoUrl: string;
+  eventCategories: EventCategory[];
+  facebookAccUrl: string;
+  instagramAccUrl: string;
+  twiiterAccUrl: string;
+  followersCount: number;
+  followingCount: number;
+  phone: string;
+  tiktokAccUrl: string;
+}
 
 const EditProfile = () => {
-  const { organizerProfile } = useOrganizerContext();
+  const navigate = useNavigate();
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
   >([]);
@@ -48,23 +70,40 @@ const EditProfile = () => {
     fetchCategories();
   }, []);
 
-  useEffect(() => {
-    if (organizerProfile) {
-      setName(organizerProfile.name || "");
+  const [profileData, setProfileData] = useState<OrganizerProfile>();
 
-      if (organizerProfile.countryCode && organizerProfile.phone) {
-        setPhone(`${organizerProfile.countryCode} ${organizerProfile.phone}`);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const fetchedCategories = await fetchOrganizationProfile();
+        if (fetchedCategories) {
+          setProfileData(fetchedCategories);
+        }
+      } catch (error) {
+        console.error("Failed to fetch categories", error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  useEffect(() => {
+    if (profileData) {
+      setName(profileData.name || "");
+
+      if (profileData.countryCode && profileData.phone) {
+        setPhone(`${profileData.countryCode} ${profileData.phone}`);
       } else {
         setPhone("");
       } // setAbout("");
       setFacebookAccUrl("");
-      setInstagramAccUrl(organizerProfile.instagramAccUrl || "");
-      setTwiitterAccUrl(organizerProfile.twiiterAccUrl || "");
-      setTiktokAccUrl(organizerProfile.tiktokAccUrl || "");
+      setInstagramAccUrl(profileData.instagramAccUrl || "");
+      setTwiitterAccUrl(profileData.twiiterAccUrl || "");
+      setTiktokAccUrl(profileData.tiktokAccUrl || "");
       setOrgWebsiteUrl("");
       setCategory([]);
     }
-  }, [organizerProfile]);
+  }, [profileData]);
 
   const handleSelectChange = (event: SelectChangeEvent<string[]>) => {
     setCategory(event.target.value as string[]);
@@ -77,14 +116,14 @@ const EditProfile = () => {
   const formSubmitHandler = async (e: any) => {
     e.preventDefault();
 
-    if (!organizerProfile) {
+    if (!profileData) {
       throw new Error("Organizer profile is required to update.");
     }
 
     setLoading(true);
-    const id = organizerProfile.orgId;
+    const id = profileData.orgId;
 
-    let imageUrl = "";
+    let imageUrl = profileData.logoUrl;
 
     if (selectedFile) {
       imageUrl = await uploadImage(selectedFile);
@@ -107,10 +146,24 @@ const EditProfile = () => {
       if (Object.keys(data).length > 0) {
         await updateProfile(data as UpdateDataType, id);
         toast.success("Update successful");
-        setLoading(false);
+        navigate("/profile");
       }
-    } catch (error) {
+    } catch (error: any) {
+      setLoading(false);
       console.error("Failed to update profile", error);
+
+      // Extracting and showing error message from the backend
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
+    } finally {
+      setLoading(false); // Ensure loading state is reset
     }
   };
 
@@ -118,31 +171,31 @@ const EditProfile = () => {
     {
       id: "1",
       site: "Kafsco",
-      link: `https://www.kafsco.com/organization/${organizerProfile?.orgId}`,
+      link: `https://www.kafsco.com/organization/${profileData?.orgId}`,
       img: "/kafsco.png",
     },
     {
       id: "2",
       site: "Instagram",
-      link: organizerProfile?.instagramAccUrl ?? "",
+      link: profileData?.instagramAccUrl ?? "",
       img: "/ig_icon.png",
     },
     {
       id: "3",
       site: "Tiktok",
-      link: organizerProfile?.tiktokAccUrl ?? "",
+      link: profileData?.tiktokAccUrl ?? "",
       img: "/tiktok_icon.png",
     },
     {
       id: "4",
       site: "Facebook",
-      link: organizerProfile?.facebookAccUrl ?? "",
+      link: profileData?.facebookAccUrl ?? "",
       img: "/fb_icon.png",
     },
     {
       id: "5",
       site: "Twitter",
-      link: organizerProfile?.twiiterAccUrl ?? "",
+      link: profileData?.twiiterAccUrl ?? "",
       img: "/twitter_icon.png",
     },
     {
@@ -184,18 +237,18 @@ const EditProfile = () => {
   const handleDiscard = async (e: any) => {
     e.preventDefault();
 
-    if (!organizerProfile) return;
+    if (!profileData) return;
 
-    setName(organizerProfile.name || "");
-    setPhone(`${organizerProfile.countryCode}${organizerProfile.phone}` || "");
-    setFacebookAccUrl(organizerProfile.facebookAccUrl || "");
-    setInstagramAccUrl(organizerProfile.instagramAccUrl || "");
-    setTwiitterAccUrl(organizerProfile.twiiterAccUrl || "");
-    setTiktokAccUrl(organizerProfile.tiktokAccUrl || "");
+    setName(profileData.name || "");
+    setPhone(`${profileData.countryCode}${profileData.phone}` || "");
+    setFacebookAccUrl(profileData.facebookAccUrl || "");
+    setInstagramAccUrl(profileData.instagramAccUrl || "");
+    setTwiitterAccUrl(profileData.twiiterAccUrl || "");
+    setTiktokAccUrl(profileData.tiktokAccUrl || "");
     setOrgWebsiteUrl("");
 
-    if (organizerProfile.countryCode && organizerProfile.phone) {
-      setPhone(`${organizerProfile.countryCode} ${organizerProfile.phone}`);
+    if (profileData.countryCode && profileData.phone) {
+      setPhone(`${profileData.countryCode} ${profileData.phone}`);
     } else {
       setPhone("");
     }
@@ -394,9 +447,6 @@ const EditProfile = () => {
 };
 
 export default EditProfile;
-
-import React from "react";
-import { Link } from "react-router-dom";
 
 interface ProfileSocialProps {
   site: string;

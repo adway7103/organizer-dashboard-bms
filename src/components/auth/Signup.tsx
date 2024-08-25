@@ -43,10 +43,9 @@ const Register = () => {
         break;
     }
   };
-
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-
+  
     try {
       setLoading(true);
       const response = await useSignUp({
@@ -62,18 +61,45 @@ const Register = () => {
       });
       const token = response.data.accessToken;
       login(token);
-      toast.success("Sign up successfull");
+      toast.success("Sign up successful");
       navigate("/createanaccount");
     } catch (error: any) {
-      if (error.response.status === 409) {
-        toast.error("Email or phone number already in use.");
+      console.log(error);
+  
+      // Check if the error is an AxiosError
+      if (error.isAxiosError) {
+        const status = error.response?.status;
+        const data = error.response?.data;
+  
+        // Handle error based on status code and data
+        if (status === 400) {
+          const errorMessage = data.message;
+  
+          if (errorMessage.details) {
+            // Extract validation errors from 'details' array
+            errorMessage.details.forEach((detail: { message: string }) => {
+              toast.error(detail.message);
+            });
+          } else if (typeof errorMessage === "string") {
+            toast.error(errorMessage);
+          } else {
+            toast.error("Invalid error format from server.");
+          }
+        } else if (status === 409) {
+          toast.error("Email or phone number already in use.");
+        } else {
+          toast.error("An unexpected error occurred. Please try again.");
+        }
       } else {
-        console.error("signup error:", error);
+        toast.error("An unexpected error occurred. Please try again.");
       }
     } finally {
       setLoading(false);
     }
   };
+  
+  
+  
 
   return (
     <>

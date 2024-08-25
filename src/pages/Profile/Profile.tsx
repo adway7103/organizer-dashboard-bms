@@ -2,35 +2,71 @@ import "./Profile.css";
 import "./ProfileSocial.tsx";
 import ProfileSocial from "./ProfileSocial.tsx";
 import { Link } from "react-router-dom";
-import { useOrganizerContext } from "../../Contexts/OrganizerProfileContext.tsx";
+import { useEffect, useState } from "react";
+import { fetchOrganizationProfile } from "../../api/fetchProfileApi.ts";
+interface EventCategory {
+  _id: string;
+  categoryName: string;
+}
+
+interface OrganizerProfile {
+  countryCode: any;
+  orgId: string;
+  name: string;
+  slug: string;
+  logoUrl: string;
+  eventCategories: EventCategory[];
+  facebookAccUrl: string;
+  instagramAccUrl: string;
+  twiiterAccUrl: string;
+  followersCount: number;
+  followingCount: number;
+  phone: string;
+  tiktokAccUrl: string;
+}
 
 const Profile = () => {
-  const { organizerProfile } = useOrganizerContext();
+  const [profileData, setProfileData] = useState<OrganizerProfile>();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const fetchedCategories = await fetchOrganizationProfile();
+        if (fetchedCategories) {
+          setProfileData(fetchedCategories);
+        }
+      } catch (error) {
+        console.error("Failed to fetch categories", error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const profileSocials = [
     {
       site: "Kafsco",
-      link: `https://www.kafsco.com/organization/${organizerProfile?.orgId}`,
+      link: `https://www.kafsco.com/organization/${profileData?.orgId}`,
       img: "/kafsco.png",
     },
     {
       site: "Instagram",
-      link: organizerProfile?.instagramAccUrl ?? "",
+      link: profileData?.instagramAccUrl ?? "",
       img: "/ig_icon.png",
     },
     {
       site: "Tiktok",
-      link: organizerProfile?.tiktokAccUrl ?? "",
+      link: profileData?.tiktokAccUrl ?? "",
       img: "/tiktok_icon.png",
     },
     {
       site: "Facebook",
-      link: organizerProfile?.twiiterAccUrl ?? "",
+      link: profileData?.twiiterAccUrl ?? "",
       img: "/fb_icon.png",
     },
     {
       site: "Twitter",
-      link: organizerProfile?.instagramAccUrl ?? "",
+      link: profileData?.instagramAccUrl ?? "",
       img: "/twitter_icon.png",
     },
     {
@@ -47,25 +83,23 @@ const Profile = () => {
       <h1 className="font-semibold text-2xl pb-4">Profile Details</h1>
       <div className="flex flex-col items-center gap-4 w-full p-5 border-2 rounded-2xl">
         <img
-          src={organizerProfile?.logoUrl}
+          src={profileData?.logoUrl}
           className="pfp object-cover rounded-full"
-          alt="img"
+          alt=""
         />
-        <h3 className="font-semibold text-lg">{organizerProfile?.name}</h3>
+        <h3 className="font-semibold text-lg">{profileData?.name}</h3>
 
         <div className="profile-info grid sm:grid-cols-2 gap-4 w-full">
           <span className="text-center text-sm text-black py-2 profile-border">
-            {organizerProfile?.phone ? organizerProfile.phone : "Phone Number"}
+            {profileData?.phone ? profileData.phone : "Phone Number"}
           </span>
-          <span className="text-center text-sm text-black py-2 profile-border">
-            {organizerProfile?.eventCategories?.map(
-              (category, index, array) => (
-                <span key={category._id}>
-                  {category.categoryName}
-                  {index < array.length - 1 && ", "}
-                </span>
-              )
-            )}
+          <span className="text-center text-sm text-black py-2 profile-border overflow-x-auto">
+            {profileData?.eventCategories?.map((category, index, array) => (
+              <span key={category._id}>
+                {category.categoryName}
+                {index < array.length - 1 && ", "}
+              </span>
+            ))}
           </span>
         </div>
 
