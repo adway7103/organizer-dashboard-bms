@@ -226,7 +226,7 @@ const PlacesAutocomplete = ({
         value={address}
         onChange={handleInputChange}
         placeholder="Search an address"
-        className="w-full p-2 border border-gray-300 rounded-md"
+        className="w-full items-center border border-gray-300 rounded-md h-[56px]"
       />
       {predictions.length > 0 && (
         <ul className="absolute top-full left-0 w-full border border-gray-300 bg-white shadow-lg mt-1 z-10">
@@ -244,7 +244,6 @@ const PlacesAutocomplete = ({
     </div>
   );
 };
-
 
 // import { useMemo, useState, useCallback } from "react";
 // import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
@@ -264,7 +263,6 @@ const PlacesAutocomplete = ({
 // import { useEventContext } from "../../Contexts/CreateEventContext";
 // // const secretKey = import.meta.env.VITE_SECRET_KEY;
 // // console.log(secretKey);
-
 
 // export default function Places() {
 //   const { isLoaded } = useLoadScript({
