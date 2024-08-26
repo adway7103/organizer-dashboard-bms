@@ -57,6 +57,7 @@ const EventForm: React.FC = () => {
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
   >([]);
+console.log(loadingButton);
 
   useEffect(() => {
     const fetchCategories = async () => {

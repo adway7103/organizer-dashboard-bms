@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { IoTicketOutline } from "react-icons/io5";
+// import { IoTicketOutline } from "react-icons/io5";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -26,6 +26,7 @@ const CE_Page2: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState<string | null>(null);
+console.log(loadingButton);
 
   const [lastEntryDate, setLastEntryDate] = useState<Dayjs | null>(null);
   const [lastEntryTime, setLastEntryTime] = useState<Dayjs | null>(null);

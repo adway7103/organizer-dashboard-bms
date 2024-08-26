@@ -6,7 +6,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import ASIndividual from "../../components/AdvancedSettings/ASIndividual";
-import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { createTicket } from "../../api/createTicket";
 import toast from "react-hot-toast";
