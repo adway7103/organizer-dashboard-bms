@@ -49,23 +49,25 @@ const Login = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     try {
-      setLoading(true);
-      const response = await useLogin({ email, password });
-      const token = response.data.accessToken;
-      login(token);
-      toast.success("Login successful!");
-      navigate("/dashboard");
+        setLoading(true);
+        const response = await useLogin({ email, password });
+        const token = response.data.accessToken;
+        login(token);
+        toast.success("Login successful!");
+        navigate("/dashboard");
     } catch (error: any) {
-      if (error.response && error.response.status === 400) {
-        setError("Invalid email or password. Please try again.");
-      } else {
-        setError("An error occurred during login. Please try again later.");
+        setLoading(false);
+        if (error.response) {
+            // Check if the error response has a specific message
+            const errorMessage = error.response.data.message || "An error occurred during login. Please try again later.";
+            toast.error(errorMessage);
+        } else {
+            toast.error("An error occurred. Please check your network connection.");
+        }
         console.error("Login error:", error);
-      }
-    } finally {
-      setLoading(false);
     }
-  };
+};
+
 
   return (
     <>
