@@ -8,7 +8,7 @@ import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -123,7 +123,7 @@ const Login = () => {
                   Sign In
                   {loading && <Loader2 className="size-4 animate-spin" />}
                 </button>
-                <div className="text-red-600 ">{error}</div>
+                {/* <div className="text-red-600 ">{error}</div> */}
               </div>
               {/* <GoogleLogin onSuccess={responseGoogle} /> */}
               <div className="flex w-full justify-around gap-2 items-center">
