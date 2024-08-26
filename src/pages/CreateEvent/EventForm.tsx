@@ -24,8 +24,9 @@ import dayjs from "dayjs";
 import createEvent from "../../api/createEventApi";
 import toast from "react-hot-toast";
 import { uploadImage } from "../../api/uploadImage";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchOrganizationProfile } from "../../api/fetchProfileApi.ts";
+import { Loader2 } from "lucide-react";
 interface EventCategory {
   _id: string;
   categoryName: string;
@@ -143,7 +144,7 @@ const EventForm: React.FC = () => {
   const validateForm = () => {
     return (
       eventInfo.title &&
-      eventInfo.eventCategories.length > 0 &&
+      eventInfo.eventCategories !== null &&
       eventInfo.description &&
       selectedFile &&
       eventInfo.eventStartDate &&
@@ -154,11 +155,8 @@ const EventForm: React.FC = () => {
       eventInfo.genres &&
       eventInfo.cheapestTicket &&
       eventInfo.venueAddress &&
-      eventInfo.refundPolicy.allRefundsApproved &&
-      eventInfo.refundPolicy.policyType &&
       eventInfo.periodicity &&
-      eventInfo.eventMode &&
-      eventInfo.isRep
+      eventInfo.eventMode
     );
   };
 
@@ -187,9 +185,9 @@ const EventForm: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setLoadingButton(buttonType);
-  
+
     let imageUrl = "";
-  
+
     if (selectedFile) {
       try {
         imageUrl = await uploadImage(selectedFile);
@@ -200,14 +198,14 @@ const EventForm: React.FC = () => {
         return;
       }
     }
-  
+
     if (!profileData) {
       toast.error("Organizer profile is required to create an event.");
       setLoading(false);
       setLoadingButton(null);
       return;
     }
-  
+
     const eventData: EventInfo = {
       title: eventInfo.title,
       organizer: profileData.orgId,
@@ -232,8 +230,10 @@ const EventForm: React.FC = () => {
       isRep: eventInfo.isRep,
       periodicity: eventInfo.periodicity,
       duration: eventInfo.duration,
+      ageRestriction: eventInfo.ageRestriction,
+
     };
-  
+
     try {
       await createEvent(eventData);
       navigate(redirectPath);
@@ -264,17 +264,18 @@ const EventForm: React.FC = () => {
         periodicity: "",
         duration: "",
         organizer: "",
+        ageRestriction: ""
       });
     } catch (error: any) {
       console.error(error);
-  
+
       if (error.isAxiosError) {
         const status = error.response?.status;
         const data = error.response?.data;
-  
+
         if (status === 400 || status === 409) {
           const errorMessage = data.message;
-  
+
           if (typeof errorMessage === "string") {
             toast.error(errorMessage);
           } else if (errorMessage.details) {
@@ -296,7 +297,6 @@ const EventForm: React.FC = () => {
       setLoadingButton(null); // Reset loading state for buttons
     }
   };
-  
 
   return (
     <form className="event-form flex flex-col gap-5 pb-10">
@@ -311,10 +311,10 @@ const EventForm: React.FC = () => {
         required
         sx={{
           "& .MuiInputBase-root": {
-            height: "56px", // Adjust height as needed
+            height: "56px",
           },
           "& .MuiOutlinedInput-input": {
-            padding: "16px", // Adjust padding as needed
+            padding: "16px",
           },
         }}
       />
@@ -516,6 +516,32 @@ const EventForm: React.FC = () => {
         />
       </div>
 
+      <div>
+        <label
+          htmlFor="eventStart"
+          className="flex space-x-2 text-lg font-medium pb-2"
+        >
+          Age Limit
+        </label>
+        <TextField
+          id="ageLimit"
+          name="ageRestriction"
+          placeholder="Enter Age Limit"
+          value={eventInfo.ageRestriction}
+          onChange={handleChange}
+          type="number" // Use number input for numeric values
+          fullWidth
+          sx={{
+            "& .MuiInputBase-root": {
+              height: "56px", // Adjust height as needed
+            },
+            "& .MuiOutlinedInput-input": {
+              padding: "16px", // Adjust padding as needed
+            },
+          }}
+        />
+      </div>
+
       <div className="location">
         <label
           htmlFor="location-search"
@@ -579,7 +605,7 @@ const EventForm: React.FC = () => {
         <div className="flex flex-col gap-2">
           <div className="flex items-center">
             <input
-              type="checkbox"
+              type="radio"
               id="eventPolicy"
               name="eventPolicy"
               checked={eventInfo.refundPolicy.policyType}
@@ -601,9 +627,9 @@ const EventForm: React.FC = () => {
           </div>
           <div className="flex items-center">
             <input
-              type="checkbox"
+              type="radio"
               id="allRefundsApproved"
-              name="allRefundsApproved"
+              name="eventPolicy"
               checked={eventInfo.refundPolicy.allRefundsApproved}
               onChange={(e) =>
                 setEventInfo({
@@ -626,7 +652,7 @@ const EventForm: React.FC = () => {
       <hr />
 
       <div className="flex flex-wrap gap-5 md:justify-normal justify-center">
-        <div>
+        {/* <div>
           <button
             disabled={!validateForm() || loading}
             className={`flex justify-center items-center gap-4 event-form-btn ${
@@ -636,16 +662,22 @@ const EventForm: React.FC = () => {
           >
             {loadingButton === "saveChanges" ? "Loading..." : "Save Changes"}
           </button>
-        </div>
+        </div> */}
+        <Link to={"/dashboard"}>
+          <button className="flex flex-row items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-10 rounded">
+            CANCEL
+          </button>
+        </Link>
         <div>
           <button
             disabled={!validateForm() || loading}
-            className={`px-14 py-2 rounded event-form-btn ${
+            className={`flex flex-row items-center justify-center gap-4 bg-black text-white font-bold py-2 px-10 rounded ${
               !validateForm() || loading ? "cursor-not-allowed" : ""
             }`}
             onClick={(e) => handleOnSubmit(e, "/create-events/2", "nextPage")}
           >
-            {loadingButton === "nextPage" ? "Loading..." : "Next Page"}
+            NEXT PAGE
+            {loading && <Loader2 className="size-4 animate-spin" />}
           </button>
         </div>
       </div>
@@ -654,3 +686,6 @@ const EventForm: React.FC = () => {
 };
 
 export default EventForm;
+
+
+// https://kafsbackend-106f.onrender.com

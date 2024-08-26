@@ -41,6 +41,7 @@ export interface EventInfo {
   eventStart?: string;
   eventEnd?: string;
   duration: string;
+  ageRestriction: string;
 }
 
 interface EventContextProps {
@@ -76,6 +77,7 @@ const defaultEventInfo: EventInfo = {
   eventStart: "",
   eventEnd: "",
   duration: "",
+  ageRestriction: "",
 };
 
 const EventContext = createContext<EventContextProps | undefined>(undefined);

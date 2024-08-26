@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import "./FileDragNDrop.css";
 import { MdUpload, MdDeleteForever } from "react-icons/md";
 
-const FileDragNDrop: React.FC<{ onFileSelect: (file: File | null) => void }> = ({ onFileSelect }) => {
+const FileDragNDrop: React.FC<{ onFileSelect: (file: File | null) => void; ClassName?: string  }> = ({ onFileSelect, ClassName="" }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -37,7 +37,7 @@ const FileDragNDrop: React.FC<{ onFileSelect: (file: File | null) => void }> = (
   return (
     <div>
       <div
-        className="drop-zone flex items-center justify-center"
+        className={`drop-zone flex items-center justify-center ${ClassName}`}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
@@ -50,7 +50,7 @@ const FileDragNDrop: React.FC<{ onFileSelect: (file: File | null) => void }> = (
               <MdUpload style={{ fontSize: "3.3rem" }} />
             </span>
             <h3 className="text-xl font-semibold">Event Image</h3>
-            <p>Drag-drop or click here to choose an image.</p>
+            <p className="text-xs">Drag-drop or click here to choose an image.</p>
             <input
               type="file"
               name="image"

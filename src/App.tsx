@@ -33,7 +33,7 @@ function App() {
   return (
     <>
       {!shouldHideNavAndSidebar && <Navbar toggleSidebar={toggleSidebar} />}
-      <div className={`p-2 ${shouldHideNavAndSidebar ? 'py-0' : 'py-16'}`}>
+      <div className={`${shouldHideNavAndSidebar ? 'py-0' : 'py-16'}`}>
         {!shouldHideNavAndSidebar && <Sidebar isVisible={isSidebarVisible} />}
         <main
           className={`transition-all duration-300 ${

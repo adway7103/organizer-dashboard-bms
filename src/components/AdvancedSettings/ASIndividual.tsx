@@ -47,7 +47,15 @@ const ASIndividual: React.FC<ASIndividualProps> = ({
           type="number"
           value={formData.minPersonAllowedPerBooking}
           onChange={handleChange}
-          className="w-full "
+          className="w-full"
+          sx={{
+            "& .MuiInputBase-root": {
+              height: "56px", // Adjust height as needed
+            },
+            "& .MuiOutlinedInput-input": {
+              padding: "16px", // Adjust padding as needed
+            },
+          }}
         />
         <TextField
           id="maxTickets"
@@ -57,7 +65,15 @@ const ASIndividual: React.FC<ASIndividualProps> = ({
           label="Maximum tickets per user"
           variant="outlined"
           type="number"
-          className="w-full "
+          className="w-full"
+          sx={{
+            "& .MuiInputBase-root": {
+              height: "56px", // Adjust height as needed
+            },
+            "& .MuiOutlinedInput-input": {
+              padding: "16px", // Adjust padding as needed
+            },
+          }}
         />
       </div>
 

@@ -1,10 +1,4 @@
-import {
-  TextField,
-  InputLabel,
-  Select,
-  MenuItem,
-  SelectChangeEvent,
-} from "@mui/material";
+import { TextField, InputLabel, Select, MenuItem } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getCategories } from "../../api/createEventApi";
 import { MuiTelInput } from "mui-tel-input";
@@ -16,8 +10,9 @@ import FormDialog from "./Dialog.tsx";
 import { fetchOrganizationProfile } from "../../api/fetchProfileApi.ts";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 interface EventCategory {
-  _id: string;
+  categoryId: string;
   categoryName: string;
 }
 
@@ -35,6 +30,7 @@ interface OrganizerProfile {
   followingCount: number;
   phone: string;
   tiktokAccUrl: string;
+  about: string;
 }
 
 const EditProfile = () => {
@@ -45,6 +41,8 @@ const EditProfile = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [eventCategories, setCategory] = useState<string[]>([]);
 
+  console.log("category", eventCategories);
+
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [facebookAccUrl, setFacebookAccUrl] = useState<string>("");
@@ -52,7 +50,7 @@ const EditProfile = () => {
   const [twiiterAccUrl, setTwiitterAccUrl] = useState<string>("");
   const [tiktokAccUrl, setTiktokAccUrl] = useState<string>("");
   const [orgWebsiteUrl, setOrgWebsiteUrl] = useState<string>("");
-  // const [about, setAbout] = useState<string>("");
+  const [about, setAbout] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -75,37 +73,38 @@ const EditProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const fetchedCategories = await fetchOrganizationProfile();
-        if (fetchedCategories) {
-          setProfileData(fetchedCategories);
+        const fetchedProfile = await fetchOrganizationProfile();
+        if (fetchedProfile) {
+          setProfileData(fetchedProfile);
+
+          if (fetchedProfile.eventCategories) {
+            setCategory(
+              fetchedProfile.eventCategories.map((cat: any) => cat._id)
+            );
+          }
+
+          setName(fetchedProfile.name || "");
+          if (fetchedProfile.countryCode && fetchedProfile.phone) {
+            setPhone(`${fetchedProfile.countryCode} ${fetchedProfile.phone}`);
+          } else {
+            setPhone("");
+          }
+          setAbout(fetchedProfile.about || "");
+          setFacebookAccUrl(fetchedProfile.facebookAccUrl || "");
+          setInstagramAccUrl(fetchedProfile.instagramAccUrl || "");
+          setTwiitterAccUrl(fetchedProfile.twiiterAccUrl || "");
+          setTiktokAccUrl(fetchedProfile.tiktokAccUrl || "");
+          setOrgWebsiteUrl(fetchedProfile.orgWebsiteUrl || "");
         }
       } catch (error) {
-        console.error("Failed to fetch categories", error);
+        console.error("Failed to fetch profile data", error);
       }
     };
 
     fetchProfile();
   }, []);
 
-  useEffect(() => {
-    if (profileData) {
-      setName(profileData.name || "");
-
-      if (profileData.countryCode && profileData.phone) {
-        setPhone(`${profileData.countryCode} ${profileData.phone}`);
-      } else {
-        setPhone("");
-      } // setAbout("");
-      setFacebookAccUrl("");
-      setInstagramAccUrl(profileData.instagramAccUrl || "");
-      setTwiitterAccUrl(profileData.twiiterAccUrl || "");
-      setTiktokAccUrl(profileData.tiktokAccUrl || "");
-      setOrgWebsiteUrl("");
-      setCategory([]);
-    }
-  }, [profileData]);
-
-  const handleSelectChange = (event: SelectChangeEvent<string[]>) => {
+  const handleSelectChange = (event: any) => {
     setCategory(event.target.value as string[]);
   };
 
@@ -115,14 +114,11 @@ const EditProfile = () => {
 
   const formSubmitHandler = async (e: any) => {
     e.preventDefault();
-
     if (!profileData) {
       throw new Error("Organizer profile is required to update.");
     }
-
     setLoading(true);
     const id = profileData.orgId;
-
     let imageUrl = profileData.logoUrl;
 
     if (selectedFile) {
@@ -139,7 +135,7 @@ const EditProfile = () => {
       twiiterAccUrl,
       tiktokAccUrl,
       orgWebsiteUrl,
-      // about,
+      about,
     };
 
     try {
@@ -152,18 +148,21 @@ const EditProfile = () => {
       setLoading(false);
       console.error("Failed to update profile", error);
 
-      // Extracting and showing error message from the backend
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message);
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message;
+
+        if (Array.isArray(errorMessage)) {
+          errorMessage.forEach((msg: string) => toast.error(msg));
+        } else if (typeof errorMessage === "string") {
+          toast.error(errorMessage);
+        } else {
+          toast.error("An unexpected error occurred. Please try again.");
+        }
       } else {
         toast.error("An unexpected error occurred. Please try again.");
       }
     } finally {
-      setLoading(false); // Ensure loading state is reset
+      setLoading(false);
     }
   };
 
@@ -246,7 +245,8 @@ const EditProfile = () => {
     setTwiitterAccUrl(profileData.twiiterAccUrl || "");
     setTiktokAccUrl(profileData.tiktokAccUrl || "");
     setOrgWebsiteUrl("");
-
+    setCategory(profileData.eventCategories.map((cat: any) => cat._id));
+    setAbout(profileData.about);
     if (profileData.countryCode && profileData.phone) {
       setPhone(`${profileData.countryCode} ${profileData.phone}`);
     } else {
@@ -257,7 +257,8 @@ const EditProfile = () => {
   return (
     <>
       <form>
-        <div className="grid grid-cols-3 md:grid-cols-6 border-2 w-[80%] sm:ml-8 min-w-[300px] p-8 gap-8 rounded-3xl">
+        <h1 className="text-2xl font-semibold md:ml-10">Edit Details</h1>
+        <div className="mt-4 grid grid-cols-3 md:grid-cols-6 border-2 w-[80%] sm:ml-8 min-w-[300px] p-8 gap-8 rounded-3xl">
           <div className="col-span-6 max-md:space-y-6 md:col-span-4 flex flex-col justify-between">
             <TextField
               id="eventName"
@@ -276,19 +277,19 @@ const EditProfile = () => {
                 },
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
-                    borderColor: "gray", // Set border color to gray
+                    borderColor: "darkgray", // Set border color to gray
                   },
                   "&:hover fieldset": {
-                    borderColor: "gray", // Maintain gray border color on hover
+                    borderColor: "darkgray", // Maintain gray border color on hover
                   },
                   "&.Mui-focused fieldset": {
-                    borderColor: "gray", // Maintain gray border color when focused
+                    borderColor: "darkgray", // Maintain gray border color when focused
                   },
                 },
               }}
             />
 
-            <div className="md:grid grid-cols-2 gap-8">
+            <div className="md:grid grid-cols-2 gap-8 mb-3">
               <div className="col-span-1">
                 <InputLabel id="phone-label">Phone</InputLabel>
                 <MuiTelInput
@@ -391,8 +392,8 @@ const EditProfile = () => {
               label="Description"
               multiline
               rows={2}
-              // value={about}
-              // onChange={(e) => setAbout(e.target.value)}
+              value={about}
+              onChange={(e) => setAbout(e.target.value)}
               fullWidth
               sx={{
                 "& .MuiOutlinedInput-root": {
@@ -410,8 +411,11 @@ const EditProfile = () => {
             />
           </div>
 
-          <div className="col-span-6 md:col-span-2">
-            <FileDragNDrop onFileSelect={handleFileSelect} />
+          <div className="col-span-6 md:col-span-2 ">
+            <FileDragNDrop
+              onFileSelect={handleFileSelect}
+              ClassName="p-4 border-gray-400 rounded-md"
+            />
           </div>
 
           <div className="col-span-6 max-md:space-y-4 md:grid grid-cols-3 md:gap-4 gap-2 w-full">
@@ -426,18 +430,21 @@ const EditProfile = () => {
               />
             ))}
           </div>
-          <div className="col-span-6 flex max-md:gap-4">
-            <button
+          <div className="col-span-6 flex justify-center items-center gap-6">
+          <button
               onClick={handleDiscard}
-              className="flex items-center bg-gray-100 text-black font-thin py-3 rounded-md shadow-md gap-2 border-2rounded-md w-fit p-[5px] px-[10px] text-sm mx-auto mt-2 sm:my-0 my-[20px]"
+              className="flex flex-row items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-4 rounded"
+
             >
               DISCARD CHANGES
             </button>
             <button
               onClick={formSubmitHandler}
-              className="flex items-center gap-2 bg-black text-white py-3 rounded-md w-fit p-[5px] px-[10px] text-sm mx-auto mt-2 sm:my-0 my-[20px]"
-            >
-              {loading ? "SAVING CHANGES..." : "SAVE CHANGES "}
+              className="flex flex-row items-center justify-center gap-4 bg-black text-white font-bold py-2 px-4 rounded"
+              >
+              SAVE CHANGES{" "}
+              {loading && <Loader2 className="size-4 animate-spin" />}
+
             </button>
           </div>
         </div>

@@ -10,7 +10,7 @@ export type UpdateDataType = {
   twiiterAccUrl: string;
   tiktokAccUrl: string;
   orgWebsiteUrl: string;
-  //   about:string;
+    about:string;
 };
 
 const extractCountryCode = (phoneNumber: string) => {

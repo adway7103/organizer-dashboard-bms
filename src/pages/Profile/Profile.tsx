@@ -23,6 +23,7 @@ interface OrganizerProfile {
   followingCount: number;
   phone: string;
   tiktokAccUrl: string;
+  about: string;
 }
 
 const Profile = () => {
@@ -79,32 +80,37 @@ const Profile = () => {
   console.log(profileSocials);
 
   return (
-    <section className="md:w-1/2 w-full md:px-0 px-5 mx-auto pb-10">
+    <section className="md:w-1/2 w-full md:px-5 mx-auto pb-10">
       <h1 className="font-semibold text-2xl pb-4">Profile Details</h1>
       <div className="flex flex-col items-center gap-4 w-full p-5 border-2 rounded-2xl">
-        <img
-          src={profileData?.logoUrl}
-          className="pfp object-cover rounded-full"
-          alt=""
-        />
+        {profileData?.logoUrl ? (
+          <img
+            src={profileData?.logoUrl}
+            className="pfp object-cover rounded-full"
+            alt=""
+          />
+        ) : (
+          <SizeAvatars />
+        )}
+
         <h3 className="font-semibold text-lg">{profileData?.name}</h3>
 
         <div className="profile-info grid sm:grid-cols-2 gap-4 w-full">
           <span className="text-center text-sm text-black py-2 profile-border">
             {profileData?.phone ? profileData.phone : "Phone Number"}
           </span>
-          <span className="text-center text-sm text-black py-2 profile-border overflow-x-auto">
+          <span className="flex items-center text-sm text-black  py-2 profile-border overflow-x-auto whitespace-nowrap">
             {profileData?.eventCategories?.map((category, index, array) => (
               <span key={category._id}>
                 {category.categoryName}
-                {index < array.length - 1 && ", "}
+                {index < array.length - 1 && "  , "}
               </span>
             ))}
           </span>
         </div>
 
         <div className="profile-border profile-desc px-3 py-1 w-full">
-          Description
+          {profileData?.about}{" "}
         </div>
 
         <div className="grid md:grid-cols-3 grid-cols-2 md:gap-4 gap-2 w-full">
@@ -129,3 +135,18 @@ const Profile = () => {
 };
 
 export default Profile;
+
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+
+function SizeAvatars() {
+  return (
+    <Stack direction="row" spacing={2}>
+      <Avatar
+        alt=""
+        src="/static/images/avatar/1.jpg"
+        sx={{ width: 150, height: 150 }}
+      />
+    </Stack>
+  );
+}

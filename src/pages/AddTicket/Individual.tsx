@@ -10,7 +10,8 @@ import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { createTicket } from "../../api/createTicket";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 
 interface Ticket {
   event: string;
@@ -58,6 +59,7 @@ const Individual: React.FC = () => {
     saleEndTime: null,
   });
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -100,10 +102,11 @@ const Individual: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const id = localStorage.getItem("eventId");
-    console.log("i got id from local storage", id);
     if (!id) {
       throw new Error("Event Id is required to create a ticket.");
     }
+
+    setLoading(true);
 
     const ticketData = {
       event: id,
@@ -131,8 +134,12 @@ const Individual: React.FC = () => {
       await createTicket(ticketData);
       toast.success("Ticket created successfully:");
       navigate("/create-events/2");
-    } catch (error) {
-      toast.error("failed to creating ticket");
+      setLoading(false);
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message || "Failed to create ticket";
+      toast.error(errorMessage);
+      setLoading(false);
     }
 
     setFormData({
@@ -180,6 +187,14 @@ const Individual: React.FC = () => {
             value={formData.categoryName}
             onChange={handleChange}
             className="border border-gray-600"
+            sx={{
+              "& .MuiInputBase-root": {
+                height: "56px", // Adjust height as needed
+              },
+              "& .MuiOutlinedInput-input": {
+                padding: "16px", // Adjust padding as needed
+              },
+            }}
           />
           <TextField
             id="numberOfTickets"
@@ -190,6 +205,14 @@ const Individual: React.FC = () => {
             type="number"
             value={formData.totalSeats}
             onChange={handleChange}
+            sx={{
+              "& .MuiInputBase-root": {
+                height: "56px", // Adjust height as needed
+              },
+              "& .MuiOutlinedInput-input": {
+                padding: "16px", // Adjust padding as needed
+              },
+            }}
           />
         </div>
         <div className="grid gap-4">
@@ -403,35 +426,29 @@ const Individual: React.FC = () => {
         {showAdvanced && (
           <ASIndividual formData={formData} handleChange={handleChange} />
         )}
-        <div className="hidden md:grid grid-cols-3 gap-4">
-          <Button
-            href="/"
-            style={{
-              backgroundColor: "#60769D",
-              color: "black",
-              fontWeight: "medium",
-              border: "none",
-              cursor: "pointer",
-              outline: "none",
-            }}
-          >
-            CANCEL
-          </Button>
+        <div className="flex gap-4">
+          <Link to={"/create-events/2"}>
+            {" "}
+            <button className="flex items-center justify-center gap-4 bg-black text-white font-bold py-2 px-4 rounded">
+              BACK
+            </button>
+          </Link>
           <button
             type="submit"
-            className=" items-center px-4 py-2 bg-black text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+            className="flex flex-row items-center justify-center gap-4 bg-black text-white font-bold py-2 px-4 rounded"
           >
             CREATE TICKET
+            {loading && <Loader2 className="size-4 animate-spin" />}
           </button>
         </div>
-        <div className="flex justify-center items-center md:hidden">
+        {/* <div className="flex justify-center items-center md:hidden">
           <button
             type="submit"
             className="items-center max-w-md my-4 px-16 py-3 bg-black text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
           >
             Create Ticket
           </button>
-        </div>
+        </div> */}
       </form>
     </>
   );

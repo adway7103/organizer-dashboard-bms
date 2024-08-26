@@ -6,6 +6,7 @@ interface TableProps {
 
 interface TableBodyProps {
   children: ReactNode;
+  className?: string;
 }
 
 interface TableCellProps {
@@ -49,8 +50,8 @@ export const TableHead: React.FC<TableHeadProps> = ({ className, scope, children
   </th>
 );
 
-export const TableBody: React.FC<TableBodyProps> = ({ children }) => (
-  <tbody className="bg-white divide-y divide-gray-300">{children}</tbody>
+export const TableBody: React.FC<TableBodyProps> = ({className,  children }) => (
+  <tbody className={`bg-white divide-y divide-gray-300 ${className}`}>{children}</tbody>
 );
 
 export const TableRow: React.FC<TableRowProps> = ({ className, children, ...props }) => (
@@ -60,7 +61,7 @@ export const TableRow: React.FC<TableRowProps> = ({ className, children, ...prop
 );
 
 export const TableCell: React.FC<TableCellProps> = ({ className, children, ...props }) => (
-  <td className={`px-5 py-4 whitespace-nowrap text-sm text-gray-500 ${className}`} {...props}>
+  <td className={`px-4 py-3 whitespace-nowrap text-sm text-gray-500 ${className}`} {...props}>
     {children}
   </td>
 );

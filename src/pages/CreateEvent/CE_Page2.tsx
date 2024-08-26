@@ -4,6 +4,7 @@ import { IoTicketOutline } from "react-icons/io5";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { TicketTable } from "./TicketTable";
 import {
   DatePicker,
   TimePicker,
@@ -11,6 +12,7 @@ import {
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs"; // Import Dayjs
+import { Loader2 } from "lucide-react";
 
 const CE_Page2: React.FC = () => {
   const navigate = useNavigate();
@@ -63,11 +65,11 @@ const CE_Page2: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setLoadingButton(buttonType);
-  
+
     console.log("redirectPath", redirectPath);
-  
+
     const eventId = localStorage.getItem("eventId");
-  
+
     const lastEntryTimeFormatted =
       lastEntryDate && lastEntryTime
         ? dayjs(lastEntryDate)
@@ -75,7 +77,7 @@ const CE_Page2: React.FC = () => {
             .minute(dayjs(lastEntryTime).minute())
             .format("YYYY-MM-DD HH:mm")
         : null;
-  
+
     const data: any = {
       isPrivate,
       entryCondition,
@@ -83,11 +85,11 @@ const CE_Page2: React.FC = () => {
       limitTotalTicket,
       lastEntryTime: lastEntryTimeFormatted, // Include formatted time
     };
-  
+
     if (buttonType === "nextPage") {
       data.eventStatus = "Published";
     }
-  
+
     try {
       await updateEvent(data, eventId);
       navigate(redirectPath);
@@ -98,14 +100,14 @@ const CE_Page2: React.FC = () => {
     } catch (error: any) {
       setLoading(false);
       setLoadingButton(null);
-  
+
       if (error.isAxiosError) {
         const status = error.response?.status;
         const data = error.response?.data;
-  
+
         if (status === 400 || status === 409) {
           const errorMessage = data.message;
-  
+
           if (typeof errorMessage === "string") {
             toast.error(errorMessage);
           } else if (Array.isArray(errorMessage.details)) {
@@ -123,7 +125,6 @@ const CE_Page2: React.FC = () => {
       }
     }
   };
-  
 
   const handleDateChange = (newValue: Dayjs | null, type: string) => {
     if (type === "lastEntryDate") {
@@ -131,6 +132,10 @@ const CE_Page2: React.FC = () => {
     } else if (type === "lastEntryTime") {
       setLastEntryTime(newValue);
     }
+  };
+
+  const handleCancelButton = () => {
+    localStorage.removeItem("eventId");
   };
 
   return (
@@ -149,10 +154,11 @@ const CE_Page2: React.FC = () => {
       <p className="font-light text-sm pt-2">
         You can add tickets later from Tickets Menu
       </p>
-
-      <div className="tickets-display flex flex-col items-center justify-center my-5">
-        <IoTicketOutline className="text-9xl opacity-20" />
-        <p className="font-light pt-2">You don't seem to have any bookings</p>
+      {/*  flex-col items-center tickets-display*/}
+      <div className="border rounded-3xl flex justify-center my-5">
+        <TicketTable />
+        {/* <IoTicketOutline className="text-9xl opacity-20" />
+        <p className="font-light pt-2">You don't seem to have any bookings</p> */}
       </div>
 
       <h4
@@ -247,26 +253,35 @@ const CE_Page2: React.FC = () => {
       )}
 
       <div className="flex flex-wrap gap-5 md:justify-normal justify-center">
-        <div>
+        {/* <div>
           <button
             disabled={!validateForm() || loading}
-            className={`flex justify-center items-center gap-4 event-form-btn ${
+            className={`px-14 flex flex-row items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 rounded ${
               !validateForm() || loading ? "cursor-not-allowed" : ""
             }`}
             onClick={(e) => handleOnSubmit(e, "/events", "saveChanges")}
           >
             {loadingButton === "saveChanges" ? "Loading..." : "SAVE CHANGES"}
           </button>
-        </div>
+        </div> */}
+        <Link to={"/dashboard"}>
+          <button
+            className="flex flex-row items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-10 rounded"
+            onClick={handleCancelButton}
+          >
+            CANCEL
+          </button>
+        </Link>
         <div>
           <button
             disabled={!validateForm() || loading}
-            className={`px-14 py-2 rounded event-form-btn ${
+            className={`px-10 flex flex-row items-center justify-center gap-4 bg-black text-white font-bold py-2 rounded ${
               !validateForm() || loading ? "cursor-not-allowed" : ""
             }`}
             onClick={(e) => handleOnSubmit(e, "/events", "nextPage")}
           >
-            {loadingButton === "nextPage" ? "Loading..." : "CREATE EVENT"}
+            PUBLISH EVENT{" "}
+            {loading && <Loader2 className="size-4 animate-spin" />}
           </button>
         </div>
       </div>

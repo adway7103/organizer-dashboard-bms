@@ -134,7 +134,7 @@ const CreateAnAccount = () => {
 
   return (
     <>
-      <div className="flex h-screen ">
+      <div className="flex h-screen">
         <div className="md:w-1/2 md:block hidden">
           <img
             src="/OrganizerLogin.png"
@@ -143,10 +143,10 @@ const CreateAnAccount = () => {
           />
         </div>
         <div className="h-screen w-full md:w-1/2 flex justify-center items-center">
-          <div className="md:px-[10vw]">
+          <div className="w-full md:px-[10vw]">
             <form
               onSubmit={handleOnSubmit}
-              className="h-full p-4 w-full space-y-3"
+              className="h-full p-4 w-full max-w-[600px] min-w-[300px] mx-auto space-y-3"
             >
               <div className="flex flex-col items-center">
                 <h1 className="text-3xl font-bold text-center">
@@ -166,7 +166,8 @@ const CreateAnAccount = () => {
                   className="w-full"
                 />
               </div>
-              <div>
+
+              <div className="w-full">
                 <InputLabel id="category-label">Category</InputLabel>
                 <Select
                   labelId="category-label"
@@ -213,9 +214,12 @@ const CreateAnAccount = () => {
                 </Select>
               </div>
 
-              <FileDragNDrop onFileSelect={handleFileSelect} />
+              <FileDragNDrop
+                onFileSelect={handleFileSelect}
+                ClassName="p-4 border-gray-600 h-[150px] rounded-md"
+              />
 
-              <div className="">
+              <div className="w-full">
                 <input
                   type="text"
                   name="facebookAccUrl"
@@ -226,7 +230,7 @@ const CreateAnAccount = () => {
                   className="w-full"
                 />
               </div>
-              <div className="">
+              <div className="w-full">
                 <input
                   type="text"
                   name="instagramAccUrl"
@@ -237,7 +241,7 @@ const CreateAnAccount = () => {
                   className="w-full"
                 />
               </div>
-              <div className="">
+              <div className="w-full">
                 <input
                   type="text"
                   name="twitterAccUrl"
@@ -254,12 +258,9 @@ const CreateAnAccount = () => {
                   type="submit"
                   className="flex items-center justify-center gap-4 bg-black w-full text-white font-bold py-2 px-4 rounded"
                 >
-                  Submit{" "}
+                  Submit
                   {loading && <Loader2 className="size-4 animate-spin" />}
                 </button>
-                {/* <Link to={"/profile"} className="text-center">
-                  skip
-                </Link> */}
               </div>
             </form>
           </div>
