@@ -165,16 +165,16 @@ export const columns: ColumnDef<Follower>[] = [
       </div>
     ),
   },
-  {
-    accessorKey: "*",
-    header: "",
-    cell: () => (
-      <div className="flex">
-        <span className="pr-2">Message</span>
-        <img src={Vector} alt="" />
-      </div>
-    ),
-  },
+  // {
+  //   accessorKey: "*",
+  //   header: "",
+  //   cell: () => (
+  //     <div className="flex">
+  //       <span className="pr-2">Message</span>
+  //       <img src={Vector} alt="" />
+  //     </div>
+  //   ),
+  // },
 ];
 
 export function AffiliateTable() {

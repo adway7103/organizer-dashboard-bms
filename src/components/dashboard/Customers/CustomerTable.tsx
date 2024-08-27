@@ -232,15 +232,15 @@ export const columns: ColumnDef<Follower>[] = [
       </div>
     ),
   },
-  {
-    accessorKey: "*",
-    header: "",
-    cell: () => (
-      <div>
-        <Message />
-      </div>
-    ),
-  },
+  // {
+  //   accessorKey: "*",
+  //   header: "",
+  //   cell: () => (
+  //     <div>
+  //       <Message />
+  //     </div>
+  //   ),
+  // },
 ];
 
 export function CustomerTable() {
