@@ -22,7 +22,7 @@ import {
   TableRow,
 } from "../../ui/Table";
 import { MenuItem, Select } from "@mui/material";
-import Message from "../Affiliates/Message";
+// import Message from "../Affiliates/Message";
 
 const data: Follower[] = [
   {

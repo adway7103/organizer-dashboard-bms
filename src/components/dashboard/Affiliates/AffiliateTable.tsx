@@ -1,5 +1,5 @@
 import * as React from "react";
-import Vector from "../../../../public/affiliates/Vector.png";
+// import Vector from "../../../../public/affiliates/Vector.png";
 
 import {
   ColumnDef,
