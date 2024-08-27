@@ -57,7 +57,7 @@ const EventForm: React.FC = () => {
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
   >([]);
-console.log(loadingButton);
+  console.log(loadingButton);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -98,6 +98,8 @@ console.log(loadingButton);
     }
   };
 
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
   const handleSelectChange = (event: SelectChangeEvent<string | string[]>) => {
     const { name, value } = event.target;
 
@@ -111,6 +113,7 @@ console.log(loadingButton);
           },
         };
       } else if (name === "eventCategories") {
+        setDropdownOpen(false); // Close the dropdown after selection
         return {
           ...prevInfo,
           eventCategories: value as string[],
@@ -152,11 +155,9 @@ console.log(loadingButton);
       eventInfo.eventStartTime &&
       eventInfo.eventEndDate &&
       eventInfo.eventEndTime &&
-      eventInfo.duration &&
       eventInfo.genres &&
       eventInfo.cheapestTicket &&
       eventInfo.venueAddress &&
-      eventInfo.periodicity &&
       eventInfo.eventMode
     );
   };
@@ -186,6 +187,13 @@ console.log(loadingButton);
     e.preventDefault();
     setLoading(true);
     setLoadingButton(buttonType);
+
+    if (!validateForm()) {
+      toast.error("All fields are required.");
+      setLoading(false);
+      setLoadingButton(null);
+      return;
+    }
 
     let imageUrl = "";
 
@@ -230,9 +238,7 @@ console.log(loadingButton);
       },
       isRep: eventInfo.isRep,
       periodicity: eventInfo.periodicity,
-      duration: eventInfo.duration,
       ageRestriction: eventInfo.ageRestriction,
-
     };
 
     try {
@@ -263,9 +269,8 @@ console.log(loadingButton);
         },
         isRep: false,
         periodicity: "",
-        duration: "",
         organizer: "",
-        ageRestriction: ""
+        ageRestriction: "",
       });
     } catch (error: any) {
       console.error(error);
@@ -326,11 +331,14 @@ console.log(loadingButton);
           labelId="category-label"
           id="category"
           name="eventCategories"
-          multiple
           value={eventInfo.eventCategories}
           onChange={handleSelectChange}
           fullWidth
           required
+          multiple
+          open={dropdownOpen}
+          onOpen={() => setDropdownOpen(true)}
+          onClose={() => setDropdownOpen(false)}
           MenuProps={{
             PaperProps: {
               style: {
@@ -357,7 +365,7 @@ console.log(loadingButton);
           <MenuItem disabled value="">
             <em>Select category</em>
           </MenuItem>
-          {categories.map((category) => (
+          {categories.slice(1).map((category) => (
             <MenuItem key={category.categoryId} value={category.categoryId}>
               {category.categoryName}
             </MenuItem>
@@ -376,9 +384,9 @@ console.log(loadingButton);
           fullWidth
           required
         >
-          <MenuItem value="daily">daily</MenuItem>
-          <MenuItem value="weekly">weekly</MenuItem>
-          <MenuItem value="monthly">monthly</MenuItem>
+          <MenuItem value="daily">Daily</MenuItem>
+          <MenuItem value="weekly">Weekly</MenuItem>
+          <MenuItem value="monthly">Monthly</MenuItem>
         </Select>
       </div>
 
@@ -491,7 +499,7 @@ console.log(loadingButton);
         </LocalizationProvider>
       </div>
 
-      <div>
+      {/* <div>
         <label
           htmlFor="eventStart"
           className="flex space-x-2 text-lg font-medium pb-2"
@@ -515,7 +523,7 @@ console.log(loadingButton);
             },
           }}
         />
-      </div>
+      </div> */}
 
       <div>
         <label
@@ -602,7 +610,7 @@ console.log(loadingButton);
       </div>
 
       <div>
-        <h3 className="font-semibold text-xl mb-2">Refunds</h3>
+       <h3 className="font-semibold text-xl mb-2">Refunds</h3>
         <div className="flex flex-col gap-2">
           <div className="flex items-center">
             <input
@@ -643,6 +651,8 @@ console.log(loadingButton);
               }
               className="follow rounded mx-0 w-6 h-4"
             />
+
+            
             <label htmlFor="allRefundsApproved" className="text-sm ml-3">
               All refunds are approved.
             </label>
@@ -671,10 +681,7 @@ console.log(loadingButton);
         </Link>
         <div>
           <button
-            disabled={!validateForm() || loading}
-            className={`flex flex-row items-center justify-center gap-4 bg-black text-white font-bold py-2 px-10 rounded ${
-              !validateForm() || loading ? "cursor-not-allowed" : ""
-            }`}
+            className={`flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-bold py-2 px-10 rounded`}
             onClick={(e) => handleOnSubmit(e, "/create-events/2", "nextPage")}
           >
             NEXT PAGE
@@ -687,6 +694,5 @@ console.log(loadingButton);
 };
 
 export default EventForm;
-
 
 // https://kafsbackend-106f.onrender.com

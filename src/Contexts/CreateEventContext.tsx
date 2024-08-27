@@ -40,7 +40,6 @@ export interface EventInfo {
   periodicity: string;
   eventStart?: string;
   eventEnd?: string;
-  duration: string;
   ageRestriction: string;
 }
 
@@ -76,7 +75,6 @@ const defaultEventInfo: EventInfo = {
   periodicity: "",
   eventStart: "",
   eventEnd: "",
-  duration: "",
   ageRestriction: "",
 };
 

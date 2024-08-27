@@ -19,7 +19,7 @@ const Navbar = ({ toggleSidebar }: any) => {
         </svg>
       </div>
       <div className="flex items-center">
-        <Link to="/dashboard">
+        <a href="https://www.kafsco.com" target="blank"  rel="noopener noreferrer">
           <div className="size-10 w-full flex">
             <img
               src="../kafsco.icon.jpeg"
@@ -27,7 +27,7 @@ const Navbar = ({ toggleSidebar }: any) => {
               className="hidden sm:block"
             />
           </div>
-        </Link>
+        </a>
         <span className="text-xl text-black font-semibold hidden sm:block">
           ORGANIZER
         </span>

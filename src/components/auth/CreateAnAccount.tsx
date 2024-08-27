@@ -203,7 +203,7 @@ const CreateAnAccount = () => {
                   <MenuItem disabled value="">
                     <em>Select category</em>
                   </MenuItem>
-                  {categories.map((category) => (
+                  {categories.slice(1).map((category) => (
                     <MenuItem
                       key={category.categoryId}
                       value={category.categoryId}

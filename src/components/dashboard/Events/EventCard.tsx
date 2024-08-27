@@ -1,30 +1,36 @@
 interface EventCardProps {
-  image: string;
-  location: string;
-  time: string;
+  eventId: string;
+  title: string;
+  posterUrl: string;
+  city: string;
   date: string;
+  time: string;
   revenue: string;
   ticketsSold: string;
   onClick: () => void;
 }
 
 const EventCard = ({
-  image,
-  location,
-  time,
+  eventId,
+  title,
+  posterUrl,
+  city,
   date,
+  time,
   revenue,
   ticketsSold,
   onClick,
 }: EventCardProps) => {
+  console.log(eventId);
+  
   return (
     <div  onClick={onClick} className="flex flex-col md:flex-row items-center md:items-start border rounded-3xl p-4 space-x-0 md:space-x-6 min-w-[300px] w-full sm:w-[300px] md:w-[565px] mr-8 sm:mr-0 cursor-pointer">
       <div>
-        <img src={image} alt="" className="h-[230px] w-[230px]" />
+        <img src={posterUrl} alt="" className="h-[230px] w-[230px]" />
       </div>
       <div className="">
         <h1 className="text-3xl font-semibold text-[#a28a02] text-center md:text-start">
-          Rhythms Live
+          {title}
         </h1>
         <div className="flex text-[#787878] space-x-4 text-sm mt-1 justify-center md:justify-start ">
           <div className="flex">
@@ -49,7 +55,7 @@ const EventCard = ({
                 />
               </svg>
             </div>
-            {location}
+            {city}
           </div>
           <div className="flex">
             <div className="pr-1">

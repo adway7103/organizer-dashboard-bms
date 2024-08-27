@@ -26,7 +26,7 @@ const CE_Page2: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState<string | null>(null);
-console.log(loadingButton);
+  console.log(loadingButton);
 
   const [lastEntryDate, setLastEntryDate] = useState<Dayjs | null>(null);
   const [lastEntryTime, setLastEntryTime] = useState<Dayjs | null>(null);
@@ -36,15 +36,13 @@ console.log(loadingButton);
   };
 
   const validateForm = () => {
-    return entryCondition && isPrivate && seperateBooking && limitTotalTicket;
+    return lastEntryDate && lastEntryTime;
   };
 
   const updateEvent = async (data: any, eventId: any) => {
-    console.log("update event api payload", data, "and", eventId);
-
     const token = localStorage.getItem("accessToken");
 
-    const response = await axios.put(
+    await axios.put(
       `https://kafsbackend-106f.onrender.com/api/v1/events/update/${eventId}`,
       data,
       {
@@ -54,8 +52,6 @@ console.log(loadingButton);
         },
       }
     );
-
-    console.log("update event api response", response.data);
   };
 
   const handleOnSubmit = async (
@@ -67,7 +63,11 @@ console.log(loadingButton);
     setLoading(true);
     setLoadingButton(buttonType);
 
-    console.log("redirectPath", redirectPath);
+    if (!validateForm()) {
+      toast.error("Last entry is required");
+      setLoading(false);
+      return;
+    }
 
     const eventId = localStorage.getItem("eventId");
 
@@ -94,7 +94,7 @@ console.log(loadingButton);
     try {
       await updateEvent(data, eventId);
       navigate(redirectPath);
-      toast.success("Event updated successfully!");
+      toast.success("Event published successfully!");
       setLoading(false);
       setLoadingButton(null);
       localStorage.removeItem("eventId");
@@ -147,8 +147,8 @@ console.log(loadingButton);
       </div>
       <h1 className="font-semibold text-2xl pb-4">Create Event</h1>
       <h3 className="font-semibold text-lg">Tickets</h3>
-      <button className="add-ticket-btn font-light text-sm my-2">
-        <Link to={"/ind-tickets"} className="add-ticket-btn">
+      <button className="add-ticket-btn font-md bg-[#244f7a] text-sm my-2">
+        <Link to={"/ind-tickets"} className="">
           Add a Ticket
         </Link>
       </button>
@@ -275,10 +275,7 @@ console.log(loadingButton);
         </Link>
         <div>
           <button
-            disabled={!validateForm() || loading}
-            className={`px-10 flex flex-row items-center justify-center gap-4 bg-black text-white font-bold py-2 rounded ${
-              !validateForm() || loading ? "cursor-not-allowed" : ""
-            }`}
+            className={`px-10 flex flex-row items-center justify-center gap-4 bg-[#244f7a] hover:bg-black text-white font-bold py-2 rounded cursor-pointer}`}
             onClick={(e) => handleOnSubmit(e, "/events", "nextPage")}
           >
             PUBLISH EVENT{" "}

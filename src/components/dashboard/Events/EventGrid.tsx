@@ -1,55 +1,44 @@
 import { Search } from "lucide-react";
 import EventCard from "../Events/EventCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MenuItem, Select } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { fetchEvents } from "../../../api/fetchAllEvents";
 
 interface EventData {
-  image: string;
-  location: string;
-  time: string;
+  eventId: string;
+  title: string;
+  posterUrl: string;
+  city: string;
   date: string;
+  time: string;
   revenue: string;
   ticketsSold: string;
 }
-const events: EventData[] = [
-  {
-    image: "./elp1-1.png",
-    location: "Boston",
-    time: "12:00 PM",
-    date: "december 24, Thursday",
-    revenue: "2000",
-    ticketsSold: "300",
-  },
-  {
-    image: "./elp2-2.png",
-    location: "Boston",
-    time: "12:00 PM",
-    date: "december 24, Thursday",
-    revenue: "2000",
-    ticketsSold: "300",
-  },
-  {
-    image: "./elp1-1.png",
-    location: "Boston",
-    time: "12:00 PM",
-    date: "december 24, Thursday",
-    revenue: "2000",
-    ticketsSold: "300 / 2000",
-  },
-  {
-    image: "./elp2-2.png",
-    location: "Boston",
-    time: "12:00 PM",
-    date: "december 24, Thursday",
-    revenue: "2000",
-    ticketsSold: "300",
-  },
-];
 
 const EventGrid = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
+
+  const [events, setEvents] = useState<EventData[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetchEvents();
+      const formattedEvents = response.events.map((event: EventData) => ({
+        eventId: event.eventId,
+        title: event.title,
+        posterUrl: event.posterUrl,
+        city: event.city,
+        date: event.date,
+        time: event.time,
+        revenue: event.revenue,
+        ticketsSold: event.ticketsSold,
+      }));
+      setEvents(formattedEvents);
+    };
+    fetchData();
+  }, []);
 
   const handleEventClick = () => {
     navigate("event-overview");
@@ -91,8 +80,10 @@ const EventGrid = () => {
         {events.map((i, index) => (
           <EventCard
             key={index}
-            image={i.image}
-            location={i.location}
+            eventId={i.eventId}
+            title={i.title}
+            posterUrl={i.posterUrl}
+            city={i.city}
             time={i.time}
             date={i.date}
             revenue={i.revenue}

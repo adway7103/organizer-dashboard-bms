@@ -20,27 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../components/ui/Table";
-
-const data: Follower[] = [
-  {
-    id: "5",
-    name: "ERBEEGT",
-    price: "$ 10 + $1",
-    totalTickets: "150",
-  },
-  {
-    id: "6",
-    name: "ERBEEGT",
-    price: "$ 10 + $1",
-    totalTickets: "150",
-  },
-  {
-    id: "7",
-    name: "ERBEEGT",
-    price: "$ 10 + $1",
-    totalTickets: "150",
-  },
-];
+import { fetchTickets } from "../../api/fetchTickets";
 
 export type Follower = {
   id: string;
@@ -103,8 +83,29 @@ export function TicketTable() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
+  const [tickets, setTickets] = React.useState<Follower[]>([]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetchTickets();
+      const transformedData = response.data.matrix.ticketCategories.map(
+        (ticket: any, index: any) => ({
+          id: index.toString(),
+          name: ticket.categoryName,
+          price: ticket.categoryPricePerPerson
+            ? `$ ${ticket.categoryPricePerPerson}`
+            : "N/A",
+          totalTickets: ticket.totalSeats.toString(),
+        })
+      );
+      setTickets(transformedData);
+      console.log(transformedData);
+    };
+    fetchData();
+  }, []);
+
   const table = useReactTable({
-    data,
+    data: tickets,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

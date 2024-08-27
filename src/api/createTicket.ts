@@ -5,7 +5,7 @@ interface TicketData {
   ticketCategories: {
     categoryType: string;
     categoryName: string;
-    totalSeats: number;
+    totalSeats: string;
     ticketType: string;
     deductFeesFromTicketPrice: boolean;
     categoryPricePerPerson: string;
@@ -13,7 +13,7 @@ interface TicketData {
     saleStarts: string;
     saleEnds: string;
     additionalInfo: string;
-    minPersonAllowedPerBooking: number;
+    minPersonAllowedPerBooking: string;
     maxPersonAllowedPerBooking: string;
     promoCode: boolean;
     toggleVisibility: boolean;

@@ -74,12 +74,44 @@ export const SidebarNavs = [
 
 export const tagsOptions = [
     {
-        title: "title 1",
+        title: "Music",
     },
     {
-        title: "title 2",
+        title: "Movie",
     },
     {
-        title: "title 3",
+        title: "Sports",
+    },
+    {
+        title: "Arts",
+    },
+    {
+        title: "Theatre",
+    },
+    {
+        title: "Health",
+    },
+    {
+        title: "Food & Drinks",
+    },
+    {
+        title: "Seminars",
+    },
+    {
+        title: "Comedy",
+    },
+    {
+        title: "Business",
+    },
+    {
+        title: "Workshops",
+    },
+    {
+        title: "Concert",
+    },
+    {
+        title: "Party",
     }
 ]
+
+

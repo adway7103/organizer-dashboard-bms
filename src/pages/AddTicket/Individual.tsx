@@ -16,7 +16,7 @@ interface Ticket {
   event: string;
   categoryType: string;
   categoryName: string;
-  totalSeats: number;
+  totalSeats: string;
   ticketType: string;
   deductFeesFromTicketPrice: boolean;
   categoryPricePerPerson: string;
@@ -24,7 +24,7 @@ interface Ticket {
   saleStarts: string;
   saleEnds: string;
   additionalInfo: string;
-  minPersonAllowedPerBooking: number;
+  minPersonAllowedPerBooking: string;
   maxPersonAllowedPerBooking: string;
   promoCode: boolean;
   toggleVisibility: boolean;
@@ -40,7 +40,7 @@ const Individual: React.FC = () => {
     event: "",
     categoryType: "",
     categoryName: "",
-    totalSeats: 0,
+    totalSeats: "",
     ticketType: "",
     deductFeesFromTicketPrice: false,
     categoryPricePerPerson: "",
@@ -48,7 +48,7 @@ const Individual: React.FC = () => {
     saleStarts: "",
     saleEnds: "",
     additionalInfo: "",
-    minPersonAllowedPerBooking: 0,
+    minPersonAllowedPerBooking: "",
     maxPersonAllowedPerBooking: "",
     promoCode: false,
     toggleVisibility: false,
@@ -98,8 +98,30 @@ const Individual: React.FC = () => {
     .minute(dayjs(formData.saleEndTime).minute())
     .format("YYYY-MM-DD HH:mm:ss");
 
+  const validateForm = () => {
+    return (
+      formData.categoryName &&
+      formData.totalSeats &&
+      formData.ticketType && 
+      formData.ticketSaleType
+      // formData.saleStartsDate &&
+      // formData.saleStartsTime &&
+      // formData.saleEndsDate &&
+      // formData.saleEndTime &&
+      // formData.saleStarts &&
+      // formData.saleEnds
+    );
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!validateForm()) {
+      toast.error("Please fill required fields");
+      setLoading(false);
+      return;
+    }
+
     const id = localStorage.getItem("eventId");
     if (!id) {
       throw new Error("Event Id is required to create a ticket.");
@@ -145,7 +167,7 @@ const Individual: React.FC = () => {
       event: "",
       categoryType: "",
       categoryName: "",
-      totalSeats: 0,
+      totalSeats: "",
       ticketType: "",
       deductFeesFromTicketPrice: false,
       categoryPricePerPerson: "",
@@ -153,7 +175,7 @@ const Individual: React.FC = () => {
       saleStarts: "",
       saleEnds: "",
       additionalInfo: "",
-      minPersonAllowedPerBooking: 0,
+      minPersonAllowedPerBooking: "",
       maxPersonAllowedPerBooking: "",
       promoCode: false,
       toggleVisibility: false,
@@ -184,6 +206,7 @@ const Individual: React.FC = () => {
             placeholder="General Admission"
             variant="outlined"
             value={formData.categoryName}
+            required
             onChange={handleChange}
             className="border border-gray-600"
             sx={{
@@ -203,6 +226,7 @@ const Individual: React.FC = () => {
             variant="outlined"
             type="number"
             value={formData.totalSeats}
+            required
             onChange={handleChange}
             sx={{
               "& .MuiInputBase-root": {
@@ -256,6 +280,14 @@ const Individual: React.FC = () => {
               value={formData.categoryPricePerPerson}
               onChange={handleChange}
               className="flex-grow w-full mr-2 md:mr-4"
+              sx={{
+                "& .MuiInputBase-root": {
+                  height: "56px", // Adjust height as needed
+                },
+                "& .MuiOutlinedInput-input": {
+                  padding: "16px", // Adjust padding as needed
+                },
+              }}
             />
             <p className="flex items-center text-xs md:text-sm">
               Buyer Pays : <span> $ {formData.categoryPricePerPerson} </span>{" "}
@@ -328,14 +360,14 @@ const Individual: React.FC = () => {
             <DatePicker
               value={formData.saleStartsDate}
               onChange={(newValue) =>
-                handleDateChange(newValue, "saleStartDate")
+                handleDateChange(newValue, "saleStartsDate")
               }
             />
             <p className="font-medium">at</p>
             <TimePicker
               value={formData.saleStartsTime}
               onChange={(newValue) =>
-                handleDateChange(newValue, "saleStartTime")
+                handleDateChange(newValue, "saleStartsTime")
               }
             />
           </div>
@@ -350,7 +382,7 @@ const Individual: React.FC = () => {
           <div className="flex items-center space-x-6">
             <DatePicker
               value={formData.saleEndsDate}
-              onChange={(newValue) => handleDateChange(newValue, "saleEndDate")}
+              onChange={(newValue) => handleDateChange(newValue, "saleEndsDate")}
             />
             <p className="font-medium">at</p>
             <TimePicker
@@ -428,13 +460,13 @@ const Individual: React.FC = () => {
         <div className="flex gap-4">
           <Link to={"/create-events/2"}>
             {" "}
-            <button className="flex items-center justify-center gap-4 bg-black text-white font-bold py-2 px-4 rounded">
+            <button className="flex items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-4 rounded">
               BACK
             </button>
           </Link>
           <button
             type="submit"
-            className="flex flex-row items-center justify-center gap-4 bg-black text-white font-bold py-2 px-4 rounded"
+            className="flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-bold py-2 px-4 rounded"
           >
             CREATE TICKET
             {loading && <Loader2 className="size-4 animate-spin" />}

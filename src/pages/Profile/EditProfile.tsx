@@ -440,7 +440,7 @@ const EditProfile = () => {
             </button>
             <button
               onClick={formSubmitHandler}
-              className="flex flex-row items-center justify-center gap-4 bg-black text-white font-bold py-2 px-4 rounded"
+              className="flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-bold py-2 px-4 rounded"
               >
               SAVE CHANGES{" "}
               {loading && <Loader2 className="size-4 animate-spin" />}
