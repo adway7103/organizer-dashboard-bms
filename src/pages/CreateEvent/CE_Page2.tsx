@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { IoTicketOutline } from "react-icons/io5";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -158,8 +157,7 @@ const CE_Page2: React.FC = () => {
       {/*  flex-col items-center tickets-display*/}
       <div className="border rounded-3xl flex justify-center my-5">
         <TicketTable />
-        {/* <IoTicketOutline className="text-9xl opacity-20" />
-        <p className="font-light pt-2">You don't seem to have any bookings</p> */}
+ 
       </div>
 
       <h4

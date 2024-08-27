@@ -21,58 +21,16 @@ import {
   TableRow,
 } from "../../components/ui/Table";
 import { fetchTickets } from "../../api/fetchTickets";
+import { IoTicketOutline } from "react-icons/io5";
+import FormDialog from "./Dialog";
 
 export type Follower = {
   id: string;
   name: string;
   price: string;
   totalTickets: string;
+  matrixId: string;
 };
-
-export const columns: ColumnDef<Follower>[] = [
-  {
-    accessorKey: "name",
-    header: "Ticket Name",
-    cell: ({ row }) => <div className="text-black">{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "price",
-    header: "Price",
-    cell: ({ row }) => (
-      <div className="text-black">{row.getValue("price")}</div>
-    ),
-  },
-  {
-    accessorKey: "totalTickets",
-    header: "Total Tickets",
-    cell: ({ row }) => (
-      <div className="text-black">{row.getValue("totalTickets")}</div>
-    ),
-  },
-  {
-    accessorKey: "*",
-    header: "",
-    cell: () => (
-      <div>
-        {" "}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          className="size-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
-          />
-        </svg>
-      </div>
-    ),
-  },
-];
 
 export function TicketTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -82,20 +40,22 @@ export function TicketTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-
   const [tickets, setTickets] = React.useState<Follower[]>([]);
 
   React.useEffect(() => {
     const fetchData = async () => {
       const response = await fetchTickets();
+      const matrixId = response.data.matrix._id;
+
       const transformedData = response.data.matrix.ticketCategories.map(
-        (ticket: any, index: any) => ({
-          id: index.toString(),
+        (ticket: any) => ({
+          id: ticket._id,
           name: ticket.categoryName,
           price: ticket.categoryPricePerPerson
             ? `$ ${ticket.categoryPricePerPerson}`
-            : "N/A",
+            : "Free",
           totalTickets: ticket.totalSeats.toString(),
+          matrixId: matrixId,
         })
       );
       setTickets(transformedData);
@@ -103,6 +63,49 @@ export function TicketTable() {
     };
     fetchData();
   }, []);
+
+  const handleDeleteTicket = (id: string) => {
+    setTickets((prevTickets) =>
+      prevTickets.filter((ticket) => ticket.id !== id)
+    );
+  };
+
+  const columns: ColumnDef<Follower>[] = [
+    {
+      accessorKey: "name",
+      header: "Ticket Name",
+      cell: ({ row }) => (
+        <div className="text-black">{row.getValue("name")}</div>
+      ),
+    },
+    {
+      accessorKey: "price",
+      header: "Price",
+      cell: ({ row }) => (
+        <div className="text-black">{row.getValue("price")}</div>
+      ),
+    },
+    {
+      accessorKey: "totalTickets",
+      header: "Total Tickets",
+      cell: ({ row }) => (
+        <div className="text-black">{row.getValue("totalTickets")}</div>
+      ),
+    },
+    {
+      accessorKey: "*",
+      header: "",
+      cell: ({ row }) => (
+        <div>
+          <FormDialog
+            id={row.original.id}
+            matrixId={row.original.matrixId}
+            onDelete={handleDeleteTicket} 
+          />
+        </div>
+      ),
+    },
+  ];
 
   const table = useReactTable({
     data: tickets,
@@ -166,7 +169,10 @@ export function TicketTable() {
                     colSpan={columns.length}
                     className="h-24 text-center text-black"
                   >
-                    No results.
+                    <IoTicketOutline className="text-9xl opacity-20" />
+                    <p className="font-light pt-2">
+                      You don't seem to have any bookings
+                    </p>{" "}
                   </TableCell>
                 </TableRow>
               )}
