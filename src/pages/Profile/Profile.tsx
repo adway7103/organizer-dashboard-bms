@@ -32,9 +32,9 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const fetchedCategories = await fetchOrganizationProfile();
-        if (fetchedCategories) {
-          setProfileData(fetchedCategories);
+        const profileData = await fetchOrganizationProfile();
+        if (profileData) {
+          setProfileData(profileData);
         }
       } catch (error) {
         console.error("Failed to fetch categories", error);
@@ -77,8 +77,6 @@ const Profile = () => {
     },
   ];
 
-  console.log(profileSocials);
-
   return (
     <section className="md:w-1/2 w-full md:px-5 mx-auto pb-10">
       <h1 className="font-semibold text-2xl pb-4">Profile Details</h1>
@@ -96,10 +94,10 @@ const Profile = () => {
         <h3 className="font-semibold text-lg">{profileData?.name}</h3>
 
         <div className="profile-info grid sm:grid-cols-2 gap-4 w-full">
-          <span className="text-center text-sm text-black py-2 profile-border">
+          <span className="flex justify-center items-center text-sm text-black py-2 profile-border">
             {profileData?.phone ? profileData.phone : "Phone Number"}
           </span>
-          <span className="flex items-center text-sm text-black  py-2 profile-border overflow-x-auto whitespace-nowrap">
+          <span className="flex justify-center items-center text-sm text-black  py-2 profile-border overflow-x-auto whitespace-nowrap">
             {profileData?.eventCategories?.map((category, index, array) => (
               <span key={category._id}>
                 {category.categoryName}
