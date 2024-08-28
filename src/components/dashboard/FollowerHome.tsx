@@ -6,15 +6,15 @@ import { FollowerTable } from "./Followers/FollowerTable";
 import { fetchFollowers } from "../../api/fetchFollowersApi";
 import { useEffect, useState } from "react";
 
-interface FollowerList {
-  fname: string;
-  lname: string;
-  age: number;
-  email: string;
-  followedOn: string;
-  eventsAttended: number;
-  affiliationStatus: string;
-}
+// interface FollowerList {
+//   fname: string;
+//   lname: string;
+//   age: number;
+//   email: string;
+//   followedOn: string;
+//   eventsAttended: number;
+//   affiliationStatus: string;
+// }
 
 interface AttendeesByGender {
   male: string;
