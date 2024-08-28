@@ -1,19 +1,26 @@
+import React from "react";
 import AreaChartHome from "../Charts/AreaChart";
 import HomeContainerCard from "../HomeContainerCard";
 
-const FollowerChart = () => {
-  const dummyData = [
-    { name: "Jan", value: 10 },
-    { name: "Feb", value: 50 },
-    { name: "Mar", value: 30 },
-    { name: "Apr", value: 40 },
-    { name: "May", value: 10 },
-    { name: "June", value: 70 },
-    { name: "July", value: 90 },
-  ];
+interface FollowersPerMonth {
+  [month: string]: number;
+}
+
+interface FollowerChartProps {
+  followersPerMonth?: FollowersPerMonth;
+}
+
+const FollowerChart: React.FC<FollowerChartProps> = ({ followersPerMonth = {} }) => {
+  console.log(followersPerMonth);
+
+  const data = Object.entries(followersPerMonth || {}).map(([month, count]) => ({
+    name: month,
+    value: count,
+  }));
+
   return (
     <HomeContainerCard className="h-[40vh] shadow-none min-w-[300px] w-full">
-      <AreaChartHome data={dummyData} heading="Followers" />
+      <AreaChartHome data={data} heading="Followers" />
     </HomeContainerCard>
   );
 };
