@@ -11,7 +11,7 @@ const CustomerHome = () => {
       <div className="grid grid-cols-6 xl:grid-cols-10 gap-4 my-3">
         <div className="col-span-6 md:col-span-2 xl:col-span-2">
           <div>
-            <CountCard heading={"Followers"} count={"5000"}/>
+            <CountCard heading={"Followers"} count={5000}/>
           </div>
           <div>
             <TextBlast />

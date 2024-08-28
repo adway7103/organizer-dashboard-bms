@@ -13,7 +13,7 @@ const AffiliateHome = () => {
         <div className="col-span-1 grid grid-cols-9 gap-4">
           <div className="col-span-9 sm:col-span-4">
             <div>
-              <CountCard heading={"Affiliates"} count={"5000"} />
+              <CountCard heading={"Affiliates"} count={5000} />
             </div>
             <div>
               <TextBlast />

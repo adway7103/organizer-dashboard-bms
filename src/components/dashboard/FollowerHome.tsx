@@ -67,7 +67,7 @@ const FollowerHome = () => {
       <h2 className="font-semibold text-[2rem] px-4">Followers</h2>
       <div className="grid grid-cols-6 xl:grid-cols-10 gap-4 my-3">
         <div className="col-span-6 md:col-span-2 xl:col-span-2">
-          <CountCard heading={"Followers"} totalFollowers={totalFollowers} />
+          <CountCard heading={"Followers"} count={totalFollowers} />
           <TextBlast />
         </div>
         <div className="col-span-6 md:col-span-4 xl:col-span-4">

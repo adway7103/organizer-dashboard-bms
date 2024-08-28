@@ -3,10 +3,10 @@ import img from "../../../../public/affiliates/count.png";
 
 interface CountCardType {
   heading: string;
-  totalFollowers: number;
+  count: number;
 }
 
-const CountCard = ({ heading, totalFollowers }: CountCardType) => {
+const CountCard = ({ heading, count }: CountCardType) => {
   return (
     <HomeContainerCard className="h-auto sm:h-[22vh] shadow-none border border-gray-300 rounded-3xl sm:flex justify-center sm:items-center">
       <div className="flex flex-row justify-around items-center sm:flex-col sm:justify-center sm:items-center gap-y-2">
@@ -20,7 +20,7 @@ const CountCard = ({ heading, totalFollowers }: CountCardType) => {
           </div>
           <div className="font-semibold text-xl">{heading}</div>
         </div>
-        <div className="text-[2rem] font-bold ">{totalFollowers}</div>
+        <div className="text-[2rem] font-bold ">{count}</div>
       </div>
     </HomeContainerCard>
   );
