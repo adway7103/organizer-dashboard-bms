@@ -45,18 +45,17 @@ interface FollowersPerMonth {
 
 const FollowerHome = () => {
   const [totalFollowers, setTotalFollowers] = useState<number>(0);
-  const [followerList, setFollowerList] = useState<FollowerList[]>([]);
   const [genderPercentage, setGenderPercentage] = useState<AttendeesByGender>();
   const [ageDistribution, setAgeDistribution] = useState<AgeDistribution>();
-  const [followersPerMonth, setFollowersPerMonth] = useState<FollowersPerMonth>();
+  const [followersPerMonth, setFollowersPerMonth] =
+    useState<FollowersPerMonth>();
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetchFollowers();
-      setFollowersPerMonth(response.followersPerMonth)
+      setFollowersPerMonth(response.followersPerMonth);
       setAgeDistribution(response.ageDistribution);
       setGenderPercentage(response.genderPercentage);
-      setFollowerList(response.followersList);
       setTotalFollowers(response.totalFollowers);
     };
     fetchData();
@@ -71,7 +70,7 @@ const FollowerHome = () => {
           <TextBlast />
         </div>
         <div className="col-span-6 md:col-span-4 xl:col-span-4">
-          <FollowerChart followersPerMonth={followersPerMonth}/>
+          <FollowerChart followersPerMonth={followersPerMonth} />
         </div>
         <div className="col-span-6 md:col-span-3 xl:col-span-2">
           <FollowerPieChart
@@ -88,18 +87,7 @@ const FollowerHome = () => {
           />
         </div>
       </div>
-      {followerList.map((follower, index) => (
-        <FollowerTable
-          key={index}
-          name={follower.fname}
-          lname={follower.lname}
-          age={follower.age}
-          email={follower.email}
-          followedOn={follower.followedOn}
-          eventsAttended={follower.eventsAttended}
-          affiliationStatus={follower.affiliationStatus}
-        />
-      ))}
+      <FollowerTable />
     </div>
   );
 };

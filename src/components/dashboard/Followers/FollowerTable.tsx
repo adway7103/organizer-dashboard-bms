@@ -20,10 +20,11 @@ import {
   TableHeader,
   TableRow,
 } from "../../ui/Table";
-import { MenuItem, Select } from "@mui/material";
+// import { MenuItem, Select } from "@mui/material";
+import { fetchFollowers } from "../../../api/fetchFollowersApi";
 
-interface FollowerTableProps {
-  name: string;
+interface FollowerList {
+  fname: string;
   lname: string;
   age: number;
   email: string;
@@ -32,62 +33,79 @@ interface FollowerTableProps {
   affiliationStatus: string;
 }
 
-export function FollowerTable({
-  name,
-  lname,
-  age,
-  email,
-  followedOn,
-  eventsAttended,
-  affiliationStatus,
-}: FollowerTableProps) {
+export function FollowerTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [followersList, setFollowersList] = React.useState<FollowerList[]>([]); // Updated to an array
 
-  const columns: ColumnDef<any>[] = [
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetchFollowers();
+      console.log(response.FollowerList); // Adjusted to log the total number of followers
+      setFollowersList(response.followersList); // Correctly set the followers list
+    };
+    fetchData();
+  }, []);
+
+  const columns: ColumnDef<FollowerList>[] = [
     {
       accessorKey: "fname",
       header: "Name",
-      cell: () => <div>{name}</div>,
+      cell: ({ row }) => (
+        <div className="text-black">{row.getValue("fname")}</div>
+      ),
     },
     {
       accessorKey: "lname",
       header: "Last Name",
-      cell: () => <div>{lname}</div>,
+      cell: ({ row }) => (
+        <div className="text-black">{row.getValue("lname")}</div>
+      ),
     },
     {
       accessorKey: "age",
       header: "Age",
-      cell: () => <div>{age}</div>,
+      cell: ({ row }) => (
+        <div className="text-black">{row.getValue("age")}</div>
+      ),
     },
     {
       accessorKey: "email",
       header: "Email Address",
-      cell: () => <div>{email}</div>,
+      cell: ({ row }) => (
+        <div className="text-black">{row.getValue("email")}</div>
+      ),
     },
     {
       accessorKey: "followedOn",
       header: "Followed On",
-      cell: () => <div>{followedOn}</div>,
+      cell: ({ row }) => (
+        <div className="text-black">{row.getValue("followedOn")}</div>
+      ),
     },
     {
       accessorKey: "eventsAttended",
       header: "Events Attended",
-      cell: () => <div>{eventsAttended}</div>,
+      cell: ({ row }) => (
+        <div className="text-black">{row.getValue("eventsAttended")}</div>
+      ),
     },
     {
       accessorKey: "affiliationStatus",
       header: "Affiliation Status",
-      cell: () => <div>{affiliationStatus}</div>,
+      cell: ({ row }) => (
+        <div className="text-black">{row.getValue("affiliationStatus")}</div>
+      ),
     },
   ];
 
-  const data = [{ name, lname, age, email, followedOn, eventsAttended, affiliationStatus }];
-
   const table = useReactTable({
-    data,
+    data: followersList, // Pass the fetched data to the table
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -113,8 +131,12 @@ export function FollowerTable({
           <div className="relative flex items-center w-full sm:w-auto">
             <Search className="absolute left-4 text-gray-400 pointer-events-none" />
             <input
-              value={(table.getColumn("fname")?.getFilterValue() as string) ?? ""}
-              onChange={(event) => table.getColumn("fname")?.setFilterValue(event.target.value)}
+              value={
+                (table.getColumn("fname")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table.getColumn("fname")?.setFilterValue(event.target.value)
+              }
               className="w-full sm:w-auto !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm lg:w-80"
               placeholder="Search"
             />
@@ -134,37 +156,44 @@ export function FollowerTable({
                   fill="#333333"
                 />
                 <path
-                  d="M8.88477 10.0652C8.75416 9.93386 8.68611 9.75456 8.69655 9.57031C8.70699 9.38607 8.79499 9.21469 8.93898 9.09692C9.08297 8.97916 9.27089 8.92577 9.45798 8.94808C9.64507 8.9704 9.81262 9.06691 9.92852 9.21875L10.625 10.0703V3.75C10.625 3.58424 10.6908 3.42527 10.8081 3.30806C10.9253 3.19085 11.0842 3.125 11.25 3.125C11.4158 3.125 11.5747 3.19085 11.6919 3.30806C11.8092 3.42527 11.875 3.58424 11.875 3.75V10.0703L12.5715 9.21875C12.6874 9.06691 12.8549 8.9704 13.042 8.94808C13.2291 8.92577 13.417 8.97916 13.561 9.09692C13.705 9.21469 13.793 9.38607 13.8034 9.57031C13.8139 9.75456 13.7458 9.93386 13.6152 10.0652L11.1152 12.5652C11.0516 12.6297 10.9764 12.6815 10.8938 12.7175C10.8113 12.7536 10.7224 12.7731 10.632 12.775C10.5428 12.7733 10.4545 12.7546 10.3733 12.7199C10.2921 12.6853 10.2194 12.6356 10.1598 12.573C10.1554 12.5684 10.1511 12.5638 10.1468 12.5592L8.88477 10.0652Z"
+                  d="M8.88477 10.0652C8.75416 9.93386 8.68611 9.75456 8.69655 9.57031C8.70699 9.38607 8.79499 9.21469 8.93898 9.09692C9.08297 8.97916 9.27089 8.92577 9.45798 8.94808C9.64507 8.9704 9.81262 9.06691 9.92852 9.21875L10.625 10.0703V3.75C10.625 3.58424 10.6908 3.42527 10.8081 3.30806C10.9253 3.19085 11.0842 3.125 11.25 3.125C11.4158 3.125 11.5747 3.19085 11.6919 3.30806C11.8092 3.42527 11.875 3.58424 11.875 3.75V10.0703L12.5715 9.21875C12.6874 9.06691 12.855 8.9704 13.0421 8.94808C13.2292 8.92577 13.4171 8.97916 13.5611 9.09692C13.705 9.21469 13.793 9.38607 13.8034 9.57031C13.8139 9.75456 13.7458 9.93386 13.6152 10.0652L10.8652 12.8152C10.7339 12.9458 10.5557 13.0156 10.3711 13.0156C10.1865 13.0156 10.0083 12.9458 9.87695 12.8152L8.88477 11.823L8.88477 10.0652Z"
                   fill="#333333"
                 />
               </svg>
             </button>
-            <Select
-              defaultValue={1}
-              style={{ height: 48, width: 125, borderRadius: 999 }}
-            >
-              <MenuItem value={1}>Sort By</MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
           </div>
         </div>
-        <div className="overflow-x-auto">
+
+        <div className="p-2">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  ))}
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder ? null : (
+                          <div
+                            {...{
+                              className: header.column.getCanSort()
+                                ? "cursor-pointer select-none"
+                                : "",
+                              onClick: header.column.getToggleSortingHandler(),
+                            }}
+                          >
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                            {{
+                              asc: " 🔼",
+                              desc: " 🔽",
+                            }[header.column.getIsSorted() as string] ?? null}
+                          </div>
+                        )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
               ))}
             </TableHeader>
@@ -177,15 +206,21 @@ export function FollowerTable({
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
                       </TableCell>
                     ))}
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={columns.length} className="h-24 text-center">
-                    No followers found
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No Followers Found.
                   </TableCell>
                 </TableRow>
               )}
