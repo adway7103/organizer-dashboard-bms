@@ -23,10 +23,10 @@ import { EventInfo } from "../../Contexts/CreateEventContext";
 import dayjs from "dayjs";
 import createEvent from "../../api/createEventApi";
 import toast from "react-hot-toast";
-import { uploadImage } from "../../api/uploadImage";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchOrganizationProfile } from "../../api/fetchProfileApi.ts";
 import { Loader2 } from "lucide-react";
+import VideoComponent from "../../components/DragNDrop/VideoComponent";
 interface EventCategory {
   _id: string;
   categoryName: string;
@@ -53,12 +53,14 @@ const EventForm: React.FC = () => {
   const { eventInfo, setEventInfo } = useEventContext();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const [loadingButton, setLoadingButton] = useState<string | null>(null); // Track loading state for each button
+  const [loadingButton, setLoadingButton] = useState<string | null>(null);
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
   >([]);
   console.log(loadingButton);
 
+  const [trailerUrl, setTrailerUrl] = useState<any[]>([]);
+  
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -145,6 +147,14 @@ const EventForm: React.FC = () => {
     setSelectedFile(file);
   };
 
+  const handleVideoFile = (file: File | null) => {
+    setSelectedFile(file);
+    // if (file) {
+    //   const videoUrl = URL.createObjectURL(file);
+    //   setTrailerUrl((prev) => [...prev, { videoUrl }]);
+    // }
+  };
+
   const validateForm = () => {
     return (
       eventInfo.title &&
@@ -195,18 +205,6 @@ const EventForm: React.FC = () => {
       return;
     }
 
-    let imageUrl = "";
-
-    if (selectedFile) {
-      try {
-        imageUrl = await uploadImage(selectedFile);
-      } catch (uploadError) {
-        toast.error("Failed to upload image. Please try again.");
-        setLoading(false);
-        setLoadingButton(null);
-        return;
-      }
-    }
 
     if (!profileData) {
       toast.error("Organizer profile is required to create an event.");
@@ -221,7 +219,7 @@ const EventForm: React.FC = () => {
       eventCategories: eventInfo.eventCategories,
       genres: eventInfo.genres,
       description: eventInfo.description,
-      posterUrl: imageUrl,
+      posterUrl: eventInfo.posterUrl,
       cheapestTicket: {
         currency: eventInfo.cheapestTicket.currency,
         amount: "10",
@@ -239,6 +237,7 @@ const EventForm: React.FC = () => {
       isRep: eventInfo.isRep,
       periodicity: eventInfo.periodicity,
       ageRestriction: eventInfo.ageRestriction,
+      trailerUrls:trailerUrl
     };
 
     try {
@@ -271,6 +270,7 @@ const EventForm: React.FC = () => {
         periodicity: "",
         organizer: "",
         ageRestriction: "",
+        trailerUrls:[],
       });
     } catch (error: any) {
       console.error(error);
@@ -404,6 +404,21 @@ const EventForm: React.FC = () => {
 
       {/* <div> */}
       <FileDragNDrop onFileSelect={handleFileSelect} />
+      <div className="flex gap-4">
+        <VideoComponent
+          onFileSelect={handleVideoFile}
+          setTrailerUrl={setTrailerUrl}
+        />
+        <VideoComponent
+          onFileSelect={handleVideoFile}
+          setTrailerUrl={setTrailerUrl}
+        />
+        <VideoComponent
+          onFileSelect={handleVideoFile}
+          setTrailerUrl={setTrailerUrl}
+        />
+      </div>
+
       {/* </div> */}
 
       <Autocomplete
@@ -610,7 +625,7 @@ const EventForm: React.FC = () => {
       </div>
 
       <div>
-       <h3 className="font-semibold text-xl mb-2">Refunds</h3>
+        <h3 className="font-semibold text-xl mb-2">Refunds</h3>
         <div className="flex flex-col gap-2">
           <div className="flex items-center">
             <input
@@ -652,7 +667,6 @@ const EventForm: React.FC = () => {
               className="follow rounded mx-0 w-6 h-4"
             />
 
-            
             <label htmlFor="allRefundsApproved" className="text-sm ml-3">
               All refunds are approved.
             </label>

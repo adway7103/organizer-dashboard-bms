@@ -1,8 +1,11 @@
 import React, { useState, useRef } from "react";
 import "./FileDragNDrop.css";
 import { MdUpload, MdDeleteForever } from "react-icons/md";
+import { uploadImage } from "../../api/uploadImage";
+import { useEventContext } from "../../Contexts/CreateEventContext";
 
-const FileDragNDrop: React.FC<{ onFileSelect: (file: File | null) => void; ClassName?: string  }> = ({ onFileSelect, ClassName="" }) => {
+
+const FileDragNDrop: React.FC<{ onFileSelect: (file: File | null) => void; ClassName?: string }> = ({ onFileSelect, ClassName = "" }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -10,28 +13,44 @@ const FileDragNDrop: React.FC<{ onFileSelect: (file: File | null) => void; Class
     e.preventDefault();
     e.stopPropagation();
   };
+  const { setEventInfo } = useEventContext();
+
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     const file = e.dataTransfer.files[0];
     if (file) {
-      setImagePreview(URL.createObjectURL(file));
-      onFileSelect(file);
+      handleImageUpload(file);
     }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImagePreview(URL.createObjectURL(file));
-      onFileSelect(file);
+      handleImageUpload(file);
+    }
+  };
+
+  const handleImageUpload = async (file: File) => {
+    setImagePreview(URL.createObjectURL(file));
+
+    onFileSelect(file);
+
+    try {
+      const imageUrl = await uploadImage(file);
+      setEventInfo((prevEventInfo) => ({
+        ...prevEventInfo,
+        posterUrl: imageUrl,
+      }));     
+    } catch (error) {
+      console.error("Image upload failed:", error);
     }
   };
 
   const deleteImg = () => {
     setImagePreview(null);
-    onFileSelect(null); // Notify parent component of image removal
+    onFileSelect(null); 
   };
 
   return (
