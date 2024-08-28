@@ -57,8 +57,7 @@ const EventForm: React.FC = () => {
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
   >([]);
-  console.log(loadingButton);
-
+  
   const [trailerUrl, setTrailerUrl] = useState<any[]>([]);
   
   useEffect(() => {
@@ -72,26 +71,26 @@ const EventForm: React.FC = () => {
         console.error("Failed to fetch categories", error);
       }
     };
-
+    
     fetchCategories();
   }, []);
-
+  
   // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   setEventInfo((prevEventInfo) => ({
-  //     ...prevEventInfo,
-  //     [name]: value,
-  //   }));
-  // };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (name === "duration") {
-      const numericValue = value.replace(/[^\d]/g, ""); // Extract numeric value
-      setEventInfo((prevEventInfo) => ({
-        ...prevEventInfo,
-        [name]: `${numericValue}h`, // Append "h" to the numeric value
-      }));
+    //   const { name, value } = e.target;
+    //   setEventInfo((prevEventInfo) => ({
+      //     ...prevEventInfo,
+      //     [name]: value,
+      //   }));
+      // };
+      
+      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        if (name === "duration") {
+          const numericValue = value.replace(/[^\d]/g, ""); // Extract numeric value
+          setEventInfo((prevEventInfo) => ({
+            ...prevEventInfo,
+            [name]: `${numericValue}h`, // Append "h" to the numeric value
+          }));
     } else {
       setEventInfo((prevEventInfo) => ({
         ...prevEventInfo,
@@ -99,12 +98,12 @@ const EventForm: React.FC = () => {
       }));
     }
   };
-
+  
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  
   const handleSelectChange = (event: SelectChangeEvent<string | string[]>) => {
     const { name, value } = event.target;
-
+    
     setEventInfo((prevInfo) => {
       if (name === "currency") {
         return {
@@ -129,21 +128,21 @@ const EventForm: React.FC = () => {
       return prevInfo;
     });
   };
-
+  
   const handleDateChange = (newValue: Dayjs | null, name: string) => {
     setEventInfo({ ...eventInfo, [name]: newValue });
   };
-
+  
   const eventStart = dayjs(eventInfo.eventStartDate)
-    .hour(dayjs(eventInfo.eventStartTime).hour())
-    .minute(dayjs(eventInfo.eventStartTime).minute())
-    .format("YYYY-MM-DD HH:mm:ss");
+  .hour(dayjs(eventInfo.eventStartTime).hour())
+  .minute(dayjs(eventInfo.eventStartTime).minute())
+  .format("YYYY-MM-DD HH:mm:ss");
   const eventEnd = dayjs(eventInfo.eventEndDate)
     .hour(dayjs(eventInfo.eventEndTime).hour())
     .minute(dayjs(eventInfo.eventEndTime).minute())
     .format("YYYY-MM-DD HH:mm:ss");
 
-  const handleFileSelect = (file: File | null) => {
+    const handleFileSelect = (file: File | null) => {
     setSelectedFile(file);
   };
 
@@ -154,7 +153,7 @@ const EventForm: React.FC = () => {
     //   setTrailerUrl((prev) => [...prev, { videoUrl }]);
     // }
   };
-
+  
   const validateForm = () => {
     return (
       eventInfo.title &&
@@ -197,13 +196,14 @@ const EventForm: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setLoadingButton(buttonType);
-
+    
     if (!validateForm()) {
       toast.error("All fields are required.");
       setLoading(false);
       setLoadingButton(null);
       return;
     }
+    console.log(loadingButton);
 
 
     if (!profileData) {
