@@ -14,7 +14,7 @@ const CustomerHome = () => {
             <CountCard heading={"Followers"} count={5000}/>
           </div>
           <div>
-            <TextBlast />
+          <TextBlast className="bg-[#954b7c]" />
           </div>
         </div>
         <div className="col-span-6 md:col-span-4 xl:col-span-4">

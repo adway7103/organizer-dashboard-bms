@@ -16,7 +16,7 @@ const AffiliateHome = () => {
               <CountCard heading={"Affiliates"} count={5000} />
             </div>
             <div>
-              <TextBlast />
+            <TextBlast className="bg-[#954b7c]"/>
             </div>
           </div>
           <div className="col-span-9 sm:col-span-5">
