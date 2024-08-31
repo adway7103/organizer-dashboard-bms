@@ -7,10 +7,9 @@ import { Link } from "react-router-dom";
 interface SidebarNavItem {
   name: string;
   link: string;
-  icon?: React.ReactNode; 
-  imgSrc?: string;      
+  icon?: React.ReactNode;
+  imgSrc?: string;
 }
-
 
 const Sidebar = ({ isVisible }: any) => {
   const [currentNavs, setCurrentNavs] = useState<SidebarNavItem[]>(SidebarNavs);
@@ -26,9 +25,10 @@ const Sidebar = ({ isVisible }: any) => {
     setAccordionOpen(false);
   };
 
-  const handleAccordionToggle = () => {
-    // setAccordionOpen((prev) => !prev);
-    setAccordionOpen(true);
+  const handleAccordionToggle = (e: any) => {
+    e.preventDefault();
+    setAccordionOpen((prev) => !prev);
+    // setAccordionOpen(true);
   };
 
   const handleGenericClick = () => {

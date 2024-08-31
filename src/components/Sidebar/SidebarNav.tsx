@@ -9,7 +9,7 @@ interface SidebarNavItem {
 
 interface SidebarNavProps {
   item: SidebarNavItem;
-  onClick?: () => void;
+  onClick?: (e: any) => void;
   isActive?: boolean;
 }
 
