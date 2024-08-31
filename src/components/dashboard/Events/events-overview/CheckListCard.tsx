@@ -7,7 +7,7 @@ const CheckListCard = () => {
     { description: "Create a tracking link", key: 4 },
   ];
   return (
-    <div className="flex flex-col border p-4 rounded-3xl  min-w-[300px] md:w-[480px] cursor-pointer bg-[#eeedf3] h-[275px]">
+    <div className="flex flex-col border p-4 rounded-3xl  min-w-[300px] md:w-[520px] cursor-pointer bg-[#eeedf3] h-[275px]">
       <div className="text-center">
         <h3 className="text-lg">Check list</h3>
       </div>

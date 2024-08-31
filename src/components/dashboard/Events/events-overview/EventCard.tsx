@@ -1,9 +1,9 @@
 
 const EventCard = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center md:items-start border p-8 rounded-3xl space-x-0 md:space-x-8 min-w-[300px] md:w-[480px] cursor-pointer bg-[#ffffff]">
+    <div className="flex flex-col sm:flex-row items-center md:items-start border p-8 rounded-3xl space-x-0 sm:space-x-8 min-w-[300px] sm:w-[520px] cursor-pointer bg-[#ffffff]">
       <div>
-        <img src="../elp2-2.png" alt="" className="h-[210px] w-[210px]" />
+        <img src="../elp2-2.png" alt="" className="h-[210px] w-[280px]" />
       </div>
       <div className="pt-4">
         <div className="text-lg mt-1">
