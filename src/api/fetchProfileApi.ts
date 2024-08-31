@@ -10,8 +10,6 @@ export const fetchOrganizationProfile = async () => {
         "Content-Type": "application/json",
       },
     }
-  );
-  console.log(response.data.data);
-  
+  );  
   return response.data.data;
 };
