@@ -40,7 +40,7 @@ function App() {
             shouldHideNavAndSidebar
               ? "w-full"
               : isSidebarVisible
-              ? "pl-[70px] sm:pl-[220px]"
+              ? "pl-[70px] sm:pl-[260px]"
               : "pl-[20px] sm:pl-0"
           }`}
         >
