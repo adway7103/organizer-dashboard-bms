@@ -41,8 +41,6 @@ const EditProfile = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [eventCategories, setCategory] = useState<string[]>([]);
 
-  console.log("category", eventCategories);
-
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [facebookAccUrl, setFacebookAccUrl] = useState<string>("");
