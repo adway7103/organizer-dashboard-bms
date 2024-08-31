@@ -24,6 +24,10 @@ import Logout from "../components/auth/Logout";
 import { EventHome } from "../components/dashboard/EventHome";
 import EventOverview from "../components/dashboard/Events/events-overview/EventOverview";
 import CreateAnAccount from "../components/auth/CreateAnAccount";
+import { DraftedEvents } from "../components/dashboard/Events/DraftedEvents";
+import EditIndTicket from "../pages/AddTicket/EditIndTicket";
+import Tickets from "../components/dashboard/Events/ticketsAndVouchers/Tickets";
+import Vouchers from "../components/dashboard/Events/ticketsAndVouchers/Vouchers";
 
 export const router = createBrowserRouter([
   {
@@ -106,17 +110,33 @@ export const router = createBrowserRouter([
             element: <CreateAnAccount />,
           },
           {
+            path: "/edit-ticket/:matrixId/:id",
+            element: <EditIndTicket />,
+          },
+          {
+            path: "/drafted-events",
+            element: <DraftedEvents />,
+          },
+          {
             path: "/events",
-            children:[
+            children: [
               {
-                path:"",
+                path: "",
                 element: <EventHome />,
               },
               {
-                path:"/events/event-overview",
+                path: "/events/event-overview",
                 element: <EventOverview />,
-              }
-            ]
+              },
+              {
+                path: "/events/tickets",
+                element: <Tickets />,
+              },
+              {
+                path: "/events/vouchers",
+                element: <Vouchers />,
+              },
+            ],
           },
           {
             path: "/logout",

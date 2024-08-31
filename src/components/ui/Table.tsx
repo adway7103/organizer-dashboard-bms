@@ -42,7 +42,7 @@ export const TableHeader: React.FC<TableHeaderProps> = ({ children }) => (
 
 export const TableHead: React.FC<TableHeadProps> = ({ className, scope, children, ...props }) => (
   <th
-    className={`px-4 py-3 text-left text-xs font-medium text-bold uppercase tracking-wider ${className}`}
+    className={`px-4 py-3 text-center text-xs font-medium text-bold uppercase tracking-wider ${className}`}
     scope={scope}
     {...props}
   >
@@ -61,7 +61,7 @@ export const TableRow: React.FC<TableRowProps> = ({ className, children, ...prop
 );
 
 export const TableCell: React.FC<TableCellProps> = ({ className, children, ...props }) => (
-  <td className={`px-4 py-3 whitespace-nowrap text-sm text-gray-500 ${className}`} {...props}>
+  <td className={`px-4 py-3 text-center whitespace-nowrap text-sm text-gray-500 ${className}`} {...props}>
     {children}
   </td>
 );

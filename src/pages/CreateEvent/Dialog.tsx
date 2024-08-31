@@ -2,10 +2,11 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 interface PositionedMenuProps {
   id: string;
-  matrixId: string;
+  matrixId?: string;
   onDelete: (id: string) => void;
 }
 export default function PositionedMenu({
@@ -13,7 +14,6 @@ export default function PositionedMenu({
   matrixId,
   onDelete,
 }: PositionedMenuProps) {
-  console.log("mid", matrixId);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -24,6 +24,7 @@ export default function PositionedMenu({
   const handleClose = () => {
     setAnchorEl(null);
   };
+
 
   const handleDelete = async () => {
     const token = localStorage.getItem("accessToken");
@@ -40,7 +41,7 @@ export default function PositionedMenu({
           },
         }
       );
-      onDelete(id);
+      onDelete(id);      
       handleClose();
       console.log(response.data);
       return response.data;
@@ -50,10 +51,11 @@ export default function PositionedMenu({
     }
   };
 
+
   return (
     <div>
       <button
-        // id="demo-positioned-button"
+        id="demo-positioned-button"
         // aria-controls={open ? "demo-positioned-menu" : undefined}
         // aria-haspopup="true"
         // aria-expanded={open ? "true" : undefined}
@@ -81,15 +83,17 @@ export default function PositionedMenu({
         open={open}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "left",
+          vertical: 20,
+          horizontal: 10,
         }}
         transformOrigin={{
           vertical: "top",
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={handleClose}>Edit Ticket</MenuItem>
+        <Link to={`/edit-ticket/${matrixId}/${id}`}>
+          <MenuItem>Edit Ticket</MenuItem>
+        </Link>
         <MenuItem onClick={handleDelete}>Delete Ticket</MenuItem>
         {/* <MenuItem onClick={handleClose}>Logout</MenuItem> */}
       </Menu>
