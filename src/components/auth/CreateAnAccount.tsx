@@ -188,7 +188,7 @@ const CreateAnAccount = () => {
                     },
                   }}
                   sx={{
-                    height: "56px",
+                    height: "42px",
                     ".MuiSelect-select": {
                       padding: "10px",
                     },
@@ -244,7 +244,7 @@ const CreateAnAccount = () => {
               <div className="w-full">
                 <input
                   type="text"
-                  name="twitterAccUrl"
+                  name="twiiterAccUrl"
                   value={accountInfo.twiiterAccUrl}
                   onChange={handleChange}
                   placeholder="Twitter Account"
