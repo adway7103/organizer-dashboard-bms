@@ -2,15 +2,16 @@ import "./Sidebar.css";
 import SidebarNav from "./SidebarNav";
 import { SidebarNavs, eventsTabSidebar } from "../../utils/Constant";
 import { useLocation } from "react-router-dom";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Sidebar = ({ isVisible }: any) => {
   const location = useLocation();
+  const [isAccordionOpen, setAccordionOpen] = useState(false);
 
-  // Determine which set of nav items to show based on the current route
   const currentNavs = location.pathname.startsWith("/events/")
-  ? eventsTabSidebar
-  : SidebarNavs;
+    ? eventsTabSidebar
+    : SidebarNavs;
 
   return (
     <div
@@ -19,19 +20,23 @@ const Sidebar = ({ isVisible }: any) => {
       }`}
     >
       {currentNavs.map((item, index) => {
-        const isActive = item.name === "Ticket and Vouchers" && location.pathname === item.link;
+        const isActive = location.pathname === item.link;
+        const isAccordionTab = item.name === "Ticket and Vouchers";
 
         return (
           <div key={index}>
             <SidebarNav
               item={item}
               key={index}
-              isActive={isActive}
+              isActive={isAccordionTab ? isAccordionOpen : isActive}
+              onClick={() => {
+                if (isAccordionTab) setAccordionOpen(!isAccordionOpen); 
+              }}
             />
-            {item.name === "Ticket and Vouchers" && isActive && (
-              <div className="bg-[#cbd0d6] rounded-b-3xl flex flex-col items-center gap-3 pt-3 pb-3">
-                <Link to={"events/tickets"}>Tickets</Link>
-                <Link to={"events/vouchers"}>Vouchers</Link>
+            {isAccordionTab && isAccordionOpen && (
+              <div className="bg-[#cbd0d6] rounded-b-3xl flex flex-col items-center gap-3 pt-3 pb-3 cursor-pointer">
+                <Link to={"/events/tickets"}>Tickets</Link>
+                <Link to={"/events/vouchers"}>Vouchers</Link>
               </div>
             )}
           </div>
