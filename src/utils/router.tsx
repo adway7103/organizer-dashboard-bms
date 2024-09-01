@@ -49,13 +49,13 @@ export const router = createBrowserRouter([
                 element: <CE_Page1 />,
               },
               {
-                path: "/create-events/2",
+                path: "2/:eventId",
                 element: <CE_Page2 />,
               },
             ],
           },
           {
-            path: "/ind-tickets",
+            path: "/ind-tickets/:eventId",
             element: <Individual />,
           },
           {
@@ -112,7 +112,7 @@ export const router = createBrowserRouter([
             element: <CreateAnAccount />,
           },
           {
-            path: "/edit-ticket/:matrixId/:id",
+            path: "/edit-ticket/:eventId/:matrixId/:id",
             element: <EditIndTicket />,
           },
           {

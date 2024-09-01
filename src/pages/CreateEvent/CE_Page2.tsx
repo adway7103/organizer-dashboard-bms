@@ -12,9 +12,11 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs"; // Import Dayjs
 import { Loader2 } from "lucide-react";
+import { useParams } from "react-router-dom";
 
 const CE_Page2: React.FC = () => {
   const navigate = useNavigate();
+  const { eventId } = useParams();
 
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(true);
 
@@ -67,9 +69,6 @@ const CE_Page2: React.FC = () => {
       setLoading(false);
       return;
     }
-
-    const eventId = localStorage.getItem("eventId");
-
     const lastEntryTimeFormatted =
       lastEntryDate && lastEntryTime
         ? dayjs(lastEntryDate)
@@ -96,7 +95,6 @@ const CE_Page2: React.FC = () => {
       toast.success("Event published successfully!");
       setLoading(false);
       setLoadingButton(null);
-      localStorage.removeItem("eventId");
     } catch (error: any) {
       setLoading(false);
       setLoadingButton(null);
@@ -134,10 +132,6 @@ const CE_Page2: React.FC = () => {
     }
   };
 
-  const handleCancelButton = () => {
-    localStorage.removeItem("eventId");
-  };
-
   return (
     <form>
       <div className="flex items-center justify-between pb-8 p-1">
@@ -147,7 +141,7 @@ const CE_Page2: React.FC = () => {
       <h1 className="font-semibold text-2xl pb-4">Create Event</h1>
       <h3 className="font-semibold text-lg">Tickets</h3>
       <button className="add-ticket-btn font-md bg-[#244f7a] text-sm my-2">
-        <Link to={"/ind-tickets"} className="">
+        <Link to={`/ind-tickets/${eventId}`} className="">
           Add a Ticket
         </Link>
       </button>
@@ -157,7 +151,6 @@ const CE_Page2: React.FC = () => {
       {/*  flex-col items-center tickets-display*/}
       <div className="border rounded-3xl flex justify-center my-5">
         <TicketTable />
- 
       </div>
 
       <h4
@@ -264,10 +257,7 @@ const CE_Page2: React.FC = () => {
           </button>
         </div> */}
         <Link to={"/dashboard"}>
-          <button
-            className="flex flex-row items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-10 rounded"
-            onClick={handleCancelButton}
-          >
+          <button className="flex flex-row items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-10 rounded">
             CANCEL
           </button>
         </Link>

@@ -7,14 +7,15 @@ import { Link } from "react-router-dom";
 interface PositionedMenuProps {
   id: string;
   matrixId?: string;
+  eventId?: string;
   onDelete: (id: string) => void;
 }
 export default function PositionedMenu({
   id,
   matrixId,
+  eventId,
   onDelete,
 }: PositionedMenuProps) {
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -24,7 +25,6 @@ export default function PositionedMenu({
   const handleClose = () => {
     setAnchorEl(null);
   };
-
 
   const handleDelete = async () => {
     const token = localStorage.getItem("accessToken");
@@ -41,7 +41,7 @@ export default function PositionedMenu({
           },
         }
       );
-      onDelete(id);      
+      onDelete(id);
       handleClose();
       console.log(response.data);
       return response.data;
@@ -50,7 +50,6 @@ export default function PositionedMenu({
       throw error;
     }
   };
-
 
   return (
     <div>
@@ -91,7 +90,7 @@ export default function PositionedMenu({
           horizontal: "left",
         }}
       >
-        <Link to={`/edit-ticket/${matrixId}/${id}`}>
+        <Link to={`/edit-ticket/${eventId}/${matrixId}/${id}`}>
           <MenuItem>Edit Ticket</MenuItem>
         </Link>
         <MenuItem onClick={handleDelete}>Delete Ticket</MenuItem>

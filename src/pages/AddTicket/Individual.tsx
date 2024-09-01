@@ -9,7 +9,7 @@ import ASIndividual from "../../components/AdvancedSettings/ASIndividual";
 import TextField from "@mui/material/TextField";
 import { createTicket } from "../../api/createTicket";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 
 interface Ticket {
@@ -36,6 +36,7 @@ interface Ticket {
 
 const Individual: React.FC = () => {
   const navigate = useNavigate();
+  const { eventId } = useParams();
   const [formData, setFormData] = useState<Ticket>({
     event: "",
     categoryType: "",
@@ -102,7 +103,7 @@ const Individual: React.FC = () => {
     return (
       formData.categoryName &&
       formData.totalSeats &&
-      formData.ticketType && 
+      formData.ticketType &&
       formData.ticketSaleType
       // formData.saleStartsDate &&
       // formData.saleStartsTime &&
@@ -122,7 +123,7 @@ const Individual: React.FC = () => {
       return;
     }
 
-    const id = localStorage.getItem("eventId");
+    const id = eventId;
     if (!id) {
       throw new Error("Event Id is required to create a ticket.");
     }
@@ -154,7 +155,7 @@ const Individual: React.FC = () => {
     try {
       await createTicket(ticketData);
       toast.success("Ticket created successfully:");
-      navigate("/create-events/2");
+      navigate(`/create-events/2/${eventId}`);
       setLoading(false);
     } catch (error: any) {
       const errorMessage =
@@ -382,7 +383,9 @@ const Individual: React.FC = () => {
           <div className="flex items-center space-x-6">
             <DatePicker
               value={formData.saleEndsDate}
-              onChange={(newValue) => handleDateChange(newValue, "saleEndsDate")}
+              onChange={(newValue) =>
+                handleDateChange(newValue, "saleEndsDate")
+              }
             />
             <p className="font-medium">at</p>
             <TimePicker
@@ -458,7 +461,7 @@ const Individual: React.FC = () => {
           <ASIndividual formData={formData} handleChange={handleChange} />
         )}
         <div className="flex gap-4">
-          <Link to={"/create-events/2"}>
+          <Link to={`/create-events/2/${eventId}`}>
             {" "}
             <button className="flex items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-4 rounded">
               BACK

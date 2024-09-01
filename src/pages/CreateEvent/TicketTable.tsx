@@ -23,6 +23,7 @@ import {
 import { fetchTickets } from "../../api/fetchTickets";
 import { IoTicketOutline } from "react-icons/io5";
 import FormDialog from "./Dialog";
+import { useParams } from "react-router-dom";
 
 export type Follower = {
   id: string;
@@ -30,9 +31,12 @@ export type Follower = {
   price: string;
   totalTickets: string;
   matrixId: string;
+  eventId: string;
 };
 
 export function TicketTable() {
+  const { eventId } = useParams();
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -44,9 +48,8 @@ export function TicketTable() {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const response = await fetchTickets();
+      const response = await fetchTickets({ eventId });
       const matrixId = response.data.matrix._id;
-
       const transformedData = response.data.matrix.ticketCategories.map(
         (ticket: any) => ({
           id: ticket._id,
@@ -56,10 +59,10 @@ export function TicketTable() {
             : "Free",
           totalTickets: ticket.totalSeats.toString(),
           matrixId: matrixId,
+          eventId: eventId,
         })
       );
       setTickets(transformedData);
-      console.log(transformedData);
     };
     fetchData();
   }, []);
@@ -100,7 +103,8 @@ export function TicketTable() {
           <FormDialog
             id={row.original.id}
             matrixId={row.original.matrixId}
-            onDelete={handleDeleteTicket} 
+            eventId={eventId}
+            onDelete={handleDeleteTicket}
           />
         </div>
       ),

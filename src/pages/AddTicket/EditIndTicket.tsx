@@ -35,7 +35,7 @@ interface Ticket {
 
 const EditIndTicket: React.FC = () => {
   const navigate = useNavigate();
-  const { matrixId, id } = useParams();
+  const { eventId, matrixId, id } = useParams();
   const [formData, setFormData] = useState<Ticket>({
     categoryType: "",
     categoryName: "",
@@ -141,7 +141,7 @@ const EditIndTicket: React.FC = () => {
     try {
       await updateTicket(ticketData);
       toast.success("Ticket Updated successfully:");
-      navigate("/create-events/2");
+      navigate(`/create-events/2/${eventId}`);
       setLoading(false);
     } catch (error: any) {
       const errorMessage =
@@ -444,7 +444,7 @@ const EditIndTicket: React.FC = () => {
           <ASIndividual formData={formData} handleChange={handleChange} />
         )}
         <div className="flex gap-4">
-          <Link to={"/create-events/2"}>
+          <Link to={`/create-events/2/${eventId}`}>
             {" "}
             <button className="flex items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-4 rounded">
               BACK

@@ -57,9 +57,11 @@ const EventForm: React.FC = () => {
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
   >([]);
-  
+
   const [trailerUrl, setTrailerUrl] = useState<any[]>([]);
-  
+  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [refundTimeframe, setRefundTimeframe] = useState("");
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -71,26 +73,26 @@ const EventForm: React.FC = () => {
         console.error("Failed to fetch categories", error);
       }
     };
-    
+
     fetchCategories();
   }, []);
-  
+
   // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //   const { name, value } = e.target;
-    //   setEventInfo((prevEventInfo) => ({
-      //     ...prevEventInfo,
-      //     [name]: value,
-      //   }));
-      // };
-      
-      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        if (name === "duration") {
-          const numericValue = value.replace(/[^\d]/g, ""); // Extract numeric value
-          setEventInfo((prevEventInfo) => ({
-            ...prevEventInfo,
-            [name]: `${numericValue}h`, // Append "h" to the numeric value
-          }));
+  //   const { name, value } = e.target;
+  //   setEventInfo((prevEventInfo) => ({
+  //     ...prevEventInfo,
+  //     [name]: value,
+  //   }));
+  // };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === "duration") {
+      const numericValue = value.replace(/[^\d]/g, ""); // Extract numeric value
+      setEventInfo((prevEventInfo) => ({
+        ...prevEventInfo,
+        [name]: `${numericValue}h`, // Append "h" to the numeric value
+      }));
     } else {
       setEventInfo((prevEventInfo) => ({
         ...prevEventInfo,
@@ -98,12 +100,12 @@ const EventForm: React.FC = () => {
       }));
     }
   };
-  
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  
+
   const handleSelectChange = (event: SelectChangeEvent<string | string[]>) => {
     const { name, value } = event.target;
-    
+
     setEventInfo((prevInfo) => {
       if (name === "currency") {
         return {
@@ -128,21 +130,21 @@ const EventForm: React.FC = () => {
       return prevInfo;
     });
   };
-  
+
   const handleDateChange = (newValue: Dayjs | null, name: string) => {
     setEventInfo({ ...eventInfo, [name]: newValue });
   };
-  
+
   const eventStart = dayjs(eventInfo.eventStartDate)
-  .hour(dayjs(eventInfo.eventStartTime).hour())
-  .minute(dayjs(eventInfo.eventStartTime).minute())
-  .format("YYYY-MM-DD HH:mm:ss");
+    .hour(dayjs(eventInfo.eventStartTime).hour())
+    .minute(dayjs(eventInfo.eventStartTime).minute())
+    .format("YYYY-MM-DD HH:mm:ss");
   const eventEnd = dayjs(eventInfo.eventEndDate)
     .hour(dayjs(eventInfo.eventEndTime).hour())
     .minute(dayjs(eventInfo.eventEndTime).minute())
     .format("YYYY-MM-DD HH:mm:ss");
 
-    const handleFileSelect = (file: File | null) => {
+  const handleFileSelect = (file: File | null) => {
     setSelectedFile(file);
   };
 
@@ -153,7 +155,7 @@ const EventForm: React.FC = () => {
     //   setTrailerUrl((prev) => [...prev, { videoUrl }]);
     // }
   };
-  
+
   const validateForm = () => {
     return (
       eventInfo.title &&
@@ -188,15 +190,11 @@ const EventForm: React.FC = () => {
     fetchProfile();
   }, []);
 
-  const handleOnSubmit = async (
-    e: any,
-    redirectPath: string,
-    buttonType: string
-  ) => {
+  const handleOnSubmit = async (e: any, buttonType: string) => {
     e.preventDefault();
     setLoading(true);
     setLoadingButton(buttonType);
-    
+
     if (!validateForm()) {
       toast.error("All fields are required.");
       setLoading(false);
@@ -204,7 +202,6 @@ const EventForm: React.FC = () => {
       return;
     }
     console.log(loadingButton);
-
 
     if (!profileData) {
       toast.error("Organizer profile is required to create an event.");
@@ -230,20 +227,25 @@ const EventForm: React.FC = () => {
       venueAddress: eventInfo.venueAddress,
       venueLocation: eventInfo.venueLocation,
       refundPolicy: {
-        refundTimeframe: "48h",
+        refundTimeframe: refundTimeframe || "24h",
         policyType: eventInfo.refundPolicy.policyType,
         allRefundsApproved: eventInfo.refundPolicy.allRefundsApproved,
       },
       isRep: eventInfo.isRep,
       periodicity: eventInfo.periodicity,
       ageRestriction: eventInfo.ageRestriction,
-      trailerUrls:trailerUrl
+      trailerUrls: trailerUrl,
     };
 
     try {
-      await createEvent(eventData);
-      navigate(redirectPath);
-      toast.success("Event created successfully!");
+      const response = await createEvent(eventData);
+      const eventId = response.data?.eventId;
+      if (eventId) {
+        navigate(`/create-events/2/${eventId}`);
+        toast.success("Event created successfully!");
+      } else {
+        toast.error("Event created, but no eventId found.");
+      }
       setEventInfo({
         title: "",
         eventCategories: [],
@@ -270,7 +272,7 @@ const EventForm: React.FC = () => {
         periodicity: "",
         organizer: "",
         ageRestriction: "",
-        trailerUrls:[],
+        trailerUrls: [],
       });
     } catch (error: any) {
       console.error(error);
@@ -553,14 +555,14 @@ const EventForm: React.FC = () => {
           placeholder="Enter Age Limit"
           value={eventInfo.ageRestriction}
           onChange={handleChange}
-          type="number" // Use number input for numeric values
+          type="number"
           fullWidth
           sx={{
             "& .MuiInputBase-root": {
-              height: "56px", // Adjust height as needed
+              height: "56px",
             },
             "& .MuiOutlinedInput-input": {
-              padding: "16px", // Adjust padding as needed
+              padding: "16px",
             },
           }}
         />
@@ -626,29 +628,115 @@ const EventForm: React.FC = () => {
 
       <div>
         <h3 className="font-semibold text-xl mb-2">Refunds</h3>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 ml-2">
           <div className="flex items-center">
             <input
               type="radio"
               id="eventPolicy"
               name="eventPolicy"
               checked={eventInfo.refundPolicy.policyType}
-              onChange={(e) =>
+              onChange={(e) => {
                 setEventInfo({
                   ...eventInfo,
                   refundPolicy: {
                     ...eventInfo.refundPolicy,
                     policyType: e.target.checked,
                   },
-                })
-              }
-              className="follow rounded mx-0 w-6 h-4"
+                });
+                setAccordionOpen(e.target.checked);
+              }}
+              className="follow rounded w-6 h-4 ml-[2px]"
             />
             <label htmlFor="eventPolicy" className="text-sm ml-3">
               Set your policy (no refunds, refunds approved 24h/48h before event
               date/ send approval to organizer for each refund)
             </label>
           </div>
+
+          {accordionOpen && (
+            <div className="ml-6">
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id="refundOption1"
+                    name="refundTimeframe"
+                    value="24h"
+                    checked={refundTimeframe === "24h"}
+                    onChange={(e) => {
+                      setRefundTimeframe(e.target.value);
+                      setEventInfo({
+                        ...eventInfo,
+                        refundPolicy: {
+                          ...eventInfo.refundPolicy,
+                          refundTimeframe: e.target.value,
+                          policyType: true,
+                          allRefundsApproved: false,
+                        },
+                      });
+                    }}
+                    className="follow rounded w-6 h-4"
+                  />
+                  <label htmlFor="refundOption1" className="text-sm ml-3">
+                    24h{" "}
+                  </label>
+                </div>
+
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id="refundOption2"
+                    name="refundTimeframe"
+                    value="48h"
+                    checked={refundTimeframe === "48h"}
+                    onChange={(e) => {
+                      setRefundTimeframe(e.target.value);
+                      setEventInfo({
+                        ...eventInfo,
+                        refundPolicy: {
+                          ...eventInfo.refundPolicy,
+                          refundTimeframe: e.target.value,
+                          policyType: true,
+                          allRefundsApproved: false,
+                        },
+                      });
+                    }}
+                    className="follow rounded w-6 h-4"
+                  />
+                  <label htmlFor="refundOption2" className="text-sm ml-3">
+                    48h{" "}
+                  </label>
+                </div>
+
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id="refundOption3"
+                    name="refundTimeframe"
+                    value="7d"
+                    checked={refundTimeframe === "7d"}
+                    onChange={(e) => {
+                      setRefundTimeframe(e.target.value);
+                      setEventInfo({
+                        ...eventInfo,
+                        refundPolicy: {
+                          ...eventInfo.refundPolicy,
+                          refundTimeframe: e.target.value,
+                          policyType: true,
+                          allRefundsApproved: false,
+                        },
+                      });
+                    }}
+                    className="follow rounded w-6 h-4"
+                  />
+                  <label htmlFor="refundOption3" className="text-sm ml-3">
+                    7d{" "}
+                  </label>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="flex items-center">
             <input
               type="radio"
@@ -661,12 +749,16 @@ const EventForm: React.FC = () => {
                   refundPolicy: {
                     ...eventInfo.refundPolicy,
                     allRefundsApproved: e.target.checked,
+                    policyType: false,
                   },
                 })
               }
-              className="follow rounded mx-0 w-6 h-4"
+              onClick={() => {
+                setRefundTimeframe("");
+                setAccordionOpen(false);
+              }}
+              className="follow rounded w-6 h-4"
             />
-
             <label htmlFor="allRefundsApproved" className="text-sm ml-3">
               All refunds are approved.
             </label>
@@ -696,7 +788,7 @@ const EventForm: React.FC = () => {
         <div>
           <button
             className={`flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-bold py-2 px-10 rounded`}
-            onClick={(e) => handleOnSubmit(e, "/create-events/2", "nextPage")}
+            onClick={(e) => handleOnSubmit(e, "nextPage")}
           >
             NEXT PAGE
             {loading && <Loader2 className="size-4 animate-spin" />}
@@ -708,5 +800,3 @@ const EventForm: React.FC = () => {
 };
 
 export default EventForm;
-
-// https://kafsbackend-106f.onrender.com

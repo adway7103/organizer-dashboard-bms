@@ -26,8 +26,6 @@ interface TicketData {
 }
 
 export const createTicket = async (ticketData: TicketData) => {
-  console.log("create ticket payload", ticketData);
-
   const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
@@ -40,7 +38,6 @@ export const createTicket = async (ticketData: TicketData) => {
         },
       }
     );
-    console.log("create ticket response", response.data);
     return response.data;
   } catch (error) {
     console.error("Error creating ticket:", error);
