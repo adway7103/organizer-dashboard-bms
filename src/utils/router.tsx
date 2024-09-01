@@ -28,6 +28,8 @@ import { DraftedEvents } from "../components/dashboard/Events/DraftedEvents";
 import EditIndTicket from "../pages/AddTicket/EditIndTicket";
 import Tickets from "../components/dashboard/Events/ticketsAndVouchers/Tickets";
 import Vouchers from "../components/dashboard/Events/ticketsAndVouchers/Vouchers";
+import AddTicket from "../components/dashboard/Events/ticketsAndVouchers/AddTicket";
+import EditTicket from "../components/dashboard/Events/ticketsAndVouchers/EditTicket";
 
 export const router = createBrowserRouter([
   {
@@ -135,6 +137,14 @@ export const router = createBrowserRouter([
               {
                 path: "/events/vouchers",
                 element: <Vouchers />,
+              },
+              {
+                path: "/events/addticket",
+                element: <AddTicket />,
+              },
+              {
+                path: "/events/edit-ticket/:matrixId/:id",
+                element: <EditTicket />,
               },
             ],
           },

@@ -8,7 +8,7 @@ const Tickets = () => {
       <div className="flex justify-between items-center mr-6 sm:mr-10 mt-6">
         <h1 className="text-xl font-medium ml-8 ">Tickets</h1>
         <Link
-          to={"/ind-tickets"}
+          to={"/events/addticket"}
           className="bg-[#d3c282] px-4 sm:px-10 py-2 rounded-full flex items-center gap-2"
         >
           <svg

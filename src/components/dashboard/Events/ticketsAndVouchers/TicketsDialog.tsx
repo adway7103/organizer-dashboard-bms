@@ -96,7 +96,7 @@ export default function TicketDailog({
             },
           }}
       >
-        <Link to={`/edit-ticket/${matrixId}/${id}`}>
+        <Link to={`/events/edit-ticket/${matrixId}/${id}`}>
           <MenuItem>Edit Ticket</MenuItem>
         </Link>
         <MenuItem >Make ticket invisible</MenuItem>
