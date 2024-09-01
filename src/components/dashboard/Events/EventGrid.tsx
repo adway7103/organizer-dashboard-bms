@@ -3,7 +3,7 @@ import EventCard from "../Events/EventCard";
 import { useEffect, useState } from "react";
 import { MenuItem, Select } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { fetchEvents } from "../../../api/fetchAllEvents";
+// import { fetchEvents } from "../../../api/fetchAllEvents";
 
 interface EventData {
   eventId: string;
