@@ -9,13 +9,11 @@ interface SidebarNavItem {
 
 interface SidebarNavProps {
   item: SidebarNavItem;
-  onClick?: (e: any) => void;
   isActive?: boolean;
 }
 
-const SidebarNav: React.FC<SidebarNavProps> = ({ item, onClick, isActive }) => {
-  const borderRadiusClass =
-    item.name === "Ticket and Vouchers" ? "rounded-t-3xl" : "rounded-3xl";
+const SidebarNav: React.FC<SidebarNavProps> = ({ item, isActive }) => {
+  const borderRadiusClass = item.name === "Ticket and Vouchers" ? "rounded-t-3xl" : "rounded-3xl";
   const navStyle = `flex items-center md:gap-x-4 px-4 sm:px-5 py-2 ${borderRadiusClass} ${
     isActive ? "active-sidebar" : ""
   }`;
@@ -23,7 +21,6 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ item, onClick, isActive }) => {
   return (
     <NavLink
       to={item.link}
-      onClick={onClick}
       className={({ isActive }) =>
         isActive ? `active-sidebar ${navStyle}` : navStyle
       }

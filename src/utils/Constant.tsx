@@ -92,17 +92,17 @@ export const eventsTabSidebar = [
   {
     name: "Participants",
     icon: <BsPeople />,
-    link: "/participants",
+    link: "/events/participants",
   },
-  {
-    name: "Affiliation",
-    icon: <LuNetwork />,
-    link: "/affiliation",
-  },
+  // {
+  //   name: "Affiliation",
+  //   icon: <LuNetwork />,
+  //   link: "/affiliation",
+  // },
   {
     name: "Sales",
     icon: <PiTicketFill />,
-    link: "/sales",
+    link: "/events/sales",
   },
   {
     name: "Logout",
