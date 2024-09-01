@@ -66,7 +66,7 @@ const AddVoucher: React.FC = () => {
             maxWidth: "800px",
             margin: "0 auto",
             position: "absolute",
-            top: "25%",
+            top: "23%",
             left: {
               xs: "34%",
               md: "40%",
