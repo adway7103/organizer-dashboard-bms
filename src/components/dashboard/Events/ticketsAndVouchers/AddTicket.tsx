@@ -458,7 +458,7 @@ const AddTicket: React.FC = () => {
           <ASIndividual formData={formData} handleChange={handleChange} />
         )}
         <div className="flex gap-4">
-          <Link to={"/events/event-overview"}>
+          <Link to={"/events/tickets"}>
             {" "}
             <button className="flex items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-4 rounded">
               BACK
