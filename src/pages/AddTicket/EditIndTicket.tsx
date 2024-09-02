@@ -1,5 +1,5 @@
 import "./AddTicket.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { updateTicket } from "../../api/updteTicketApi";
+import { fetchTicket } from "../../api/fetchTicket";
 
 interface Ticket {
   categoryType: string;
@@ -36,6 +37,7 @@ interface Ticket {
 const EditIndTicket: React.FC = () => {
   const navigate = useNavigate();
   const { eventId, matrixId, id } = useParams();
+
   const [formData, setFormData] = useState<Ticket>({
     categoryType: "",
     categoryName: "",
@@ -56,6 +58,47 @@ const EditIndTicket: React.FC = () => {
     saleEndsDate: null,
     saleEndTime: null,
   });
+
+  useEffect(() => {
+    const fetchAndSetTicket = async () => {
+      try {
+        const ticket = await fetchTicket({ ticketId: id });
+        console.log(ticket);
+
+        const saleStartsDate =
+          ticket.saleStarts !== "Invalid Date"
+            ? dayjs(ticket.saleStarts)
+            : null;
+        const saleEndsDate =
+          ticket.saleEnds !== "Invalid Date" ? dayjs(ticket.saleEnds) : null;
+
+        setFormData({
+          categoryType: ticket.categoryType,
+          categoryName: ticket.categoryName,
+          totalSeats: ticket.totalSeats.toString(),
+          ticketType: ticket.ticketType,
+          deductFeesFromTicketPrice: ticket.deductFeesFromTicketPrice,
+          categoryPricePerPerson: ticket.categoryPricePerPerson,
+          ticketSaleType: ticket.ticketSaleType,
+          saleStarts: ticket.saleStarts,
+          saleEnds: ticket.saleEnds,
+          additionalInfo: ticket.additionalInfo,
+          minPersonAllowedPerBooking: ticket.minPersonAllowedPerBooking,
+          maxPersonAllowedPerBooking: ticket.maxPersonAllowedPerBooking,
+          promoCode: ticket.promoCode,
+          toggleVisibility: ticket.toggleVisibility,
+          saleStartsDate: saleStartsDate,
+          saleStartsTime: saleStartsDate ? dayjs(ticket.saleStarts) : null,
+          saleEndsDate: saleEndsDate,
+          saleEndTime: saleEndsDate ? dayjs(ticket.saleEnds) : null,
+        });
+      } catch (error) {
+        toast.error("Failed to fetch ticket");
+      }
+    };
+
+    fetchAndSetTicket();
+  }, [id]);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [loading, setLoading] = useState(false);
 
