@@ -18,8 +18,8 @@ function NewReturningCustomerPie({
 
   
     chartData = [
-      { gender: "returning", visitors: Number(returningCustomer), fill: "#800080" },
-      { gender: "new", visitors: Number(newCustomer), fill: "#FFBB28" },
+      { gender: "new", visitors: Number(newCustomer), fill: "#800080" },
+      { gender: "returning", visitors: Number(returningCustomer), fill: "#FFBB28" },
     ];
   const totalVisitors = React.useMemo(() => {
     return chartData.reduce((acc: any, curr: any) => acc + curr.visitors, 0);
