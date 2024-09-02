@@ -59,7 +59,7 @@ export const CardFooter: React.FC<CardFooter> = ({
 export const CardTitle: React.FC<CardTitle> = ({
   children,
   className = "",
-}) => <h3 className={`text-lg font-semibold ${className}`}>{children}</h3>;
+}) => <h3 className={`text-md font-medium ${className}`}>{children}</h3>;
 
 export const CardDescription: React.FC<CardDescription> = ({
   children,
