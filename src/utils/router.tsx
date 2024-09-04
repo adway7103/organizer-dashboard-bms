@@ -31,6 +31,7 @@ import Vouchers from "../components/dashboard/Events/ticketsAndVouchers/Vouchers
 import AddTicket from "../components/dashboard/Events/ticketsAndVouchers/AddTicket";
 import EditTicket from "../components/dashboard/Events/ticketsAndVouchers/EditTicket";
 import Participants from "../components/dashboard/Events/participants/Participants";
+import Sales from "../components/dashboard/Events/sales/Sales";
 
 export const router = createBrowserRouter([
   {
@@ -150,6 +151,10 @@ export const router = createBrowserRouter([
               {
                 path: "/events/participants",
                 element: <Participants />,
+              },
+              {
+                path: "/events/sales",
+                element: <Sales />,
               },
             ],
           },

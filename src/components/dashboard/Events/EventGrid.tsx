@@ -3,7 +3,7 @@ import EventCard from "../Events/EventCard";
 import { useEffect, useState } from "react";
 import { MenuItem, Select } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-// import { fetchEvents } from "../../../api/fetchAllEvents";
+import { fetchEvents } from "../../../api/fetchAllEvents";
 
 interface EventData {
   eventId: string;
@@ -22,51 +22,27 @@ const EventGrid = () => {
 
   const [events, setEvents] = useState<EventData[]>([]);
 
-  const fallbackEvents: EventData[] = [
-    {
-      eventId: "1",
-      title: "Sample Event 1",
-      posterUrl: "https://via.placeholder.com/150",
-      city: "New York",
-      date: "2024-10-01",
-      time: "18:00",
-      revenue: "5000",
-      ticketsSold: "200",
-    },
-    {
-      eventId: "2",
-      title: "Sample Event 2",
-      posterUrl: "https://via.placeholder.com/150",
-      city: "Los Angeles",
-      date: "2024-10-05",
-      time: "20:00",
-      revenue: "7500",
-      ticketsSold: "350",
-    },
-    // Add more hardcoded events as needed
-  ];
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     const response = await fetchEvents();
-    //     const formattedEvents = response.events.map((event: EventData) => ({
-    //       eventId: event.eventId,
-    //       title: event.title,
-    //       posterUrl: event.posterUrl,
-    //       city: event.city,
-    //       date: event.date,
-    //       time: event.time,
-    //       revenue: event.revenue,
-    //       ticketsSold: event.ticketsSold,
-    //     }));
-    //     setEvents(formattedEvents);
-    //   } catch (error) {
-    //     console.error("Failed to fetch events, using fallback data", error);
-        setEvents(fallbackEvents); // Set fallback data if API fails
-    //   }
-    // };
-    // fetchData();
+     const fetchData = async () => {
+       try {
+         const response = await fetchEvents();
+         const formattedEvents = response.events.map((event: EventData) => ({
+           eventId: event.eventId,
+           title: event.title,
+           posterUrl: event.posterUrl,
+           city: event.city,
+           date: event.date,
+           time: event.time,
+          revenue: event.revenue,
+           ticketsSold: event.ticketsSold,
+         }));
+         setEvents(formattedEvents);
+       } catch (error) {
+         console.error("Failed to fetch events", error);
+       }
+     };
+     fetchData();
   }, []);
 
 
