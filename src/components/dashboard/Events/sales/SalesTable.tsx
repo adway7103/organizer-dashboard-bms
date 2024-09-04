@@ -21,7 +21,6 @@ import {
   TableRow,
 } from "../../../ui/Table";
 import { IoTicketOutline } from "react-icons/io5";
-import TicketDailog from "../ticketsAndVouchers/TicketsDialog";
 // import { Search } from "lucide-react";
 
 // export type Tickets = {
