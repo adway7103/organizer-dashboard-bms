@@ -82,7 +82,12 @@ const Login = () => {
               className="h-full flex flex-col justify-center gap-6 w-[25rem]"
             >
               <div className="flex flex-col gap-2 items-center">
-                <h1 className="text-3xl font-bold">Login</h1>
+              <img
+                    src="/kafsco.icon.jpeg"
+                    alt="logo"
+                    className="max-h-[10vh] max-w-[40vw]"
+                  />
+                <h1 className="text-3xl font-bold">Organizer Login</h1>
                 {/* <h6 className="text-md">
                   Please enter your login details to sign in
                 </h6> */}

@@ -117,14 +117,14 @@ const Register = () => {
               className="h-full p-4 w-full space-y-3"
             >
               <div className="flex flex-col items-center">
-                {/* <Link to={"/"}>
+                {/* <Link to={"/"}> */}
                   <img
-                    src="/logo-nobg.png"
+                    src="/kafsco.icon.jpeg"
                     alt="logo"
                     className="max-h-[10vh] max-w-[40vw]"
                   />
-                </Link> */}
-                <h1 className="text-3xl font-bold text-center">Sign Up</h1>
+                {/* </Link> */}
+                <h1 className="text-3xl font-bold text-center">Organizer Register</h1>
               </div>
 
               <div className="w-full">
