@@ -1,10 +1,29 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { TicketTable } from "../events-overview/TicketsTable";
+import { useEffect, useState } from "react";
+import { fetchEventOverview } from "../../../../api/fetchEventOverview";
 
 const Tickets = () => {
+  const { eventId } = useParams<{ eventId: string }>();
+  const [eventOverviewData, setEventOverviewData] =
+    useState<any>();
+  useEffect(() => {
+    const getEventOverview = async () => {
+      try {
+        if (eventId) {
+          const response = await fetchEventOverview({ eventId });
+          setEventOverviewData(response.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch event overview:", error);
+      }
+    };
+
+    getEventOverview();
+  }, [eventId]);
   return (
     <div className="sm:ml-8 sm:mr-24">
-      <h1 className="text-3xl text-[#9d487b] font-medium ml-8">Rhythem Live</h1>
+      <h1 className="text-3xl text-[#9d487b] font-medium ml-8">{eventOverviewData?.event.title}</h1>
       <div className="flex justify-between items-center mr-6 sm:mr-10 mt-6">
         <h1 className="text-xl font-medium ml-8 ">Tickets</h1>
         <Link

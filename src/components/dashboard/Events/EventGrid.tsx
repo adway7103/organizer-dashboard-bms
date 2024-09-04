@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { MenuItem, Select } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { fetchEvents } from "../../../api/fetchAllEvents";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 interface EventData {
   eventId: string;
@@ -22,33 +24,54 @@ const EventGrid = () => {
 
   const [events, setEvents] = useState<EventData[]>([]);
 
+  const fetchData = async () => {
+    try {
+      const response = await fetchEvents();
+      const formattedEvents = response.events.map((event: EventData) => ({
+        eventId: event.eventId,
+        title: event.title,
+        posterUrl: event.posterUrl,
+        city: event.city,
+        date: event.date,
+        time: event.time,
+        revenue: event.revenue,
+        ticketsSold: event.ticketsSold,
+      }));
+      setEvents(formattedEvents);
+    } catch (error) {
+      console.error("Failed to fetch events", error);
+    }
+  };
 
   useEffect(() => {
-     const fetchData = async () => {
-       try {
-         const response = await fetchEvents();
-         const formattedEvents = response.events.map((event: EventData) => ({
-           eventId: event.eventId,
-           title: event.title,
-           posterUrl: event.posterUrl,
-           city: event.city,
-           date: event.date,
-           time: event.time,
-          revenue: event.revenue,
-           ticketsSold: event.ticketsSold,
-         }));
-         setEvents(formattedEvents);
-       } catch (error) {
-         console.error("Failed to fetch events", error);
-       }
-     };
-     fetchData();
+    fetchData();
   }, []);
-
 
   const handleEventClick = (eventId: string) => {
     navigate(`event-overview/${eventId}`);
   };
+
+  const handleDelete = async (eventId: string) => {
+    const token = localStorage.getItem("accessToken");
+    
+    try {
+      await axios.delete(
+        `https://kafsbackend-106f.onrender.com/api/v1/events/delete/${eventId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Event Deleted successfully!");
+      fetchData();
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to delete event");
+    }
+  };
+  
+
   return (
     <div>
       <h1 className="text-2xl font-semibold mt-10 px-4">Event list</h1>
@@ -94,6 +117,7 @@ const EventGrid = () => {
             revenue={i.revenue}
             ticketsSold={i.ticketsSold}
             onClick={() => handleEventClick(i.eventId)}
+            handleDelete={() => handleDelete(i.eventId)}
           />
         ))}
       </div>

@@ -2,7 +2,7 @@ const EventCard = ({ posterUrl, city, date, day, time }: any) => {
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start border p-8 rounded-3xl space-x-0 sm:space-x-8 min-w-[300px] sm:w-[520px] cursor-pointer bg-[#ffffff]">
       <div>
-        <img src={posterUrl} alt="" className="h-[210px] w-[280px] object-cover" />
+        <img src={posterUrl} alt="" className="h-[210px] w-[280px] object-cover rounded-lg" />
       </div>
       <div className="pt-4">
         <div className="text-lg mt-1">

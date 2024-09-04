@@ -13,45 +13,56 @@ import { fetchEventOverview } from "../../../../api/fetchEventOverview";
 interface EventOverviewResponse {
   statusCode: number;
   message: string;
-    event: {
-      title: string;
-      posterUrl: string;
-      city: string;
-      date: string;
-      day: string;
-      time: string;
-    };
-    totalTicketSold: number;
-    interestedPeople: string;
-    revenue: string;
-    pageViewCount: number;
-    tickets: {
-      ticketName: string;
-      price: string;
-      ticketSold: number;
-      active: string;
-    }[];
-    bookings: {
-      bookingId: string;
-      ticketName: string;
-      totalQuantity: number;
-      price: string;
-      date: string;
-    }[];
+  event: {
+    title: string;
+    posterUrl: string;
+    city: string;
+    date: string;
+    day: string;
+    time: string;
+  };
+  totalTicketSold: number;
+  interestedPeople: string;
+  revenue: string;
+  pageViewCount: number;
+  tickets: {
+    ticketName: string;
+    price: string;
+    ticketSold: number;
+    active: string;
+  }[];
+  bookings: {
+    bookingId: string;
+    ticketName: string;
+    totalQuantity: number;
+    price: string;
+    date: string;
+  }[];
 }
-
 
 const EventOverview = () => {
   const { eventId } = useParams<{ eventId: string }>();
-  const [eventOverviewData, setEventOverviewData] = useState<EventOverviewResponse>();
+  const [eventOverviewData, setEventOverviewData] =
+    useState<EventOverviewResponse>();
 
   const data = [
-    { image: "", text: "Total tickets sold", num: eventOverviewData?.totalTicketSold },
-    { image: img, text: "Interested People", num: eventOverviewData?.interestedPeople },
+    {
+      image: "",
+      text: "Total tickets sold",
+      num: eventOverviewData?.totalTicketSold,
+    },
+    {
+      image: img,
+      text: "Interested People",
+      num: eventOverviewData?.interestedPeople,
+    },
     { image: money, text: "Revenue", num: eventOverviewData?.revenue },
-    { image: "", text: "Page view count", num: eventOverviewData?.pageViewCount },
+    {
+      image: "",
+      text: "Page view count",
+      num: eventOverviewData?.pageViewCount,
+    },
   ];
-
 
   useEffect(() => {
     const getEventOverview = async () => {
@@ -69,15 +80,19 @@ const EventOverview = () => {
   }, [eventId]);
   return (
     <>
-      <div className="bg-[#f8f8f8] sm:ml-8 ml-2 mr-0 2xl:mr-8 rounded-3xl min-w-[300px]">
+    <h1 className="text-3xl ml-14 font-medium">
+      Event Overview
+    </h1>
+      <div className="bg-[#f8f8f8] sm:ml-8 ml-2 mr-0 xl:mr-8 rounded-3xl min-w-[300px] mt-4">
+        <h1 className="text-2xl text-[#9d487b] font-medium ml-14 pt-6">{eventOverviewData?.event.title}</h1>
         <div className="xl:flex">
-          <div className="pt-10 pl-2 max-sm:pr-2 lg:pl-10">
-            <EventCard 
-            posterUrl={eventOverviewData?.event.posterUrl}
-            city={eventOverviewData?.event.city}
-            date={eventOverviewData?.event.date}
-            day={eventOverviewData?.event.day}
-            time={eventOverviewData?.event.time}
+          <div className="pt-6 pl-2 max-sm:pr-2 lg:pl-10">
+            <EventCard
+              posterUrl={eventOverviewData?.event.posterUrl}
+              city={eventOverviewData?.event.city}
+              date={eventOverviewData?.event.date}
+              day={eventOverviewData?.event.day}
+              time={eventOverviewData?.event.time}
             />
           </div>
           <div className="max-sm:pl-4 max-sm:mt-4 p-2 lg:p-10 pr-2">
@@ -91,7 +106,7 @@ const EventOverview = () => {
               image={i.image}
               text={i.text}
               num={i.num}
-              />
+            />
           ))}
         </div>
         <div className="grid min-w-[300px] grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 ml-8 mr-28 mt-4">
