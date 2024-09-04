@@ -6,10 +6,6 @@ import { GiMoneyStack } from "react-icons/gi";
 import { LuNetwork } from "react-icons/lu";
 import { HiUserGroup } from "react-icons/hi2";
 import { PiUsersFourLight } from "react-icons/pi";
-import { BsPeople } from "react-icons/bs";
-import Group from "../../public/sidebar/Group.png";
-import Ticket from "../../public/sidebar/Ticket.png";
-import { PiTicketFill } from "react-icons/pi";
 
 export const SidebarNavs = [
   // {
@@ -67,43 +63,6 @@ export const SidebarNavs = [
   //     icon: <RiCustomerService2Line />,
   //     link: "/help",
   // },
-  {
-    name: "Logout",
-    icon: <IoLogOutOutline />,
-    link: "/logout",
-  },
-];
-export const eventsTabSidebar = [
-  {
-    name: "Dashboard",
-    icon: <RxDashboard />,
-    link: "/dashboard",
-  },
-  {
-    name: "Event Overview",
-    imgSrc: Group, // Using imgSrc for custom image
-    link: "/events/event-overview",
-  },
-  {
-    name: "Ticket and Vouchers",
-    imgSrc: Ticket,
-    link: "/events/tickets",
-  },
-  {
-    name: "Participants",
-    icon: <BsPeople />,
-    link: "/events/participants",
-  },
-  // {
-  //   name: "Affiliation",
-  //   icon: <LuNetwork />,
-  //   link: "/affiliation",
-  // },
-  {
-    name: "Sales",
-    icon: <PiTicketFill />,
-    link: "/events/sales",
-  },
   {
     name: "Logout",
     icon: <IoLogOutOutline />,

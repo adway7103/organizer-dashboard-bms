@@ -1,9 +1,8 @@
-
-const EventCard = () => {
+const EventCard = ({ posterUrl, city, date, day, time }: any) => {
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start border p-8 rounded-3xl space-x-0 sm:space-x-8 min-w-[300px] sm:w-[520px] cursor-pointer bg-[#ffffff]">
       <div>
-        <img src="../elp2-2.png" alt="" className="h-[210px] w-[280px]" />
+        <img src={posterUrl} alt="" className="h-[210px] w-[280px] object-cover" />
       </div>
       <div className="pt-4">
         <div className="text-lg mt-1">
@@ -29,7 +28,7 @@ const EventCard = () => {
                 />
               </svg>
             </div>
-            Boston
+            {city}{" "}
           </div>
           <div className="flex items-center text-[#4e4e4e]">
             <div className="pr-3">
@@ -48,16 +47,16 @@ const EventCard = () => {
                 />
               </svg>
             </div>
-            12:00 PM
+            {time}{" "}
           </div>
         </div>
         <div className="mt-1 text-black text-center md:text-start">
-          <p className="text-lg text-[#4e4e4e]">december 24, Thursday</p>
+          <p className="text-lg text-[#4e4e4e]">
+            {date}, {day}
+          </p>
         </div>
         <div className="flex space-x-1 mt-2 text-sm">
-          <div className="border bg-[#6076a0] text-white px-8 py-1">
-              Edit
-          </div>
+          <div className="border bg-[#6076a0] text-white px-8 py-1">Edit</div>
         </div>
       </div>
     </div>

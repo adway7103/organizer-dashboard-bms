@@ -129,31 +129,31 @@ export const router = createBrowserRouter([
                 element: <EventHome />,
               },
               {
-                path: "/events/event-overview",
+                path: "/events/event-overview/:eventId",
                 element: <EventOverview />,
               },
               {
-                path: "/events/tickets",
+                path: "/events/tickets/:eventId",
                 element: <Tickets />,
               },
               {
-                path: "/events/vouchers",
+                path: "/events/vouchers/:eventId",
                 element: <Vouchers />,
               },
               {
-                path: "/events/addticket",
+                path: "/events/addticket/:eventId",
                 element: <AddTicket />,
               },
               {
-                path: "/events/edit-ticket/:matrixId/:id",
+                path: "/events/edit-ticket/:eventId/:matrixId/:id",
                 element: <EditTicket />,
               },
               {
-                path: "/events/participants",
+                path: "/events/participants/:eventId",
                 element: <Participants />,
               },
               {
-                path: "/events/sales",
+                path: "/events/sales/:eventId",
                 element: <Sales />,
               },
             ],

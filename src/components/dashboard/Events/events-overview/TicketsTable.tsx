@@ -22,17 +22,9 @@ import {
 } from "../../../ui/Table";
 import { IoTicketOutline } from "react-icons/io5";
 import TicketDailog from "../ticketsAndVouchers/TicketsDialog";
+import { fetchEventOverview } from "../../../../api/fetchEventOverview";
+import { useParams } from "react-router-dom";
 // import { Search } from "lucide-react";
-
-// export type Tickets = {
-//   id: string;
-//   name: string;
-//   price: string;
-//   totalTickets: string;
-//   commission: string;
-//   status: string;
-//   matrixId: string;
-// };
 
 export type Tickets = {
   id: string;
@@ -43,50 +35,9 @@ export type Tickets = {
   status: string;
 };
 
-const data: Tickets[] = [
-  {
-    id: "xueh0xpf",
-    name: "Sarah",
-    price: "Rodriguez",
-    totalTickets: "100/150",
-    commission: "100",
-    status: "Active",
-  },
-  {
-    id: "xueh0xpf",
-    name: "Sarah",
-    price: "Rodriguez",
-    totalTickets: "100/150",
-    commission: "100",
-    status: "Active",
-  },
-  {
-    id: "xueh0xpf",
-    name: "Sarah",
-    price: "Rodriguez",
-    totalTickets: "100/150",
-    commission: "100",
-    status: "Active",
-  },
-  {
-    id: "xueh0xpf",
-    name: "Sarah",
-    price: "Rodriguez",
-    totalTickets: "100/150",
-    commission: "100",
-    status: "Active",
-  },
-  {
-    id: "xueh0xpf",
-    name: "Sarah",
-    price: "Rodriguez",
-    totalTickets: "100/150",
-    commission: "100",
-    status: "Active",
-  },
-];
-
 export function TicketTable() {
+  const { eventId } = useParams<{ eventId: string }>();
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -94,36 +45,30 @@ export function TicketTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  //   const [tickets, setTickets] = React.useState<Tickets[]>([]);
+  const [tickets, setTickets] = React.useState<Tickets[]>([]);
 
-  //   React.useEffect(() => {
-  //     const fetchData = async () => {
-  //       const response = await fetchTickets();
-  //       const matrixId = response.data.matrix._id;
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetchEventOverview({ eventId });
 
-  //       const transformedData = response.data.matrix.ticketCategories.map(
-  //         (ticket: any) => ({
-  //           id: ticket._id,
-  //           name: ticket.categoryName,
-  //           price: ticket.categoryPricePerPerson
-  //             ? `$ ${ticket.categoryPricePerPerson}`
-  //             : "Free",
-  //           totalTickets: ticket.totalSeats.toString(),
-  //           matrixId: matrixId,
-  //         })
-  //       );
-  //       setTickets(transformedData);
-  //       console.log(transformedData);
-  //     };
-  //     fetchData();
-  //   }, []);
+      // Map API response to table data format
+      const transformedData = response.data.tickets.map((ticket: any) => ({
+        id: ticket.ticketName,
+        name: ticket.ticketName,
+        price: ticket.price ? `€ ${ticket.price}` : "Free",
+        totalTickets: `${ticket.ticketSold}`,
+        status: ticket.active,
+      }));
+      setTickets(transformedData);
+    };
+    fetchData();
+  }, [eventId]);
 
   const handleDeleteTicket = (id: string) => {
     console.log(id);
-
-    // setTickets((prevTickets) =>
-    //   prevTickets.filter((ticket) => ticket.id !== id)
-    // );
+    setTickets((prevTickets) =>
+      prevTickets.filter((ticket) => ticket.id !== id)
+    );
   };
 
   const columns: ColumnDef<Tickets>[] = [
@@ -180,7 +125,7 @@ export function TicketTable() {
   ];
 
   const table = useReactTable({
-    data,
+    data: tickets,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

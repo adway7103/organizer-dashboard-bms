@@ -20,65 +20,21 @@ import {
   TableHeader,
   TableRow,
 } from "../../../ui/Table";
+import { fetchEventOverview } from "../../../../api/fetchEventOverview";
+import { useParams } from "react-router-dom";
 // import { Search } from "lucide-react";
 
-// export type Tickets = {
-//   id: string;
-//   name: string;
-//   price: string;
-//   totalTickets: string;
-//   commission: string;
-//   status: string;
-//   matrixId: string;
-// };
-
-export type Tickets = {
+export type Bookings = {
   ordNo: string;
   name: string;
-  quantity: string;
+  totalQuantity: string;
   price: string;
   date: string;
 };
 
-const data: Tickets[] = [
-  {
-    ordNo: "1",
-    name: "ERBEEGT",
-    quantity: "1000",
-    price: "$200",
-    date: "12/03/2024",
-  },
-  {
-    ordNo: "1",
-    name: "ERBEEGT",
-    quantity: "1000",
-    price: "$200",
-    date: "12/03/2024",
-  },
-  {
-    ordNo: "1",
-    name: "ERBEEGT",
-    quantity: "1000",
-    price: "$200",
-    date: "12/03/2024",
-  },
-  {
-    ordNo: "1",
-    name: "ERBEEGT",
-    quantity: "1000",
-    price: "$200",
-    date: "12/03/2024",
-  },
-  {
-    ordNo: "1",
-    name: "ERBEEGT",
-    quantity: "1000",
-    price: "$200",
-    date: "12/03/2024",
-  },
-];
-
 export function RecentOrdersTable() {
+  const { eventId } = useParams<{ eventId: string }>();
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -86,13 +42,30 @@ export function RecentOrdersTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [bookings, setBookings] = React.useState<Bookings[]>([]);
 
-  const columns: ColumnDef<Tickets>[] = [
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetchEventOverview({ eventId });
+
+      const transformedData = response.data.bookings.map((booking: any) => ({
+        id: booking.bookingId,
+        name: booking.ticketName,
+        totalQuantity: `${booking.totalQuantity}`,
+        price: booking.price ? `€ ${booking.price}` : "Free",
+        date: booking.date,
+      }));
+      setBookings(transformedData);
+    };
+    fetchData();
+  }, [eventId]);
+
+  const columns: ColumnDef<Bookings>[] = [
     {
       accessorKey: "ordNo",
       header: "Ord. No",
       cell: ({ row }) => (
-        <div className="text-black">{row.getValue("ordNo")}</div>
+        <div className="text-black">{row.index + 1}</div>
       ),
     },
     {
@@ -103,10 +76,10 @@ export function RecentOrdersTable() {
       ),
     },
     {
-      accessorKey: "quantity",
+      accessorKey: "totalQuantity",
       header: "Quantity",
       cell: ({ row }) => (
-        <div className="text-black">{row.getValue("quantity")}</div>
+        <div className="text-black">{row.getValue("totalQuantity")}</div>
       ),
     },
     {
@@ -126,7 +99,7 @@ export function RecentOrdersTable() {
   ];
 
   const table = useReactTable({
-    data,
+    data: bookings,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

@@ -46,8 +46,8 @@ const EventGrid = () => {
   }, []);
 
 
-  const handleEventClick = () => {
-    navigate("event-overview");
+  const handleEventClick = (eventId: string) => {
+    navigate(`event-overview/${eventId}`);
   };
   return (
     <div>
@@ -86,7 +86,6 @@ const EventGrid = () => {
         {events.map((i, index) => (
           <EventCard
             key={index}
-            eventId={i.eventId}
             title={i.title}
             posterUrl={i.posterUrl}
             city={i.city}
@@ -94,7 +93,7 @@ const EventGrid = () => {
             date={i.date}
             revenue={i.revenue}
             ticketsSold={i.ticketsSold}
-            onClick={() => handleEventClick()}
+            onClick={() => handleEventClick(i.eventId)}
           />
         ))}
       </div>

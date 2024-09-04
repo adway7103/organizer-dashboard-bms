@@ -1,13 +1,61 @@
 import "./Sidebar.css";
 import SidebarNav from "./SidebarNav";
-import { SidebarNavs, eventsTabSidebar } from "../../utils/Constant";
+import { SidebarNavs } from "../../utils/Constant";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { RxDashboard } from "react-icons/rx";
+import { useParams } from "react-router-dom";
+import { BsPeople } from "react-icons/bs";
+import Group from "../../../public/sidebar/Group.png";
+import Ticket from "../../../public/sidebar/Ticket.png";
+import { PiTicketFill } from "react-icons/pi";
+import { IoLogOutOutline } from "react-icons/io5";
 
 const Sidebar = ({ isVisible }: any) => {
   const location = useLocation();
+  const { eventId } = useParams<{ eventId: string }>();
   const [isAccordionOpen, setAccordionOpen] = useState(false);
+  console.log("i am in sidebar",eventId);
+  
+
+  const eventsTabSidebar = [
+    {
+      name: "Dashboard",
+      icon: <RxDashboard />,
+      link: "/dashboard",
+    },
+    {
+      name: "Event Overview",
+      imgSrc: Group, // Using imgSrc for custom image
+      link: `/events/event-overview/${eventId}`,
+    },
+    {
+      name: "Ticket and Vouchers",
+      imgSrc: Ticket,
+      link: `/events/tickets`,
+    },
+    {
+      name: "Participants",
+      icon: <BsPeople />,
+      link: `/events/participants/${eventId}`,
+    },
+    // {
+    //   name: "Affiliation",
+    //   icon: <LuNetwork />,
+    //   link: "/affiliation",
+    // },
+    {
+      name: "Sales",
+      icon: <PiTicketFill />,
+      link: `/events/sales/${eventId}`,
+    },
+    {
+      name: "Logout",
+      icon: <IoLogOutOutline />,
+      link: "/logout",
+    },
+  ];
 
   const currentNavs = location.pathname.startsWith("/events/")
     ? eventsTabSidebar
@@ -35,8 +83,8 @@ const Sidebar = ({ isVisible }: any) => {
             />
             {isAccordionTab && isAccordionOpen && (
               <div className="bg-[#cbd0d6] rounded-b-3xl flex flex-col items-center gap-3 pt-3 pb-3 cursor-pointer">
-                <Link to={"/events/tickets"}>Tickets</Link>
-                <Link to={"/events/vouchers"}>Vouchers</Link>
+                <Link to={`/events/tickets/${eventId}`}>Tickets</Link>
+                <Link to={`/events/vouchers/${eventId}`}>Vouchers</Link>
               </div>
             )}
           </div>
