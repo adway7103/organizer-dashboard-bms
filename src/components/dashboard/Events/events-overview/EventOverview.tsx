@@ -109,13 +109,13 @@ const EventOverview = () => {
             />
           ))}
         </div>
-        <div className="grid min-w-[300px] grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 ml-8 mr-28 mt-4">
+        <div className="grid min-w-[300px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ml-8 mr-28 mt-4">
           <TextBlast className="bg-[#954b7c]" />
           <TextBlast className="bg-[#6076a0]" heading="Event traffic" />
-          <TextBlast
+          {/* <TextBlast
             className="bg-[#6076a0]"
             heading="View participant discussion"
-          />
+          /> */}
           <TextBlast className="bg-[#6076a0] text-xl" heading="Share" />
         </div>
         <div className="ml-8 mr-28 mt-8 sm:mt-4">
