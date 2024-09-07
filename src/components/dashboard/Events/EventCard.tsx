@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 interface EventCardProps {
   title: string;
   posterUrl: string;
@@ -19,32 +21,60 @@ const EventCard = ({
   revenue,
   ticketsSold,
   onClick,
-  handleDelete
+  handleDelete,
 }: EventCardProps) => {
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowPopup(true);
+  };
+
+  const handleConfirmDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    handleDelete();
+    setShowPopup(false);
+  };
+
+  const handleCancelDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowPopup(false);
+  };
+
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      e.stopPropagation();
+      setShowPopup(false);
+    }
+  };
+
   return (
     <div
       onClick={onClick}
       className="flex flex-col md:flex-row items-center md:items-start border rounded-3xl p-4 space-x-0 md:space-x-6 min-w-[300px] w-full sm:w-[300px] md:w-[565px] mr-8 sm:mr-0 cursor-pointer"
     >
       <div>
-        <img src={posterUrl} alt="" className="h-[230px] w-[230px] object-cover rounded-lg" />
+        <img
+          src={posterUrl}
+          alt=""
+          className="h-[230px] w-[230px] object-cover rounded-lg"
+        />
       </div>
       <div>
-        <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-semibold text-[#a28a02] text-center md:text-start">
-          {title}
-        </h1>
+        <div className="flex justify-center sm:justify-between items-center">
+          <h1 className="text-3xl font-semibold text-[#a28a02] text-center md:text-start">
+            {title}
+          </h1>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="size-5"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDelete();
-            }}          >
+            className="size-5 max-sm:hidden"
+            onClick={handleDeleteClick}
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -178,6 +208,32 @@ const EventCard = ({
           <p>{ticketsSold}</p>
         </div>
       </div>
+      {showPopup && (
+        <div
+          className="fixed -inset-6 flex items-center justify-center bg-black bg-opacity-50"
+          onClick={handleOverlayClick}
+        >
+          <div className="bg-white p-4 rounded-lg shadow-lg">
+            <p className="text-lg font-semibold mb-4">
+              Are you sure you want to delete this event?
+            </p>
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={handleConfirmDelete}
+                className="bg-[#244f7a] text-white px-4 py-2 rounded-lg hover:bg-red-600"
+              >
+                Yes
+              </button>
+              <button
+                onClick={handleCancelDelete}
+                className="bg-gray-300 text-black px-4 py-2 rounded-lg hover:bg-gray-400"
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
