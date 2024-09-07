@@ -15,9 +15,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 const Sidebar = ({ isVisible }: any) => {
   const location = useLocation();
   const { eventId } = useParams<{ eventId: string }>();
-  const [isAccordionOpen, setAccordionOpen] = useState(false);
-  console.log("i am in sidebar",eventId);
-  
+  const [isAccordionOpen, setAccordionOpen] = useState(false);  
 
   const eventsTabSidebar = [
     {
@@ -63,7 +61,7 @@ const Sidebar = ({ isVisible }: any) => {
 
   return (
     <div
-      className={`sidebar ml-2 h-[90%] py-5 md:px-8 md:py-5 flex flex-col space-y-2 transition-transform duration-300 ease-in-out sm:w-[16vw] md:w-[260px] ${
+      className={`sidebar ml-2 h-[90%] py-5 md:px-8 md:py-5 flex flex-col space-y-2 transition-transform duration-300 ease-in-out sm:w-[16vw] md:w-[260px] mt-2 ${
         isVisible || window.innerWidth >= 768 ? "translate-x-0" : "-translate-x-full"
       }`}
     >
