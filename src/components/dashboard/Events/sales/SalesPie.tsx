@@ -29,10 +29,11 @@ export function SalesPieChart() {
                 data={chartData}
                 dataKey="visitors"
                 nameKey="browser"
-                innerRadius={58}
-                outerRadius={70}
-                strokeWidth={5}
-              >
+                innerRadius={60}
+                outerRadius={68}
+                strokeWidth={0}
+                cornerRadius={10}  
+                paddingAngle={5}              >
                 <Label
                   content={({ viewBox }) => {
                     if (viewBox && "cx" in viewBox && "cy" in viewBox) {

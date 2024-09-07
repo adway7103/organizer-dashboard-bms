@@ -34,10 +34,11 @@ export function AffiliatePieChart() {
                 data={chartData}
                 dataKey="visitors"
                 nameKey="browser"
-                innerRadius={64}
+                innerRadius={70}
                 outerRadius={80}
-                strokeWidth={5}
-              >
+                strokeWidth={0}
+                cornerRadius={10}  
+                paddingAngle={5}              >
                 <Label
                   content={({ viewBox }) => {
                     if (viewBox && "cx" in viewBox && "cy" in viewBox) {

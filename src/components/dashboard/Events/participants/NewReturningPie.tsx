@@ -37,9 +37,10 @@ function NewReturningCustomerPie({
                 dataKey="visitors"
                 nameKey="gender"
                 innerRadius={50}
-                outerRadius={60}
-                strokeWidth={5}
-              >
+                outerRadius={56}
+                strokeWidth={0}
+                cornerRadius={10}  
+                paddingAngle={5}              >
                 <Label
                   content={({ viewBox }) => {
                     if (viewBox && "cx" in viewBox && "cy" in viewBox) {

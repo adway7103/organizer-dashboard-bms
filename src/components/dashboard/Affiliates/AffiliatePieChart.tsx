@@ -19,7 +19,7 @@ export function AffiliatePieChart() {
   }, []);
 
   return (
-    <Card className="h-auto bg-transparent shadow-none rounded">
+    <Card className="h-auto bg-none shadow-none rounded">
       <div className="sm:col-span-1">
         <CardContent className="flex-1 pb-0">
           <div className="mx-auto aspect-square xl:w-full xl:h-full">
@@ -29,10 +29,12 @@ export function AffiliatePieChart() {
                 data={chartData}
                 dataKey="visitors"
                 nameKey="browser"
-                innerRadius={58}
+                innerRadius={60}
                 outerRadius={70}
-                strokeWidth={5}
-              >
+                strokeWidth={0}
+                cornerRadius={10}  
+                paddingAngle={5}
+                >
                 <Label
                   content={({ viewBox }) => {
                     if (viewBox && "cx" in viewBox && "cy" in viewBox) {
