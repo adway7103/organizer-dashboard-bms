@@ -32,7 +32,6 @@ const EventCard = ({
 
   const handleConfirmDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
-
     handleDelete();
     setShowPopup(false);
   };
@@ -40,13 +39,6 @@ const EventCard = ({
   const handleCancelDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
     setShowPopup(false);
-  };
-
-  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      e.stopPropagation();
-      setShowPopup(false);
-    }
   };
 
   return (
@@ -211,7 +203,7 @@ const EventCard = ({
       {showPopup && (
         <div
           className="fixed -inset-6 flex items-center justify-center bg-black bg-opacity-50"
-          onClick={handleOverlayClick}
+          onClick={handleCancelDelete}
         >
           <div className="bg-white p-4 rounded-lg shadow-lg">
             <p className="text-lg font-semibold mb-4">
