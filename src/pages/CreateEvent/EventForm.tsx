@@ -423,7 +423,7 @@ const EventForm: React.FC = () => {
 
       {/* </div> */}
 
-      <Autocomplete
+      {/* <Autocomplete
         multiple
         id="genres"
         options={tagsOptions}
@@ -440,8 +440,27 @@ const EventForm: React.FC = () => {
             genres: newValue.map((option) => option.title),
           })
         }
-      />
+      /> */}
 
+      <Autocomplete
+        id="genres"
+        options={tagsOptions}
+        getOptionLabel={(option) => option.title}
+        renderInput={(params) => (
+          <TextField {...params} label="Add Tags" required />
+        )}
+        value={
+          tagsOptions.find((option) =>
+            eventInfo.genres.includes(option.title)
+          ) || null
+        }
+        onChange={(_, newValue) =>
+          setEventInfo({
+            ...eventInfo,
+            genres: newValue ? [newValue.title] : [], // Handle single selection
+          })
+        }
+      />
       <div>
         <InputLabel id="currency-label">Currency</InputLabel>
         <Select
