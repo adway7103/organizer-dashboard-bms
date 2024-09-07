@@ -103,6 +103,7 @@ const AddVoucher: React.FC = () => {
                 name="maxUse"
                 label="Maximum Number of Uses"
                 variant="outlined"
+                type="number"
                 fullWidth
                 sx={{
                   "& .MuiInputBase-root": {
@@ -182,9 +183,10 @@ const AddVoucher: React.FC = () => {
             </div>
             <div className="grid gap-4">
               <TextField
-                id="price"
-                name="price"
-                label="Price"
+                id="discountPercentage"
+                name="discountPercentage"
+                label="Discount Percentage"
+                type="number"
                 variant="outlined"
                 fullWidth
                 sx={{
