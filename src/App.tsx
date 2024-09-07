@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import { Outlet, useLocation } from "react-router-dom";
+import bg from "../public/bg3.png";
 
 function App() {
   const [isSidebarVisible, setSidebarVisible] = useState(false);
@@ -31,23 +32,26 @@ function App() {
   const shouldHideNavAndSidebar = location.pathname === "/createanaccount";
 
   return (
-    <>
+    <div>
+      <div className="home -z-10 fixed min-h-screen md:flex min-w-screen">
+        <img src={bg} alt="" className="min-h-screen min-w-screen" />
+      </div>
       {!shouldHideNavAndSidebar && <Navbar toggleSidebar={toggleSidebar} />}
-      <div className={`${shouldHideNavAndSidebar ? 'py-0' : 'py-16'}`}>
+      <div className={`${shouldHideNavAndSidebar ? "py-0" : "py-16"}`}>
         {!shouldHideNavAndSidebar && <Sidebar isVisible={isSidebarVisible} />}
         <main
           className={`transition-all duration-300 ${
             shouldHideNavAndSidebar
               ? "w-full"
               : isSidebarVisible
-              ? "pl-[70px] sm:pl-[260px]"
+              ? "pl-[70px] sm:pl-[260px] pt-2"
               : "pl-[20px] sm:pl-0"
           }`}
         >
           <Outlet />
         </main>
       </div>
-    </>
+    </div>
   );
 }
 
