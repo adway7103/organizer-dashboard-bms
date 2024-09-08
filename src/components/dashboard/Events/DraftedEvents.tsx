@@ -21,7 +21,6 @@ import {
   TableRow,
 } from "../../ui/Table";
 import { MenuItem, Select } from "@mui/material";
-import { Link } from "react-router-dom";
 import { fetchDraftedEvents } from "../../../api/fetchDraftedEvents";
 
 // Define the table type for clarity
