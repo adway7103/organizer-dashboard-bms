@@ -122,38 +122,79 @@ export const router = createBrowserRouter([
             element: <DraftedEvents />,
           },
           {
-            path: "/events",
+            path: "/live-events",
+            element: <EventHome />,
+          },
+          {
+            path: "/live-events",
             children: [
               {
                 path: "",
                 element: <EventHome />,
               },
               {
-                path: "/events/event-overview/:eventId",
+                path: "/live-events/event-overview/:eventId",
                 element: <EventOverview />,
               },
               {
-                path: "/events/tickets/:eventId",
+                path: "/live-events/tickets/:eventId",
                 element: <Tickets />,
               },
               {
-                path: "/events/vouchers/:eventId",
+                path: "/live-events/vouchers/:eventId",
                 element: <Vouchers />,
               },
               {
-                path: "/events/addticket/:eventId",
+                path: "/live-events/addticket/:eventId",
                 element: <AddTicket />,
               },
               {
-                path: "/events/edit-ticket/:eventId/:matrixId/:id",
+                path: "/live-events/edit-ticket/:eventId/:matrixId/:id",
                 element: <EditTicket />,
               },
               {
-                path: "/events/participants/:eventId",
+                path: "/live-events/participants/:eventId",
                 element: <Participants />,
               },
               {
-                path: "/events/sales/:eventId",
+                path: "/live-events/sales/:eventId",
+                element: <Sales />,
+              },
+            ],
+          },
+          {
+            path: "/past-events",
+            children: [
+              {
+                path: "",
+                element: <EventHome />,
+              },
+              {
+                path: "/past-events/event-overview/:eventId",
+                element: <EventOverview />,
+              },
+              {
+                path: "/past-events/tickets/:eventId",
+                element: <Tickets />,
+              },
+              {
+                path: "/past-events/vouchers/:eventId",
+                element: <Vouchers />,
+              },
+              {
+                path: "/past-events/addticket/:eventId",
+                element: <AddTicket />,
+              },
+              {
+                path: "/past-events/edit-ticket/:eventId/:matrixId/:id",
+                element: <EditTicket />,
+              },
+              {
+                path: "/past-events/participants/:eventId",
+                element: <Participants />,
+              },
+              {
+                path: "/past-events/sales/:eventId",
                 element: <Sales />,
               },
             ],

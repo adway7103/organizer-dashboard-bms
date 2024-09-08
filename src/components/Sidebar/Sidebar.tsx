@@ -15,7 +15,16 @@ import { IoLogOutOutline } from "react-icons/io5";
 const Sidebar = ({ isVisible }: any) => {
   const location = useLocation();
   const { eventId } = useParams<{ eventId: string }>();
-  const [isAccordionOpen, setAccordionOpen] = useState(false);  
+  const [isAccordionOpen, setAccordionOpen] = useState(false);
+
+  const isLiveEvent = location.pathname.startsWith("/live-events/");
+  const isPastEvent = location.pathname.startsWith("/past-events/");
+
+  const baseEventUrl = isLiveEvent
+    ? "/live-events"
+    : isPastEvent
+    ? "/past-events"
+    : "";
 
   const eventsTabSidebar = [
     {
@@ -26,7 +35,7 @@ const Sidebar = ({ isVisible }: any) => {
     {
       name: "Event Overview",
       imgSrc: Group, // Using imgSrc for custom image
-      link: `/events/event-overview/${eventId}`,
+      link: `${baseEventUrl}/event-overview/${eventId}`,
     },
     {
       name: "Ticket and Vouchers",
@@ -36,7 +45,7 @@ const Sidebar = ({ isVisible }: any) => {
     {
       name: "Participants",
       icon: <BsPeople />,
-      link: `/events/participants/${eventId}`,
+      link: `${baseEventUrl}/participants/${eventId}`,
     },
     // {
     //   name: "Affiliation",
@@ -46,7 +55,7 @@ const Sidebar = ({ isVisible }: any) => {
     {
       name: "Sales",
       icon: <PiTicketFill />,
-      link: `/events/sales/${eventId}`,
+      link: `${baseEventUrl}/sales/${eventId}`,
     },
     {
       name: "Logout",
@@ -55,19 +64,20 @@ const Sidebar = ({ isVisible }: any) => {
     },
   ];
 
-  const currentNavs = location.pathname.startsWith("/events/")
-    ? eventsTabSidebar
-    : SidebarNavs;
+  const currentNavs = baseEventUrl ? eventsTabSidebar : SidebarNavs;
 
   return (
     <div
-      className={`sidebar ml-2 h-[90%] py-5 md:px-8 md:py-5 flex flex-col space-y-2 transition-transform duration-300 ease-in-out sm:w-[16vw] md:w-[260px] mt-2 ${
-        isVisible || window.innerWidth >= 768 ? "translate-x-0" : "-translate-x-full"
+      className={`sidebar ml-2 h-[90%] py-5 md:px-8 md:py-5 flex flex-col space-y-2 transition-transform duration-300 ease-in-out sm:w-[16vw] md:w-[260px] mt-3 ${
+        isVisible || window.innerWidth >= 768
+          ? "translate-x-0"
+          : "-translate-x-full"
       }`}
     >
       {currentNavs.map((item, index) => {
         const isActive = location.pathname === item.link;
-        const isAccordionTab = item.name === "Ticket and Vouchers";
+        const isAccordionTab =
+          item.name === "Ticket and Vouchers" || item.name === "Events";
 
         return (
           <div key={index}>
@@ -76,13 +86,20 @@ const Sidebar = ({ isVisible }: any) => {
               key={index}
               isActive={isAccordionTab ? isAccordionOpen : isActive}
               onClick={() => {
-                if (isAccordionTab) setAccordionOpen(!isAccordionOpen); 
+                if (isAccordionTab) setAccordionOpen(!isAccordionOpen);
               }}
             />
-            {isAccordionTab && isAccordionOpen && (
+            {item.name === "Ticket and Vouchers" && isAccordionOpen && (
               <div className="bg-[#cbd0d6] rounded-b-3xl flex flex-col items-center gap-3 pt-3 pb-3 cursor-pointer">
-                <Link to={`/events/tickets/${eventId}`}>Tickets</Link>
-                <Link to={`/events/vouchers/${eventId}`}>Vouchers</Link>
+                <Link to={`${baseEventUrl}/tickets/${eventId}`}>Tickets</Link>
+                <Link to={`${baseEventUrl}/vouchers/${eventId}`}>Vouchers</Link>
+              </div>
+            )}
+            {item.name === "Events" && isAccordionOpen && (
+              <div className="bg-[#cbd0d6] rounded-b-3xl flex flex-col pl-1.5 sm:pl-6 md:pl-14 gap-3 pt-3 pb-3 cursor-pointer ">
+                <Link to={`/drafted-events`}>Drafts</Link>
+                <Link to={`live-events`}>Live</Link>
+                <Link to={`past-events`}>Past</Link>
               </div>
             )}
           </div>
