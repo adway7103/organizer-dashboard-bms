@@ -118,9 +118,9 @@ const EventOverview = () => {
           /> */}
           <TextBlast className="bg-[#6076a0] text-xl" heading="Share" />
         </div>
-        <div className="ml-8 mr-28 mt-8 sm:mt-4">
+        {/* <div className="ml-8 mr-28 mt-8 sm:mt-4">
           <TrackEventComponent />
-        </div>
+        </div> */}
         <div className="sm:ml-8 sm:mr-24 mt-12">
           <h1 className="text-2xl font-medium ml-8">Tickets</h1>
           <TicketTable />
@@ -136,20 +136,20 @@ const EventOverview = () => {
 
 export default EventOverview;
 
-const TrackEventComponent = () => {
-  return (
-    <div className="flex grid grid-cols-5 min-w-[300px]">
-      <div
-        className={`col-span-1 flex justify-center items-center h-16 pl-4 text-[1rem] border border-gray-700 bg-[#6076a0] rounded-l-full text-white`}
-      >
-        Track event
-      </div>
-      <div
-        className={`col-span-4 flex justify-between items-center h-16 text-[1rem] border border-gray-700 bg-[#eaebef] rounded-r-full text-black`}
-      >
-        <div className="ml-16">Track event</div>
-        <div className="mr-6">copy</div>
-      </div>
-    </div>
-  );
-};
+// const TrackEventComponent = () => {
+//   return (
+//     <div className="flex grid grid-cols-5 min-w-[300px]">
+//       <div
+//         className={`col-span-1 flex justify-center items-center h-16 pl-4 text-[1rem] border border-gray-700 bg-[#6076a0] rounded-l-full text-white`}
+//       >
+//         Track event
+//       </div>
+//       <div
+//         className={`col-span-4 flex justify-between items-center h-16 text-[1rem] border border-gray-700 bg-[#eaebef] rounded-r-full text-black`}
+//       >
+//         <div className="ml-16">Track event</div>
+//         <div className="mr-6">copy</div>
+//       </div>
+//     </div>
+//   );
+// };
