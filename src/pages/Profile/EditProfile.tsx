@@ -413,6 +413,7 @@ const EditProfile = () => {
             <FileDragNDrop
               onFileSelect={handleFileSelect}
               ClassName="p-4 border-gray-400 rounded-md"
+              posterUrl={profileData?.logoUrl}
             />
           </div>
 
