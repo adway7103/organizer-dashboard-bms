@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { TicketTable } from "./TicketTable";
 import {
@@ -13,6 +12,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs"; // Import Dayjs
 import { Loader2 } from "lucide-react";
 import { useParams } from "react-router-dom";
+import { updateEvent } from "../../api/updateEvent";
 
 const CE_Page2: React.FC = () => {
   const navigate = useNavigate();
@@ -38,21 +38,6 @@ const CE_Page2: React.FC = () => {
 
   const validateForm = () => {
     return lastEntryDate && lastEntryTime;
-  };
-
-  const updateEvent = async (data: any, eventId: any) => {
-    const token = localStorage.getItem("accessToken");
-
-    await axios.put(
-      `https://kafsbackend-106f.onrender.com/api/v1/events/update/${eventId}`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
   };
 
   const handleOnSubmit = async (
