@@ -1,11 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./FileDragNDrop.css";
 import { MdUpload, MdDeleteForever } from "react-icons/md";
 import { uploadImage } from "../../api/uploadImage";
 import { useEventContext } from "../../Contexts/CreateEventContext";
 
+interface FileDragNDropProps {
+  onFileSelect: (file: File | null) => void;
+  ClassName?: string;
+  posterUrl?: string;
+}
 
-const FileDragNDrop: React.FC<{ onFileSelect: (file: File | null) => void; ClassName?: string }> = ({ onFileSelect, ClassName = "" }) => {
+const FileDragNDrop: React.FC<FileDragNDropProps> = ({ onFileSelect, ClassName = "", posterUrl }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -13,8 +18,8 @@ const FileDragNDrop: React.FC<{ onFileSelect: (file: File | null) => void; Class
     e.preventDefault();
     e.stopPropagation();
   };
-  const { setEventInfo } = useEventContext();
 
+  const { setEventInfo } = useEventContext();
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -34,7 +39,6 @@ const FileDragNDrop: React.FC<{ onFileSelect: (file: File | null) => void; Class
 
   const handleImageUpload = async (file: File) => {
     setImagePreview(URL.createObjectURL(file));
-
     onFileSelect(file);
 
     try {
@@ -42,7 +46,7 @@ const FileDragNDrop: React.FC<{ onFileSelect: (file: File | null) => void; Class
       setEventInfo((prevEventInfo) => ({
         ...prevEventInfo,
         posterUrl: imageUrl,
-      }));     
+      }));
     } catch (error) {
       console.error("Image upload failed:", error);
     }
@@ -50,8 +54,14 @@ const FileDragNDrop: React.FC<{ onFileSelect: (file: File | null) => void; Class
 
   const deleteImg = () => {
     setImagePreview(null);
-    onFileSelect(null); 
+    onFileSelect(null);
   };
+
+  useEffect(() => {
+    if (posterUrl) {
+      setImagePreview(posterUrl);
+    }
+  }, [posterUrl]);
 
   return (
     <div>

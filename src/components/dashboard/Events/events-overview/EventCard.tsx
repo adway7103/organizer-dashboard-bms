@@ -1,8 +1,21 @@
+import { useParams, useNavigate } from "react-router-dom";
+
 const EventCard = ({ posterUrl, city, date, day, time }: any) => {
+  const { eventId } = useParams();
+  const navigate = useNavigate();
+
+  const handleEditButton = () => {
+    navigate(`/edit/${eventId}`);
+  };
+
   return (
-    <div className="flex flex-col sm:flex-row items-center md:items-start border p-8 rounded-3xl space-x-0 sm:space-x-8 min-w-[300px] sm:w-[520px] cursor-pointer bg-[#ffffff]">
+    <div className="flex flex-col sm:flex-row items-center md:items-start border p-8 rounded-3xl space-x-0 sm:space-x-8 min-w-[300px] sm:w-[520px] bg-[#ffffff]">
       <div>
-        <img src={posterUrl} alt="" className="h-[210px] w-[280px] object-cover rounded-lg" />
+        <img
+          src={posterUrl}
+          alt=""
+          className="h-[210px] w-[280px] object-cover rounded-lg"
+        />
       </div>
       <div className="pt-4">
         <div className="text-lg mt-1">
@@ -56,7 +69,12 @@ const EventCard = ({ posterUrl, city, date, day, time }: any) => {
           </p>
         </div>
         <div className="flex space-x-1 mt-2 text-sm">
-          <div className="border bg-[#6076a0] text-white px-8 py-1">Edit</div>
+          <button
+            className="border bg-[#6076a0] text-white px-8 py-1 cursor-pointer hover:shadow-lg"
+            onClick={handleEditButton}
+          >
+            Edit
+          </button>
         </div>
       </div>
     </div>

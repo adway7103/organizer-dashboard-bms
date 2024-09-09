@@ -109,6 +109,7 @@ const EventGrid = () => {
         {events.map((i, index) => (
           <EventCard
             key={index}
+            eventId={i.eventId}
             title={i.title}
             posterUrl={i.posterUrl}
             city={i.city}

@@ -32,6 +32,7 @@ import AddTicket from "../components/dashboard/Events/ticketsAndVouchers/AddTick
 import EditTicket from "../components/dashboard/Events/ticketsAndVouchers/EditTicket";
 import Participants from "../components/dashboard/Events/participants/Participants";
 import Sales from "../components/dashboard/Events/sales/Sales";
+import EditEvent from "../pages/CreateEvent/EditEvent";
 
 export const router = createBrowserRouter([
   {
@@ -122,8 +123,8 @@ export const router = createBrowserRouter([
             element: <DraftedEvents />,
           },
           {
-            path: "/live-events",
-            element: <EventHome />,
+            path: "/edit/:eventId",
+            element: <EditEvent />,
           },
           {
             path: "/live-events",
