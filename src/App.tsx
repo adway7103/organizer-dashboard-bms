@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import { Outlet, useLocation } from "react-router-dom";
-import bg from "../public/bg3.png";
+import bg from "../public/background2.png";
 
 function App() {
   const [isSidebarVisible, setSidebarVisible] = useState(false);
