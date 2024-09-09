@@ -5,7 +5,7 @@ import { useEventContext } from "../../Contexts/CreateEventContext";
 
 export default function Places() {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAnliOx4Yo5jCupy2J4j58bvA7jN7EIR5I",
+    googleMapsApiKey: "AIzaSyAxh0ks8s9JDC182Ls7PUmTJ2ahN-azosU",
     libraries: ["places"],
   });
 
