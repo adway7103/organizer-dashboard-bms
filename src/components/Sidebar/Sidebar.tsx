@@ -2,7 +2,7 @@ import "./Sidebar.css";
 import SidebarNav from "./SidebarNav";
 import { SidebarNavs } from "../../utils/Constant";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
 import { useParams } from "react-router-dom";
@@ -26,6 +26,10 @@ const Sidebar = ({ isVisible }: any) => {
     ? "/past-events"
     : "";
 
+  useEffect(() => {
+    setAccordionOpen(false);
+  }, [baseEventUrl]);
+  
   const eventsTabSidebar = [
     {
       name: "Dashboard",
