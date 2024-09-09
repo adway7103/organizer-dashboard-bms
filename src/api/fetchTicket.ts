@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const fetchTicket = async ({ ticketId }: any) => {
-    console.log(ticketId);
     
   const token = localStorage.getItem("accessToken");
   const response = await axios.get(
@@ -13,7 +12,5 @@ export const fetchTicket = async ({ ticketId }: any) => {
       },
     }
   );
-  console.log(response);
-
   return response.data.data;
 };
