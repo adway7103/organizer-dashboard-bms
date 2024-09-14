@@ -4,16 +4,18 @@ import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-interface PositionedMenuProps {
+interface Props {
   id: string;
   matrixId?: string;
+  eventId?: string;
   onDelete: (id: string) => void;
 }
 export default function TicketDailog({
   id,
   matrixId,
+  eventId,
   onDelete,
-}: PositionedMenuProps) {
+}: Props) {
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -41,7 +43,7 @@ export default function TicketDailog({
           },
         }
       );
-      onDelete(id);      
+      onDelete(id);
       handleClose();
       console.log(response.data);
       return response.data;
@@ -91,12 +93,15 @@ export default function TicketDailog({
           horizontal: "left",
         }}
         sx={{
-            "& .MuiPaper-root": {
-              backgroundColor: "#fffeff"
-            },
-          }}
+          "& .MuiPaper-root": {
+            backgroundColor: "#fffeff"
+          },
+        }}
       >
-        <Link to={`/events/edit-ticket/${matrixId}/${id}`}>
+        <Link
+          to={`/live-events/edit-ticket/${eventId}/${matrixId}/${id}`}
+          state={{ from: location.pathname }}
+        >
           <MenuItem>Edit Ticket</MenuItem>
         </Link>
         <MenuItem >Make ticket invisible</MenuItem>

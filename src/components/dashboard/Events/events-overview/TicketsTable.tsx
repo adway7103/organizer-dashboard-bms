@@ -27,6 +27,7 @@ import { useParams } from "react-router-dom";
 // import { Search } from "lucide-react";
 
 export type Tickets = {
+  matrixId:string;
   id: string;
   name: string;
   price: string;
@@ -53,19 +54,19 @@ export function TicketTable() {
 
       // Map API response to table data format
       const transformedData = response.data.tickets.map((ticket: any) => ({
-        id: ticket.ticketName,
+        matrixId:ticket.bookingMatrixId,
+        id: ticket.ticketId,
         name: ticket.ticketName,
         price: ticket.price ? `€ ${ticket.price}` : "Free",
         totalTickets: `${ticket.ticketSold}`,
         status: ticket.active,
-      }));
+      }));      
       setTickets(transformedData);
     };
     fetchData();
   }, [eventId]);
 
   const handleDeleteTicket = (id: string) => {
-    console.log(id);
     setTickets((prevTickets) =>
       prevTickets.filter((ticket) => ticket.id !== id)
     );
@@ -115,8 +116,9 @@ export function TicketTable() {
       cell: ({ row }) => (
         <div>
           <TicketDailog
+          eventId={eventId}
             id={row.original.id}
-            // matrixId={row.original.matrixId}
+            matrixId={row.original.matrixId}
             onDelete={handleDeleteTicket}
           />
         </div>

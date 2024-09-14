@@ -1,5 +1,5 @@
 import "../../../../pages/AddTicket/AddTicket.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -8,9 +8,10 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import ASIndividual from "../../../../components/AdvancedSettings/ASIndividual";
 import TextField from "@mui/material/TextField";
 import toast from "react-hot-toast";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { updateTicket } from "../../../../api/updteTicketApi";
+import { fetchTicket } from "../../../../api/fetchTicket";
 
 interface Ticket {
   categoryType: string;
@@ -35,7 +36,8 @@ interface Ticket {
 
 const EditTicket: React.FC = () => {
   const navigate = useNavigate();
-  const { matrixId, id } = useParams();
+  const location = useLocation()
+  const { eventId, matrixId, id } = useParams();
   const [formData, setFormData] = useState<Ticket>({
     categoryType: "",
     categoryName: "",
@@ -56,6 +58,45 @@ const EditTicket: React.FC = () => {
     saleEndsDate: null,
     saleEndTime: null,
   });
+
+  useEffect(() => {
+    const fetchAndSetTicket = async () => {
+      try {
+        const ticket = await fetchTicket({ ticketId: id });
+        const saleStartsDate =
+          ticket.saleStarts !== "Invalid Date"
+            ? dayjs(ticket.saleStarts)
+            : null;
+        const saleEndsDate =
+          ticket.saleEnds !== "Invalid Date" ? dayjs(ticket.saleEnds) : null;
+
+        setFormData({
+          categoryType: ticket.categoryType,
+          categoryName: ticket.categoryName,
+          totalSeats: ticket.totalSeats.toString(),
+          ticketType: ticket.ticketType,
+          deductFeesFromTicketPrice: ticket.deductFeesFromTicketPrice,
+          categoryPricePerPerson: ticket.categoryPricePerPerson,
+          ticketSaleType: ticket.ticketSaleType,
+          saleStarts: ticket.saleStarts,
+          saleEnds: ticket.saleEnds,
+          additionalInfo: ticket.additionalInfo,
+          minPersonAllowedPerBooking: ticket.minPersonAllowedPerBooking,
+          maxPersonAllowedPerBooking: ticket.maxPersonAllowedPerBooking,
+          promoCode: ticket.promoCode,
+          toggleVisibility: ticket.toggleVisibility,
+          saleStartsDate: saleStartsDate,
+          saleStartsTime: saleStartsDate ? dayjs(ticket.saleStarts) : null,
+          saleEndsDate: saleEndsDate,
+          saleEndTime: saleEndsDate ? dayjs(ticket.saleEnds) : null,
+        });
+      } catch (error) {
+        toast.error("Failed to fetch ticket");
+      }
+    };
+
+    fetchAndSetTicket();
+  }, [id]);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -141,7 +182,8 @@ const EditTicket: React.FC = () => {
     try {
       await updateTicket(ticketData);
       toast.success("Ticket Updated successfully:");
-      navigate("/events/event-overview");
+      const redirectPath = location.state?.from || `/live-events/event-overview/${eventId}`;
+      navigate(redirectPath);
       setLoading(false);
     } catch (error: any) {
       const errorMessage =
@@ -444,10 +486,10 @@ const EditTicket: React.FC = () => {
           <ASIndividual formData={formData} handleChange={handleChange} />
         )}
         <div className="flex gap-4">
-          <Link to={"/events/event-overview"}>
+          <Link to={location.state?.from || `/live-events/event-overview/${eventId}`}>
             {" "}
             <button className="flex items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-4 rounded">
-              BACK
+              CANCEL
             </button>
           </Link>
           <button
