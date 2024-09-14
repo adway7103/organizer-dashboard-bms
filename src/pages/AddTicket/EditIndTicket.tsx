@@ -63,7 +63,6 @@ const EditIndTicket: React.FC = () => {
     const fetchAndSetTicket = async () => {
       try {
         const ticket = await fetchTicket({ ticketId: id });
-        console.log(ticket);
 
         const saleStartsDate =
           ticket.saleStarts !== "Invalid Date"

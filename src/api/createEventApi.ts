@@ -41,7 +41,6 @@ export const getCategories = async () => {
       "https://kafsbackend-106f.onrender.com/api/v1/categories/getallcategories"
     );
     const { data } = response.data;
-    console.log(data);
     return data;
   } catch (error) {
     console.log("failed to fetch categories", error);

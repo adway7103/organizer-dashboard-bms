@@ -19,7 +19,6 @@ const extractCountryCode = (phoneNumber: string) => {
 };
 
 export const updateProfile = async (data: UpdateDataType, id: string) => {
-  console.log("update profile api page", data, id);
   const token = localStorage.getItem("accessToken");
 
   try {

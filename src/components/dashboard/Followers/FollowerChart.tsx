@@ -11,7 +11,6 @@ interface FollowerChartProps {
 }
 
 const FollowerChart: React.FC<FollowerChartProps> = ({ followersPerMonth = {} }) => {
-  console.log(followersPerMonth);
 
   const data = Object.entries(followersPerMonth || {}).map(([month, count]) => ({
     name: month,

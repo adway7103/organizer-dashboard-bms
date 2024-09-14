@@ -12,7 +12,6 @@ export const fetchLiveEvents = async () => {
         },
       }
     );  
-    console.log("live event",response.data);
     
     return response.data.data;
   };

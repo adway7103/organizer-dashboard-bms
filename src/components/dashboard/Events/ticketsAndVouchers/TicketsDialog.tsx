@@ -45,7 +45,6 @@ export default function TicketDailog({
       );
       onDelete(id);
       handleClose();
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error deleting ticket:", error);

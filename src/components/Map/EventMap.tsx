@@ -106,9 +106,7 @@ const PlacesAutocomplete = ({
           country: country || "Unknown Country",
           zipcode: zipcode,
         };
-
-        console.log("Venue Address:", venueAddress);
-
+        
         setLocation(lat, lng, venueAddress);
       }
     };
@@ -207,8 +205,6 @@ const PlacesAutocomplete = ({
               country: country || "Unknown Country",
               zipcode: zipcode,
             };
-
-            console.log("Venue Address:", venueAddress);
 
             setAddress(place.description);
             setLocation(lat, lng, venueAddress);

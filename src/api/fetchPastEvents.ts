@@ -12,7 +12,6 @@ export const fetchPastEvents = async () => {
       },
     }
   );  
-  console.log("past event",response.data);
 
   return response.data.data;
 };

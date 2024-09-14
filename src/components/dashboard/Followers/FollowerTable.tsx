@@ -46,8 +46,7 @@ export function FollowerTable() {
   React.useEffect(() => {
     const fetchData = async () => {
       const response = await fetchFollowers();
-      console.log(response.FollowerList); // Adjusted to log the total number of followers
-      setFollowersList(response.followersList); // Correctly set the followers list
+      setFollowersList(response.followersList);
     };
     fetchData();
   }, []);

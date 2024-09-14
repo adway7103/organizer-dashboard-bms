@@ -38,8 +38,6 @@ const EditEventForm: React.FC = () => {
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
   >([]);
-  console.log(selectedFile);
-  console.log(eventInfo.posterUrl);
 
   const [trailerUrl, setTrailerUrl] = useState<any[]>([]);
   const [accordionOpen, setAccordionOpen] = useState(false);
