@@ -1,10 +1,6 @@
 import axios from "axios";
 
 export const updateTicket = async ({ data, ticketId, matrixId }: any) => {
-  console.log("data",data);
-  console.log("ticketId",ticketId);
-  console.log("matrixId",matrixId);
-
   const token = localStorage.getItem("accessToken");
 
   try {
