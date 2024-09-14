@@ -9,7 +9,7 @@ import ASIndividual from "../../../../components/AdvancedSettings/ASIndividual";
 import TextField from "@mui/material/TextField";
 import { createTicket } from "../../../../api/createTicket";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 
 interface Ticket {
@@ -36,6 +36,7 @@ interface Ticket {
 
 const AddTicket: React.FC = () => {
   const navigate = useNavigate();
+  const { eventId } = useParams<{ eventId: string }>();
   const [formData, setFormData] = useState<Ticket>({
     event: "",
     categoryType: "",
@@ -122,7 +123,7 @@ const AddTicket: React.FC = () => {
       return;
     }
 
-    const id = localStorage.getItem("eventId");
+    const id = eventId;
     if (!id) {
       throw new Error("Event Id is required to create a ticket.");
     }
@@ -154,7 +155,7 @@ const AddTicket: React.FC = () => {
     try {
       await createTicket(ticketData);
       toast.success("Ticket created successfully:");
-      navigate("/events/event-overview");
+      navigate(`/live-events/tickets/${eventId}`);
       setLoading(false);
     } catch (error: any) {
       const errorMessage =
@@ -458,10 +459,10 @@ const AddTicket: React.FC = () => {
           <ASIndividual formData={formData} handleChange={handleChange} />
         )}
         <div className="flex gap-4">
-          <Link to={"/events/tickets"}>
+          <Link to={`/live-events/tickets/${eventId}`}>
             {" "}
             <button className="flex items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-4 rounded">
-              BACK
+              CANCEL
             </button>
           </Link>
           <button
