@@ -12,8 +12,9 @@ import HomeContainerCard from "../HomeContainerCard";
 type AreaChartHomeTypes = {
   data: any;
   heading?: string;
+  type?: "customers" | "followers";
 };
-function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
+function AreaChartHome({ data, heading, type  }: AreaChartHomeTypes) {
   return (
     <HomeContainerCard className=" shadow-none col-span-2 md:col-span-1 border border-gray-300 rounded-3xl p-4 xl:h-[50vh]">
       <div className="flex gap-2 items-center text-lg font-medium">
@@ -76,7 +77,7 @@ function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
           <Tooltip />
           <Area
             type="monotone"
-            dataKey="value"
+            dataKey={type === "customers" ? "customers" : "followers"}
             stroke="#8884d8"
             fill="#60769D"
           />
