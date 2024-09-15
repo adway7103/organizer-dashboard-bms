@@ -3,28 +3,29 @@ import { Label, Pie, PieChart, Tooltip } from "recharts";
 import { Card, CardContent, CardFooter, CardTitle } from "../../../ui/Card";
 import yellow from "../../../../../public/follower/yellow.png";
 import purple from "../../../../../public/follower/purple.png";
+import extra from "../../../../../public/follower/extra.png";
 
 interface PieChartProps {
-  returningCustomer?: string;
-  newCustomer?: string;
-  width?: number;
+  heading: string;
+  mobile?: string;
+  tablet?: string;
+  laptop?: string;
 }
 
-function NewReturningCustomerPie({
-  returningCustomer,
-  newCustomer,
-  width = 120,
+function AttendeesByDevicePie({
+  heading,
+  mobile,
+  tablet,
+  laptop,
 }: PieChartProps) {
   let chartData: any = [];
 
   chartData = [
-    { gender: "new", visitors: Number(newCustomer), fill: "#800080" },
-    {
-      gender: "returning",
-      visitors: Number(returningCustomer),
-      fill: "#FFBB28",
-    },
+    { gender: "mobile", visitors: Number(mobile), fill: "#800080" },
+    { gender: "tablet", visitors: Number(tablet), fill: "#FFBB28" },
+    { gender: "laptop", visitors: Number(laptop), fill: "#8e854b" },
   ];
+
   const totalVisitors = React.useMemo(() => {
     return chartData.reduce((acc: any, curr: any) => acc + curr.visitors, 0);
   }, []);
@@ -32,11 +33,12 @@ function NewReturningCustomerPie({
     <Card className="h-auto sm:h-[36vh] bg-transparent shadow-none rounded border border-gray-300 flex flex-col justify-between sm:justify-center items-center max-sm:py-4">
       <div className="sm:col-span-1">
         <div className="flex justify-center items-center">
-          <CardTitle>New or returning customers</CardTitle>
+          {" "}
+          <CardTitle>{heading}</CardTitle>
         </div>{" "}
         <CardContent className="">
           <div className="mx-auto flex justify-center items-center">
-            <PieChart width={width} height={120}>
+            <PieChart width={220} height={120}>
               <Tooltip cursor={false} />
               <Pie
                 data={chartData}
@@ -79,21 +81,30 @@ function NewReturningCustomerPie({
         <CardFooter className="">
           <div className="flex items-center justify-between gap-8">
             <div className="text-xs">
-              <div className="text-center">Returning</div>
+              <div className="text-center">Mobile</div>
               <div className="flex items-center">
                 <span>
                   <img src={yellow} alt="" className="pr-1" />
                 </span>
-                {returningCustomer}%{" "}
+                {mobile}%{" "}
               </div>
             </div>
             <div className="text-xs">
-              <div className="text-center">New</div>
+              <div className="text-center">Tablet</div>
               <div className="flex items-center">
                 <span>
                   <img src={purple} alt="" className="pr-1" />
                 </span>
-                {newCustomer}%{" "}
+                {tablet}%{" "}
+              </div>
+            </div>
+            <div className="text-xs">
+              <div className="text-center">Laptop</div>
+              <div className="flex items-center justify-center">
+                <span>
+                  <img src={extra} alt="" className="pr-1" />
+                </span>
+                {laptop}%{" "}
               </div>
             </div>
           </div>
@@ -103,4 +114,4 @@ function NewReturningCustomerPie({
   );
 }
 
-export default NewReturningCustomerPie;
+export default AttendeesByDevicePie;
