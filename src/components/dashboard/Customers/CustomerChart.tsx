@@ -1,19 +1,28 @@
+import React from "react";
 import AreaChartHome from "../Charts/AreaChart";
 import HomeContainerCard from "../HomeContainerCard";
 
-const CustomerChart = () => {
-  const dummyData = [
-    { name: "Jan", value: 10 },
-    { name: "Feb", value: 50 },
-    { name: "Mar", value: 30 },
-    { name: "Apr", value: 40 },
-    { name: "May", value: 10 },
-    { name: "June", value: 70 },
-    { name: "July", value: 90 },
-  ];
+interface MonthlyBookingData {
+  month: string;
+  year: number;
+  bookings: number;
+}
+
+interface CustomerChartProps {
+  monthlyBookingData: MonthlyBookingData[];
+}
+
+const CustomerChart: React.FC<CustomerChartProps> = ({
+  monthlyBookingData,
+}) => {
+  const data = monthlyBookingData.map((item) => ({
+    name: `${item.month}`,
+    customers: item.bookings,
+  }));
+
   return (
     <HomeContainerCard className="h-[40vh] shadow-none min-w-[300px] w-full">
-      <AreaChartHome data={dummyData} heading="Customers" />
+      <AreaChartHome data={data} heading="Customers" type="customers"/>
     </HomeContainerCard>
   );
 };

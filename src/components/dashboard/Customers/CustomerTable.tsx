@@ -22,140 +22,9 @@ import {
   TableRow,
 } from "../../ui/Table";
 import { MenuItem, Select } from "@mui/material";
+import { fetchCustomers } from "../../../api/fetchCustomersApi";
+import { useEffect, useState } from "react";
 // import Message from "../Affiliates/Message";
-
-const data: Follower[] = [
-  {
-    id: "xueh0xpf",
-    activity: "?",
-    fName: "Sarah",
-    lName: "Rodriguez",
-    age: "20",
-    email: "Sarahhhhhhhhhhhhhh@gmail.com",
-    mobile: "1234567890",
-    gender: "male",
-    revenue: "40",
-    eventsAttented: "10",
-    affliationStatus: "Yes",
-  },
-  {
-    id: "atzmz950",
-    activity: "?",
-    fName: "Sarah",
-    lName: "Rodriguez",
-    age: "20",
-    email: "Sarah@gmail.com",
-    mobile: "1234567890",
-    gender: "male",
-    revenue: "40",
-    eventsAttented: "10",
-    affliationStatus: "Yes",
-  },
-  {
-    id: "6nn1ww0c",
-    activity: "?",
-    fName: "Sarah",
-    lName: "Rodriguez",
-    age: "20",
-    email: "Sarah@gmail.com",
-    mobile: "1234567890",
-    gender: "male",
-    revenue: "40",
-    eventsAttented: "10",
-    affliationStatus: "Yes",
-  },
-  {
-    id: "043gpwfr",
-    activity: "?",
-    fName: "Sarah",
-    lName: "Rodriguez",
-    age: "20",
-    email: "Sarah@gmail.com",
-    mobile: "1234567890",
-    gender: "male",
-    revenue: "40",
-    eventsAttented: "10",
-    affliationStatus: "Yes",
-  },
-  {
-    id: "6skmearr",
-    activity: "?",
-    fName: "Sarah",
-    lName: "Rodriguez",
-    age: "20",
-    email: "Sarah@gmail.com",
-    mobile: "1234567890",
-    gender: "male",
-    revenue: "40",
-    eventsAttented: "10",
-    affliationStatus: "Yes",
-  },
-  {
-    id: "xvmc7ya9",
-    activity: "?",
-    fName: "Sarah",
-    lName: "Rodriguez",
-    age: "20",
-    email: "Sarah@gmail.com",
-    mobile: "1234567890",
-    gender: "male",
-    revenue: "40",
-    eventsAttented: "10",
-    affliationStatus: "Yes",
-  },
-  {
-    id: "q3hk0roa",
-    activity: "?",
-    fName: "Sarah",
-    lName: "Rodriguez",
-    age: "20",
-    email: "Sarah@gmail.com",
-    mobile: "1234567890",
-    gender: "male",
-    revenue: "40",
-    eventsAttented: "10",
-    affliationStatus: "Yes",
-  },
-  {
-    id: "4dd5ykmx",
-    activity: "?",
-    fName: "Sarah",
-    lName: "Rodriguez",
-    age: "20",
-    email: "Sarah@gmail.com",
-    mobile: "1234567890",
-    gender: "male",
-    revenue: "40",
-    eventsAttented: "10",
-    affliationStatus: "Yes",
-  },
-  {
-    id: "07yjag41",
-    activity: "?",
-    fName: "Sarah",
-    lName: "Rodriguez",
-    age: "20",
-    email: "Sarah@gmail.com",
-    mobile: "1234567890",
-    gender: "male",
-    revenue: "40",
-    eventsAttented: "10",
-    affliationStatus: "Yes",
-  },
-  {
-    id: "4nnd81pn",
-    activity: "?",
-    fName: "Sarah",
-    lName: "Rodriguez",
-    age: "20",
-    email: "Sarah@gmail.com",
-    mobile: "1234567890",
-    gender: "male",
-    revenue: "40",
-    eventsAttented: "10",
-    affliationStatus: "Yes",
-  },
-];
 
 export type Follower = {
   id: string;
@@ -244,6 +113,8 @@ export const columns: ColumnDef<Follower>[] = [
 ];
 
 export function CustomerTable() {
+  const [customers, setCustomers] = useState([]);
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -252,8 +123,21 @@ export function CustomerTable() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
+  useEffect(() => {
+    const getCustomers = async () => {
+      try {
+        const customersData = await fetchCustomers();
+        setCustomers(customersData.customerList);
+      } catch (err) {
+        console.log("Failed to fetch customers");
+      }
+    };
+
+    getCustomers();
+  }, []);
+
   const table = useReactTable({
-    data,
+    data:customers,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -365,7 +249,7 @@ export function CustomerTable() {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    No Customers Found.
                   </TableCell>
                 </TableRow>
               )}
