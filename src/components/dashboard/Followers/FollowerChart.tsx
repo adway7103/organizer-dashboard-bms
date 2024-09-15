@@ -10,16 +10,19 @@ interface FollowerChartProps {
   followersPerMonth?: FollowersPerMonth;
 }
 
-const FollowerChart: React.FC<FollowerChartProps> = ({ followersPerMonth = {} }) => {
-
-  const data = Object.entries(followersPerMonth || {}).map(([month, count]) => ({
-    name: month,
-    value: count,
-  }));
+const FollowerChart: React.FC<FollowerChartProps> = ({
+  followersPerMonth = {},
+}) => {
+  const data = Object.entries(followersPerMonth || {}).map(
+    ([month, count]) => ({
+      name: month,
+      followers: count,
+    })
+  );
 
   return (
     <HomeContainerCard className="h-[40vh] shadow-none min-w-[300px] w-full">
-      <AreaChartHome data={data} heading="Followers" />
+      <AreaChartHome data={data} heading="Followers" type="followers"/>
     </HomeContainerCard>
   );
 };
