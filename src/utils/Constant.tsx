@@ -3,7 +3,7 @@ import { RiUserSettingsFill } from "react-icons/ri"; //RiCustomerService2Line
 import { SlCalender } from "react-icons/sl";
 import { RxDashboard } from "react-icons/rx";
 import { GiMoneyStack } from "react-icons/gi";
-import { LuNetwork } from "react-icons/lu";
+// import { LuNetwork } from "react-icons/lu";
 import { HiUserGroup } from "react-icons/hi2";
 import { PiUsersFourLight } from "react-icons/pi";
 
@@ -33,11 +33,11 @@ export const SidebarNavs = [
     icon: <GiMoneyStack />,
     link: "payouts",
   },
-  {
-    name: "Affiliate",
-    icon: <LuNetwork />,
-    link: "/affiliate",
-  },
+  // {
+  //   name: "Affiliate",
+  //   icon: <LuNetwork />,
+  //   link: "/affiliate",
+  // },
   {
     name: "Followers",
     icon: <HiUserGroup />,
