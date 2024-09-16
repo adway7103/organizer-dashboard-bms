@@ -14,8 +14,9 @@ interface EventData {
   city: string;
   date: string;
   time: string;
-  revenue: string;
-  ticketsSold: string;
+  revenue: number;
+  ticketsSold: number;
+  shareUrl: string;
 }
 
 export const EventHome = () => {
@@ -43,6 +44,7 @@ export const EventHome = () => {
         date: event.date,
         time: event.time,
         revenue: event.revenue,
+        shareUrl: event.shareUrl,
         ticketsSold: event.ticketsSold,
       }));
 

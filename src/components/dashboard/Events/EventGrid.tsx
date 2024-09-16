@@ -11,8 +11,9 @@ interface EventData {
   city: string;
   date: string;
   time: string;
-  revenue: string;
-  ticketsSold: string;
+  revenue: number;
+  ticketsSold: number;
+  shareUrl: string;
 }
 
 interface EventGridProps {
@@ -71,6 +72,7 @@ const EventGrid = ({ events, handleDelete }: EventGridProps) => {
             time={event.time}
             date={event.date}
             revenue={event.revenue}
+            shareUrl={event.shareUrl}
             ticketsSold={event.ticketsSold}
             onClick={() => handleEventClick(event.eventId)}
             handleDelete={() => handleDelete(event.eventId)}

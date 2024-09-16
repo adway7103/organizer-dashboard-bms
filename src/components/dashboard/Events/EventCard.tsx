@@ -11,8 +11,9 @@ interface EventCardProps {
   city: string;
   date: string;
   time: string;
-  revenue: string;
-  ticketsSold: string;
+  revenue: number;
+  ticketsSold: number;
+  shareUrl: string;
   onClick: () => void;
   handleDelete: () => void;
 }
@@ -26,6 +27,7 @@ const EventCard = ({
   time,
   revenue,
   ticketsSold,
+  shareUrl,
   onClick,
   handleDelete,
 }: EventCardProps) => {
@@ -78,6 +80,11 @@ const EventCard = ({
   const handleTrafficButton = (e: React.MouseEvent) => {
     e.stopPropagation();
     navigate("/event-traffic");
+  };
+
+  const handlePreviewButton = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    window.open(shareUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -186,7 +193,10 @@ const EventCard = ({
               </div>
             </div>
           </div>
-          <div className="border bg-[#ededed] px-4 py-1 rounded-full" onClick={handleTrafficButton}>
+          <div
+            className="border bg-[#ededed] px-4 py-1 rounded-full"
+            onClick={handleTrafficButton}
+          >
             <div className="flex gap-1">
               Traffic
               <div>
@@ -194,7 +204,7 @@ const EventCard = ({
               </div>
             </div>
           </div>
-          <div className="border bg-[#ededed] px-4 py-1 rounded-full">
+          {/* <div className="border bg-[#ededed] px-4 py-1 rounded-full">
             <div className="flex gap-1">
               Track
               <div>
@@ -214,9 +224,12 @@ const EventCard = ({
                 </svg>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
-        <div className="flex text-white text-lg space-x-2 mt-3">
+        <div
+          className="flex text-white text-lg space-x-2 mt-3"
+          onClick={handlePreviewButton}
+        >
           <div className="border bg-[#000000] px-8 py-1 rounded hover:shadow-lg">
             Preview
           </div>
