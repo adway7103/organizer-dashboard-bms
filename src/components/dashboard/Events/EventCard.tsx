@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import img from "../../../../public/traffic.png";
-import { textBlast } from "../../../api/textBlastApi";
-import toast from "react-hot-toast";
+import TextBlast from "../Affiliates/TextBlast";
 
 interface EventCardProps {
   eventId: string;
@@ -33,7 +32,6 @@ const EventCard = ({
 }: EventCardProps) => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState<boolean>(false);
-  const [showTextBlastPopup, setShowTextBlastPopup] = useState<boolean>(false);
 
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -54,27 +52,6 @@ const EventCard = ({
   const handleEditButton = (e: React.MouseEvent) => {
     e.stopPropagation();
     navigate(`/edit/${eventId}`);
-  };
-
-  const handleTextBlastClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setShowTextBlastPopup(true);
-  };
-
-  const handleConfirmTextBlast = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setShowTextBlastPopup(false);
-    try {
-      await textBlast();
-      toast.success("Text blast sent successfully!");
-    } catch (error) {
-      toast.error("Failed to send text blast. Please try again.");
-    }
-  };
-
-  const handleCancelTextBlast = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setShowTextBlastPopup(false);
   };
 
   const handleTrafficButton = (e: React.MouseEvent) => {
@@ -230,14 +207,15 @@ const EventCard = ({
           className="flex text-white text-lg space-x-2 mt-3"
           onClick={handlePreviewButton}
         >
-          <div className="border bg-[#000000] px-8 py-1 rounded hover:shadow-lg">
+          <div className="border bg-[#000000] px-8 py-1 rounded-md hover:shadow-lg">
             Preview
           </div>
-          <div
-            className="border bg-[#954b7c] px-7 sm:px-8 py-1 rounded hover:shadow-lg"
-            onClick={handleTextBlastClick}
-          >
-            Text Blast
+          <div className="" onClick={(e) => e.stopPropagation()}>
+            <TextBlast
+              heading="Text Blast"
+              className="border bg-[#954b7c] px-7 sm:px-8 py-1 rounded-md hover:shadow-lg cursor-pointer h-9 "
+              classStyle="h-auto shadow-none mt-0 sm:h-[0vh]"
+            />{" "}
           </div>
         </div>
         <div className="flex justify-between border-t mt-3 pt-1 text-sm">
@@ -267,33 +245,6 @@ const EventCard = ({
               </button>
               <button
                 onClick={handleCancelDelete}
-                className="bg-gray-300 text-black px-4 py-2 rounded-lg hover:bg-gray-400"
-              >
-                No
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showTextBlastPopup && (
-        <div
-          className="fixed -inset-6 flex items-center justify-center bg-black bg-opacity-50"
-          onClick={handleCancelTextBlast}
-        >
-          <div className="bg-white p-4 rounded-lg shadow-lg">
-            <p className="text-lg font-semibold mb-4">
-              Do you want to send a text blast?
-            </p>
-            <div className="flex justify-end gap-4">
-              <button
-                onClick={handleConfirmTextBlast}
-                className="bg-[#244f7a] text-white px-4 py-2 rounded-lg hover:bg-red-600"
-              >
-                Yes
-              </button>
-              <button
-                onClick={handleCancelTextBlast}
                 className="bg-gray-300 text-black px-4 py-2 rounded-lg hover:bg-gray-400"
               >
                 No

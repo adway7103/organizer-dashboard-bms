@@ -9,8 +9,9 @@ import DialogContent from "@mui/material/DialogContent";
 interface Props {
   className?: string;
   heading?: string;
+  classStyle?: string;
 }
-const TextBlast = ({ className, heading }: Props) => {
+const TextBlast = ({ className, heading, classStyle }: Props) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -23,7 +24,9 @@ const TextBlast = ({ className, heading }: Props) => {
 
   return (
     <React.Fragment>
-      <HomeContainerCard className="h-auto sm:h-[10vh] mt-4 shadow-none">
+      <HomeContainerCard
+        className={`h-auto sm:h-[10vh] mt-4 shadow-none ${classStyle}`}
+      >
         <div
           onClick={handleClickOpen}
           className={`flex h-16 justify-center items-center pl-4 text-[1rem] border border-gray-700 rounded-full text-white cursor-pointer ${className}`}
@@ -84,7 +87,7 @@ const SendComponent = ({ heading }: any) => {
       <HomeContainerCard className="h-auto sm:h-[10vh] shadow-none">
         <div
           onClick={handleClickOpen}
-          className={`bg-black text-white max-sm:text-xs px-2 sm:px-6 py-3 rounded-lg`}
+          className={`bg-black text-white max-sm:text-xs px-2 sm:px-6 py-3 rounded-lg cursor-pointer`}
         >
           {heading ? heading : ""}{" "}
         </div>
