@@ -243,7 +243,7 @@ const CE_Page2: React.FC = () => {
         </div> */}
         <Link to={"/drafted-events"}>
           <button className="flex flex-row items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-10 rounded">
-            CANCEL
+            SAVE AS DRAFT
           </button>
         </Link>
         <div>
