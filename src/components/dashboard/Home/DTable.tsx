@@ -1,43 +1,44 @@
 import TableRow from "./TableRow";
 
-const DTable = () => {
-  const data = [
-    {
-      event: "Rozen Tal at Tone Lab",
-      eventinfo: "19a Koryun St, Yerevan 0009",
-      price: 100,
-      totalTicket: 100,
-      amount: 120,
-    },
-    {
-      event: "Rozen Tal at Tone Lab",
-      eventinfo: "19a Koryun St, Yerevan 0009",
-      price: 100,
-      totalTicket: 100,
-      amount: 120,
-    },
-    {
-      event: "Rozen Tal at Tone Lab",
-      eventinfo: "19a Koryun St, Yerevan 0009",
-      price: 100,
-      totalTicket: 100,
-      amount: 120,
-    },
-    {
-      event: "Rozen Tal at Tone Lab",
-      eventinfo: "19a Koryun St, Yerevan 0009",
-      price: 100,
-      totalTicket: 100,
-      amount: 120,
-    },
-    {
-      event: "Rozen Tal at Tone Lab",
-      eventinfo: "19a Koryun St, Yerevan 0009",
-      price: 100,
-      totalTicket: 100,
-      amount: 120,
-    },
-  ];
+const DTable = ({ data }: any) => {
+
+  // const dataa = [
+  //   {
+  //     event: "Rozen Tal at Tone Lab",
+  //     eventinfo: "19a Koryun St, Yerevan 0009",
+  //     price: 100,
+  //     totalTicket: 100,
+  //     amount: 120,
+  //   },
+  //   {
+  //     event: "Rozen Tal at Tone Lab",
+  //     eventinfo: "19a Koryun St, Yerevan 0009",
+  //     price: 100,
+  //     totalTicket: 100,
+  //     amount: 120,
+  //   },
+  //   {
+  //     event: "Rozen Tal at Tone Lab",
+  //     eventinfo: "19a Koryun St, Yerevan 0009",
+  //     price: 100,
+  //     totalTicket: 100,
+  //     amount: 120,
+  //   },
+  //   {
+  //     event: "Rozen Tal at Tone Lab",
+  //     eventinfo: "19a Koryun St, Yerevan 0009",
+  //     price: 100,
+  //     totalTicket: 100,
+  //     amount: 120,
+  //   },
+  //   {
+  //     event: "Rozen Tal at Tone Lab",
+  //     eventinfo: "19a Koryun St, Yerevan 0009",
+  //     price: 100,
+  //     totalTicket: 100,
+  //     amount: 120,
+  //   },
+  // ];
   //   const [submissions, getSubmissions] = useState<any[]>([]);
   //   const [isLoading, setLoading] = useState<boolean>(false);
   //   useEffect(() => {
@@ -84,15 +85,16 @@ const DTable = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((data, index) => {
+          {data?.map((data:any, index:any) => {
             return (
               <TableRow
                 key={index}
-                event={data.event}
-                eventinfo={data.eventinfo}
-                price={data.price}
-                totalTicket={data.totalTicket}
-                amount={data.amount}
+                event={data.title}
+                img={data.posterUrl}
+                // eventinfo={data.eventinfo}
+                // price={data.price}
+                // totalTicket={data.totalTicket}
+                // amount={data.amount}
                 // stdout={submission.stdout}
               />
             );

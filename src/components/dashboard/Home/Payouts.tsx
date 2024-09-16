@@ -1,7 +1,12 @@
 import HomeContainerCard from "../HomeContainerCard";
 import img from "../../../../public/dashboard/payout.png";
 
-function Payouts() {
+interface PayoutsProps {
+  payouts?: string;
+  nextPayouts?: string;
+}
+
+function Payouts({ payouts, nextPayouts }: PayoutsProps) {
   return (
     <HomeContainerCard className="h-auto sm:h-[50vh] w-auto bg-gray-200 py-4 sm:py-0 sm:flex sm:flex-col sm:p-6 sm:space-y-4 rounded-3xl">
       <div className="flex gap-3 items-center">
@@ -19,7 +24,7 @@ function Payouts() {
           <p>Previous Payout</p>
           <div className="flex items-center justify-between">
             <h1 className="text-[1.2rem] sm:text-[2rem] font-semibold ">
-              $43,000
+              {payouts}{" "}
             </h1>
             <span className="text-xs lg:text-[1rem] px-3 py-1 bg-green-300 rounded-md text-green-600 max-sm:ml-4">
               paid
@@ -30,7 +35,7 @@ function Payouts() {
           <p>Next Payout</p>
           <div className="flex items-center justify-between">
             <h1 className="text-[1.2rem] sm:text-[2rem] font-semibold">
-              $80,000
+              {nextPayouts}{" "}
             </h1>
             <span className="text-xs lg:text-[1rem] bg-red-200 px-3 py-1 text-red-600 rounded-md max-sm:ml-4">
               pending
