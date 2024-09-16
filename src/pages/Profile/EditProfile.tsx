@@ -414,6 +414,7 @@ const EditProfile = () => {
               onFileSelect={handleFileSelect}
               ClassName="p-4 border-gray-400 rounded-md"
               posterUrl={profileData?.logoUrl}
+              setProfileData={setProfileData}
             />
           </div>
 
@@ -430,20 +431,18 @@ const EditProfile = () => {
             ))}
           </div>
           <div className="col-span-6 flex justify-center items-center gap-6">
-          <button
+            <button
               onClick={handleDiscard}
               className="flex flex-row items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-4 rounded"
-
             >
               DISCARD CHANGES
             </button>
             <button
               onClick={formSubmitHandler}
               className="flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-bold py-2 px-4 rounded"
-              >
+            >
               SAVE CHANGES{" "}
               {loading && <Loader2 className="size-4 animate-spin" />}
-
             </button>
           </div>
         </div>
