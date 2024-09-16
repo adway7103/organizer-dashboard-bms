@@ -1,12 +1,5 @@
 import HomeContainerCard from "../HomeContainerCard";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
 
 const BarChartHome = ({ data }: any) => {
   return (
@@ -37,14 +30,51 @@ const BarChartHome = ({ data }: any) => {
           <h3 className="text-xs">Revenue Report</h3>
         </div>
       </div>
-      {/* 95% */}
-      <ResponsiveContainer width="90%" > 
-        <BarChart data={data}>
-          <CartesianGrid strokeDasharray="2 2" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          {/* <Tooltip /> */}
-          <Bar dataKey="value" width={10} fill="#8884d8" />
+      <ResponsiveContainer width="90%" height="80%">
+        <BarChart
+          data={data}
+          margin={{
+            top: 0,
+            right: 0,
+            left: 20,
+            bottom: 40,
+          }}
+        >
+          <XAxis
+            dataKey="name"
+            axisLine={false}
+            tick={{ fill: "black", fontSize: 12 }}
+            label={{
+              value: "Month",
+              offset: -20,
+              position: "insideBottom",
+              style: {
+                textAnchor: "middle",
+                fill: "black",
+                fontSize: 14,
+              },
+            }}
+          />
+          <YAxis
+            axisLine={false}
+            tick={{ fill: "black", fontSize: 12 }}
+            label={{
+              value: "Tickets sold",
+              angle: -90,
+              position: "insideLeft",
+              style: {
+                textAnchor: "middle",
+                fill: "black",
+                fontSize: 14,
+              },
+            }}
+          />
+          <Bar
+            dataKey="value"
+            fill="#a05d89"
+            radius={[10, 10, 0, 0]}
+            barSize={20}
+          />
         </BarChart>
       </ResponsiveContainer>
     </HomeContainerCard>

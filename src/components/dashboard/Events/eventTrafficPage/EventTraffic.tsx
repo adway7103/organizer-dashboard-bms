@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import img1 from "../../../../../public/eye.png";
 import img2 from "../../../../../public/sold.png";
 import img3 from "../../../../../public/icons.png";
@@ -10,37 +10,83 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
 import { TextField } from "@mui/material";
-import NewReturningCustomerPie from "../participants/NewReturningPie";
 import AttendeesByDevicePie from "./AttendeesByDevice";
+import { fetchEventTraffic } from "../../../../api/fetchEventTrafficApi";
+import NewOrReturningCustomerPie from "./NewOrReturningPie";
 
-const countComponentData = [
-  {
-    icon: img1,
-    heading: "Page Views",
-    count: "1000",
-  },
-  {
-    icon: img2,
-    heading: "Orders Sold",
-    count: "1000",
-  },
-  {
-    icon: img3,
-    heading: "Tickets Sold",
-    count: "1000",
-  },
-  {
-    icon: img4,
-    heading: "Conversion Rate",
-    count: "50%",
-  },
-];
+interface EventTrafficResponse {
+  pageViews: number;
+  orderSold: number;
+  ticketSold: number;
+  conversionRate: string;
+  monthlyViewData: Record<string, number>; // Map months (e.g., Jan, Feb) to numbers
+  pageVisitByChannel: {
+    direct: number;
+    shareUrl: number;
+  };
+  attendeeByDevice: {
+    mobile: {
+      number: number;
+      percentage: string;
+    };
+    tablet: {
+      number: number;
+      percentage: string;
+    };
+    laptop: {
+      number: number;
+      percentage: string;
+    };
+  };
+  newVsReturning: {
+    returning: {
+      number: string;
+      percentage: string;
+    };
+    new: {
+      number: string;
+      percentage: string;
+    };
+  };
+}
 
 const EventTraffic = () => {
   const [formData, setFormData] = useState({
     startDate: null,
   });
+  const [eventTrafficData, setEventTrafficData] =
+    useState<EventTrafficResponse | null>(null);
 
+  const countComponentData = [
+    {
+      icon: img1,
+      heading: "Page Views",
+      count: eventTrafficData?.pageViews,
+    },
+    {
+      icon: img2,
+      heading: "Orders Sold",
+      count: eventTrafficData?.orderSold,
+    },
+    {
+      icon: img3,
+      heading: "Tickets Sold",
+      count: eventTrafficData?.ticketSold,
+    },
+    {
+      icon: img4,
+      heading: "Conversion Rate",
+      count: eventTrafficData?.conversionRate,
+    },
+  ];
+  const fetchData = async () => {
+    const response = await fetchEventTraffic();
+    setEventTrafficData(response);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   const handleDateChange = (date: Dayjs | null, name: string) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -57,7 +103,7 @@ const EventTraffic = () => {
             key={index}
             icon={item.icon}
             heading={item.heading}
-            count={item.count}
+            count={item?.count}
           />
         ))}
       </div>
@@ -66,7 +112,7 @@ const EventTraffic = () => {
         <div className="grid lg:grid-cols-3 gap-x-6 max-lg:space-y-8">
           <div className="col-span-2 lg:h-[550px] flex flex-col md:justify-between">
             <div>
-              <TrafficChart />
+              <TrafficChart data={eventTrafficData?.monthlyViewData} />
             </div>
             <div>
               <div className="font-medium mb-3 text-2xl mt-6">
@@ -150,14 +196,27 @@ const EventTraffic = () => {
       <div className="sm:flex gap-x-8 max-sm:space-y-8">
         <div>
           <AttendeesByDevicePie
-            heading={"Attendees By Device"}
-            mobile={"50"}
-            tablet={"100"}
-            laptop={"100"}
-          />{" "}
+            heading="Attendees by Device"
+            mobile={eventTrafficData?.attendeeByDevice.mobile}
+            tablet={eventTrafficData?.attendeeByDevice.tablet}
+            laptop={eventTrafficData?.attendeeByDevice.laptop}
+          />
+          ;
         </div>
         <div>
-          <NewReturningCustomerPie returningCustomer="35" newCustomer="65" width={220}/>{" "}
+          <NewOrReturningCustomerPie
+            returning={{
+              num: eventTrafficData?.newVsReturning.returning.number || "0",
+              percentage:
+                eventTrafficData?.newVsReturning.returning.percentage || "0%",
+            }}
+            newCustomer={{
+              num: eventTrafficData?.newVsReturning.new.number || "0",
+              percentage:
+                eventTrafficData?.newVsReturning.new.percentage || "0%",
+            }}
+            width={220}
+          />
         </div>
       </div>
     </div>

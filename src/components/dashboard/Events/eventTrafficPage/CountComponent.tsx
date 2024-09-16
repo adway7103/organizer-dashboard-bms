@@ -1,7 +1,7 @@
 interface CountProps {
-  icon: string;
-  heading: string;
-  count: string;
+  icon?: string;
+  heading?: string;
+  count?: string | number;
 }
 
 const CountComponent = ({ icon, heading, count }: CountProps) => {

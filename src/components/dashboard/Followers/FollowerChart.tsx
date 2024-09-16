@@ -16,13 +16,13 @@ const FollowerChart: React.FC<FollowerChartProps> = ({
   const data = Object.entries(followersPerMonth || {}).map(
     ([month, count]) => ({
       name: month,
-      followers: count,
+      value: count,
     })
   );
 
   return (
     <HomeContainerCard className="h-[40vh] shadow-none min-w-[300px] w-full">
-      <AreaChartHome data={data} heading="Followers" type="followers"/>
+      <AreaChartHome data={data} heading="Followers"/>
     </HomeContainerCard>
   );
 };

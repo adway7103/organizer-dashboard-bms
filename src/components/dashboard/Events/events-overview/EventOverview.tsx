@@ -7,8 +7,9 @@ import TextBlast from "../../Affiliates/TextBlast";
 import { TicketTable } from "./TicketsTable";
 import { RecentOrdersTable } from "./RecentOrderTable";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchEventOverview } from "../../../../api/fetchEventOverview";
+import HomeContainerCard from "../../HomeContainerCard";
 
 interface EventOverviewResponse {
   statusCode: number;
@@ -80,11 +81,11 @@ const EventOverview = () => {
   }, [eventId]);
   return (
     <>
-    <h1 className="text-3xl ml-14 font-medium">
-      Event Overview
-    </h1>
+      <h1 className="text-3xl ml-14 font-medium">Event Overview</h1>
       <div className="bg-[#f8f8f8] sm:ml-8 ml-2 mr-0 xl:mr-8 rounded-3xl min-w-[300px] mt-4">
-        <h1 className="text-2xl text-[#9d487b] font-medium ml-14 pt-6">{eventOverviewData?.event.title}</h1>
+        <h1 className="text-2xl text-[#9d487b] font-medium ml-14 pt-6">
+          {eventOverviewData?.event.title}
+        </h1>
         <div className="xl:flex">
           <div className="pt-6 pl-2 max-sm:pr-2 lg:pl-10">
             <EventCard
@@ -111,12 +112,18 @@ const EventOverview = () => {
         </div>
         <div className="grid min-w-[300px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ml-8 mr-28 mt-4">
           <TextBlast className="bg-[#954b7c]" />
-          <TextBlast className="bg-[#6076a0]" heading="Event traffic" />
+          <EventTraficAndShareButton
+            className="bg-[#6076a0]"
+            heading="Event traffic"
+          />
           {/* <TextBlast
             className="bg-[#6076a0]"
             heading="View participant discussion"
           /> */}
-          <TextBlast className="bg-[#6076a0] text-xl" heading="Share" />
+          <EventTraficAndShareButton
+            className="bg-[#6076a0] text-xl"
+            heading="Share"
+          />
         </div>
         {/* <div className="ml-8 mr-28 mt-8 sm:mt-4">
           <TrackEventComponent />
@@ -153,3 +160,24 @@ export default EventOverview;
 //     </div>
 //   );
 // };
+
+const EventTraficAndShareButton = ({ heading, className }: any) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    if (heading === "Event traffic") {
+      navigate("/event-traffic");
+    }
+  };
+  return (
+    <div>
+      <HomeContainerCard className="h-auto sm:h-[10vh] mt-4 shadow-none">
+        <div
+          onClick={handleClick}
+          className={`flex h-16 justify-center items-center pl-4 text-[1.2rem] border border-gray-700 rounded-full text-white cursor-pointer ${className}`}
+        >
+          {heading ? heading : " "}{" "}
+        </div>
+      </HomeContainerCard>
+    </div>
+  );
+};

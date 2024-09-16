@@ -72,4 +72,3 @@ const TextBlast = ({ className, heading }: Props) => {
 };
 
 export default TextBlast;
-console.log("a");

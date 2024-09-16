@@ -12,9 +12,11 @@ import HomeContainerCard from "../HomeContainerCard";
 type AreaChartHomeTypes = {
   data: any;
   heading?: string;
-  type?: "customers" | "followers";
+  // type?: "customers" | "followers" | "sale";
 };
-function AreaChartHome({ data, heading, type  }: AreaChartHomeTypes) {
+function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
+  console.log(data);
+
   return (
     <HomeContainerCard className=" shadow-none col-span-2 md:col-span-1 border border-gray-300 rounded-3xl p-4 xl:h-[50vh]">
       <div className="flex gap-2 items-center text-lg font-medium">
@@ -60,27 +62,35 @@ function AreaChartHome({ data, heading, type  }: AreaChartHomeTypes) {
           </div>
         </div>
       </div>
-      {/* 100% */}
-      <ResponsiveContainer width="90%">
+      <ResponsiveContainer width="100%">
         <AreaChart
           data={data}
           margin={{
             top: 0,
-            right: 0,
-            left: 0,
-            bottom: 0,
+            right: 20,
+            left: -40,
+            bottom: 20,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Area
-            type="monotone"
-            dataKey={type === "customers" ? "customers" : "followers"}
-            stroke="#8884d8"
-            fill="#60769D"
+          <CartesianGrid vertical horizontal={false} strokeOpacity={0.3} />
+          <XAxis
+            dataKey="name"
+            axisLine={false}
+            tick={{ fill: "black", fontSize: 12 }}
+            label={{
+              value: "Month",
+              offset: -20, 
+              position: "insideBottom", 
+              style: {
+                textAnchor: "middle",
+                fill: "black",
+                fontSize: 14,
+              },
+            }}
           />
+          <YAxis axisLine={false} tick={false} />
+          <Tooltip />
+          <Area type="linear" dataKey="value" stroke="#8884d8" fill="#60769D" />
         </AreaChart>
       </ResponsiveContainer>
     </HomeContainerCard>

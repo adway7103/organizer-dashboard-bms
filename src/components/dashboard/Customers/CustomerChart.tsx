@@ -17,12 +17,12 @@ const CustomerChart: React.FC<CustomerChartProps> = ({
 }) => {
   const data = monthlyBookingData.map((item) => ({
     name: `${item.month}`,
-    customers: item.bookings,
+    value: item.bookings,
   }));
 
   return (
     <HomeContainerCard className="h-[40vh] shadow-none min-w-[300px] w-full">
-      <AreaChartHome data={data} heading="Customers" type="customers"/>
+      <AreaChartHome data={data} heading="Customers"/>
     </HomeContainerCard>
   );
 };

@@ -3,45 +3,42 @@ import { Label, Pie, PieChart, Tooltip } from "recharts";
 import { Card, CardContent, CardFooter, CardTitle } from "../../../ui/Card";
 import yellow from "../../../../../public/follower/yellow.png";
 import purple from "../../../../../public/follower/purple.png";
-import extra from "../../../../../public/follower/extra.png";
 
-interface PieChartProps {
-  heading: string;
-  mobile?: { number: number; percentage: string };
-  tablet?: { number: number; percentage: string };
-  laptop?: { number: number; percentage: string };
+interface Props {
+  returning?: { num: string; percentage: string };
+  newCustomer?: { num: string; percentage: string };
+  width: number;
 }
 
-function AttendeesByDevicePie({
-  heading,
-  mobile = { number: 0, percentage: "0.00%" },
-  tablet = { number: 0, percentage: "0.00%" },
-  laptop = { number: 0, percentage: "0.00%" },
-}: PieChartProps) {
-  const chartData = [
-    { device: "Mobile", visitors: mobile.number, fill: "#800080" },
-    { device: "Tablet", visitors: tablet.number, fill: "#FFBB28" },
-    { device: "Laptop", visitors: laptop.number, fill: "#8e854b" },
-  ];
+function NewOrReturningCustomerPie({
+  returning,
+  newCustomer,
+  width = 120,
+}: Props) {
+  const returningNumber = returning ? parseInt(returning.num, 10) : 0;
+  const newCustomerNumber = newCustomer ? parseInt(newCustomer.num, 10) : 0;
 
+  let chartData: any = [
+    { gender: "new", visitors: newCustomerNumber, fill: "#800080" },
+    { gender: "returning", visitors: returningNumber, fill: "#FFBB28" },
+  ];
   const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc: number, curr) => acc + curr.visitors, 0);
-  }, [chartData]);
+    return chartData.reduce((acc: any, curr: any) => acc + curr.visitors, 0);
+  }, []);
   return (
     <Card className="h-auto sm:h-[36vh] bg-transparent shadow-none rounded border border-gray-300 flex flex-col justify-between sm:justify-center items-center max-sm:py-4">
       <div className="sm:col-span-1">
         <div className="flex justify-center items-center">
-          {" "}
-          <CardTitle>{heading}</CardTitle>
+          <CardTitle>New or returning customers</CardTitle>
         </div>{" "}
         <CardContent className="">
           <div className="mx-auto flex justify-center items-center">
-            <PieChart width={220} height={120}>
+            <PieChart width={width} height={120}>
               <Tooltip cursor={false} />
               <Pie
                 data={chartData}
                 dataKey="visitors"
-                nameKey="device"
+                nameKey="gender"
                 innerRadius={50}
                 outerRadius={56}
                 strokeWidth={0}
@@ -79,30 +76,21 @@ function AttendeesByDevicePie({
         <CardFooter className="">
           <div className="flex items-center justify-between gap-8">
             <div className="text-xs">
-              <div className="text-center">Mobile</div>
+              <div className="text-center">Returning</div>
               <div className="flex items-center">
                 <span>
                   <img src={yellow} alt="" className="pr-1" />
                 </span>
-                {mobile.percentage}{" "}
+                {returning?.percentage}{" "}
               </div>
             </div>
             <div className="text-xs">
-              <div className="text-center">Tablet</div>
+              <div className="text-center">New</div>
               <div className="flex items-center">
                 <span>
                   <img src={purple} alt="" className="pr-1" />
                 </span>
-                {tablet.percentage}{" "}
-              </div>
-            </div>
-            <div className="text-xs">
-              <div className="text-center">Laptop</div>
-              <div className="flex items-center justify-center">
-                <span>
-                  <img src={extra} alt="" className="pr-1" />
-                </span>
-                {laptop.percentage}{" "}
+                {newCustomer?.percentage}{" "}
               </div>
             </div>
           </div>
@@ -112,4 +100,4 @@ function AttendeesByDevicePie({
   );
 }
 
-export default AttendeesByDevicePie;
+export default NewOrReturningCustomerPie;
