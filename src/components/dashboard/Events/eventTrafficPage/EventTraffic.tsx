@@ -5,7 +5,7 @@ import img3 from "../../../../../public/icons.png";
 import img4 from "../../../../../public/conversionRate.png";
 import CountComponent from "./CountComponent";
 import TrafficChart from "./TrafficChart";
-import PageVisitByChannels from "./PageVisitByChannels";
+// import PageVisitByChannels from "./PageVisitByChannels";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
@@ -188,9 +188,9 @@ const EventTraffic = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-1">
+          {/* <div className="col-span-1">
             <PageVisitByChannels />
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="sm:flex gap-x-8 max-sm:space-y-8">
