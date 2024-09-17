@@ -42,7 +42,6 @@ const CE_Page2: React.FC = () => {
 
   const handleOnSubmit = async (
     e: any,
-    redirectPath: string,
     buttonType: string
   ) => {
     e.preventDefault();
@@ -76,7 +75,7 @@ const CE_Page2: React.FC = () => {
 
     try {
       await updateEvent(data, eventId);
-      navigate(redirectPath);
+      navigate(`/live-events`);
       toast.success("Event published successfully!");
       setLoading(false);
       setLoadingButton(null);
@@ -249,7 +248,7 @@ const CE_Page2: React.FC = () => {
         <div>
           <button
             className={`px-10 flex flex-row items-center justify-center gap-4 bg-[#244f7a] hover:bg-black text-white font-bold py-2 rounded cursor-pointer}`}
-            onClick={(e) => handleOnSubmit(e, "/events", "nextPage")}
+            onClick={(e) => handleOnSubmit(e, "/events")}
           >
             PUBLISH EVENT{" "}
             {loading && <Loader2 className="size-4 animate-spin" />}
