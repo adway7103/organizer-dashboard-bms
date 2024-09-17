@@ -261,7 +261,7 @@ const EditEventForm: React.FC = () => {
     try {
       await updateEvent(eventData, eventId);
       toast.success("Event updated successfully!");
-      navigate(`/live-events`);
+      navigate(`/edit/2/${eventId}`);
     } catch (error: any) {
       console.error(error);
 
@@ -799,7 +799,7 @@ const EditEventForm: React.FC = () => {
             className={`flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-bold py-2 px-10 rounded`}
             onClick={(e) => handleOnSubmit(e)}
           >
-            UPDATE EVENT
+            NEXT PAGE
             {loading && <Loader2 className="size-4 animate-spin" />}
           </button>
         </div>
