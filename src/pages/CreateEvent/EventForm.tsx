@@ -157,20 +157,22 @@ const EventForm: React.FC = () => {
   };
 
   const validateForm = () => {
-    return (
-      eventInfo.title &&
-      eventInfo.eventCategories !== null &&
-      eventInfo.description &&
-      selectedFile &&
-      eventInfo.eventStartDate &&
-      eventInfo.eventStartTime &&
-      eventInfo.eventEndDate &&
-      eventInfo.eventEndTime &&
-      eventInfo.genres &&
-      eventInfo.cheapestTicket &&
-      eventInfo.venueAddress &&
-      eventInfo.eventMode
-    );
+    const errors = [];
+
+    if (!eventInfo.title) errors.push("Title");
+    if (eventInfo.eventCategories === null) errors.push("Event Categories");
+    if (!eventInfo.description) errors.push("Description");
+    if (!selectedFile) errors.push("Event Image");
+    if (!eventInfo.eventStartDate) errors.push("Start Date");
+    if (!eventInfo.eventStartTime) errors.push("Start Time");
+    if (!eventInfo.eventEndDate) errors.push("End Date");
+    if (!eventInfo.eventEndTime) errors.push("End Time");
+    if (!eventInfo.genres) errors.push("Genres");
+    if (!eventInfo.cheapestTicket) errors.push("Cheapest Ticket");
+    if (!eventInfo.venueAddress) errors.push("Venue Address");
+    if (!eventInfo.eventMode) errors.push("Event Mode");
+
+    return errors;
   };
 
   const [profileData, setProfileData] = useState<OrganizerProfile>();
@@ -194,9 +196,10 @@ const EventForm: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setLoadingButton(buttonType);
+    const errors = validateForm();
 
-    if (!validateForm()) {
-      toast.error("All fields are required.");
+    if (errors.length > 0) {
+      toast.error(`${errors[0]} is required.`);
       setLoading(false);
       setLoadingButton(null);
       return;
