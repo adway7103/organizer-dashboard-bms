@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export const textBlast = async (data: { subject: string; description: string }) => {
   const token = localStorage.getItem("accessToken");
-  console.log("token", token);
 
   try {
     const response = await axios.post(
@@ -17,7 +16,7 @@ export const textBlast = async (data: { subject: string; description: string }) 
         },
       }
     );
-    console.log(response);
+    return response
   } catch (error) {
     console.error("Error sending text blast:", error);
     throw error;
