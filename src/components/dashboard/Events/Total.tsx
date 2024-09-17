@@ -10,9 +10,9 @@ interface PropsType {
 }
 const Total = ({ heading }: PropsType) => {
   return (
-    <HomeContainerCard className="h-auto border border-gray-300 rounded-3xl min-w-[300px] sm:pr-6">
+    <HomeContainerCard className="h-auto border border-gray-300 rounded-3xl min-w-[300px] ">
       <div className="grid grid-cols-1 lg:grid-cols-2">
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center lg:mt-4">
           <AffiliatePieChart />
         </div>
         <div className="xl:px-5 flex flex-col justify-center items-center pb-2 gap-y-4">
