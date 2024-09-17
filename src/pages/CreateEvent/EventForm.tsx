@@ -680,8 +680,8 @@ const EventForm: React.FC = () => {
                     type="radio"
                     id="refundOption1"
                     name="refundTimeframe"
-                    value="24h"
-                    checked={refundTimeframe === "24h"}
+                    value="no"
+                    checked={refundTimeframe === "no"}
                     onChange={(e) => {
                       setRefundTimeframe(e.target.value);
                       setEventInfo({
@@ -697,7 +697,7 @@ const EventForm: React.FC = () => {
                     className="follow rounded w-6 h-4"
                   />
                   <label htmlFor="refundOption1" className="text-sm ml-3">
-                    24h{" "}
+                    No Refunds{" "}
                   </label>
                 </div>
 
