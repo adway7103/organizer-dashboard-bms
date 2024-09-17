@@ -15,6 +15,7 @@ interface EventCardProps {
   shareUrl: string;
   onClick: () => void;
   handleDelete: () => void;
+  handleTurnLiveButton: () => void;
 }
 
 const EventCard = ({
@@ -29,9 +30,12 @@ const EventCard = ({
   shareUrl,
   onClick,
   handleDelete,
+  handleTurnLiveButton,
 }: EventCardProps) => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [showTurnLivePopup, setShowTurnLivePopup] = useState<boolean>(false);
+  const isDraftEvents = location.pathname.includes("/drafted-events");
 
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -49,6 +53,21 @@ const EventCard = ({
     setShowPopup(false);
   };
 
+  const handleTurnLiveClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowTurnLivePopup(true);
+  };
+
+  const handleConfirmTurnLive = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    handleTurnLiveButton();
+  };
+
+  const handleCancelTurnLive = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowTurnLivePopup(false);
+  };
+
   const handleEditButton = (e: React.MouseEvent) => {
     e.stopPropagation();
     navigate(`/edit/${eventId}`);
@@ -56,7 +75,7 @@ const EventCard = ({
 
   const handleTrafficButton = (e: React.MouseEvent) => {
     e.stopPropagation();
-    navigate("/event-traffic");
+    navigate(`/event-traffic/${eventId}`);
   };
 
   const handlePreviewButton = (e: React.MouseEvent) => {
@@ -147,7 +166,7 @@ const EventCard = ({
         </div>
         <div className="flex space-x-1 mt-2 text-sm">
           <div
-            className="border bg-[#ededed] px-4 py-1 rounded-full"
+            className="border bg-[#ededed] px-4 py-1 rounded-full hover:shadow-lg"
             onClick={handleEditButton}
           >
             <div className="flex gap-1">
@@ -170,17 +189,44 @@ const EventCard = ({
               </div>
             </div>
           </div>
-          <div
-            className="border bg-[#ededed] px-4 py-1 rounded-full"
-            onClick={handleTrafficButton}
-          >
-            <div className="flex gap-1">
-              Traffic
-              <div>
-                <img src={img} alt="" className="flex items-center size-4" />
+          {!isDraftEvents ? (
+            <div
+              className="border bg-[#ededed] px-4 py-1 rounded-full hover:shadow-lg"
+              onClick={handleTrafficButton}
+            >
+              <div className="flex gap-1">
+                Traffic
+                <div>
+                  <img src={img} alt="" className="flex items-center size-4" />
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div
+              className="border bg-[#ededed] px-4 py-1 rounded-full  hover:shadow-lg"
+              onClick={handleTurnLiveClick}
+            >
+              <div className="flex gap-1">
+                Turn Live
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="gray"
+                    className="size-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9.348 14.652a3.75 3.75 0 0 1 0-5.304m5.304 0a3.75 3.75 0 0 1 0 5.304m-7.425 2.121a6.75 6.75 0 0 1 0-9.546m9.546 0a6.75 6.75 0 0 1 0 9.546M5.106 18.894c-3.808-3.807-3.808-9.98 0-13.788m13.788 0c3.808 3.807 3.808 9.98 0 13.788M12 12h.008v.008H12V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                    />
+                  </svg>{" "}
+                </div>
+              </div>
+            </div>
+          )}
           {/* <div className="border bg-[#ededed] px-4 py-1 rounded-full">
             <div className="flex gap-1">
               Track
@@ -245,6 +291,33 @@ const EventCard = ({
               </button>
               <button
                 onClick={handleCancelDelete}
+                className="bg-gray-300 text-black px-4 py-2 rounded-lg hover:bg-gray-400"
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showTurnLivePopup && (
+        <div
+          className="fixed -inset-6 flex items-center justify-center bg-black bg-opacity-50"
+          onClick={handleCancelTurnLive}
+        >
+          <div className="bg-white p-4 rounded-lg shadow-lg">
+            <p className="text-lg font-semibold mb-4">
+              Are you sure you want to Turn this event Live?
+            </p>
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={handleConfirmTurnLive}
+                className="bg-[#244f7a] text-white px-4 py-2 rounded-lg hover:bg-black hover:text-white"
+              >
+                Yes
+              </button>
+              <button
+                onClick={handleCancelTurnLive}
                 className="bg-gray-300 text-black px-4 py-2 rounded-lg hover:bg-gray-400"
               >
                 No
