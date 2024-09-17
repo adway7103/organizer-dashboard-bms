@@ -34,6 +34,7 @@ import Participants from "../components/dashboard/Events/participants/Participan
 import Sales from "../components/dashboard/Events/sales/Sales";
 import EditEvent from "../pages/CreateEvent/EditEvent";
 import EventTraffic from "../components/dashboard/Events/eventTrafficPage/EventTraffic";
+import EditEvent2 from "../pages/CreateEvent/EditEvent2";
 
 export const router = createBrowserRouter([
   {
@@ -126,6 +127,10 @@ export const router = createBrowserRouter([
           {
             path: "/edit/:eventId",
             element: <EditEvent />,
+          },
+          {
+            path: "/edit/2/:eventId",
+            element: <EditEvent2 />,
           },
           {
             path: "/event-traffic/:eventId",
