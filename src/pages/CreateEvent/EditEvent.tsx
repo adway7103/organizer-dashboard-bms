@@ -39,7 +39,6 @@ const EditEventForm: React.FC = () => {
     { categoryId: string; categoryName: string }[]
   >([]);
   console.log(selectedFile);
-  
 
   const [trailerUrl, setTrailerUrl] = useState<any[]>([]);
   const [accordionOpen, setAccordionOpen] = useState(false);
@@ -83,13 +82,13 @@ const EditEventForm: React.FC = () => {
               ? dayjs(fetchedEvent.eventStart).startOf("day")
               : null,
             eventStartTime: fetchedEvent.eventStart
-              ? dayjs(fetchedEvent.eventStart).startOf("day")
+              ? dayjs(fetchedEvent.eventStart)
               : null,
             eventEndDate: fetchedEvent.eventEnd
               ? dayjs(fetchedEvent.eventEnd).startOf("day")
               : null,
             eventEndTime: fetchedEvent.eventEnd
-              ? dayjs(fetchedEvent.eventEnd).startOf("day")
+              ? dayjs(fetchedEvent.eventEnd)
               : null,
             eventMode: fetchedEvent.eventMode || "",
             venueAddress: fetchedEvent.venueAddress || {
