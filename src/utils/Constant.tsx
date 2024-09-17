@@ -15,22 +15,22 @@ export const SidebarNavs = [
   // },
   {
     name: "Profile",
-    icon: <RiUserSettingsFill />,
+    icon: <RiUserSettingsFill size={24}/>,
     link: "/profile",
   },
   {
     name: "Events",
-    icon: <SlCalender />,
+    icon: <SlCalender size={22}/>,
     link: "/events",
   },
   {
     name: "Dashboard",
-    icon: <RxDashboard />,
+    icon: <RxDashboard size={24}/>,
     link: "/dashboard",
   },
   {
     name: "Payouts",
-    icon: <GiMoneyStack />,
+    icon: <GiMoneyStack size={24}/>,
     link: "payouts",
   },
   // {
@@ -40,12 +40,12 @@ export const SidebarNavs = [
   // },
   {
     name: "Followers",
-    icon: <HiUserGroup />,
+    icon: <HiUserGroup size={24}/>,
     link: "/followers",
   },
   {
     name: "Customers",
-    icon: <PiUsersFourLight />,
+    icon: <PiUsersFourLight size={24}/>,
     link: "/customers",
   },
   // {
@@ -65,7 +65,7 @@ export const SidebarNavs = [
   // },
   {
     name: "Logout",
-    icon: <IoLogOutOutline />,
+    icon: <IoLogOutOutline size={27}/>,
     link: "/logout",
   },
 ];
