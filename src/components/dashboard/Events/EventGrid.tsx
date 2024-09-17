@@ -19,9 +19,14 @@ interface EventData {
 interface EventGridProps {
   events: EventData[];
   handleDelete: (eventId: string) => void;
+  handleTurnLiveButton: (eventId: string) => void;
 }
 
-const EventGrid = ({ events, handleDelete }: EventGridProps) => {
+const EventGrid = ({
+  events,
+  handleDelete,
+  handleTurnLiveButton,
+}: EventGridProps) => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
@@ -76,6 +81,7 @@ const EventGrid = ({ events, handleDelete }: EventGridProps) => {
             ticketsSold={event.ticketsSold}
             onClick={() => handleEventClick(event.eventId)}
             handleDelete={() => handleDelete(event.eventId)}
+            handleTurnLiveButton={() => handleTurnLiveButton(event.eventId)}
           />
         ))}
       </div>
