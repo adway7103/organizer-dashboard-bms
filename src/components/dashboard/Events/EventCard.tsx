@@ -61,6 +61,7 @@ const EventCard = ({
   const handleConfirmTurnLive = (e: React.MouseEvent) => {
     e.stopPropagation();
     handleTurnLiveButton();
+    setShowTurnLivePopup(false);
   };
 
   const handleCancelTurnLive = (e: React.MouseEvent) => {
