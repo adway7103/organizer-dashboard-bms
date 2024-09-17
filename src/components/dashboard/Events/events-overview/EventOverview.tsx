@@ -113,6 +113,7 @@ const EventOverview = () => {
         <div className="grid min-w-[300px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ml-8 mr-28 mt-4">
           <TextBlast className="bg-[#954b7c]" />
           <EventTraficAndShareButton
+            eventId={eventId}
             className="bg-[#6076a0]"
             heading="Event traffic"
           />
@@ -161,11 +162,13 @@ export default EventOverview;
 //   );
 // };
 
-const EventTraficAndShareButton = ({ heading, className }: any) => {
+const EventTraficAndShareButton = ({ heading, className, eventId }: any) => {
   const navigate = useNavigate();
   const handleClick = () => {
     if (heading === "Event traffic") {
-      navigate("/event-traffic");
+      console.log("eventId", eventId);
+
+      navigate(`/event-traffic/${eventId}`);
     }
   };
   return (
