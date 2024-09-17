@@ -254,7 +254,7 @@ const EventCard = ({
           className="flex text-white text-lg space-x-2 mt-3"
           onClick={handlePreviewButton}
         >
-          <div className="border bg-[#000000] px-8 py-1 rounded-md hover:shadow-lg">
+          <div className="border bg-[#244f7a] px-8 py-1 rounded-md hover:shadow-lg">
             Preview
           </div>
           <div className="" onClick={(e) => e.stopPropagation()}>
