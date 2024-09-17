@@ -5,6 +5,8 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
+import { textBlast } from "../../../api/textBlastApi";
+import toast from "react-hot-toast";
 
 interface Props {
   className?: string;
@@ -48,8 +50,16 @@ const TextBlast = ({ className, heading, classStyle }: Props) => {
           <div>
             <div className="text-xl font-medium mb-6">Text Blast</div>
             <div className="flex gap-1 sm:gap-6 max-sm:text-xs justify-center items-center">
-              <SendComponent heading={"Send via Email"} />
-              <SendComponent heading={"Send via whatsapp"} />
+              <SendComponent
+                heading={"Send via Email"}
+                type="email"
+                closeParentDialog={handleClose}
+              />
+              <SendComponent
+                heading={"Send via WhatsApp"}
+                type="whatsapp"
+                closeParentDialog={handleClose}
+              />
             </div>
           </div>
         </DialogContent>
@@ -68,11 +78,22 @@ const TextBlast = ({ className, heading, classStyle }: Props) => {
 
 export default TextBlast;
 
-const SendComponent = ({ heading }: any) => {
+interface SendComponentProps {
+  heading: string;
+  type: "email" | "whatsapp";
+  closeParentDialog: () => void;
+}
+
+const SendComponent = ({
+  heading,
+  type,
+  closeParentDialog,
+}: SendComponentProps) => {
   const [open, setOpen] = React.useState(false);
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
-  console.log(subject, description);
+  const [attendeesChecked, setAttendeesChecked] = useState(false);
+  const [followersChecked, setFollowersChecked] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -80,6 +101,23 @@ const SendComponent = ({ heading }: any) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleSend = async () => {
+    try {
+      if (type === "email") {
+        await textBlast({ subject, description });
+        handleClose();
+        closeParentDialog();
+        toast.success("Text Blast sent successfully");
+      } else if (type === "whatsapp") {
+        console.log("Sending WhatsApp:", { subject, description });
+      }
+      handleClose();
+    } catch (error) {
+      console.error("Error sending text blast:", error);
+      toast.error("Failed to send the text blast. Please try again.");
+    }
   };
 
   return (
@@ -119,10 +157,6 @@ const SendComponent = ({ heading }: any) => {
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "10px", // Increase the border-radius
-                      border: "1px solid gray", // Thicker and darker border
-                      "& fieldset": {
-                        borderColor: "gray", // Border color
-                      },
                       "&:hover fieldset": {
                         borderColor: "black", // Border color on hover
                       },
@@ -153,10 +187,6 @@ const SendComponent = ({ heading }: any) => {
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "10px", // Increase the border-radius
-                      border: "1px solid gray", // Thicker and darker border
-                      "& fieldset": {
-                        borderColor: "gray", // Border color
-                      },
                       "&:hover fieldset": {
                         borderColor: "black", // Border color on hover
                       },
@@ -166,6 +196,24 @@ const SendComponent = ({ heading }: any) => {
                     },
                   }}
                 />
+              </div>
+              <div className="flex gap-6 items-center">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={attendeesChecked}
+                    onChange={() => setAttendeesChecked(!attendeesChecked)}
+                  />
+                  Attendees
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={followersChecked}
+                    onChange={() => setFollowersChecked(!followersChecked)}
+                  />
+                  Followers
+                </label>
               </div>
             </div>
           </div>
@@ -179,7 +227,7 @@ const SendComponent = ({ heading }: any) => {
           </button>
           <button
             className="bg-black text-white px-4 py-2 rounded-lg"
-            onClick={handleClose}
+            onClick={handleSend}
           >
             Send
           </button>

@@ -103,7 +103,7 @@ const AddTicket: React.FC = () => {
     return (
       formData.categoryName &&
       formData.totalSeats &&
-      formData.ticketType && 
+      formData.ticketType &&
       formData.ticketSaleType
       // formData.saleStartsDate &&
       // formData.saleStartsTime &&
@@ -113,6 +113,18 @@ const AddTicket: React.FC = () => {
       // formData.saleEnds
     );
   };
+
+  const isLiveEvent = location.pathname.startsWith("/live-events/");
+  const isPastEvent = location.pathname.startsWith("/past-events/");
+  const isDraftEvent = location.pathname.startsWith("/drafted-events/");
+
+  const baseEventUrl = isLiveEvent
+    ? "/live-events"
+    : isPastEvent
+    ? "/past-events"
+    : isDraftEvent
+    ? "/drafted-events"
+    : "";
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -155,7 +167,7 @@ const AddTicket: React.FC = () => {
     try {
       await createTicket(ticketData);
       toast.success("Ticket created successfully:");
-      navigate(`/live-events/tickets/${eventId}`);
+      navigate(`${baseEventUrl}/tickets/${eventId}`);
       setLoading(false);
     } catch (error: any) {
       const errorMessage =
@@ -383,7 +395,9 @@ const AddTicket: React.FC = () => {
           <div className="flex items-center space-x-6">
             <DatePicker
               value={formData.saleEndsDate}
-              onChange={(newValue) => handleDateChange(newValue, "saleEndsDate")}
+              onChange={(newValue) =>
+                handleDateChange(newValue, "saleEndsDate")
+              }
             />
             <p className="font-medium">at</p>
             <TimePicker
@@ -459,7 +473,7 @@ const AddTicket: React.FC = () => {
           <ASIndividual formData={formData} handleChange={handleChange} />
         )}
         <div className="flex gap-4">
-          <Link to={`/live-events/tickets/${eventId}`}>
+          <Link to={`${baseEventUrl}/tickets/${eventId}`}>
             {" "}
             <button className="flex items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-4 rounded">
               CANCEL
