@@ -6,23 +6,23 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import TextField from "@mui/material/TextField";
 import {
-  InputLabel,
-  MenuItem,
-  Select,
+  // InputLabel,
+  // MenuItem,
+  // Select,
   Dialog,
   DialogContent,
   DialogTitle,
 } from "@mui/material";
 
 const AddVoucher: React.FC = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedTickets, setSelectedTickets] = useState<string[]>([]);
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const [selectedTickets, setSelectedTickets] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
 
-  const handleSelectChange = (event: any) => {
-    setSelectedTickets(event.target.value as string[]);
-    setDropdownOpen(false);
-  };
+  // const handleSelectChange = (event: any) => {
+  //   setSelectedTickets(event.target.value as string[]);
+  //   setDropdownOpen(false);
+  // };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -115,8 +115,26 @@ const AddVoucher: React.FC = () => {
                 }}
               />
             </div>
+            <div className="grid gap-4">
+              <TextField
+                id="minCartValue"
+                name="minCartValue"
+                label="Minimum cart value"
+                variant="outlined"
+                type="number"
+                fullWidth
+                sx={{
+                  "& .MuiInputBase-root": {
+                    height: "56px",
+                  },
+                  "& .MuiOutlinedInput-input": {
+                    padding: "16px",
+                  },
+                }}
+              />
+            </div>
 
-            <div>
+            {/* <div>
               <InputLabel id="category-label">Ticket Name</InputLabel>
               <Select
                 labelId="category-label"
@@ -162,7 +180,7 @@ const AddVoucher: React.FC = () => {
                 <MenuItem value="Early Bird">Early Bird</MenuItem>
                 <MenuItem value="Group">Group</MenuItem>
               </Select>
-            </div>
+            </div> */}
 
             <div className="grid gap-4">
               <TextField
