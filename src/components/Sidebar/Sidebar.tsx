@@ -19,17 +19,20 @@ const Sidebar = ({ isVisible }: any) => {
 
   const isLiveEvent = location.pathname.startsWith("/live-events/");
   const isPastEvent = location.pathname.startsWith("/past-events/");
+  const isDraftEvent = location.pathname.startsWith("/drafted-events/");
 
   const baseEventUrl = isLiveEvent
     ? "/live-events"
     : isPastEvent
     ? "/past-events"
+    : isDraftEvent
+    ? "/drafted-events"
     : "";
 
   useEffect(() => {
     setAccordionOpen(false);
   }, [baseEventUrl]);
-  
+
   const eventsTabSidebar = [
     {
       name: "Dashboard",
@@ -101,7 +104,7 @@ const Sidebar = ({ isVisible }: any) => {
             )}
             {item.name === "Events" && isAccordionOpen && (
               <div className="bg-[#cbd0d6] rounded-b-3xl flex flex-col pl-1.5 sm:pl-6 md:pl-14 gap-3 pt-3 pb-3 cursor-pointer ">
-                <Link to={`/drafted-events`}>Drafts</Link>
+                <Link to={`drafted-events`}>Drafts</Link>
                 <Link to={`live-events`}>Live</Link>
                 <Link to={`past-events`}>Past</Link>
               </div>
