@@ -39,6 +39,13 @@ interface EventOverviewResponse {
     price: string;
     date: string;
   }[];
+  checklist:{
+    atLeastOneTicket:boolean;
+    eventLive:boolean;
+    connectRepNetwork:boolean;
+    promoCodeCreated:boolean;
+    trackingLinkCreated:boolean;
+  }
 }
 
 const EventOverview = () => {
@@ -87,7 +94,7 @@ const EventOverview = () => {
           {eventOverviewData?.event.title}
         </h1>
         <div className="xl:flex">
-          <div className="pt-6 pl-2 max-sm:pr-2 lg:pl-10">
+          <div className="pt-10 pl-2 max-sm:pr-2 lg:pl-10">
             <EventCard
               posterUrl={eventOverviewData?.event.posterUrl}
               city={eventOverviewData?.event.city}
@@ -97,7 +104,7 @@ const EventOverview = () => {
             />
           </div>
           <div className="max-sm:pl-4 max-sm:mt-4 p-2 lg:p-10 pr-2">
-            <CheckListCard />
+            <CheckListCard eventOverviewData={eventOverviewData?.checklist}/>
           </div>
         </div>
         <div className="flex flex-wrap max-sm:mt-4 gap-6 p-2 ml-8 mr-8">
