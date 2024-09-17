@@ -30,7 +30,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ item, isActive, onClick }) => {
             <img
               src={item.imgSrc}
               alt={item.name}
-              className="sidebar-img w-6 h-5"
+              className="sidebar-img size-7"
             />
           ) : (
             <span className="sidebar-navigations text-xl">{item.icon}</span>
@@ -50,7 +50,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ item, isActive, onClick }) => {
             <img
               src={item.imgSrc}
               alt={item.name}
-              className="sidebar-img w-6 h-5"
+              className="sidebar-img"
             />
           ) : (
             <span className="sidebar-navigations text-xl">{item.icon}</span>
