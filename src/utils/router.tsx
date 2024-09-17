@@ -128,7 +128,7 @@ export const router = createBrowserRouter([
             element: <EditEvent />,
           },
           {
-            path: "/event-traffic",
+            path: "/event-traffic/:eventId",
             element: <EventTraffic />,
           },
           {
@@ -201,6 +201,43 @@ export const router = createBrowserRouter([
               },
               {
                 path: "/past-events/sales/:eventId",
+                element: <Sales />,
+              },
+            ],
+          },
+          {
+            path: "/drafted-events",
+            children: [
+              {
+                path: "",
+                element: <EventHome />,
+              },
+              {
+                path: "/drafted-events/event-overview/:eventId",
+                element: <EventOverview />,
+              },
+              {
+                path: "/drafted-events/tickets/:eventId",
+                element: <Tickets />,
+              },
+              {
+                path: "/drafted-events/vouchers/:eventId",
+                element: <Vouchers />,
+              },
+              {
+                path: "/drafted-events/addticket/:eventId",
+                element: <AddTicket />,
+              },
+              {
+                path: "/drafted-events/edit-ticket/:eventId/:matrixId/:id",
+                element: <EditTicket />,
+              },
+              {
+                path: "/drafted-events/participants/:eventId",
+                element: <Participants />,
+              },
+              {
+                path: "/drafted-events/sales/:eventId",
                 element: <Sales />,
               },
             ],
