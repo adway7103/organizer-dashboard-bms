@@ -75,11 +75,11 @@ const Sidebar = ({ isVisible }: any) => {
 
   return (
     <div
-      className={`sidebar md:text-lg ml-2 h-[90%] py-5 md:px-8 md:py-5 flex flex-col space-y-2 transition-transform duration-300 ease-in-out sm:w-[16vw] md:w-[260px] mt-3 ${
+      className={`sidebar md:text-lg md:ml-2 h-[90%] py-5 md:px-8 md:py-5 flex flex-col space-y-2 transition-transform duration-300 ease-in-out sm:w-[16vw] md:w-[260px] mt-3 ${
         isVisible || window.innerWidth >= 768
           ? "translate-x-0"
           : "-translate-x-full"
-      }bg-black bg-opacity-50`}
+      }`}
     >
       {currentNavs.map((item, index) => {
         const isActive = location.pathname === item.link;
