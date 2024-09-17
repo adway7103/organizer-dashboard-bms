@@ -28,6 +28,18 @@ export default function TicketDailog({
   };
 
 
+  const isLiveEvent = location.pathname.startsWith("/live-events/");
+  const isPastEvent = location.pathname.startsWith("/past-events/");
+  const isDraftEvent = location.pathname.startsWith("/drafted-events/");
+
+  const baseEventUrl = isLiveEvent
+    ? "/live-events"
+    : isPastEvent
+    ? "/past-events"
+    : isDraftEvent
+    ? "/drafted-events"
+    : "";
+
   const handleDelete = async () => {
     const token = localStorage.getItem("accessToken");
     try {
@@ -98,7 +110,7 @@ export default function TicketDailog({
         }}
       >
         <Link
-          to={`/live-events/edit-ticket/${eventId}/${matrixId}/${id}`}
+          to={`${baseEventUrl}/edit-ticket/${eventId}/${matrixId}/${id}`}
           state={{ from: location.pathname }}
         >
           <MenuItem>Edit Ticket</MenuItem>
