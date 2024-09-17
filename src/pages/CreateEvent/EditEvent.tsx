@@ -64,6 +64,18 @@ const EditEventForm: React.FC = () => {
       try {
         const fetchedEvent = await fetchEvent({ eventId });
 
+        let venueLocationFormatted;
+
+        if (Array.isArray(fetchedEvent.venueLocation?.coordinates)) {
+          venueLocationFormatted = {
+            latitude: fetchedEvent.venueLocation.coordinates[1], // latitude
+            longitude: fetchedEvent.venueLocation.coordinates[0], // longitude
+          };
+        } else {
+          // Assuming it's already in object format
+          venueLocationFormatted = fetchedEvent.venueLocation;
+        }
+
         if (fetchedEvent) {
           setEventInfo({
             organizer: fetchedEvent.organizer?._id || "",
@@ -97,10 +109,7 @@ const EditEventForm: React.FC = () => {
               country: "",
               zipcode: "",
             },
-            venueLocation: fetchedEvent.venueLocation?.coordinates || {
-              latitude: 0,
-              longitude: 0,
-            },
+            venueLocation: venueLocationFormatted, // Use formatted venueLocation
             refundPolicy: {
               refundTimeframe: fetchedEvent.refundPolicy?.refundTimeframe || "",
               policyType: fetchedEvent.refundPolicy?.policyType || false,
@@ -220,6 +229,7 @@ const EditEventForm: React.FC = () => {
       setLoading(false);
       return;
     }
+    const venueLocationFormatted = eventInfo.venueLocation;
 
     const eventData: EventInfo = {
       title: eventInfo.title,
@@ -235,10 +245,7 @@ const EditEventForm: React.FC = () => {
       eventEnd,
       eventMode: eventInfo.eventMode,
       venueAddress: eventInfo.venueAddress,
-      venueLocation: {
-        latitude: eventInfo.venueLocation?.latitude ?? 0,
-        longitude: eventInfo.venueLocation?.longitude ?? 0,
-      },
+      venueLocation: venueLocationFormatted,
       refundPolicy: {
         refundTimeframe: refundTimeframe || "24h",
         policyType: eventInfo.refundPolicy.policyType,
