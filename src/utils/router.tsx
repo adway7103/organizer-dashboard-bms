@@ -36,6 +36,7 @@ import EditEvent from "../pages/CreateEvent/EditEvent";
 import EventTraffic from "../components/dashboard/Events/eventTrafficPage/EventTraffic";
 import EditEvent2 from "../pages/CreateEvent/EditEvent2";
 import GuestList from "../components/dashboard/Events/guest-list/GuestList";
+import EntryScanner from "../components/dashboard/Events/entry-scanner/EntryScanner";
 
 export const router = createBrowserRouter([
   {
@@ -176,6 +177,10 @@ export const router = createBrowserRouter([
                 path: "/live-events/guest-list/:eventId",
                 element: <GuestList />,
               },
+              {
+                path: "/live-events/enrty-scanner/:eventId",
+                element: <EntryScanner />,
+              },
             ],
           },
           {
@@ -217,6 +222,10 @@ export const router = createBrowserRouter([
                 path: "/past-events/guest-list/:eventId",
                 element: <GuestList />,
               },
+              {
+                path: "/past-events/enrty-scanner/:eventId",
+                element: <EntryScanner />,
+              },
             ],
           },
           {
@@ -257,6 +266,10 @@ export const router = createBrowserRouter([
               {
                 path: "/drafted-events/guest-list/:eventId",
                 element: <GuestList />,
+              },
+              {
+                path: "/drafted-events/enrty-scanner/:eventId",
+                element: <EntryScanner />,
               },
             ],
           },

@@ -12,6 +12,7 @@ import Ticket from "../../../public/sidebar/Ticket.png";
 import { PiTicketFill } from "react-icons/pi";
 import { IoLogOutOutline } from "react-icons/io5";
 import { LuClipboardList } from "react-icons/lu";
+import { LuScanLine } from "react-icons/lu";
 
 const Sidebar = ({ isVisible }: any) => {
   const location = useLocation();
@@ -69,6 +70,11 @@ const Sidebar = ({ isVisible }: any) => {
       name: "Guestlist",
       icon: <LuClipboardList size={24} />,
       link: `${baseEventUrl}/guest-list/${eventId}`,
+    },
+    {
+      name: "Entry scanner",
+      icon: <LuScanLine size={24} />,
+      link: `${baseEventUrl}/enrty-scanner/${eventId}`,
     },
     {
       name: "Logout",
