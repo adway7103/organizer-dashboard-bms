@@ -11,6 +11,7 @@ import Group from "../../../public/sidebar/Group.png";
 import Ticket from "../../../public/sidebar/Ticket.png";
 import { PiTicketFill } from "react-icons/pi";
 import { IoLogOutOutline } from "react-icons/io5";
+import { LuClipboardList } from "react-icons/lu";
 
 const Sidebar = ({ isVisible }: any) => {
   const location = useLocation();
@@ -36,7 +37,7 @@ const Sidebar = ({ isVisible }: any) => {
   const eventsTabSidebar = [
     {
       name: "Dashboard",
-      icon: <RxDashboard size={24}/>,
+      icon: <RxDashboard size={24} />,
       link: "/dashboard",
     },
     {
@@ -51,7 +52,7 @@ const Sidebar = ({ isVisible }: any) => {
     },
     {
       name: "Participants",
-      icon: <BsPeople size={24}/>,
+      icon: <BsPeople size={24} />,
       link: `${baseEventUrl}/participants/${eventId}`,
     },
     // {
@@ -61,12 +62,17 @@ const Sidebar = ({ isVisible }: any) => {
     // },
     {
       name: "Sales",
-      icon: <PiTicketFill size={24}/>,
+      icon: <PiTicketFill size={24} />,
       link: `${baseEventUrl}/sales/${eventId}`,
     },
     {
+      name: "Guestlist",
+      icon: <LuClipboardList size={24} />,
+      link: `${baseEventUrl}/guest-list/${eventId}`,
+    },
+    {
       name: "Logout",
-      icon: <IoLogOutOutline size={27}/>,
+      icon: <IoLogOutOutline size={27} />,
       link: "/logout",
     },
   ];
