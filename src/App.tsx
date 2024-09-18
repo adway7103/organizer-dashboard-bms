@@ -45,7 +45,7 @@ function App() {
               ? "w-full"
               : isSidebarVisible
               ? "pl-[70px] sm:pl-[260px] pt-6"
-              : "pl-[20px] sm:pl-0"
+              : "sm:pl-[20px] sm:pl-0"
           }`}
         >
           <Outlet />
