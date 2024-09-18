@@ -35,6 +35,7 @@ import Sales from "../components/dashboard/Events/sales/Sales";
 import EditEvent from "../pages/CreateEvent/EditEvent";
 import EventTraffic from "../components/dashboard/Events/eventTrafficPage/EventTraffic";
 import EditEvent2 from "../pages/CreateEvent/EditEvent2";
+import GuestList from "../components/dashboard/Events/guest-list/GuestList";
 
 export const router = createBrowserRouter([
   {
@@ -171,6 +172,10 @@ export const router = createBrowserRouter([
                 path: "/live-events/sales/:eventId",
                 element: <Sales />,
               },
+              {
+                path: "/live-events/guest-list/:eventId",
+                element: <GuestList />,
+              },
             ],
           },
           {
@@ -208,6 +213,10 @@ export const router = createBrowserRouter([
                 path: "/past-events/sales/:eventId",
                 element: <Sales />,
               },
+              {
+                path: "/past-events/guest-list/:eventId",
+                element: <GuestList />,
+              },
             ],
           },
           {
@@ -244,6 +253,10 @@ export const router = createBrowserRouter([
               {
                 path: "/drafted-events/sales/:eventId",
                 element: <Sales />,
+              },
+              {
+                path: "/drafted-events/guest-list/:eventId",
+                element: <GuestList />,
               },
             ],
           },
