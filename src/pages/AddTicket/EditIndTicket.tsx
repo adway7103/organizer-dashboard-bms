@@ -490,6 +490,14 @@ const EditIndTicket: React.FC = () => {
               onChange={(newValue) =>
                 handleDateChange(newValue, "saleStartsDate")
               }
+              sx={{
+                "& .MuiInputBase-root": {
+                  height: "56px", // Adjust height as needed
+                },
+                "& .MuiOutlinedInput-input": {
+                  padding: "16px", // Adjust padding as needed
+                },
+              }}
             />
             <p className="font-medium">at</p>
             <TimePicker
@@ -497,6 +505,14 @@ const EditIndTicket: React.FC = () => {
               onChange={(newValue) =>
                 handleDateChange(newValue, "saleStartsTime")
               }
+              sx={{
+                "& .MuiInputBase-root": {
+                  height: "56px", // Adjust height as needed
+                },
+                "& .MuiOutlinedInput-input": {
+                  padding: "16px", // Adjust padding as needed
+                },
+              }}
             />
           </div>
         </LocalizationProvider>
@@ -513,11 +529,27 @@ const EditIndTicket: React.FC = () => {
               onChange={(newValue) =>
                 handleDateChange(newValue, "saleEndsDate")
               }
+              sx={{
+                "& .MuiInputBase-root": {
+                  height: "56px", // Adjust height as needed
+                },
+                "& .MuiOutlinedInput-input": {
+                  padding: "16px", // Adjust padding as needed
+                },
+              }}
             />
             <p className="font-medium">at</p>
             <TimePicker
               value={formData.saleEndTime}
               onChange={(newValue) => handleDateChange(newValue, "saleEndTime")}
+              sx={{
+                "& .MuiInputBase-root": {
+                  height: "56px", // Adjust height as needed
+                },
+                "& .MuiOutlinedInput-input": {
+                  padding: "16px", // Adjust padding as needed
+                },
+              }}
             />
           </div>
         </LocalizationProvider>
