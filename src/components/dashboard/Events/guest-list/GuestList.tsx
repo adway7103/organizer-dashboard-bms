@@ -20,7 +20,6 @@ import {
   TableHeader,
   TableRow,
 } from "../../../ui/Table";
-import { IoTicketOutline } from "react-icons/io5";
 // import { useParams } from "react-router-dom";
 // import GuestListDialog from "./GuestListOptions";
 import NewGuestlist from "./NewGuestlist";
@@ -196,7 +195,6 @@ export default function GuestList() {
                     colSpan={columns.length}
                     className="h-24 text-center text-black"
                   >
-                    <IoTicketOutline className="text-9xl opacity-20" />
                     <p className="font-light pt-2">
                       No guestlist available
                     </p>{" "}

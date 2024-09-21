@@ -173,10 +173,13 @@ export function TicketTable() {
                     colSpan={columns.length}
                     className="h-24 text-center text-black"
                   >
-                    <IoTicketOutline className="text-9xl opacity-20" />
-                    <p className="font-light pt-2">
-                      You don't seem to have any bookings
-                    </p>{" "}
+                    <div className="flex flex-col justify-center items-center">
+                      {" "}
+                      <IoTicketOutline className="text-9xl opacity-20" />
+                      <p className="font-light pt-2">
+                        You don't seem to have any bookings
+                      </p>{" "}
+                    </div>
                   </TableCell>
                 </TableRow>
               )}
