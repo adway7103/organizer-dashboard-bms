@@ -7,7 +7,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
+  // getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -20,84 +20,20 @@ import {
   TableHeader,
   TableRow,
 } from "../../../ui/Table";
-import { IoTicketOutline } from "react-icons/io5";
+// import { IoTicketOutline } from "react-icons/io5";
 // import { Search } from "lucide-react";
 
-// export type Tickets = {
-//   id: string;
-//   name: string;
-//   price: string;
-//   totalTickets: string;
-//   commission: string;
-//   status: string;
-//   matrixId: string;
-// };
-
-export type Tickets = {
+type PromoCodes = {
   id: string;
-  name: string;
-  promoCode: string;
-  price: string;
-  fees: string;
-  allocation: string;
+  promoId: string;
+  discountType: string;
+  discountValue: string;
+  maximumNoOfUse: string;
   uses: string;
-  status: string;
+  isExpired: boolean;
 };
 
-const data: Tickets[] = [
-  {
-    id: "1",
-    name: "Classic",
-    promoCode: "ERBFBETHTBEFSWS",
-    price: "20",
-    fees: "5",
-    allocation: "5",
-    uses: "5",
-    status: "Expired",
-  },
-  {
-    id: "1",
-    name: "Classic",
-    promoCode: "ERBFBETHTBEFSWS",
-    price: "20",
-    fees: "5",
-    allocation: "5",
-    uses: "5",
-    status: "Active",
-  },
-  {
-    id: "1",
-    name: "Classic",
-    promoCode: "ERBFBETHTBEFSWS",
-    price: "20",
-    fees: "5",
-    allocation: "5",
-    uses: "5",
-    status: "Expired",
-  },
-  {
-    id: "1",
-    name: "Classic",
-    promoCode: "ERBFBETHTBEFSWS",
-    price: "20",
-    fees: "5",
-    allocation: "5",
-    uses: "5",
-    status: "Active",
-  },
-  {
-    id: "1",
-    name: "Classic",
-    promoCode: "ERBFBETHTBEFSWS",
-    price: "20",
-    fees: "5",
-    allocation: "5",
-    uses: "5",
-    status: "Expired",
-  },
-];
-
-export function VoucherTable() {
+export function VoucherTable({ promoCodes }: any) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -105,71 +41,35 @@ export function VoucherTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  //   const [tickets, setTickets] = React.useState<Tickets[]>([]);
 
-  //   React.useEffect(() => {
-  //     const fetchData = async () => {
-  //       const response = await fetchTickets();
-  //       const matrixId = response.data.matrix._id;
-
-  //       const transformedData = response.data.matrix.ticketCategories.map(
-  //         (ticket: any) => ({
-  //           id: ticket._id,
-  //           name: ticket.categoryName,
-  //           price: ticket.categoryPricePerPerson
-  //             ? `$ ${ticket.categoryPricePerPerson}`
-  //             : "Free",
-  //           totalTickets: ticket.totalSeats.toString(),
-  //           matrixId: matrixId,
-  //         })
-  //       );
-  //       setTickets(transformedData);
-  //       console.log(transformedData);
-  //     };
-  //     fetchData();
-  //   }, []);
-
-  //   const handleDeleteTicket = (id: string) => {
-  //     // setTickets((prevTickets) =>
-  //     //   prevTickets.filter((ticket) => ticket.id !== id)
-  //     // );
-  //   };
-
-  const columns: ColumnDef<Tickets>[] = [
+  const columns: ColumnDef<PromoCodes>[] = [
     {
-      accessorKey: "name",
-      header: "Ticket Name",
-      cell: ({ row }) => (
-        <div className="text-black">{row.getValue("name")}</div>
-      ),
-    },
-    {
-      accessorKey: "promoCode",
+      accessorKey: "promoId",
       header: "Promo Code",
       cell: ({ row }) => (
-        <div className="text-black">{row.getValue("promoCode")}</div>
+        <div className="text-black">{row.getValue("promoId")}</div>
       ),
     },
     {
-      accessorKey: "price",
-      header: "Price",
+      accessorKey: "discountType",
+      header: "DIscount type",
       cell: ({ row }) => (
-        <div className="text-black">{row.getValue("price")}</div>
+        <div className="text-black">{row.getValue("discountType")}</div>
       ),
     },
     {
-      accessorKey: "fees",
-      header: "Fees",
+      accessorKey: "discountValue",
+      header: "Discount value",
       cell: ({ row }) => (
-        <div className="text-black">{row.getValue("fees")}</div>
+        <div className="text-black">{row.getValue("discountValue")}</div>
       ),
     },
 
     {
-      accessorKey: "allocation",
+      accessorKey: "maximumNoOfUse",
       header: "Allocation",
       cell: ({ row }) => (
-        <div className="text-black">{row.getValue("allocation")}</div>
+        <div className="text-black">{row.getValue("maximumNoOfUse")}</div>
       ),
     },
 
@@ -181,11 +81,11 @@ export function VoucherTable() {
       ),
     },
     {
-      accessorKey: "status",
+      accessorKey: "isExpired",
       header: "Status",
       cell: ({ row }) => {
-        const status = row.getValue<string>("status");
-        const isExpired = status === "Expired";
+        const isExpired = row.getValue<boolean>("isExpired");
+        const status = isExpired ? "Expired" : "Active";
         const bgColor = isExpired ? "bg-[#fca8a8]" : "bg-[#d4fdd3]";
         return (
           <div
@@ -198,7 +98,7 @@ export function VoucherTable() {
     },
     // {
     //   accessorKey: "*",
-    //   header: "",
+    //   header: "",F
     //   cell: ({ row }) => (
     //     <div>
     //       <TicketDailog
@@ -212,12 +112,12 @@ export function VoucherTable() {
   ];
 
   const table = useReactTable({
-    data,
+    data: promoCodes,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    // getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
@@ -306,8 +206,7 @@ export function VoucherTable() {
                     colSpan={columns.length}
                     className="h-24 text-center text-black"
                   >
-                    <IoTicketOutline className="text-9xl opacity-20" />
-                    <p className="font-light pt-2">No tickets</p>{" "}
+                    <p className="font-light pt-2">No promocodes</p>{" "}
                   </TableCell>
                 </TableRow>
               )}

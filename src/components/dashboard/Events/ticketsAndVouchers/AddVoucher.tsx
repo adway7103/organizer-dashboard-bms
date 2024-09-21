@@ -11,8 +11,10 @@ import { addPromoCode } from "../../../../api/addPromoCodeApi";
 import { Dayjs } from "dayjs"; // Ensure you import dayjs
 import toast from "react-hot-toast";
 import axios from "axios";
-
-const AddVoucher: React.FC = () => {
+type AddVoucherProps = {
+  refetch: () => Promise<void>;
+};
+const AddVoucher: React.FC<AddVoucherProps> = ({ refetch }) => {
   const [open, setOpen] = useState(false);
   const { eventId } = useParams();
 
@@ -86,6 +88,7 @@ const AddVoucher: React.FC = () => {
       await addPromoCode({ data, eventId });
       handleClose();
       toast.success("Promo-Code Added Successfully");
+      refetch();
     } catch (error) {
       console.error("Failed to add promo code:", error);
       if (axios.isAxiosError(error) && error.response) {
