@@ -197,7 +197,9 @@ export default function GuestList() {
                     className="h-24 text-center text-black"
                   >
                     <IoTicketOutline className="text-9xl opacity-20" />
-                    <p className="font-light pt-2">No tickets</p>{" "}
+                    <p className="font-light pt-2">
+                      No guestlist available
+                    </p>{" "}
                   </TableCell>
                 </TableRow>
               )}
