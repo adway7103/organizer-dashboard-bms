@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { addPromoCode } from "../../../../api/addPromoCodeApi";
 import { Dayjs } from "dayjs"; // Ensure you import dayjs
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const AddVoucher: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -87,7 +88,11 @@ const AddVoucher: React.FC = () => {
       toast.success("Promo-Code Added Successfully");
     } catch (error) {
       console.error("Failed to add promo code:", error);
-      // Handle error (e.g., show an error message)
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(error.response.data.message || "Failed to add promo code");
+      } else {
+        toast.error("An unexpected error occurred");
+      }
     }
   };
 
@@ -166,6 +171,7 @@ const AddVoucher: React.FC = () => {
               variant="outlined"
               type="number"
               value={maxUse}
+              required
               onChange={(e) => setMaxUse(e.target.value)}
               fullWidth
               sx={{
@@ -179,6 +185,7 @@ const AddVoucher: React.FC = () => {
               label="Minimum Cart Value"
               variant="outlined"
               type="number"
+              required
               value={minCartValue}
               onChange={(e) => setMinCartValue(e.target.value)}
               fullWidth
@@ -240,6 +247,7 @@ const AddVoucher: React.FC = () => {
               label="Code"
               variant="outlined"
               fullWidth
+              required
               value={code}
               onChange={(e) => setCode(e.target.value)}
               sx={{
@@ -280,6 +288,7 @@ const AddVoucher: React.FC = () => {
               }
               type="number"
               variant="outlined"
+              required
               value={discountPercentage}
               onChange={(e) => setDiscountPercentage(e.target.value)}
               fullWidth
