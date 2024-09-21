@@ -45,22 +45,21 @@ export default function GuestList() {
   const [rowSelection, setRowSelection] = React.useState({});
   const [guests, setGuests] = React.useState<GuestList[]>([]);
 
-  console.log(guests);
+  const fetchData = async () => {
+    try {
+      const data = await fetchGuests();
+      const transformedData = data.map((guest: any) => ({
+        id: guest._id,
+        name: `${guest.fname} ${guest.lname}`,
+        noOfTickets: guest.noOfTickets,
+      }));
+      setGuests(transformedData);
+    } catch (error) {
+      console.error("Error fetching guests:", error);
+    }
+  };
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchGuests();
-        const transformedData = data.map((guest: any) => ({
-          id: guest._id,
-          name: `${guest.fname} ${guest.lname}`,
-          noOfTickets: guest.noOfTickets,
-        }));
-        setGuests(transformedData);
-      } catch (error) {
-        console.error("Error fetching guests:", error);
-      }
-    };
     fetchData();
   }, []);
 
@@ -121,7 +120,7 @@ export default function GuestList() {
       <h1 className="text-3xl text-[#9d487b] font-medium ml-8">Rhythms Live</h1>
       <div className="flex justify-between items-center mr-6 sm:mr-10 mt-6">
         <h1 className="text-xl font-medium ml-9">Guest List</h1>
-        <NewGuestlist />
+        <NewGuestlist refetch={fetchData} />
       </div>{" "}
       <div className="rounded-3xl px-6 border-2 mt-8">
         <div className="flex flex-col sm:flex-row justify-between items-center lg:p-2 lg:px-4 gap-4 sm:gap-0">

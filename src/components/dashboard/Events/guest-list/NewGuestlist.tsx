@@ -4,8 +4,10 @@ import TextField from "@mui/material/TextField";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { addGuest } from "../../../../api/addGuestApi";
 import toast from "react-hot-toast";
-
-const NewGuestlist: React.FC = () => {
+type NewGuestlistProps = {
+  refetch: () => Promise<void>;
+};
+const NewGuestlist: React.FC<NewGuestlistProps> = ({ refetch }) => {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     fname: "",
@@ -47,6 +49,7 @@ const NewGuestlist: React.FC = () => {
       await addGuest({ data: formData });
       toast.success("Guest added successfully!");
       handleClose();
+      refetch();
     } catch (error: any) {
       if (
         error.response &&
