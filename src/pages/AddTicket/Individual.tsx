@@ -18,6 +18,9 @@ interface Ticket {
   categoryName: string;
   totalSeats: string;
   ticketType: string;
+  isPriceThresholdApplicable: boolean;
+  priceThreshold: string;
+  priceAfterThreshold: string;
   deductFeesFromTicketPrice: boolean;
   categoryPricePerPerson: string;
   ticketSaleType: string;
@@ -43,6 +46,9 @@ const Individual: React.FC = () => {
     categoryName: "",
     totalSeats: "",
     ticketType: "",
+    isPriceThresholdApplicable: false,
+    priceThreshold: "",
+    priceAfterThreshold: "",
     deductFeesFromTicketPrice: false,
     categoryPricePerPerson: "",
     ticketSaleType: "",
@@ -138,6 +144,9 @@ const Individual: React.FC = () => {
           categoryName: formData.categoryName,
           totalSeats: formData.totalSeats,
           ticketType: formData.ticketType,
+          isPriceThresholdApplicable: formData.isPriceThresholdApplicable,
+          priceThreshold: formData.priceThreshold,
+          priceAfterThreshold: formData.priceAfterThreshold,
           deductFeesFromTicketPrice: formData.deductFeesFromTicketPrice,
           categoryPricePerPerson: formData.categoryPricePerPerson,
           ticketSaleType: formData.ticketSaleType,
@@ -170,6 +179,9 @@ const Individual: React.FC = () => {
       categoryName: "",
       totalSeats: "",
       ticketType: "",
+      isPriceThresholdApplicable: false,
+      priceThreshold: "",
+      priceAfterThreshold: "",
       deductFeesFromTicketPrice: false,
       categoryPricePerPerson: "",
       ticketSaleType: "",
@@ -296,6 +308,93 @@ const Individual: React.FC = () => {
             </p>
           </div>
         )}
+        <div className="grid gap-4">
+          <label htmlFor="type" className="col-span-1 text-lg font-medium">
+            Price Threshold Applicable ?{" "}
+          </label>
+          <div className="flex gap-10 ml-1">
+            <label htmlFor="yes" className="follow">
+              <input
+                type="radio"
+                id="yes"
+                name="isPriceThresholdApplicable"
+                value="yes"
+                checked={formData.isPriceThresholdApplicable === true}
+                onChange={() =>
+                  setFormData({
+                    ...formData,
+                    isPriceThresholdApplicable: true,
+                  })
+                }
+                className="mr-2 focus:ring-1 focus:ring-offset-2 focus:ring-white"
+              />
+              Yes
+            </label>
+            <label htmlFor="no" className="follow">
+              <input
+                type="radio"
+                id="no"
+                name="isPriceThresholdApplicable"
+                value="no"
+                checked={formData.isPriceThresholdApplicable === false}
+                onChange={() =>
+                  setFormData({
+                    ...formData,
+                    isPriceThresholdApplicable: false,
+                  })
+                }
+                className="mr-2 focus:ring-1 focus:ring-offset-2 focus:ring-white"
+              />
+              No
+            </label>
+          </div>
+        </div>
+        {formData.isPriceThresholdApplicable === true && (
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-2">
+            {/* Input for Price Threshold */}
+            <TextField
+              id="priceThreshold"
+              name="priceThreshold"
+              label="Price Threshold"
+              type="number"
+              placeholder="Enter threshold"
+              variant="outlined"
+              value={formData.priceThreshold}
+              onChange={handleChange}
+              className="flex-grow w-full mr-2 md:mr-4"
+              sx={{
+                "& .MuiInputBase-root": {
+                  height: "56px", // Adjust height as needed
+                },
+                "& .MuiOutlinedInput-input": {
+                  padding: "16px", // Adjust padding as needed
+                },
+              }}
+            />
+
+            {/* Input for Price After Threshold */}
+            <TextField
+              id="priceAfterThreshold"
+              name="priceAfterThreshold"
+              label="Price After Threshold"
+              type="text"
+              placeholder="Enter price after threshold"
+              variant="outlined"
+              value={formData.priceAfterThreshold}
+              onChange={handleChange}
+              className="flex-grow w-full mr-2 md:mr-4"
+              sx={{
+                "& .MuiInputBase-root": {
+                  height: "56px", // Adjust height as needed
+                },
+                "& .MuiOutlinedInput-input": {
+                  padding: "16px", // Adjust padding as needed
+                },
+              }}
+            />
+          </div>
+        )}
+
         <div className="flex items-center">
           <input
             type="checkbox"
