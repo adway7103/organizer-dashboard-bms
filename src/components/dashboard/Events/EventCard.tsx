@@ -83,6 +83,12 @@ const EventCard = ({
     e.stopPropagation();
     window.open(shareUrl, "_blank", "noopener,noreferrer");
   };
+  const truncateTitle = (title:string, wordLimit:number) => {
+    const words = title.split(" "); // Split the title into an array of words
+    return words.length > wordLimit
+      ? words.slice(0, wordLimit).join(" ") + "..."
+      : title;
+  };
 
   return (
     <div
@@ -98,9 +104,15 @@ const EventCard = ({
       </div>
       <div>
         <div className="flex justify-center sm:justify-between items-center">
-          <h1 className="text-2xl font-semibold text-[#a28a02] text-center md:text-start">
-            {title}
-          </h1>
+        <div className="relative group w-full max-sm:pt-2">
+            <h1 className="text-[#A48A00] max-sm:text-center font-semibold text-[0.8rem] md:text-[0.9rem] lg:text-[1.1rem] 2xl:text-[1.4rem] pr-4 hover:line-clamp-none line-clamp-1 leading-tight">
+              {/* < className="text-2xl font-semibold text-[#a28a02] text-center md:text-start"> */}
+              {truncateTitle(title, 3)} {/* Shows only the first 3 words */}
+            </h1>
+            <span className="sm:hidden block absolute top-0 left-0 z-10 hidden w-full bg-white text-[#A48A00] font-semibold text-[0.8rem] md:text-[0.9rem] lg:text-[1.1rem] 2xl:text-[1.4rem] pr-4 leading-tight whitespace-normal group-hover:block">
+              {title} {/* Full title shown on hover */}
+            </span>
+          </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
