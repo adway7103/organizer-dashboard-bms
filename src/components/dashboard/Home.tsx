@@ -17,8 +17,7 @@ interface DashboardData {
   followersCount: number;
   liveEvents: LiveEvent[];
   affiliates: string;
-  payouts: string;
-  nextPayout: string;
+  payouts: { previousPayout: string; nextPayout: string };
 }
 
 interface LiveEvent {
@@ -29,17 +28,7 @@ interface LiveEvent {
 
 const Home = () => {
   const [data, setData] = useState<DashboardData>();
-  const dummyData = [
-    { name: "Jan", value: 10 },
-    { name: "Feb", value: 50 },
-    { name: "Mar", value: 30 },
-    { name: "Apr", value: 40 },
-    { name: "May", value: 10 },
-    { name: "June", value: 70 },
-    { name: "July", value: 90 },
-    { name: "Aug", value: 50 },
-    { name: "Sept", value: 30 },
-  ];
+  const dummyData: any = [];
 
   const fetchDashboardData = async () => {
     const response = await fetchDashboard();
@@ -66,14 +55,17 @@ const Home = () => {
         </div>
         <div className="col-span-9 md:col-span-7 lg:col-span-5 xl:col-span-3">
           <Affilliates
-            Affiliates={data?.affiliates || "No Affiliates"}
+            Affiliates={data?.affiliates || "0"}
             Customers={data?.customerCount || 0}
             Views={data?.totalViews || 0}
             Followers={data?.followersCount || 0}
           />
         </div>
         <div className="col-span-9 md:col-span-2 lg:col-span-4 xl:col-span-2 sm:pt-0">
-          <Payouts payouts={data?.payouts} nextPayouts={data?.nextPayout} />
+          <Payouts
+            payouts={data?.payouts.previousPayout}
+            nextPayouts={data?.payouts.nextPayout}
+          />{" "}
         </div>
         <div className="col-span-9 md:col-span-9 lg:col-span-9 xl:col-span-4 ">
           <HomeContainerCard className="xl:h-[50vh] w-full px-6 py-5 border border-gray-300 rounded-3xl">
