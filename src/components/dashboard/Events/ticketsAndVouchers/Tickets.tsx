@@ -32,7 +32,7 @@ const Tickets = () => {
     ? "/drafted-events"
     : "";
   return (
-    <div className="sm:ml-8 sm:mr-24">
+    <div className="ml-2 sm:ml-8 sm:mr-24">
       <h1 className="text-3xl text-[#9d487b] font-medium ml-8">
         {eventOverviewData?.event.title}
       </h1>

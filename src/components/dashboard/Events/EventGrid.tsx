@@ -66,7 +66,7 @@ const EventGrid = ({
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-6 mt-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
         {events.map((event, index) => (
           <EventCard
             key={index}

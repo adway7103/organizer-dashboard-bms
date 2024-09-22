@@ -7,7 +7,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
+  // getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -29,88 +29,16 @@ import { useEffect, useState } from "react";
 export type Follower = {
   id: string;
   activity: string;
-  fName: string;
-  lName: string;
+  fname: string;
+  lname: string;
   age: string;
   email: string;
-  mobile: string;
+  phone: string;
   gender: string;
   revenue: string;
-  eventsAttented: string;
+  eventsAttended: string;
   affliationStatus: string;
 };
-
-export const columns: ColumnDef<Follower>[] = [
-  {
-    accessorKey: "activity",
-    header: "Activity",
-    cell: ({ row }) => <div className="">{row.getValue("activity")}</div>,
-  },
-  {
-    accessorKey: "fName",
-    header: "Name",
-    cell: ({ row }) => <div className="">{row.getValue("fName")}</div>,
-  },
-  {
-    accessorKey: "lName",
-    header: "Last Name",
-    cell: ({ row }) => <div className="">{row.getValue("lName")}</div>,
-  },
-  {
-    accessorKey: "age",
-    header: "Age",
-    cell: ({ row }) => <div className="">{row.getValue("age")}</div>,
-  },
-  {
-    accessorKey: "email",
-    header: "Email Address",
-    cell: ({ row }) => (
-      <div className="underline ">{row.getValue("email")}</div>
-    ),
-  },
-  {
-    accessorKey: "mobile",
-    header: "Mobile",
-    cell: ({ row }) => <div className="">{row.getValue("mobile")}</div>,
-  },
-  {
-    accessorKey: "gender",
-    header: "Gender",
-    cell: ({ row }) => <div className="">{row.getValue("gender")}</div>,
-  },
-  {
-    accessorKey: "revenue",
-    header: "Revenue",
-    cell: ({ row }) => <div className="">{row.getValue("gender")}</div>,
-  },
-  {
-    accessorKey: "eventsAttented",
-    header: "Events Attended",
-    cell: ({ row }) => (
-      <div className="bg-purpleCustom-300 text-center text-white rounded-full w-16 py-1">
-        {row.getValue("eventsAttented")}
-      </div>
-    ),
-  },
-  {
-    accessorKey: "affliationStatus",
-    header: "Affiliation Status",
-    cell: ({ row }) => (
-      <div className="text-center text-green-400 rounded-full w-16 py-1">
-        {row.getValue("affliationStatus")}
-      </div>
-    ),
-  },
-  // {
-  //   accessorKey: "*",
-  //   header: "",
-  //   cell: () => (
-  //     <div>
-  //       <Message />
-  //     </div>
-  //   ),
-  // },
-];
 
 export function CustomerTable() {
   const [customers, setCustomers] = useState([]);
@@ -136,13 +64,85 @@ export function CustomerTable() {
     getCustomers();
   }, []);
 
+  const columns: ColumnDef<Follower>[] = [
+    {
+      accessorKey: "activity",
+      header: "Activity",
+      cell: ({ row }) => <div className="">{row.getValue("activity")}</div>,
+    },
+    {
+      accessorKey: "fname",
+      header: "Name",
+      cell: ({ row }) => <div className="">{row.getValue("fname")}</div>,
+    },
+    {
+      accessorKey: "lname",
+      header: "Last Name",
+      cell: ({ row }) => <div className="">{row.getValue("lname")}</div>,
+    },
+    {
+      accessorKey: "age",
+      header: "Age",
+      cell: ({ row }) => <div className="">{row.getValue("age")}</div>,
+    },
+    {
+      accessorKey: "email",
+      header: "Email Address",
+      cell: ({ row }) => (
+        <div className="underline ">{row.getValue("email")}</div>
+      ),
+    },
+    {
+      accessorKey: "phone",
+      header: "Mobile",
+      cell: ({ row }) => <div className="">{row.getValue("phone")}</div>,
+    },
+    {
+      accessorKey: "gender",
+      header: "Gender",
+      cell: ({ row }) => <div className="">{row.getValue("gender")}</div>,
+    },
+    {
+      accessorKey: "revenue",
+      header: "Revenue",
+      cell: ({ row }) => <div className="">{row.getValue("revenue")}</div>,
+    },
+    {
+      accessorKey: "eventsAttended",
+      header: "Events Attended",
+      cell: ({ row }) => (
+        <div className="bg-purpleCustom-300 text-center text-white rounded-full w-16 py-1 xl:ml-6">
+          {row.getValue("eventsAttended")}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "affliationStatus",
+      header: "Affiliation Status",
+      cell: ({ row }) => (
+        <div className="text-center text-green-400 rounded-full w-16 py-1">
+          {row.getValue("affliationStatus")}
+        </div>
+      ),
+    },
+    // {
+    //   accessorKey: "*",
+    //   header: "",
+    //   cell: () => (
+    //     <div>
+    //       <Message />
+    //     </div>
+    //   ),
+    // },
+  ];
+
   const table = useReactTable({
-    data:customers,
+    data: customers,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    // getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
@@ -158,7 +158,7 @@ export function CustomerTable() {
   });
 
   return (
-    <div className="mt-6 min-w-[300px] w-full">
+    <div className="mt-6 min-w-[300px] w-full pr-4">
       <h3 className="text-2xl font-medium px-4">Customers List</h3>
       <div className="border border-gray-300 rounded-3xl px-6 mt-4">
         <div className="mt-4 flex flex-col sm:flex-row justify-between items-center p-2 px-4 gap-4 sm:gap-0">

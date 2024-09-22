@@ -44,7 +44,7 @@ function App() {
             shouldHideNavAndSidebar
               ? "w-full"
               : isSidebarVisible
-              ? "pl-[70px] sm:pl-[260px] pt-6"
+              ? "pl-[60px] sm:pl-[260px] pt-6"
               : "sm:pl-[20px] sm:pl-0"
           }`}
         >

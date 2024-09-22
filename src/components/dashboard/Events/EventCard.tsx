@@ -83,7 +83,7 @@ const EventCard = ({
     e.stopPropagation();
     window.open(shareUrl, "_blank", "noopener,noreferrer");
   };
-  const truncateTitle = (title:string, wordLimit:number) => {
+  const truncateTitle = (title: string, wordLimit: number) => {
     const words = title.split(" "); // Split the title into an array of words
     return words.length > wordLimit
       ? words.slice(0, wordLimit).join(" ") + "..."
@@ -93,7 +93,7 @@ const EventCard = ({
   return (
     <div
       onClick={onClick}
-      className="flex flex-col md:flex-row items-center md:items-start border rounded-3xl p-4 space-x-0 md:space-x-6 min-w-[300px] w-full sm:w-[300px] md:w-[565px] mr-8 sm:mr-0 cursor-pointer"
+      className="flex flex-col md:flex-row items-center md:items-start border rounded-3xl p-4 space-x-0 md:space-x-6 min-w-[300px] w-full sm:w-[300px] md:w-[565px] mr-4 sm:mr-8 sm:mr-0 cursor-pointer"
     >
       <div>
         <img
@@ -104,12 +104,12 @@ const EventCard = ({
       </div>
       <div>
         <div className="flex justify-center sm:justify-between items-center">
-        <div className="relative group w-full max-sm:pt-2">
+          <div className="relative group w-full max-sm:pt-2">
             <h1 className="text-[#A48A00] max-sm:text-center font-semibold text-[0.8rem] md:text-[0.9rem] lg:text-[1.1rem] 2xl:text-[1.4rem] pr-4 hover:line-clamp-none line-clamp-1 leading-tight">
               {/* < className="text-2xl font-semibold text-[#a28a02] text-center md:text-start"> */}
               {truncateTitle(title, 3)} {/* Shows only the first 3 words */}
             </h1>
-            <span className="sm:hidden block absolute top-0 left-0 z-10 hidden w-full bg-white text-[#A48A00] font-semibold text-[0.8rem] md:text-[0.9rem] lg:text-[1.1rem] 2xl:text-[1.4rem] pr-4 leading-tight whitespace-normal group-hover:block">
+            <span className="sm:hidden block absolute top-0 left-0 z-10 hidden w-full bg-white rounded-lg text-[#A48A00] font-semibold text-[0.8rem] md:text-[0.9rem] lg:text-[1.1rem] 2xl:text-[1.4rem] pr-4 leading-tight whitespace-normal group-hover:block">
               {title} {/* Full title shown on hover */}
             </span>
           </div>
@@ -177,7 +177,7 @@ const EventCard = ({
         <div className="pl-2 mt-1 text-black text-center md:text-start">
           <p className="text-sm">{date}</p>
         </div>
-        <div className="flex space-x-1 mt-2 text-sm">
+        <div className="flex max-sm:justify-center space-x-1 mt-2 text-sm">
           <div
             className="border bg-[#ededed] px-4 py-1 rounded-full hover:shadow-lg"
             onClick={handleEditButton}

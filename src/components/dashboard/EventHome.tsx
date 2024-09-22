@@ -96,14 +96,14 @@ export const EventHome = () => {
   };
 
   return (
-    <div className="sm:ml-8 sm:mr-16 min-w-[300px]">
+    <div className="ml-4 sm:ml-8 sm:mr-16 min-w-[300px]">
       <h1 className="text-3xl font-semibold pl-4">
         {isLiveEvents && "Live Events"}
         {isPastEvents && "Past Events"}
         {isDraftEvents && "Drafted Events"}
       </h1>
       {!isDraftEvents && (
-        <div className="flex flex-col md:flex-row lg:w-auto xl:w-auto gap-6 mt-6">
+        <div className="flex flex-col md:flex-row lg:w-auto xl:w-auto gap-6 mt-6 max-sm:pr-4">
           <Total heading={"Total Revenue"} />
           <Total heading={"Total tickets sold"} />
         </div>
