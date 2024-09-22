@@ -126,7 +126,7 @@ export function RecentOrdersTable() {
   const pageCount = Math.ceil(bookings.length / pageSize);
 
   return (
-    <div className="min-w-[300px] w-full p-4">
+    <div className="min-w-[300px] w-full p-2 sm:p-4">
       <div className="rounded-3xl px-6 border-2">
         <div className="flex flex-col sm:flex-row justify-between items-center lg:p-2 lg:px-4 gap-4 sm:gap-0">
           {/* <div className="relative flex items-center w-full sm:w-auto">

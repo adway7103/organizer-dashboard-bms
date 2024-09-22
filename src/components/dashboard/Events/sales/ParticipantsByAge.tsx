@@ -16,7 +16,7 @@ const ParticipantsByAge = () => {
         <div className="pt-6">
           <SalesPieChart />
         </div>
-        <div className="pr-6">
+        <div className="max-sm:pl-6 pr-6">
           <div className="flex justify-between">
             <p>Round 2</p>
             <p>35 %</p>

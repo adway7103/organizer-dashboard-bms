@@ -87,10 +87,10 @@ const EventOverview = () => {
     getEventOverview();
   }, [eventId]);
   return (
-    <>
-      <h1 className="text-3xl ml-14 font-medium">Event Overview</h1>
-      <div className="bg-[#f8f8f8] sm:ml-8 ml-2 mr-0 xl:mr-8 rounded-3xl min-w-[300px] mt-4">
-        <h1 className="text-2xl text-[#9d487b] font-medium ml-14 pt-6">
+    <div className="max-sm:ml-2 max-sm:pr-2">
+      <h1 className="text-3xl ml-10 sm:ml-14 font-medium">Event Overview</h1>
+      <div className="bg-[#f8f8f8] sm:ml-8 sm:ml-2 mr-0 xl:mr-8 rounded-3xl min-w-[300px] mt-4">
+        <h1 className="text-2xl text-[#9d487b] font-medium ml-14 pt-6 max-sm:pr-2">
           {eventOverviewData?.event.title}
         </h1>
         <div className="xl:flex">
@@ -103,11 +103,11 @@ const EventOverview = () => {
               time={eventOverviewData?.event.time}
             />
           </div>
-          <div className="max-sm:pl-4 max-sm:mt-4 p-2 lg:p-10 pr-2">
+          <div className="max-sm:pl-2 max-sm:mt-4 p-2 lg:p-10 pr-2">
             <CheckListCard eventOverviewData={eventOverviewData?.checklist}/>
           </div>
         </div>
-        <div className="flex flex-wrap max-sm:mt-4 gap-6 p-2 ml-8 mr-8">
+        <div className="flex flex-wrap max-sm:justify-center max-sm:mt-4 gap-6 p-2 ml-8 mr-8">
           {data.map((i, index) => (
             <CountComponent
               key={index}
@@ -117,7 +117,7 @@ const EventOverview = () => {
             />
           ))}
         </div>
-        <div className="grid min-w-[300px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ml-8 mr-28 mt-4">
+        <div className="grid min-w-[300px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pl-2 pr-2 sm:ml-8 sm:mr-28 mt-4">
           <TextBlast className="bg-[#954b7c]" />
           <EventTraficAndShareButton
             eventId={eventId}
@@ -145,7 +145,7 @@ const EventOverview = () => {
           <RecentOrdersTable />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

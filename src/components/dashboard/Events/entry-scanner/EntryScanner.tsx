@@ -119,7 +119,7 @@ export default function EntryScanner() {
   });
 
   return (
-    <div className="min-w-[300px] w-full sm:p-4">
+    <div className="min-w-[300px] w-full p-2 sm:p-4">
       <h1 className="text-3xl text-[#9d487b] font-medium ml-8">Rhythms Live</h1>
       <div className="flex justify-between items-center mr-6 sm:mr-10 mt-2">
         <h1 className="text-xl font-medium ml-9">Entry Scanner</h1>

@@ -121,7 +121,7 @@ export function TableP() {
   });
 
   return (
-    <div className="mt-10 sm:mr-8">
+    <div className="mt-10 sm:mr-8 pr-4">
       <div className="flex justify-between ">
         <h3 className="text-2xl font-semibold pl-4">Payouts List</h3>
         <Link

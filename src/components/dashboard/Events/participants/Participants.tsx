@@ -21,7 +21,7 @@ const Participants = () => {
     },
   };
   return (
-    <div className="sm:ml-8 sm:mr-20">
+    <div className="ml-4 sm:ml-8 sm:mr-20">
       <h1 className="text-3xl text-[#9d487b] font-medium ml-8">Rhythem Live</h1>
       <div className="flex justify-between items-center mr-6 sm:mr-10 mt-6">
         <h1 className="text-2xl font-medium ml-9 ">Participants</h1>
