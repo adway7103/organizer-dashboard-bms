@@ -20,7 +20,6 @@ import {
   TableHeader,
   TableRow,
 } from "../../../ui/Table";
-import { IoTicketOutline } from "react-icons/io5";
 // import { Search } from "lucide-react";
 
 // export type Tickets = {

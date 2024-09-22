@@ -20,7 +20,6 @@ import {
   TableHeader,
   TableRow,
 } from "../../../ui/Table";
-import { IoTicketOutline } from "react-icons/io5";
 import AddNewEntryCode from "./AddNewEntryCode";
 // import { useParams } from "react-router-dom";
 // import { Search } from "lucide-react";
