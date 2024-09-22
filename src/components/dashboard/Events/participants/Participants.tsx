@@ -6,18 +6,18 @@ import NewReturningCustomerPie from "./NewReturningPie";
 const Participants = () => {
   const ageDistribution: any = {
     counts: {
-      "0-18": 50,
-      "19-30": 120,
-      "31-50": 80,
-      "51+": 30,
-      Unknown: 20,
+      "0-18": 0,
+      "19-30": 0,
+      "31-50": 0,
+      "51+": 0,
+      Unknown: 0,
     },
     percentages: {
-      "0-18": "16.1%",
-      "19-30": "38.7%",
-      "31-50": "25.8%",
-      "51+": "9.7%",
-      Unknown: "6.5%",
+      "0-18": "0%",
+      "19-30": "0%",
+      "31-50": "0%",
+      "51+": "0%",
+      Unknown: "0%",
     },
   };
   return (
@@ -33,9 +33,9 @@ const Participants = () => {
         <div className="col-span-1">
           <FollowerPieChart
             heading={"Participants By Gender"}
-            male={"50"}
-            female={"100"}
-            unknownFirstPie={"100"}
+            male={"0"}
+            female={"0"}
+            unknownFirstPie={"0"}
           />
         </div>{" "}
         <div className="col-span-1">
@@ -45,7 +45,7 @@ const Participants = () => {
           />{" "}
         </div>{" "}
         <div className="col-span-1">
-          <NewReturningCustomerPie returningCustomer="35" newCustomer="65" />
+          <NewReturningCustomerPie returningCustomer="0" newCustomer="0" />
         </div>{" "}
       </div>
       <div className="mt-10 sm:ml-4">

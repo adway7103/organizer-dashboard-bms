@@ -19,27 +19,27 @@ const ParticipantsByAge = () => {
         <div className="max-sm:pl-6 pr-6">
           <div className="flex justify-between">
             <p>Round 2</p>
-            <p>35 %</p>
+            <p>0 %</p>
           </div>
           <div className="flex justify-between">
             <p>Group ticket</p>
-            <p>35 %</p>
+            <p>0 %</p>
           </div>
           <div className="flex justify-between">
             <p>Final round</p>
-            <p>35 %</p>
+            <p>0 %</p>
           </div>
           <div className="flex justify-between">
             <p>Round 3</p>
-            <p>35 %</p>
+            <p>0 %</p>
           </div>
           <div className="flex justify-between">
             <p>Limited (ST)</p>
-            <p>35 %</p>
+            <p>0 %</p>
           </div>
           <div className="flex justify-between gap-6">
             <p>Trinity Indian Society member</p>
-            <p>35 %</p>
+            <p>0 %</p>
           </div>
         </div>
       </div>
