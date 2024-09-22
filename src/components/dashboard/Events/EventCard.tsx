@@ -109,7 +109,7 @@ const EventCard = ({
               {/* < className="text-2xl font-semibold text-[#a28a02] text-center md:text-start"> */}
               {truncateTitle(title, 3)} {/* Shows only the first 3 words */}
             </h1>
-            <span className="sm:hidden block absolute top-0 left-0 z-10 hidden w-full bg-white text-[#A48A00] font-semibold text-[0.8rem] md:text-[0.9rem] lg:text-[1.1rem] 2xl:text-[1.4rem] pr-4 leading-tight whitespace-normal group-hover:block">
+            <span className="sm:hidden block absolute top-0 left-0 z-10 hidden w-full bg-white rounded-lg text-[#A48A00] font-semibold text-[0.8rem] md:text-[0.9rem] lg:text-[1.1rem] 2xl:text-[1.4rem] pr-4 leading-tight whitespace-normal group-hover:block">
               {title} {/* Full title shown on hover */}
             </span>
           </div>
