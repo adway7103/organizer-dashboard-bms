@@ -4,7 +4,7 @@ export const createAccount = async (eventData: any) => {
   const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
-      "https://kafsbackend-106f.onrender.com/api/v1/organizers/create",
+      "https://api.kafsco.com/api/v1/organizers/create",
       eventData,
       {
         headers: {
