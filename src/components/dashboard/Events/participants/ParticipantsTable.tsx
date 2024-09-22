@@ -20,7 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../../ui/Table";
-import { IoTicketOutline } from "react-icons/io5";
+// import { IoTicketOutline } from "react-icons/io5";
 // import { Search } from "lucide-react";
 
 // export type Tickets = {
@@ -45,56 +45,7 @@ export type Tickets = {
 };
 
 const data: Tickets[] = [
-  {
-    id: "xueh0xpf",
-    fname: "Christein",
-    lname: "Deigan",
-    age: "20",
-    gender: "Male",
-    ticketBoughtOn: "12-10-2023",
-    isFollowing: "Yes",
-    entryTime: "12:00Pm",
-  },
-  {
-    id: "xueh0xpf",
-    fname: "Christein",
-    lname: "Deigan",
-    age: "20",
-    gender: "Male",
-    ticketBoughtOn: "12-10-2023",
-    isFollowing: "Yes",
-    entryTime: "12:00Pm",
-  },
-  {
-    id: "xueh0xpf",
-    fname: "Christein",
-    lname: "Deigan",
-    age: "20",
-    gender: "Male",
-    ticketBoughtOn: "12-10-2023",
-    isFollowing: "Yes",
-    entryTime: "12:00Pm",
-  },
-  {
-    id: "xueh0xpf",
-    fname: "Christein",
-    lname: "Deigan",
-    age: "20",
-    gender: "Male",
-    ticketBoughtOn: "12-10-2023",
-    isFollowing: "Yes",
-    entryTime: "12:00Pm",
-  },
-  {
-    id: "xueh0xpf",
-    fname: "Christein",
-    lname: "Deigan",
-    age: "20",
-    gender: "Male",
-    ticketBoughtOn: "12-10-2023",
-    isFollowing: "Yes",
-    entryTime: "12:00Pm",
-  },
+ 
 ];
 
 export function ParticipantsTable() {
@@ -279,8 +230,7 @@ export function ParticipantsTable() {
                     colSpan={columns.length}
                     className="h-24 text-center text-black"
                   >
-                    <IoTicketOutline className="text-9xl opacity-20" />
-                    <p className="font-light pt-2">No tickets</p>{" "}
+                    <p className="font-light pt-2">No Participants</p>{" "}
                   </TableCell>
                 </TableRow>
               )}

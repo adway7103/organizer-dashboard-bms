@@ -68,23 +68,23 @@ export default function GuestList() {
   const columns: ColumnDef<GuestList>[] = [
     {
       accessorKey: "name",
-      header: "",
+      header: "Guest list name",
       cell: ({ row }) => (
         <div className="text-black text-center">{row.getValue("name")}</div>
       ),
     },
     {
       accessorKey: "noOfTickets",
-      header: "",
+      header: "No. of tickets",
       cell: ({ row }) => (
-        <div className="text-black lg:mr-40">{row.getValue("noOfTickets")}</div>
+        <div className="text-black ">{row.getValue("noOfTickets")}</div>
       ),
     },
     // {
     //   accessorKey: "eventId",
     //   header: "",
     //   cell: ({ row }) => (
-    //     <div className="pr-10">
+    //     <div className="pr-10"
     //       <GuestListDialog
     //         eventId={eventId}
     //         id={row.original.id}

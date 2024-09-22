@@ -47,7 +47,7 @@ const Card = ({ heading, icon }: any) => {
         </div>
         <div className="">
           <div className="text-lg">{heading}</div>
-          <div>$ 10010</div>
+          <div>$ 0</div>
         </div>
       </div>
     </div>

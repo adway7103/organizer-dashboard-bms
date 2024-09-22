@@ -13,7 +13,7 @@ const SalesOverTime = () => {
 
   return (
     <div className="border relative bg-blue-box rounded-3xl shadow-xl flex flex-col gap-y-2 justify-center w-full items-center">
-      <h1 className="font-medium">Sales over time</h1>
+      <h1 className="font-medium pt-4">Sales over time</h1>
         <AreaChart
           width={600}
           height={200}

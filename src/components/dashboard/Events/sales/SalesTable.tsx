@@ -45,56 +45,7 @@ export type Tickets = {
 };
 
 const data: Tickets[] = [
-  {
-    orderId: "xueh0xpf",
-    orderDate: "12/12/2023",
-    name: "Sarah",
-    email: "abc@gmail.com",
-    noOfItems: "100",
-    promoCode: "Active",
-    status: "Succeeded",
-    price: "100",
-  },
-  {
-    orderId: "xueh0xpf",
-    orderDate: "12/12/2023",
-    name: "Sarah",
-    email: "abc@gmail.com",
-    noOfItems: "100",
-    promoCode: "Active",
-    status: "Succeeded",
-    price: "100",
-  },
-  {
-    orderId: "xueh0xpf",
-    orderDate: "12/12/2023",
-    name: "Sarah",
-    email: "abc@gmail.com",
-    noOfItems: "100",
-    promoCode: "Active",
-    status: "Succeeded",
-    price: "100",
-  },
-  {
-    orderId: "xueh0xpf",
-    orderDate: "12/12/2023",
-    name: "Sarah",
-    email: "abc@gmail.com",
-    noOfItems: "100",
-    promoCode: "Active",
-    status: "Succeeded",
-    price: "100",
-  },
-  {
-    orderId: "xueh0xpf",
-    orderDate: "12/12/2023",
-    name: "Sarah",
-    email: "abc@gmail.com",
-    noOfItems: "100",
-    promoCode: "Active",
-    status: "Succeeded",
-    price: "100",
-  },
+
 ];
 
 export function SalesTable() {
@@ -286,8 +237,7 @@ export function SalesTable() {
                     colSpan={columns.length}
                     className="h-24 text-center text-black"
                   >
-                    <IoTicketOutline className="text-9xl opacity-20" />
-                    <p className="font-light pt-2">No orders</p>{" "}
+                    <p className="font-light pt-2">No data available</p>{" "}
                   </TableCell>
                 </TableRow>
               )}

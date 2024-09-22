@@ -32,29 +32,7 @@ export type EntryScanner = {
   description: string;
   status: string;
 };
-const entryScanner: EntryScanner[] = [
-  {
-    id: "1",
-    tokenId: "T123456",
-    dateCreated: "2024-09-18",
-    description: "VIP Guest",
-    status: "Active",
-  },
-  {
-    id: "2",
-    tokenId: "T123457",
-    dateCreated: "2024-09-17",
-    description: "Regular Guest",
-    status: "Active",
-  },
-  {
-    id: "3",
-    tokenId: "T123458",
-    dateCreated: "2024-09-16",
-    description: "VIP Guest",
-    status: "Inactive",
-  },
-];
+const entryScanner: EntryScanner[] = [];
 export default function EntryScanner() {
   //   const { eventId } = useParams<{ eventId: string }>();
 
@@ -205,8 +183,7 @@ export default function EntryScanner() {
                       colSpan={columns.length}
                       className="h-24 text-center text-black"
                     >
-                      <IoTicketOutline className="text-9xl opacity-20" />
-                      <p className="font-light pt-2">No tickets</p>{" "}
+                      <p className="font-light pt-2">No data available</p>{" "}
                     </TableCell>
                   </TableRow>
                 )}

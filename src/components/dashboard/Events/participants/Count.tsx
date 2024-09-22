@@ -16,7 +16,7 @@ const TotalCommision = () => {
           </div>
           <div className="text-lg sm:text-xl text-center">Number of people who bought tickets</div>
         </div>
-        <div className="text-[1.6rem] sm:text-[2rem] font-semibold">5000</div>
+        <div className="text-[1.6rem] sm:text-[2rem] font-semibold">0</div>
       </div>
     </HomeContainerCard>
   );
