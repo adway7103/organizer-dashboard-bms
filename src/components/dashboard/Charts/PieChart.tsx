@@ -8,10 +8,10 @@ import money from "../../../../public/dashboard/money.png";
 import { Card, CardContent } from "../../ui/Card";
 
 const chartData = [
-  { browser: "chrome", visitors: 8475, fill: "#0088FE" },
-  { browser: "safari", visitors: 5200, fill: "#000000" },
-  { browser: "edge", visitors: 2173, fill: "#FFBB28" },
-  { browser: "other", visitors: 4190, fill: "#800080" },
+  { browser: "chrome", visitors: 0, fill: "#0088FE" },
+  { browser: "safari", visitors: 0, fill: "#000000" },
+  { browser: "edge", visitors: 0, fill: "#FFBB28" },
+  { browser: "other", visitors: 0, fill: "#800080" },
 ];
 
 export function AffiliatePieChart() {
@@ -76,7 +76,7 @@ export function AffiliatePieChart() {
             <div>
               <img src={blue} alt="" className="mt-1 xl:mt-2" />
             </div>
-            <div className="pl-1">2,000</div>
+            <div className="pl-1">0</div>
           </div>
         </div>
         <div className="flex p-1 items-center justify-between gap-x-4">
@@ -88,7 +88,7 @@ export function AffiliatePieChart() {
             <div>
               <img src={purple} alt="" className="mt-1 xl:mt-2" />
             </div>
-            <div className="pl-1">2,000</div>
+            <div className="pl-1">0</div>
           </div>{" "}
         </div>
       </div>

@@ -24,38 +24,7 @@ import {
 import { MenuItem, Select } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const data: TableType[] = [
-  {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
-  },
-  {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
-  },
-  {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
-  },
-  {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
-  },
-  {
-    eventName: "Rozen Tal at Tone Lab",
-    date: new Date("02/24/2024"),
-    paymentAmount: "30",
-    ticketSold: "200",
-  },
-];
+const data: TableType[] = [];
 
 export type TableType = {
   eventName: string;
@@ -132,7 +101,7 @@ export function TableP() {
         </Link>
       </div>
       <div className="border border-gray-300 rounded-3xl lg:px-6 mt-4">
-      <div className="mt-4 flex flex-col sm:flex-row justify-between items-center p-2 px-4 gap-4 sm:gap-0">
+        <div className="mt-4 flex flex-col sm:flex-row justify-between items-center p-2 px-4 gap-4 sm:gap-0">
           <div className="relative flex items-center w-full sm:w-auto">
             <Search className="absolute left-4 text-gray-400 pointer-events-none" />
             <input
@@ -222,7 +191,7 @@ export function TableP() {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    No data available.
                   </TableCell>
                 </TableRow>
               )}

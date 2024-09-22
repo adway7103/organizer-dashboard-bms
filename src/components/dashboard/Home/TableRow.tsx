@@ -18,13 +18,13 @@ const TableRow: React.FC<any> = ({
         />
         <div>
           <h1 className="font-semibold">{event}</h1>
-          <p className="text-xs text-gray-800">event info</p>
+          {/* <p className="text-xs text-gray-800">event info</p> */}
         </div>
         {/* {event} */}
       </th>
-      <td className="px-6 py-4 ">$1000</td>
-      <td className="px-6 py-4">100</td>
-      <td className="px-6 py-4">$2000</td>
+      <td className="px-6 py-4 ">$0</td>
+      <td className="px-6 py-4">0</td>
+      <td className="px-6 py-4">$0</td>
       {/* {stdout && <td className="px-6 py-4">{stdout}</td>} */}
     </tr>
   );

@@ -5,29 +5,14 @@ type ArCharPayoutProps = {
   heading: string;
 };
 const ArCharPayout = ({ color, heading }: ArCharPayoutProps) => {
-  const data = [
-    {
-      name: "Page A",
-      value: 400,
-    },
-    {
-      name: "Page B",
-      value: 3000,
-    },
-    {
-      name: "Page C",
-      value: 2000,
-    },
-    {
-      name: "Page D",
-      value: 2780,
-    },
+  const data:any = [
+   
   ];
   return (
     <div className="flex border justify-between items-center h-[220px] bg-blue-box rounded-3xl shadow-xl p-6">
       <div className="flex flex-col h-full justify-around">
         <p className="text-2xl font-semibold">{heading}</p>
-        <p className="font-bold text-3xl text-[#60769D]">$43,000</p>
+        <p className="font-bold text-3xl text-[#60769D]">$0</p>
 
         <p className="text-sm">All past events</p>
       </div>

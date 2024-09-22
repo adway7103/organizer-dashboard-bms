@@ -58,7 +58,7 @@ function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
           </svg>
 
           <div>
-            <p>5000</p>
+            <p>0</p>
           </div>
         </div>
       </div>
