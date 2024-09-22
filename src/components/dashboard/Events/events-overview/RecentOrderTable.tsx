@@ -22,10 +22,11 @@ import {
 } from "../../../ui/Table";
 import { fetchEventOverview } from "../../../../api/fetchEventOverview";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 // import { Search } from "lucide-react";
 
 export type Bookings = {
-  ordNo: string;
+  bookingId: string;
   name: string;
   totalQuantity: string;
   price: string;
@@ -33,6 +34,8 @@ export type Bookings = {
 };
 
 export function RecentOrdersTable() {
+  const [pageIndex, setPageIndex] = useState(0);
+  const pageSize = 10;
   const { eventId } = useParams<{ eventId: string }>();
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -49,7 +52,7 @@ export function RecentOrdersTable() {
       const response = await fetchEventOverview({ eventId });
 
       const transformedData = response.data.bookings.map((booking: any) => ({
-        id: booking.bookingId,
+        bookingId: booking.bookingId,
         name: booking.ticketName,
         totalQuantity: `${booking.totalQuantity}`,
         price: booking.price ? `€ ${booking.price}` : "Free",
@@ -62,10 +65,10 @@ export function RecentOrdersTable() {
 
   const columns: ColumnDef<Bookings>[] = [
     {
-      accessorKey: "ordNo",
-      header: "Ord. No",
+      accessorKey: "bookingId",
+      header: "Booking Id",
       cell: ({ row }) => (
-        <div className="text-black">{row.index + 1}</div>
+        <div className="text-black">{row.getValue("bookingId")}</div>
       ),
     },
     {
@@ -114,8 +117,13 @@ export function RecentOrdersTable() {
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
     },
   });
+  const pageCount = Math.ceil(bookings.length / pageSize);
 
   return (
     <div className="min-w-[300px] w-full p-4">
@@ -200,6 +208,21 @@ export function RecentOrdersTable() {
               )}
             </TableBody>
           </Table>
+          <div className="flex justify-center mt-4">
+            {Array.from({ length: pageCount }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => setPageIndex(i)}
+                className={`px-2 m-3 rounded ${
+                  pageIndex === i
+                    ? "text-white border-2 bg-[#6076a0] rounded-xl"
+                    : "text-black"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
