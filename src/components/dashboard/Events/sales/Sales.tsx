@@ -2,7 +2,8 @@ import img from "../../../../../public/event/money.png";
 import img1 from "../../../../../public/sales/Group.png";
 import img2 from "../../../../../public/sales/Payments - iconSvg.co.png";
 import img3 from "../../../../../public/sales/image.png";
-import { SalesTable } from "./SalesTable";
+import { RecentOrdersTable } from "../events-overview/RecentOrderTable";
+// import { SalesTable } from "./SalesTable";
 import ParticipantsByAge from "./ParticipantsByAge";
 import SalesOverTime from "./SalesChart";
 const Sales = () => {
@@ -29,7 +30,7 @@ const Sales = () => {
         </div>
         <div className="md:ml-8 md:mr-16 md:pr-4">
           <h1 className="ml-8 mt-10 text-2xl font-medium">Orders</h1>
-          <SalesTable />
+          <RecentOrdersTable />
         </div>
       </div>
     </>

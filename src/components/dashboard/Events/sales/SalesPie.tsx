@@ -7,10 +7,10 @@ import {
 } from "../../../ui/Card";
 
 const chartData = [
-  { browser: "chrome", visitors: 8475, fill: "#0088FE" },
-  { browser: "safari", visitors: 5200, fill: "#000000" },
-  { browser: "edge", visitors: 2173, fill: "#FFBB28" },
-  { browser: "other", visitors: 4190, fill: "#800080" },
+  { browser: "chrome", visitors: 0, fill: "#0088FE" },
+  { browser: "safari", visitors: 0, fill: "#000000" },
+  { browser: "edge", visitors: 0, fill: "#FFBB28" },
+  { browser: "other", visitors: 0, fill: "#800080" },
 ];
 
 export function SalesPieChart() {
