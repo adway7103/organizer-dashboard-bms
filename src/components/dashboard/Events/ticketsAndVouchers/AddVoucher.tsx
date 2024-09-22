@@ -182,7 +182,7 @@ const AddVoucher: React.FC<AddVoucherProps> = ({ refetch }) => {
                 "& .MuiOutlinedInput-input": { padding: "16px" },
               }}
             />
-            <TextField
+            {/* <TextField
               id="minCartValue"
               name="minCartValue"
               label="Minimum Cart Value"
@@ -196,7 +196,7 @@ const AddVoucher: React.FC<AddVoucherProps> = ({ refetch }) => {
                 "& .MuiInputBase-root": { height: "56px" },
                 "& .MuiOutlinedInput-input": { padding: "16px" },
               }}
-            />
+            /> */}
             {/* <div>
               <InputLabel id="category-label">Ticket Name</InputLabel>
               <Select
