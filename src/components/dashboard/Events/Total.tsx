@@ -10,7 +10,7 @@ interface PropsType {
 }
 const Total = ({ heading }: PropsType) => {
   return (
-    <HomeContainerCard className="h-auto border border-gray-300 rounded-3xl min-w-[300px] ">
+    <HomeContainerCard className="h-auto border border-gray-300 rounded-3xl min-w-[300px] w-full sm:w-[300px] md:w-[565px] ">
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <div className="flex justify-center items-center lg:mt-4">
           <AffiliatePieChart />
@@ -29,7 +29,7 @@ const Total = ({ heading }: PropsType) => {
                 <div>
                   <img src={yellow} alt="" className="mt-1" />
                 </div>
-                <div className="pl-1">2,000</div>
+                <div className="pl-1">0</div>
               </div>
             </div>
             <div className="flex items-center justify-between">
@@ -43,7 +43,7 @@ const Total = ({ heading }: PropsType) => {
                 <div>
                   <img src={blue} alt="" className="mt-1" />
                 </div>
-                <div className="pl-1">2,000</div>
+                <div className="pl-1">0</div>
               </div>
             </div>
             <div className="flex items-center justify-between">
@@ -57,7 +57,7 @@ const Total = ({ heading }: PropsType) => {
                 <div>
                   <img src={purple} alt="" className="mt-1" />
                 </div>
-                <div className="pl-1">2,000</div>
+                <div className="pl-1">0</div>
               </div>
             </div>
           </div>
