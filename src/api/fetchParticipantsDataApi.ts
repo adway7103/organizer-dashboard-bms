@@ -1,10 +1,15 @@
 import axios from "axios";
 
-export const fetchTicket = async ({ ticketId }: any) => {
-    
+interface fetchParticipantsDataApiProps {
+  eventId?: string;
+}
+
+export const fetchSalesDataApi = async ({
+  eventId,
+}: fetchParticipantsDataApiProps) => {
   const token = localStorage.getItem("accessToken");
   const response = await axios.get(
-    `https://kafsbackend-106f.onrender.com/api/v1//bookingmatrix/details/${ticketId}`,
+    `https://kafsbackend-106f.onrender.com/api/v1/organizers/participants/${eventId}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

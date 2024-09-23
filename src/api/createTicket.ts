@@ -29,7 +29,7 @@ export const createTicket = async (ticketData: TicketData) => {
   const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
-      "https://api.kafsco.com/api/v1/bookingmatrix/create",
+      "https://kafsbackend-106f.onrender.com/api/v1/bookingmatrix/create",
       ticketData,
       {
         headers: {

@@ -70,7 +70,7 @@ export const EventHome = () => {
 
     try {
       await axios.delete(
-        `https://api.kafsco.com/api/v1/events/delete/${eventId}`,
+        `https://kafsbackend-106f.onrender.com/api/v1/events/delete/${eventId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

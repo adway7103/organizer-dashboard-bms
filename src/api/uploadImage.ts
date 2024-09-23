@@ -6,7 +6,7 @@ export const uploadImage = async (file: File) => {
 
     const token = localStorage.getItem("accessToken");
     const response = await axios.post(
-      "https://api.kafsco.com/api/v1/contents/upload",
+      "https://kafsbackend-106f.onrender.com/api/v1/contents/upload",
       formData,
       {
         headers: {

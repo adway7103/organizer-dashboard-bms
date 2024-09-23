@@ -4,7 +4,7 @@ export const fetchTicket = async ({ ticketId }: any) => {
     
   const token = localStorage.getItem("accessToken");
   const response = await axios.get(
-    `https://api.kafsco.com/api/v1//bookingmatrix/details/${ticketId}`,
+    `https://kafsbackend-106f.onrender.com/api/v1//bookingmatrix/details/${ticketId}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
