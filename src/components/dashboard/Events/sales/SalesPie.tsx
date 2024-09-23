@@ -1,22 +1,15 @@
 import * as React from "react";
 import { Label, Pie, PieChart, Tooltip } from "recharts";
 
-import {
-  Card,
-  CardContent,
-} from "../../../ui/Card";
+import { Card, CardContent } from "../../../ui/Card";
 
-const chartData = [
-  { browser: "chrome", visitors: 0, fill: "#0088FE" },
-  { browser: "safari", visitors: 0, fill: "#000000" },
-  { browser: "edge", visitors: 0, fill: "#FFBB28" },
-  { browser: "other", visitors: 0, fill: "#800080" },
-];
-
-export function SalesPieChart() {
+interface SalesPieChartProps {
+  data: { name: string; percentage: number; fill: string }[];
+}
+export function SalesPieChart({ data }: SalesPieChartProps) {
   const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
-  }, []);
+    return data.reduce((acc, curr) => acc + curr.percentage, 0);
+  }, [data]);
 
   return (
     <Card className="h-auto bg-transparent shadow-none rounded">
@@ -26,14 +19,15 @@ export function SalesPieChart() {
             <PieChart width={180} height={140}>
               <Tooltip cursor={false} />
               <Pie
-                data={chartData}
-                dataKey="visitors"
-                nameKey="browser"
+                data={data}
+                dataKey="percentage"
+                nameKey="name"
                 innerRadius={60}
                 outerRadius={68}
                 strokeWidth={0}
-                cornerRadius={10}  
-                paddingAngle={5}              >
+                cornerRadius={10}
+                paddingAngle={5}
+              >
                 <Label
                   content={({ viewBox }) => {
                     if (viewBox && "cx" in viewBox && "cy" in viewBox) {

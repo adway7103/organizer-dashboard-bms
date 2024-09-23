@@ -1,8 +1,19 @@
 import { AreaChart, Area, Tooltip, XAxis, CartesianGrid } from "recharts";
 
-const SalesOverTime = () => {
-  const data: any = [];
+interface MonthlyData {
+  month: string;
+  salesCount: number;
+}
 
+interface SalesOverTimeProps {
+  monthlyData?: MonthlyData[];
+}
+
+const SalesOverTime = ({ monthlyData }: SalesOverTimeProps) => {
+  const data = monthlyData?.map((item: any) => ({
+    name: item.month, // Month on the X-axis
+    value: item.salesCount, // Sales count on the Y-axis
+  }));
   return (
     <div className="border relative bg-blue-box rounded-3xl shadow-xl flex flex-col gap-y-2 justify-center w-full items-center">
       <h1 className="font-medium pt-4">Sales over time</h1>
