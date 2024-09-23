@@ -23,7 +23,7 @@ const Affilliates = ({
       icon: img,
       count: Affiliates,
       percentage: "5%",
-      days: "vs last 7 days",
+      // days: "vs last 7 days",
       bgColor: "#eeca03",
     },
     {
@@ -31,7 +31,7 @@ const Affilliates = ({
       icon: customerImg,
       count: Customers,
       percentage: "5%",
-      days: "vs last 7 days",
+      // days: "vs last 7 days",
       bgColor: "#c0b6f0",
     },
     {
@@ -39,7 +39,7 @@ const Affilliates = ({
       icon: eyeImg,
       count: Views,
       percentage: "5%",
-      days: "vs last 7 days",
+      // days: "vs last 7 days",
       bgColor: "#11dbe8",
     },
     {
@@ -47,7 +47,7 @@ const Affilliates = ({
       icon: folllowerImg,
       count: Followers,
       percentage: "5%",
-      days: "vs last 7 days",
+      // days: "vs last 7 days",
       bgColor: "#a6f683",
     },
   ];
@@ -71,14 +71,14 @@ const Affilliates = ({
               </div>
               <div className="text-[1.8rem] font-bold">{item.count}</div>
             </div>
-            <div className="flex xl:p-2 justify-center items-center pt-6 sm:pt-0">
-              <div className="text-xs sm:text-sm md:text-[0.7rem] lg:text-[0.7rem] px-2 py-1 bg-green-200 rounded-3xl text-black">
-                +{item.percentage}
-              </div>
-              <p className="text-xs md:text-[0.8rem] lg:text-xs pl-3">
-                {item.days}
-              </p>
-            </div>
+            {/* <div className="flex xl:p-2 justify-center items-center pt-6 sm:pt-0"> */}
+            {/* <div className="text-xs sm:text-sm md:text-[0.7rem] lg:text-[0.7rem] px-2 py-1 bg-green-200 rounded-3xl text-black"> */}
+            {/* +{item.percentage} */}
+            {/* </div> */}
+            {/* <p className="text-xs md:text-[0.8rem] lg:text-xs pl-3"> */}
+            {/* {item.days} */}
+            {/* </p> */}
+            {/* </div> */}
           </div>
         </HomeContainerCard>
       ))}
