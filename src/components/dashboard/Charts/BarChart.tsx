@@ -1,7 +1,17 @@
 import HomeContainerCard from "../HomeContainerCard";
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
+interface BarChartHomeProps {
+  data: { month: string; totalRevenue: number }[]; // Adjust the type as per your data
+}
 
-const BarChartHome = ({ data }: any) => {
+const BarChartHome = ({ data }: BarChartHomeProps) => {
   return (
     <HomeContainerCard className="col-span-2 xl:h-[50vh] bg-gray-200 rounded-3xl shadow-none">
       <div className="flex items-center gap-4 p-6">
@@ -41,7 +51,7 @@ const BarChartHome = ({ data }: any) => {
           }}
         >
           <XAxis
-            dataKey="name"
+            dataKey="month"
             axisLine={false}
             tick={{ fill: "black", fontSize: 12 }}
             label={{
@@ -69,11 +79,15 @@ const BarChartHome = ({ data }: any) => {
               },
             }}
           />
+          <Tooltip
+            cursor={{ fill: "transparent" }} // Make the hover effect transparent
+          />{" "}
           <Bar
-            dataKey="value"
+            dataKey="totalRevenue"
             fill="#a05d89"
             radius={[10, 10, 0, 0]}
             barSize={20}
+            isAnimationActive={true} // Disables hover animation
           />
         </BarChart>
       </ResponsiveContainer>
