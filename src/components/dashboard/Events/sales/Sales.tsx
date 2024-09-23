@@ -3,10 +3,25 @@ import img1 from "../../../../../public/sales/Group.png";
 import img2 from "../../../../../public/sales/Payments - iconSvg.co.png";
 import img3 from "../../../../../public/sales/image.png";
 import { RecentOrdersTable } from "../events-overview/RecentOrderTable";
+import { fetchSalesDataApi } from "../../../../api/fetchSalesDataApi";
+
 // import { SalesTable } from "./SalesTable";
 import ParticipantsByAge from "./ParticipantsByAge";
 import SalesOverTime from "./SalesChart";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 const Sales = () => {
+  const { eventId } = useParams();
+
+  const fetchData = async () => {
+    const response = await fetchSalesDataApi({ eventId });
+    console.log(response);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <h1 className="text-3xl text-[#9d487b] font-medium ml-16">
