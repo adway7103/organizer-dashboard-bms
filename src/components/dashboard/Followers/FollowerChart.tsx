@@ -1,5 +1,5 @@
 import React from "react";
-import AreaChartHome from "../Charts/AreaChart";
+import AreaChartHome from "./FollowerChart2";
 import HomeContainerCard from "../HomeContainerCard";
 
 interface FollowersPerMonth {
