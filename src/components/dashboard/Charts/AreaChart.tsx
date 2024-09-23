@@ -12,10 +12,14 @@ import HomeContainerCard from "../HomeContainerCard";
 type AreaChartHomeTypes = {
   data: any;
   heading?: string;
+  totalTicketsSold?: number;
   // type?: "customers" | "followers" | "sale";
 };
-function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
-  console.log(data);
+function AreaChartHome({
+  data,
+  heading,
+  totalTicketsSold,
+}: AreaChartHomeTypes) {
 
   return (
     <HomeContainerCard className=" shadow-none col-span-2 md:col-span-1 border border-gray-300 rounded-3xl p-4 xl:h-[50vh]">
@@ -58,7 +62,7 @@ function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
           </svg>
 
           <div>
-            <p>0</p>
+            <p>{totalTicketsSold}</p>
           </div>
         </div>
       </div>
@@ -74,13 +78,13 @@ function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
         >
           <CartesianGrid vertical horizontal={false} strokeOpacity={0.3} />
           <XAxis
-            dataKey="name"
+            dataKey="month"
             axisLine={false}
             tick={{ fill: "black", fontSize: 12 }}
             label={{
               value: "Month",
-              offset: -20, 
-              position: "insideBottom", 
+              offset: -20,
+              position: "insideBottom",
               style: {
                 textAnchor: "middle",
                 fill: "black",
@@ -90,7 +94,12 @@ function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
           />
           <YAxis axisLine={false} tick={false} />
           <Tooltip />
-          <Area type="linear" dataKey="value" stroke="#8884d8" fill="#60769D" />
+          <Area
+            type="linear"
+            dataKey="totalTickets"
+            stroke="#8884d8"
+            fill="#60769D"
+          />
         </AreaChart>
       </ResponsiveContainer>
     </HomeContainerCard>

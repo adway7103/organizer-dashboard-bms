@@ -9,8 +9,14 @@ import DTable from "./Home/DTable";
 import HomeContainerCard from "./HomeContainerCard";
 
 interface DashboardData {
-  totalRevenue: number;
-  totalTicketsSold: number;
+  revenue: {
+    totalRevenueAmount: number;
+    revenuePerMonth: { month: string; totalRevenue: number }[];
+  };
+  tickets: {
+    totalTicketsSold: number;
+    ticketsPerMonth: { month: string; totalTickets: number }[];
+  };
   revenuePerEvent: any[]; // You can replace 'any' with a more specific type if needed
   customerCount: number;
   totalViews: number;
@@ -28,7 +34,6 @@ interface LiveEvent {
 
 const Home = () => {
   const [data, setData] = useState<DashboardData>();
-  const dummyData: any = [];
 
   const fetchDashboardData = async () => {
     const response = await fetchDashboard();
@@ -45,10 +50,10 @@ const Home = () => {
 
       <div className="grid grid-cols-1 grid-row-6 md:grid-row-3 lg:grid-row-2 lg:grid-cols-9 gap-4 lg:gap-6 min-h-[85vh] my-3 pr-4">
         <div className="col-span-9 lg:col-span-9 xl:col-span-4">
-          <BarChartHome data={dummyData} />
+        <BarChartHome data={data?.revenue.revenuePerMonth || []} />
         </div>
         <div className="col-span-9 lg:col-span-6 xl:col-span-3">
-          <AreaChartHome data={dummyData} />
+        <AreaChartHome data={data?.tickets.ticketsPerMonth || []} totalTicketsSold={data?.tickets.totalTicketsSold}/>
         </div>
         <div className="col-span-9 lg:col-span-3 xl:col-span-2">
           <PieChartComponent />
