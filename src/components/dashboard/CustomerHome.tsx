@@ -6,7 +6,11 @@ import { CustomerTable } from "./Customers/CustomerTable";
 import FollowerPieChart from "./Followers/FollowerPieChart";
 import { fetchCustomers } from "../../api/fetchCustomersApi";
 
-// Define the type for the booking data
+interface MonthlyBookingData {
+  month: string;
+  year: number;
+  bookings: number;
+}
 interface MonthlyBookingData {
   month: string;
   year: number;
@@ -23,7 +27,6 @@ const CustomerHome = () => {
     const fetchData = async () => {
       const response = await fetchCustomers();
       
-      // Set the data directly as received from the API
       setMonthlyBookingData(response.monthlyBookingData);
       setTotalCustomers(response.totalCustomers);
     };

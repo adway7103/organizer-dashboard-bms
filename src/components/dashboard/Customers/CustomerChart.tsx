@@ -1,5 +1,5 @@
 import React from "react";
-import AreaChartHome from "../Charts/AreaChart";
+import AreaChartHome from "./CustomerChart2";
 import HomeContainerCard from "../HomeContainerCard";
 
 interface MonthlyBookingData {
