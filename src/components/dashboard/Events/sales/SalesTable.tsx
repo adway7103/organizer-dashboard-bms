@@ -42,6 +42,8 @@ export type Bookings = {
 };
 
 export function SalesTable({ bookings }: { bookings: Bookings[] }) {
+  const [pageIndex, setPageIndex] = useState(0);
+  const pageSize = 10;
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -124,8 +126,13 @@ export function SalesTable({ bookings }: { bookings: Bookings[] }) {
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
     },
   });
+  const pageCount = Math.ceil(bookings.length / pageSize);
 
   return (
     <div className="min-w-[300px] w-full p-4">
@@ -209,6 +216,21 @@ export function SalesTable({ bookings }: { bookings: Bookings[] }) {
               )}
             </TableBody>
           </Table>
+          <div className="flex justify-center mt-4">
+            {Array.from({ length: pageCount }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => setPageIndex(i)}
+                className={`px-2 m-3 rounded ${
+                  pageIndex === i
+                    ? "text-white border-2 bg-[#6076a0] rounded-xl"
+                    : "text-black"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
