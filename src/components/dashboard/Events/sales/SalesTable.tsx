@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -20,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../../ui/Table";
+import { useState } from "react";
 // import { Search } from "lucide-react";
 
 // export type Tickets = {
@@ -32,60 +32,27 @@ import {
 //   matrixId: string;
 // };
 
-export type Tickets = {
-  orderId: string;
-  orderDate: string;
-  name: string;
-  email: string;
-  noOfItems: string;
-  promoCode: string;
-  status: string;
-  price: string;
+export type Bookings = {
+  bookingId?: string;
+  name?: string;
+  totalQuantity?: string;
+  price?: string;
+  promoCode?: boolean;
+  date?: string;
 };
 
-const data: Tickets[] = [
+export function SalesTable({ bookings }: { bookings: Bookings[] }) {
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
 
-];
-
-export function SalesTable() {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
-  //   const [tickets, setTickets] = React.useState<Tickets[]>([]);
-
-  //   React.useEffect(() => {
-  //     const fetchData = async () => {
-  //       const response = await fetchTickets();
-  //       const matrixId = response.data.matrix._id;
-
-  //       const transformedData = response.data.matrix.ticketCategories.map(
-  //         (ticket: any) => ({
-  //           id: ticket._id,
-  //           name: ticket.categoryName,
-  //           price: ticket.categoryPricePerPerson
-  //             ? `$ ${ticket.categoryPricePerPerson}`
-  //             : "Free",
-  //           totalTickets: ticket.totalSeats.toString(),
-  //           matrixId: matrixId,
-  //         })
-  //       );
-  //       setTickets(transformedData);
-  //       console.log(transformedData);
-  //     };
-  //     fetchData();
-  //   }, []);
-
-
-  const columns: ColumnDef<Tickets>[] = [
+  const columns: ColumnDef<Bookings>[] = [
     {
-      accessorKey: "orderId",
-      header: "Order ID",
+      accessorKey: "bookingId",
+      header: "Booking Id",
       cell: ({ row }) => (
-        <div className="text-black">{row.getValue("orderId")}</div>
+        <div className="text-black">{row.getValue("bookingId")}</div>
       ),
     },
     {
@@ -119,18 +86,18 @@ export function SalesTable() {
     {
       accessorKey: "promoCode",
       header: "Promo code",
-      cell: ({ row }) => (
-        <div className="bg-[#d4fdd3] text-center rounded-full py-1 px-4 text-black">
-          {row.getValue("promoCode")}
-        </div>
-      ),
-    },
-    {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row }) => (
-        <div className="text-black">{row.getValue("status")}</div>
-      ),
+      cell: ({ row }) => {
+        const promoCodeApplied = row.getValue("promoCode") as boolean;
+        return (
+          <div
+            className={`text-center rounded-full py-1 px-4 ${
+              promoCodeApplied ? "bg-[#d4fdd3]" : "bg-[#fdd3d3]"
+            } text-black`}
+          >
+            {promoCodeApplied ? "Applied" : "Not Applied"}
+          </div>
+        );
+      },
     },
     {
       accessorKey: "price",
@@ -142,7 +109,7 @@ export function SalesTable() {
   ];
 
   const table = useReactTable({
-    data,
+    data: bookings,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
