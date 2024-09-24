@@ -23,7 +23,7 @@ import {
 import { fetchEventOverview } from "../../../../api/fetchEventOverview";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-// import { Search } from "lucide-react";
+import { Search } from "lucide-react";
 
 export type Bookings = {
   bookingId: string;
@@ -129,7 +129,7 @@ export function RecentOrdersTable() {
     <div className="min-w-[300px] w-full p-2 sm:p-4">
       <div className="rounded-3xl px-6 border-2">
         <div className="flex flex-col sm:flex-row justify-between items-center lg:p-2 lg:px-4 gap-4 sm:gap-0">
-          {/* <div className="relative flex items-center w-full sm:w-auto">
+          <div className="relative flex items-center w-full sm:w-auto">
             <Search className="absolute left-4 text-gray-400 pointer-events-none" />
             <input
               value={
@@ -141,9 +141,9 @@ export function RecentOrdersTable() {
               className="w-full sm:w-auto !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm lg:w-80"
               placeholder="Search"
             />
-          </div> */}
-          {/* <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4"> */}
-          {/* <button className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full">
+          </div>
+          <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4">
+          <button className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full">
               Export
               <svg
                 width="20"
@@ -158,8 +158,8 @@ export function RecentOrdersTable() {
                   fillOpacity="0.66"
                 />
               </svg>
-            </button> */}
-          {/* </div> */}
+            </button>
+          </div>
         </div>
         <div className="p-4">
           <Table>
