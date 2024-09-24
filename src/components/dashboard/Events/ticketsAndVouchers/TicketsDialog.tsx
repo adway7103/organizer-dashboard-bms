@@ -115,8 +115,8 @@ export default function TicketDailog({
         >
           <MenuItem>Edit Ticket</MenuItem>
         </Link>
-        <MenuItem >Make ticket invisible</MenuItem>
-        <MenuItem >Stop sales</MenuItem>
+        {/* <MenuItem >Make ticket invisible</MenuItem>
+        <MenuItem >Stop sales</MenuItem> */}
         <MenuItem onClick={handleDelete}>Delete Ticket</MenuItem>
       </Menu>
     </div>
