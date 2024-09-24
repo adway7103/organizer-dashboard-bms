@@ -4,7 +4,7 @@ interface fetchParticipantsDataApiProps {
   eventId?: string;
 }
 
-export const fetchSalesDataApi = async ({
+export const fetchParticipantsDataApi = async ({
   eventId,
 }: fetchParticipantsDataApiProps) => {
   const token = localStorage.getItem("accessToken");

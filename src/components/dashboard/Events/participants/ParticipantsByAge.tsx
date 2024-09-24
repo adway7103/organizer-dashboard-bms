@@ -7,23 +7,34 @@ import extra from "../../../../../public/follower/extra.png";
 
 interface PieChartProps {
   heading: string;
-  male?: string;
-  female?: string;
-  unknownFirstPie?: string;
+  female?: {
+    num: number;
+    percentage: number;
+  };
+  male?: {
+    num: number;
+    percentage: number;
+  };
+  unknownGender?: {
+    num: number;
+    percentage: number;
+  };
   newCustomers?: string;
   returningCustomers?: string;
   ageDistribution?: {
     counts: {
       "0-18": number;
-      "19-30": number;
-      "31-50": number;
+      "19-29": number;
+      "30-39": number;
+      "40-49": number;
       "51+": number;
       Unknown: number;
     };
     percentages: {
       "0-18": string;
-      "19-30": string;
-      "31-50": string;
+      "19-29": string;
+      "30-39": string;
+      "40-49": string;
       "51+": string;
       Unknown: string;
     };
@@ -34,16 +45,20 @@ export function FollowerPieChart({
   heading,
   male,
   female,
-  unknownFirstPie,
+  unknownGender,
   ageDistribution,
 }: PieChartProps) {
   let chartData: any = [];
 
   if (heading === "Participants By Gender") {
     chartData = [
-      { gender: "male", visitors: Number(male), fill: "#800080" },
-      { gender: "female", visitors: Number(female), fill: "#FFBB28" },
-      { gender: "unknown", visitors: Number(unknownFirstPie), fill: "#8e854b" },
+      { gender: "male", visitors: Number(male?.num), fill: "#800080" },
+      { gender: "female", visitors: Number(female?.num), fill: "#FFBB28" },
+      {
+        gender: "unknown",
+        visitors: Number(unknownGender?.num),
+        fill: "#8e854b",
+      },
     ];
   } else if (heading === "Participants By Age" && ageDistribution) {
     chartData = [
@@ -53,13 +68,13 @@ export function FollowerPieChart({
         fill: "#800080",
       },
       {
-        ageGroup: "19-30",
-        visitors: ageDistribution.counts["19-30"],
+        ageGroup: "19-29",
+        visitors: ageDistribution.counts["19-29"],
         fill: "#800080",
       },
       {
-        ageGroup: "31-50",
-        visitors: ageDistribution.counts["31-50"],
+        ageGroup: "30-39",
+        visitors: ageDistribution.counts["30-39"],
         fill: "#800080",
       },
       {
@@ -92,8 +107,9 @@ export function FollowerPieChart({
                 innerRadius={50}
                 outerRadius={56}
                 strokeWidth={0}
-                cornerRadius={10}  
-                paddingAngle={5}              >
+                cornerRadius={10}
+                paddingAngle={5}
+              >
                 <Label
                   content={({ viewBox }) => {
                     if (viewBox && "cx" in viewBox && "cy" in viewBox) {
@@ -131,7 +147,7 @@ export function FollowerPieChart({
                   <span>
                     <img src={yellow} alt="" className="pr-1" />
                   </span>
-                  {female}%{" "}
+                  {female?.percentage}%{" "}
                 </div>
               </div>
               <div className="text-xs">
@@ -140,7 +156,7 @@ export function FollowerPieChart({
                   <span>
                     <img src={purple} alt="" className="pr-1" />
                   </span>
-                  {male}%{" "}
+                  {male?.percentage}%{" "}
                 </div>
               </div>
               <div className="text-xs">
@@ -149,7 +165,7 @@ export function FollowerPieChart({
                   <span>
                     <img src={extra} alt="" className="pr-1" />
                   </span>
-                  {unknownFirstPie}%{" "}
+                  {unknownGender?.percentage}%{" "}
                 </div>
               </div>
             </div>
@@ -177,23 +193,32 @@ export function FollowerPieChart({
                     </div>
                   </div>
                   <div className="flex gap-4 justify-between">
-                    <div> 19-30</div>
+                    <div> 19-29</div>
                     <div className="flex items-center">
                       <span>
                         <img src={purple} alt="" className="pr-1" />
                       </span>
-                      {ageDistribution?.percentages["19-30"]}
+                      {ageDistribution?.percentages["19-29"]}
                     </div>
                   </div>
                 </div>
                 <div>
                   <div className="flex gap-4 justify-between">
-                    <div> 31-50 </div>
+                    <div> 30-39 </div>
                     <div className="flex items-center">
                       <span>
                         <img src={purple} alt="" className="pr-1" />
                       </span>
-                      {ageDistribution?.percentages["31-50"]}
+                      {ageDistribution?.percentages["30-39"]}
+                    </div>
+                  </div>
+                  <div className="flex gap-4 justify-between">
+                    <div> 40-49 </div>
+                    <div className="flex items-center">
+                      <span>
+                        <img src={purple} alt="" className="pr-1" />
+                      </span>
+                      {ageDistribution?.percentages["30-39"]}
                     </div>
                   </div>
                   <div className="flex gap-4 justify-between">

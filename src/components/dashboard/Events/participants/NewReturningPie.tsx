@@ -5,13 +5,19 @@ import yellow from "../../../../../public/follower/yellow.png";
 import purple from "../../../../../public/follower/purple.png";
 
 interface PieChartProps {
-  returningCustomer?: string;
-  newCustomer?: string;
+  returning?: {
+    num: number;
+    percentage: number;
+  };
+  newCustomer?: {
+    num: number;
+    percentage: number;
+  };
   width?: number;
 }
 
 function NewReturningCustomerPie({
-  returningCustomer,
+  returning,
   newCustomer,
   width = 120,
 }: PieChartProps) {
@@ -21,7 +27,7 @@ function NewReturningCustomerPie({
     { gender: "new", visitors: Number(newCustomer), fill: "#800080" },
     {
       gender: "returning",
-      visitors: Number(returningCustomer),
+      visitors: Number(returning),
       fill: "#FFBB28",
     },
   ];
@@ -84,7 +90,7 @@ function NewReturningCustomerPie({
                 <span>
                   <img src={yellow} alt="" className="pr-1" />
                 </span>
-                {returningCustomer}%{" "}
+                {returning?.percentage}%{" "}
               </div>
             </div>
             <div className="text-xs">
@@ -93,7 +99,7 @@ function NewReturningCustomerPie({
                 <span>
                   <img src={purple} alt="" className="pr-1" />
                 </span>
-                {newCustomer}%{" "}
+                {newCustomer?.percentage}%{" "}
               </div>
             </div>
           </div>
