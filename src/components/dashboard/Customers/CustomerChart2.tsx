@@ -14,7 +14,7 @@ type AreaChartHomeTypes = {
   heading?: string;
   // type?: "customers" | "followers" | "sale";
 };
-function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
+function AreaChartHome({ data, heading }: AreaChartHomeTypes) {  
   return (
     <HomeContainerCard className=" shadow-none col-span-2 md:col-span-1 border border-gray-300 rounded-3xl p-4 xl:h-[50vh]">
       <div className="flex gap-2 items-center text-lg font-medium">
@@ -84,7 +84,7 @@ function AreaChartHome({ data, heading }: AreaChartHomeTypes) {
           />
           <YAxis axisLine={false} tick={false} />
           <Tooltip />
-          <Area type="linear" dataKey="value" stroke="#8884d8" fill="#60769D" />
+          <Area type="linear" dataKey="customer" stroke="#8884d8" fill="#60769D" />
         </AreaChart>
       </ResponsiveContainer>
     </HomeContainerCard>

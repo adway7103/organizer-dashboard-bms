@@ -8,8 +8,7 @@ import { fetchCustomers } from "../../api/fetchCustomersApi";
 
 interface MonthlyBookingData {
   month: string;
-  year: number;
-  bookings: number;
+  customerCount: number;
 }
 interface MonthlyBookingData {
   month: string;
@@ -19,14 +18,14 @@ interface MonthlyBookingData {
 
 const CustomerHome = () => {
   const [totalCustomers, setTotalCustomers] = useState<number>(0);
-  const [monthlyBookingData, setMonthlyBookingData] = useState<MonthlyBookingData[]>([]);
-  console.log('monthlyBookingData', monthlyBookingData);
-  
+  const [monthlyBookingData, setMonthlyBookingData] = useState<
+    MonthlyBookingData[]
+  >([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetchCustomers();
-      
+
       setMonthlyBookingData(response.monthlyBookingData);
       setTotalCustomers(response.totalCustomers);
     };

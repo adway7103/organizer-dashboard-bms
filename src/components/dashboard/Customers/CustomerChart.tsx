@@ -4,8 +4,7 @@ import HomeContainerCard from "../HomeContainerCard";
 
 interface MonthlyBookingData {
   month: string;
-  year: number;
-  bookings: number;
+  customerCount: number;
 }
 
 interface CustomerChartProps {
@@ -15,14 +14,15 @@ interface CustomerChartProps {
 const CustomerChart: React.FC<CustomerChartProps> = ({
   monthlyBookingData,
 }) => {
+
   const data = monthlyBookingData.map((item) => ({
     name: `${item.month}`,
-    value: item.bookings,
+    customer: `${item.customerCount}`,
   }));
 
   return (
     <HomeContainerCard className="h-[40vh] shadow-none min-w-[300px] w-full">
-      <AreaChartHome data={data} heading="Customers"/>
+      <AreaChartHome data={data} heading="Customers" />
     </HomeContainerCard>
   );
 };
