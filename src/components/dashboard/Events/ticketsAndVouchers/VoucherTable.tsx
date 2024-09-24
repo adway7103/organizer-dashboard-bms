@@ -20,6 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../../ui/Table";
+import PromoCodeDialog from "./PromoCodeDailog";
 // import { IoTicketOutline } from "react-icons/io5";
 // import { Search } from "lucide-react";
 
@@ -33,7 +34,13 @@ type PromoCodes = {
   isExpired: boolean;
 };
 
-export function VoucherTable({ promoCodes }: any) {
+export function VoucherTable({
+  promoCodes,
+  handleDeleteTicket,
+}: {
+  promoCodes: PromoCodes[];
+  handleDeleteTicket: (id: string) => void;
+}) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -96,19 +103,18 @@ export function VoucherTable({ promoCodes }: any) {
         );
       },
     },
-    // {
-    //   accessorKey: "*",
-    //   header: "",F
-    //   cell: ({ row }) => (
-    //     <div>
-    //       <TicketDailog
-    //         id={row.original.id}
-    //         // matrixId={row.original.matrixId}
-    //         onDelete={handleDeleteTicket}
-    //       />
-    //     </div>
-    //   ),
-    // },
+    {
+      accessorKey: "*",
+      header: "",
+      cell: ({ row }) => (
+        <div>
+          <PromoCodeDialog
+            id={row.original.id}
+            onDelete={() => handleDeleteTicket(row.original.id)}
+          />
+        </div>
+      ),
+    },
   ];
 
   const table = useReactTable({

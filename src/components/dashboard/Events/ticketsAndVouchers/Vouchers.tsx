@@ -31,12 +31,17 @@ const Vouchers = () => {
       isExpired: promo.isExpired,
     }));
     setPromoCodes(transformedData);
-    console.log(transformedData);
   };
 
   useEffect(() => {
     fetchData();
   }, [eventId]);
+
+  const handleDeleteTicket = (id: string) => {
+    setPromoCodes((prevCode) =>
+      prevCode.filter((code) => code.id !== id)
+    );
+  };
 
   return (
     <div className="ml-2 sm:ml-8 sm:mr-24">
@@ -45,7 +50,7 @@ const Vouchers = () => {
         <h1 className="text-xl font-medium ml-8 ">Vouchers</h1>
         <AddVoucher refetch={fetchData} />
       </div>{" "}
-      <VoucherTable promoCodes={promoCodes} />
+      <VoucherTable promoCodes={promoCodes} handleDeleteTicket={handleDeleteTicket}/>
     </div>
   );
 };
