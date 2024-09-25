@@ -1,9 +1,9 @@
 // import img from '../../../../public/dashboard/image.png'
 const TableRow: React.FC<any> = ({
   event,
-  img
-  // eventinfo,
-  // price,
+  img,
+  date,
+  venueAddress,
   // totalTicket,
   // amount,
   //   stdout,
@@ -22,10 +22,8 @@ const TableRow: React.FC<any> = ({
         </div>
         {/* {event} */}
       </th>
-      <td className="px-6 py-4 ">$0</td>
-      <td className="px-6 py-4">0</td>
-      <td className="px-6 py-4">$0</td>
-      {/* {stdout && <td className="px-6 py-4">{stdout}</td>} */}
+      <td className="px-6">{date}</td>
+      <td className="px-6">{venueAddress}</td>
     </tr>
   );
 };
