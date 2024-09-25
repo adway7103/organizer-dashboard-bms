@@ -23,6 +23,7 @@ import { fetchEventOverview } from "../../../../api/fetchEventOverview";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
+import { downloadOrders } from "../../../../api/downloadSalesData";
 
 export type Bookings = {
   bookingId: string;
@@ -42,6 +43,9 @@ export function RecentOrdersTable() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [bookings, setBookings] = useState<Bookings[]>([]);
+  const handleExportButton = async () => {
+    await downloadOrders({ eventId });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -141,6 +145,7 @@ export function RecentOrdersTable() {
           <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4">
             <button
               className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full hover:shadow-lg"
+              onClick={handleExportButton}
             >
               Export
               <svg
