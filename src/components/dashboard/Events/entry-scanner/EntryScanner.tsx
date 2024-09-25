@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -21,7 +20,9 @@ import {
   TableRow,
 } from "../../../ui/Table";
 import AddNewEntryCode from "./AddNewEntryCode";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { fetchScannerCode } from "../../../../api/fetchScannerCodeApi";
+import { useEffect, useState } from "react";
 // import { Search } from "lucide-react";
 
 export type EntryScanner = {
@@ -31,17 +32,27 @@ export type EntryScanner = {
   description: string;
   status: string;
 };
-const entryScanner: EntryScanner[] = [];
 export default function EntryScanner() {
-  //   const { eventId } = useParams<{ eventId: string }>();
+  const { eventId } = useParams<{ eventId: string }>();
 
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+
+  const [scannerData, setScannerData] = useState<EntryScanner[]>([]);
+  const fetchData = async () => {
+    try {
+      const response = await fetchScannerCode({ eventId });
+      setScannerData(response);
+    } catch (error) {
+      console.error("Failed to fetch scanner code:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const columns: ColumnDef<EntryScanner>[] = [
     {
@@ -52,10 +63,10 @@ export default function EntryScanner() {
       ),
     },
     {
-      accessorKey: "dateCreated",
+      accessorKey: "createdAt",
       header: "Date created",
       cell: ({ row }) => (
-        <div className="text-black ">{row.getValue("dateCreated")}</div>
+        <div className="text-black ">{row.getValue("createdAt")}</div>
       ),
     },
     {
@@ -77,7 +88,7 @@ export default function EntryScanner() {
   ];
 
   const table = useReactTable({
-    data: entryScanner,
+    data: scannerData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -100,7 +111,7 @@ export default function EntryScanner() {
       <h1 className="text-3xl text-[#9d487b] font-medium ml-8">Rhythms Live</h1>
       <div className="flex justify-between items-center mr-6 sm:mr-10 mt-2">
         <h1 className="text-xl font-medium ml-9">Entry Scanner</h1>
-        <AddNewEntryCode />
+        <AddNewEntryCode refetch={fetchData} />
       </div>{" "}
       <div className="bg-[#f8f8f8] sm:ml-8 mr-0 xl:mr-8 rounded-3xl min-w-[300px] mt-4 p-6">
         <h1 className="text-xl font-medium">Create CODE </h1>

@@ -5,7 +5,7 @@ import { generateScannerCode } from "../../../../api/generateScannerCodeApi";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
-const AddNewEntryCode = ({}) => {
+const AddNewEntryCode = ({ refetch }: { refetch: () => void }) => {
   const { eventId } = useParams();
   const [open, setOpen] = React.useState(false);
   const [description, setDescription] = useState("");
@@ -29,7 +29,7 @@ const AddNewEntryCode = ({}) => {
       await generateScannerCode({ description, eventId });
       toast.success("Scanner-Code generated successfully!");
       handleClose();
-      // refetch();
+      refetch();
     } catch (error: any) {
       if (
         error.response &&
