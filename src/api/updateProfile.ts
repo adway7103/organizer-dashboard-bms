@@ -33,7 +33,7 @@ export const updateProfile = async (data: UpdateDataType, id: string) => {
     };
 
     const response = await axios.put(
-      `https://kafsbackend-106f.onrender.com/api/v1/organizers/update/${id}`,
+      `https://api.kafsco.com/api/v1/organizers/update/${id}`,
       finalPayload,
       {
         headers: {

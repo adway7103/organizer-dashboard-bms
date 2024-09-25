@@ -37,7 +37,7 @@ const useSignUp = async (userData: UserSignupDataType) => {
       countryCode: countryCode,
     };
     const response = await axios.post(
-      `https://kafsbackend-106f.onrender.com/api/v1/users/signup`,
+      `https://api.kafsco.com/api/v1/users/signup`,
       finalPayload,
       {
         headers: {
@@ -54,7 +54,7 @@ const useSignUp = async (userData: UserSignupDataType) => {
 const useLogin = async (userData: UserLoginDataType) => {
   try {
     const response = await axios.post(
-      `https://kafsbackend-106f.onrender.com/api/v1/users/login`,
+      `https://api.kafsco.com/api/v1/users/login`,
       userData,
       {
         headers: {

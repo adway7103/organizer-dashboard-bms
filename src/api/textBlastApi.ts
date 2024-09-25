@@ -5,7 +5,7 @@ export const textBlast = async (data: { subject: string; description: string }) 
 
   try {
     const response = await axios.post(
-      "https://kafsbackend-106f.onrender.com/api/v1/organizers/text-blast/email",
+      "https://api.kafsco.com/api/v1/organizers/text-blast/email",
       {
         subject: data.subject, 
         description: data.description, 
