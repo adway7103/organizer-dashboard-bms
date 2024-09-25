@@ -7,7 +7,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  // getPaginationRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -21,26 +21,26 @@ import {
   TableHeader,
   TableRow,
 } from "../../ui/Table";
-import { MenuItem, Select } from "@mui/material";
 import { fetchCustomers } from "../../../api/fetchCustomersApi";
 import { useEffect, useState } from "react";
 // import Message from "../Affiliates/Message";
 
 export type Follower = {
   id: string;
-  activity: string;
   fname: string;
   lname: string;
   age: string;
   email: string;
-  phone: string;
+  mobile: string;
   gender: string;
   revenue: string;
   eventsAttended: string;
-  affliationStatus: string;
+  affiliationStatus: string;
 };
 
 export function CustomerTable() {
+  const [pageIndex, setPageIndex] = useState(0);
+  const pageSize = 10;
   const [customers, setCustomers] = useState([]);
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -66,11 +66,6 @@ export function CustomerTable() {
 
   const columns: ColumnDef<Follower>[] = [
     {
-      accessorKey: "activity",
-      header: "Activity",
-      cell: ({ row }) => <div className="">{row.getValue("activity")}</div>,
-    },
-    {
       accessorKey: "fname",
       header: "Name",
       cell: ({ row }) => <div className="">{row.getValue("fname")}</div>,
@@ -93,9 +88,9 @@ export function CustomerTable() {
       ),
     },
     {
-      accessorKey: "phone",
+      accessorKey: "mobile",
       header: "Mobile",
-      cell: ({ row }) => <div className="">{row.getValue("phone")}</div>,
+      cell: ({ row }) => <div className="">{row.getValue("mobile")}</div>,
     },
     {
       accessorKey: "gender",
@@ -111,17 +106,17 @@ export function CustomerTable() {
       accessorKey: "eventsAttended",
       header: "Events Attended",
       cell: ({ row }) => (
-        <div className="bg-purpleCustom-300 text-center text-white rounded-full w-16 py-1 xl:ml-6">
+        <div className="bg-purpleCustom-300 text-center text-white rounded-full w-16 py-1 xl:ml-9">
           {row.getValue("eventsAttended")}
         </div>
       ),
     },
     {
-      accessorKey: "affliationStatus",
+      accessorKey: "affiliationStatus",
       header: "Affiliation Status",
       cell: ({ row }) => (
-        <div className="text-center text-green-400 rounded-full w-16 py-1">
-          {row.getValue("affliationStatus")}
+        <div className="text-center text-green-400 rounded-full w-16 py-1 xl:ml-9">
+          {row.getValue("affiliationStatus")}
         </div>
       ),
     },
@@ -142,7 +137,7 @@ export function CustomerTable() {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    // getPaginationRowModel: getPaginationRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
@@ -154,8 +149,13 @@ export function CustomerTable() {
       columnVisibility,
 
       rowSelection,
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
     },
   });
+  const pageCount = Math.ceil(customers.length / pageSize);
 
   return (
     <div className="mt-6 min-w-[300px] w-full pr-4">
@@ -192,22 +192,6 @@ export function CustomerTable() {
                 />
               </svg>
             </button>
-            <span>Show</span>
-            <Select
-              defaultValue={20}
-              size="small"
-              className="block md:hidden lg:block"
-              sx={{
-                backgroundColor: "#E6E6E682",
-                paddingX: 2,
-                borderRadius: 6,
-              }}
-            >
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={30}>30</MenuItem>
-              <MenuItem value={40}>40</MenuItem>
-            </Select>
           </div>
         </div>
         <div className="p-4">
@@ -255,6 +239,21 @@ export function CustomerTable() {
               )}
             </TableBody>
           </Table>
+          <div className="flex justify-center mt-4">
+            {Array.from({ length: pageCount }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => setPageIndex(i)}
+                className={`px-2 m-3 rounded ${
+                  pageIndex === i
+                    ? "text-white border-2 bg-[#6076a0] rounded-xl"
+                    : "text-black"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
