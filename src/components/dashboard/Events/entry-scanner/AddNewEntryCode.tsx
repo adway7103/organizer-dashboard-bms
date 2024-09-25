@@ -1,9 +1,14 @@
 import { Dialog, DialogContent, TextField } from "@mui/material";
 import HomeContainerCard from "../../HomeContainerCard";
-import React from "react";
+import React, { useState } from "react";
+import { generateScannerCode } from "../../../../api/generateScannerCodeApi";
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const AddNewEntryCode = ({}) => {
+  const { eventId } = useParams();
   const [open, setOpen] = React.useState(false);
+  const [description, setDescription] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -11,6 +16,31 @@ const AddNewEntryCode = ({}) => {
 
   const handleClose = () => {
     setOpen(false);
+    resetForm();
+  };
+
+  const resetForm = () => {
+    setDescription("");
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await generateScannerCode({ description, eventId });
+      toast.success("Scanner-Code generated successfully!");
+      handleClose();
+      // refetch();
+    } catch (error: any) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(`Error: ${error.response.data.message}`);
+      } else {
+        toast.error("Failed to generate code. Please try again.");
+      }
+    }
   };
 
   return (
@@ -61,14 +91,16 @@ const AddNewEntryCode = ({}) => {
                   name="code"
                   fullWidth
                   required
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "10px",
                       "&:hover fieldset": {
-                        borderColor: "black", 
+                        borderColor: "black",
                       },
                       "&.Mui-focused fieldset": {
-                        borderColor: "black", 
+                        borderColor: "black",
                       },
                     },
                     "& .MuiInputBase-root": {
@@ -90,7 +122,10 @@ const AddNewEntryCode = ({}) => {
           >
             CANCEL
           </button>
-          <button className="bg-[#244f7a] text-white px-4 py-2 rounded-lg">
+          <button
+            className="bg-[#244f7a] text-white px-4 py-2 rounded-lg"
+            onClick={handleSubmit}
+          >
             GENERATE CODE
           </button>
         </div>
