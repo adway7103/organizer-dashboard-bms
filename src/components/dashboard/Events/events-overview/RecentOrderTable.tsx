@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -22,7 +21,7 @@ import {
 } from "../../../ui/Table";
 import { fetchEventOverview } from "../../../../api/fetchEventOverview";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 
 export type Bookings = {
@@ -38,16 +37,13 @@ export function RecentOrdersTable() {
   const pageSize = 10;
   const { eventId } = useParams<{ eventId: string }>();
 
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
-  const [bookings, setBookings] = React.useState<Bookings[]>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+  const [bookings, setBookings] = useState<Bookings[]>([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       const response = await fetchEventOverview({ eventId });
 
@@ -133,17 +129,20 @@ export function RecentOrdersTable() {
             <Search className="absolute left-4 text-gray-400 pointer-events-none" />
             <input
               value={
-                (table.getColumn("fName")?.getFilterValue() as string) ?? ""
+                (table.getColumn("name")?.getFilterValue() as string) ?? ""
               }
               onChange={(event) =>
-                table.getColumn("fName")?.setFilterValue(event.target.value)
+                table.getColumn("name")?.setFilterValue(event.target.value)
               }
               className="w-full sm:w-auto !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm lg:w-80"
               placeholder="Search"
             />
           </div>
           <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4">
-          <button className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full">
+            <button
+              className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full hover:shadow-lg"
+              onClick={handleExportButton}
+            >
               Export
               <svg
                 width="20"
