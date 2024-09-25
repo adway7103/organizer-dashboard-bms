@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./FileDragNDrop.css";
 import { MdUpload, MdDeleteForever } from "react-icons/md";
 import { uploadImage } from "../../api/uploadImage";
@@ -6,11 +6,14 @@ import { uploadImage } from "../../api/uploadImage";
 interface VideoComponentProps {
   onFileSelect: (file: File | null) => void;
   setTrailerUrl: React.Dispatch<React.SetStateAction<string[]>>;
+  videoUrl?: string;
 }
 
 const VideoComponent: React.FC<VideoComponentProps> = ({
   onFileSelect,
   setTrailerUrl,
+  videoUrl,
+
 }) => {
   const [videoPreview, setVideoPreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
@@ -55,12 +58,16 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
       setUploading(false);
     }
   };
-
+  useEffect(() => {
+    if (videoUrl) {
+      setVideoPreview(videoUrl);
+    }
+  }, [videoUrl]);
   const deleteVideo = () => {
     setVideoPreview(null);
-    setTrailerUrl((prevUrls) => prevUrls.filter(url => url !== videoPreview));
+    setTrailerUrl((prevUrls) => prevUrls.filter((url) => url !== videoPreview));
     onFileSelect(null);
-};
+  };
 
   return (
     <div>
