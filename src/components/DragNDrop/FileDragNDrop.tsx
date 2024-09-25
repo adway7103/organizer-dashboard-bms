@@ -65,10 +65,14 @@ const FileDragNDrop: React.FC<FileDragNDropProps> = ({
     if (setProfileData) {
       setProfileData({ logoUrl: "" });
     }
+    setEventInfo((prevEventInfo) => ({
+      ...prevEventInfo,
+      posterUrl: "",
+    }));
   };
 
   useEffect(() => {
-    if (posterUrl) {
+    if (posterUrl && posterUrl.trim() !== "") {
       setImagePreview(posterUrl);
     }
   }, [posterUrl]);
