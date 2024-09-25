@@ -20,8 +20,6 @@ import {
   TableRow,
 } from "../../../ui/Table";
 import { useState } from "react";
-
-import { useParams } from "react-router-dom";
 import { Search } from "lucide-react";
 
 export type Bookings = {
@@ -34,7 +32,6 @@ export type Bookings = {
 };
 
 export function SalesTable({ bookings }: { bookings: Bookings[] }) {
-  const { eventId } = useParams();
   const [pageIndex, setPageIndex] = useState(0);
   const pageSize = 10;
   const [sorting, setSorting] = useState<SortingState>([]);

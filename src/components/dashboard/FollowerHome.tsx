@@ -17,26 +17,9 @@ import { useEffect, useState } from "react";
 // }
 
 interface AttendeesByGender {
-  male: string;
-  female: string;
-  unknown: string;
-}
-
-interface AgeDistribution {
-  counts: {
-    "0-18": number;
-    "19-30": number;
-    "31-50": number;
-    "51+": number;
-    Unknown: number;
-  };
-  percentages: {
-    "0-18": string;
-    "19-30": string;
-    "31-50": string;
-    "51+": string;
-    Unknown: string;
-  };
+  male: number;
+  female: number;
+  unknown: number;
 }
 
 interface FollowersPerMonth {
@@ -46,7 +29,6 @@ interface FollowersPerMonth {
 const FollowerHome = () => {
   const [totalFollowers, setTotalFollowers] = useState<number>(0);
   const [genderPercentage, setGenderPercentage] = useState<AttendeesByGender>();
-  const [ageDistribution, setAgeDistribution] = useState<AgeDistribution>();
   const [followersPerMonth, setFollowersPerMonth] =
     useState<FollowersPerMonth>();
 
@@ -54,7 +36,6 @@ const FollowerHome = () => {
     const fetchData = async () => {
       const response = await fetchFollowers();
       setFollowersPerMonth(response.followersPerMonth);
-      setAgeDistribution(response.ageDistribution);
       setGenderPercentage(response.genderPercentage);
       setTotalFollowers(response.totalFollowers);
     };
@@ -75,15 +56,14 @@ const FollowerHome = () => {
         <div className="col-span-6 md:col-span-3 xl:col-span-2">
           <FollowerPieChart
             heading={"Attendees By Gender"}
-            male={genderPercentage?.male}
-            female={genderPercentage?.female}
-            unknownFirstPie={genderPercentage?.unknown}
+            male={genderPercentage?.male || 0}
+            female={genderPercentage?.female || 0}
+            unknownGender={genderPercentage?.unknown || 0}
           />
         </div>
         <div className="col-span-6 md:col-span-3 xl:col-span-2">
           <FollowerPieChart
             heading={"Attendees By Age"}
-            ageDistribution={ageDistribution}
           />
         </div>
       </div>
