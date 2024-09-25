@@ -3,7 +3,7 @@ import axios from "axios";
 export const fetchOrganizationProfile = async () => {
   const token = localStorage.getItem("accessToken");
   const response = await axios.get(
-    "https://api.kafsco.com/api/v1/organizers/profile",
+    "https://kafsbackend-106f.onrender.com/api/v1/organizers/profile",
     {
       headers: {
         Authorization: `Bearer ${token}`,

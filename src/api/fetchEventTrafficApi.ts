@@ -5,7 +5,7 @@ export const fetchEventTraffic = async () => {
 
   try {
     const response = await axios.get(
-      "https://api.kafsco.com/api/v1/organizers/event-traffic/66a09125a589381e96143b26",
+      "https://kafsbackend-106f.onrender.com/api/v1/organizers/event-traffic/66a09125a589381e96143b26",
       {
         headers: {
           Authorization: `Bearer ${token}`,

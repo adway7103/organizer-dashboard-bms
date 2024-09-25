@@ -4,7 +4,7 @@ export const fetchGuests = async () => {
   const token = localStorage.getItem("accessToken");
 
   const response = await axios.get(
-    `https://api.kafsco.com/api/v1/organizers/guest-user-list`,
+    `https://kafsbackend-106f.onrender.com/api/v1/organizers/guest-user-list`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

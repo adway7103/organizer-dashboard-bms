@@ -44,7 +44,7 @@ export default function PromoCodeDialog({ id, eventId, onDelete }: Props) {
 
     try {
       const response = await axios.post(
-        `https://api.kafsco.com/api/v1/promo-code/delete/${id}`,
+        `https://kafsbackend-106f.onrender.com/api/v1/promo-code/delete/${id}`,
         {},
         {
           headers: {

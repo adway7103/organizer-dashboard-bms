@@ -9,7 +9,7 @@ export const fetchParticipantsDataApi = async ({
 }: fetchParticipantsDataApiProps) => {
   const token = localStorage.getItem("accessToken");
   const response = await axios.get(
-    `https://api.kafsco.com/api/v1/organizers/participants/${eventId}`,
+    `https://kafsbackend-106f.onrender.com/api/v1/organizers/participants/${eventId}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

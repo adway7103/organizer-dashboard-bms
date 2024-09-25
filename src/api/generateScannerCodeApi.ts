@@ -10,7 +10,7 @@ export const generateScannerCode = async ({
   const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
-      `https://api.kafsco.com/api/v1/organizers/entry-scanner/create/${eventId}`,
+      `https://kafsbackend-106f.onrender.com/api/v1/organizers/entry-scanner/create/${eventId}`,
       { description: description },
       {
         headers: {
