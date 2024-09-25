@@ -15,9 +15,16 @@ interface MonthlyBookingData {
   year: number;
   bookings: number;
 }
+interface GenderDistribution {
+  male: number;
+  female: number;
+  unknown: number;
+}
 
 const CustomerHome = () => {
   const [totalCustomers, setTotalCustomers] = useState<number>(0);
+  const [genderDistribution, setGenderDistribution] =
+    useState<GenderDistribution>();
   const [monthlyBookingData, setMonthlyBookingData] = useState<
     MonthlyBookingData[]
   >([]);
@@ -28,6 +35,13 @@ const CustomerHome = () => {
 
       setMonthlyBookingData(response.monthlyBookingData);
       setTotalCustomers(response.totalCustomers);
+      setGenderDistribution({
+        male: parseFloat(response.genderDistribution.male.replace("%", "")),
+        female: parseFloat(response.genderDistribution.female.replace("%", "")),
+        unknown: parseFloat(
+          response.genderDistribution.unknown.replace("%", "")
+        ),
+      });
     };
 
     fetchData();
@@ -49,7 +63,12 @@ const CustomerHome = () => {
           <CustomerChart monthlyBookingData={monthlyBookingData} />
         </div>
         <div className="col-span-6 md:col-span-3 xl:col-span-2">
-          <FollowerPieChart heading={"Attendees By Gender"} />
+          <FollowerPieChart
+            heading={"Attendees By Gender"}
+            male={genderDistribution?.male || 0}
+            female={genderDistribution?.female || 0}
+            unknownGender={genderDistribution?.unknown || 0}
+          />
         </div>
         <div className="col-span-6 md:col-span-3 xl:col-span-2">
           <FollowerPieChart heading={"Attendees By Age"} />
