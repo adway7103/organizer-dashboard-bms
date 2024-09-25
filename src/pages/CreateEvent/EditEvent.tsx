@@ -400,14 +400,17 @@ const EditEventForm: React.FC = () => {
         <VideoComponent
           onFileSelect={handleVideoFile}
           setTrailerUrl={setTrailerUrl}
+          videoUrl={trailerUrl[0]}
         />
         <VideoComponent
           onFileSelect={handleVideoFile}
           setTrailerUrl={setTrailerUrl}
+          videoUrl={trailerUrl[1]}
         />
         <VideoComponent
           onFileSelect={handleVideoFile}
           setTrailerUrl={setTrailerUrl}
+          videoUrl={trailerUrl[2]}
         />
       </div>
 
@@ -564,7 +567,7 @@ const EditEventForm: React.FC = () => {
           placeholder="Enter Age Limit"
           value={eventInfo.ageRestriction}
           onChange={handleChange}
-          type="number"
+          type="text"
           fullWidth
           sx={{
             "& .MuiInputBase-root": {
