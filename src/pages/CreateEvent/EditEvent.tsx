@@ -236,7 +236,7 @@ const EditEventForm: React.FC = () => {
       eventCategories: eventInfo.eventCategories,
       genres: eventInfo.genres,
       description: eventInfo.description,
-      posterUrl: eventInfo.posterUrl || profileData.posterUrl,
+      posterUrl: eventInfo.posterUrl || "",
       cheapestTicket: {
         currency: eventInfo.cheapestTicket.currency,
         amount: "10",
@@ -247,7 +247,7 @@ const EditEventForm: React.FC = () => {
       venueAddress: eventInfo.venueAddress,
       venueLocation: venueLocationFormatted,
       refundPolicy: {
-        refundTimeframe: refundTimeframe || "24h",
+        refundTimeframe: refundTimeframe || "",
         policyType: eventInfo.refundPolicy.policyType,
         allRefundsApproved: eventInfo.refundPolicy.allRefundsApproved,
       },
