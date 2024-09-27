@@ -3,6 +3,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../../utils";
 
 interface PositionedMenuProps {
   id: string;
@@ -30,7 +31,7 @@ export default function PositionedMenu({
     const token = localStorage.getItem("accessToken");
     try {
       const response = await axios.delete(
-        `https://kafsbackend-106f.onrender.com/api/v1/bookingmatrix/delete-ticket/${matrixId}`,
+        `https://${baseUrl}/api/v1/bookingmatrix/delete-ticket/${matrixId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

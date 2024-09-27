@@ -1,4 +1,6 @@
 import axios from "axios";
+import { baseUrl } from "../utils";
+
 export const uploadImage = async (file: File) => {
   try {
     const formData = new FormData();
@@ -6,7 +8,7 @@ export const uploadImage = async (file: File) => {
 
     const token = localStorage.getItem("accessToken");
     const response = await axios.post(
-      "https://kafsbackend-106f.onrender.com/api/v1/contents/upload",
+      `https://${baseUrl}/api/v1/contents/upload`,
       formData,
       {
         headers: {

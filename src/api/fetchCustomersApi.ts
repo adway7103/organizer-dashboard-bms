@@ -1,10 +1,11 @@
 import axios from "axios";
+import { baseUrl } from "../utils";
 
 export const fetchCustomers = async () => {
   const token = localStorage.getItem("accessToken");
   
   const response = await axios.get(
-    "https://kafsbackend-106f.onrender.com/api/v1/organizers/customers",
+    `https://${baseUrl}/api/v1/organizers/customers`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

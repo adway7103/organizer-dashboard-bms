@@ -1,4 +1,5 @@
 import axios from "axios";
+import { baseUrl } from "../utils";
 
 export const generateScannerCode = async ({
   description,
@@ -10,7 +11,7 @@ export const generateScannerCode = async ({
   const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
-      `https://kafsbackend-106f.onrender.com/api/v1/organizers/entry-scanner/create/${eventId}`,
+      `https://${baseUrl}/api/v1/organizers/entry-scanner/create/${eventId}`,
       { description: description },
       {
         headers: {

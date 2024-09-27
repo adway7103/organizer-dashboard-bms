@@ -1,4 +1,5 @@
 import axios from "axios";
+import { baseUrl } from "../utils";
 
 export type UpdateDataType = {
   name: string;
@@ -33,7 +34,7 @@ export const updateProfile = async (data: UpdateDataType, id: string) => {
     };
 
     const response = await axios.put(
-      `https://kafsbackend-106f.onrender.com/api/v1/organizers/update/${id}`,
+      `https://${baseUrl}/api/v1/organizers/update/${id}`,
       finalPayload,
       {
         headers: {

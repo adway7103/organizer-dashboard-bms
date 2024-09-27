@@ -42,7 +42,7 @@ export default function GuestListDialog({
     // const token = localStorage.getItem("accessToken");
     try {
       //   const response = await axios.delete(
-      //     `https://kafsbackend-106f.onrender.com/api/v1/bookingmatrix/delete-ticket/${matrixId}`,
+      //     `https://${baseUrl}/api/v1/bookingmatrix/delete-ticket/${matrixId}`,
       //     {
       //       headers: {
       //         Authorization: `Bearer ${token}`,

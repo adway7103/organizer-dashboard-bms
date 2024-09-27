@@ -3,6 +3,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { baseUrl } from "../../../../utils";
+
 
 interface Props {
   id: string;
@@ -44,7 +46,7 @@ export default function PromoCodeDialog({ id, eventId, onDelete }: Props) {
 
     try {
       const response = await axios.post(
-        `https://kafsbackend-106f.onrender.com/api/v1/promo-code/delete/${id}`,
+        `https://${baseUrl}/api/v1/promo-code/delete/${id}`,
         {},
         {
           headers: {

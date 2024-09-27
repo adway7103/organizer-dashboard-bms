@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { baseUrl } from "../utils";
 
 export const textBlast = async (data: { subject: string; description: string }) => {
   const token = localStorage.getItem("accessToken");
 
   try {
     const response = await axios.post(
-      "https://kafsbackend-106f.onrender.com/api/v1/organizers/text-blast/email",
+      `https://${baseUrl}/api/v1/organizers/text-blast/email`,
       {
         subject: data.subject, 
         description: data.description, 

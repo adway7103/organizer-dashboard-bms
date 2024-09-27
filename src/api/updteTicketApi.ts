@@ -1,11 +1,12 @@
 import axios from "axios";
+import { baseUrl } from "../utils";
 
 export const updateTicket = async ({ data, ticketId, matrixId }: any) => {
   const token = localStorage.getItem("accessToken");
 
   try {
     const response = await axios.put(
-      `https://kafsbackend-106f.onrender.com/api/v1/bookingmatrix/update/${matrixId}`,
+      `https://${baseUrl}/api/v1/bookingmatrix/update/${matrixId}`,
       { ticketId, updatedData: data },
       {
         headers: {

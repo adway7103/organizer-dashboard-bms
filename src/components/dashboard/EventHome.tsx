@@ -8,6 +8,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { fetchDraftedEvents } from "../../api/fetchDraftedEvents";
 import { updateEvent } from "../../api/updateEvent";
+import { baseUrl } from "../../utils";
 
 interface EventData {
   eventId: string;
@@ -70,7 +71,7 @@ export const EventHome = () => {
 
     try {
       await axios.delete(
-        `https://kafsbackend-106f.onrender.com/api/v1/events/delete/${eventId}`,
+        `https://${baseUrl}/api/v1/events/delete/${eventId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

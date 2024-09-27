@@ -1,3 +1,4 @@
+import { baseUrl } from "../utils";
 import axios from "axios";
 
 
@@ -6,7 +7,7 @@ const createEvent = async (eventData: any) => {
   const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
-      "https://kafsbackend-106f.onrender.com/api/v1/events/create",
+      `https://${baseUrl}/api/v1/events/create`,
       eventData,
       {
         headers: {
@@ -38,7 +39,7 @@ const createEvent = async (eventData: any) => {
 export const getCategories = async () => {
   try {
     const response = await axios.get(
-      "https://kafsbackend-106f.onrender.com/api/v1/categories/getallcategories"
+      "https://${baseUrl}/api/v1/categories/getallcategories"
     );
     const { data } = response.data;
     return data;

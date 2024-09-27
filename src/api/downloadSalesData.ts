@@ -1,10 +1,11 @@
+import { baseUrl } from "../utils";
 import axios from "axios";
 
 export const downloadOrders = async ({ eventId }: { eventId?: string }) => {
   const token = localStorage.getItem("accessToken");
 
   const response = await axios.get(
-    `https://api.kafsco.com/api/v1/organizers/download-csv/${eventId}?type=sales`,
+    `https://${baseUrl}/api/v1/organizers/download-csv/${eventId}?type=sales`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

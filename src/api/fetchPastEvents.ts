@@ -1,10 +1,11 @@
 import axios from "axios";
+import { baseUrl } from "../utils";
 
 export const fetchPastEvents = async () => {
   const token = localStorage.getItem("accessToken");
   
   const response = await axios.get(
-    "https://kafsbackend-106f.onrender.com/api/v1/organizers/events?type=past",
+    `https://${baseUrl}/api/v1/organizers/events?type=past`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

@@ -1,3 +1,4 @@
+import { baseUrl } from "../utils";
 import axios from "axios";
 
 interface TicketData {
@@ -29,7 +30,7 @@ export const createTicket = async (ticketData: TicketData) => {
   const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
-      "https://kafsbackend-106f.onrender.com/api/v1/bookingmatrix/create",
+      `https://${baseUrl}/api/v1/bookingmatrix/create`,
       ticketData,
       {
         headers: {

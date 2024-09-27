@@ -1,9 +1,10 @@
 import axios from "axios";
+import { baseUrl } from "../utils";
 
 export const fetchScannerCode = async ({ eventId }: { eventId?: string }) => {
   const token = localStorage.getItem("accessToken");
   const response = await axios.get(
-    `https://kafsbackend-106f.onrender.com/api/v1/organizers/entry-scanner/fetch/${eventId}`,
+    `https://${baseUrl}/api/v1/organizers/entry-scanner/fetch/${eventId}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

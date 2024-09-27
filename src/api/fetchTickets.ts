@@ -1,11 +1,12 @@
 import axios from "axios";
+import { baseUrl } from "../utils";
 
 export const fetchTickets = async ({ eventId }: any) => {
   const token = localStorage.getItem("accessToken");
 
   try {
     const response = await axios.get(
-      `https://kafsbackend-106f.onrender.com/api/v1/bookingmatrix/fetch/${eventId}?app=organizer`,
+      `https://${baseUrl}/api/v1/bookingmatrix/fetch/${eventId}?app=organizer`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

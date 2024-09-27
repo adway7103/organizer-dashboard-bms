@@ -144,11 +144,10 @@ const EditTicket: React.FC = () => {
           promoCode: ticket.promoCode,
           toggleVisibility: ticket.toggleVisibility,
           saleStartsDate: saleStartsDate,
-          saleStartsTime: saleStartsDate ? ticket.saleStarts : null,
+          saleStartsTime: saleStartsDate ? dayjs(ticket.saleStarts) : null,
           saleEndsDate: saleEndsDate,
-          saleEndTime: saleEndsDate ? ticket.saleEnds : null,
+          saleEndTime: saleEndsDate ? dayjs(ticket.saleEnds) : null,
         });
-        console.log(ticket.saleStarts);
       } catch (error) {
         toast.error("Failed to fetch ticket");
       }
