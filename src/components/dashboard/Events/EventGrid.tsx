@@ -67,7 +67,6 @@ const EventGrid = ({
             time={event.time}
             date={event.date}
             revenue={event.revenue}
-            shareUrl={event.shareUrl}
             ticketsSold={event.ticketsSold}
             onClick={() => handleEventClick(event.eventId)}
             handleDelete={() => handleDelete(event.eventId)}
