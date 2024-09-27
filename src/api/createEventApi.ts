@@ -1,9 +1,7 @@
 import { baseUrl } from "../utils";
 import axios from "axios";
 
-
 const createEvent = async (eventData: any) => {
-    
   const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
@@ -39,7 +37,7 @@ const createEvent = async (eventData: any) => {
 export const getCategories = async () => {
   try {
     const response = await axios.get(
-      "https://${baseUrl}/api/v1/categories/getallcategories"
+      `https://${baseUrl}/api/v1/categories/getallcategories`
     );
     const { data } = response.data;
     return data;
