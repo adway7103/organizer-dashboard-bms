@@ -4,10 +4,12 @@ import TextField from "@mui/material/TextField";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { addGuest } from "../../../../api/addGuestApi";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 type NewGuestlistProps = {
   refetch: () => Promise<void>;
 };
 const NewGuestlist: React.FC<NewGuestlistProps> = ({ refetch }) => {
+  const { eventId } = useParams();
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     fname: "",
@@ -46,7 +48,7 @@ const NewGuestlist: React.FC<NewGuestlistProps> = ({ refetch }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await addGuest({ data: formData });
+      await addGuest({ data: formData, eventId });
       toast.success("Guest added successfully!");
       handleClose();
       refetch();
