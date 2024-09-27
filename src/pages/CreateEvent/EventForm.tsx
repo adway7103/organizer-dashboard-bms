@@ -230,13 +230,13 @@ const EventForm: React.FC = () => {
       venueAddress: eventInfo.venueAddress,
       venueLocation: eventInfo.venueLocation,
       refundPolicy: {
-        refundTimeframe: refundTimeframe || "24h",
+        refundTimeframe: refundTimeframe || "",
         policyType: eventInfo.refundPolicy.policyType,
         allRefundsApproved: eventInfo.refundPolicy.allRefundsApproved,
       },
       isRep: eventInfo.isRep,
       periodicity: eventInfo.periodicity,
-      ageRestriction: eventInfo.ageRestriction,
+      ageRestriction: eventInfo.ageRestriction || "N/A",
       trailerUrls: trailerUrl,
     };
 
@@ -580,7 +580,7 @@ const EventForm: React.FC = () => {
           placeholder="Enter Age Limit"
           value={eventInfo.ageRestriction}
           onChange={handleChange}
-          type="number"
+          type="text"
           fullWidth
           sx={{
             "& .MuiInputBase-root": {

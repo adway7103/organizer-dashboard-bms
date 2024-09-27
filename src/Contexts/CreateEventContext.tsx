@@ -76,7 +76,7 @@ const defaultEventInfo: EventInfo = {
   periodicity: "",
   eventStart: "",
   eventEnd: "",
-  ageRestriction: "N/A",
+  ageRestriction: "",
   trailerUrls:[],
 };
 
