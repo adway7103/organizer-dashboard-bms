@@ -27,6 +27,7 @@ import { useEffect, useState } from "react";
 
 export type EntryScanner = {
   id: string;
+  eventTitle: string;
   tokenId: string;
   dateCreated: string;
   description: string;
@@ -41,9 +42,11 @@ export default function EntryScanner() {
   const [rowSelection, setRowSelection] = useState({});
 
   const [scannerData, setScannerData] = useState<EntryScanner[]>([]);
+  const [eventTitle, setEventTitle] = useState<string>("");
   const fetchData = async () => {
     try {
       const response = await fetchScannerCode({ eventId });
+      setEventTitle(response.eventTitle);
       setScannerData(response);
     } catch (error) {
       console.error("Failed to fetch scanner code:", error);
@@ -108,7 +111,9 @@ export default function EntryScanner() {
 
   return (
     <div className="min-w-[300px] w-full p-2 sm:p-4">
-      <h1 className="text-3xl text-[#9d487b] font-medium ml-8">Rhythms Live</h1>
+      <h1 className="text-3xl text-[#9d487b] font-medium ml-8">
+        {eventTitle}
+      </h1>
       <div className="flex justify-between items-center mr-6 sm:mr-10 mt-2">
         <h1 className="text-xl font-medium ml-9">Entry Scanner</h1>
         <AddNewEntryCode refetch={fetchData} />
