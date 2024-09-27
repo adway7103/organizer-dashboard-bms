@@ -10,6 +10,7 @@ interface FileDragNDropProps {
   posterUrl?: string;
   setProfileData?: any;
   title?: string;
+  disclaimer?: string;
 }
 
 const FileDragNDrop: React.FC<FileDragNDropProps> = ({
@@ -18,6 +19,7 @@ const FileDragNDrop: React.FC<FileDragNDropProps> = ({
   posterUrl,
   setProfileData,
   title,
+  disclaimer,
 }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -99,6 +101,9 @@ const FileDragNDrop: React.FC<FileDragNDropProps> = ({
             </h3>
             <p className="text-xs">
               Drag-drop or click here to choose an image.
+            </p>
+            <p className="text-xs text-[#244f7a]">
+              {disclaimer}
             </p>
             <input
               type="file"

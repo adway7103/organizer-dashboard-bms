@@ -408,7 +408,10 @@ const EventForm: React.FC = () => {
       />
 
       {/* <div> */}
-      <FileDragNDrop onFileSelect={handleFileSelect} />
+      <FileDragNDrop
+        onFileSelect={handleFileSelect}
+        disclaimer={"Event image needs to be 1:3"}
+      />
       <div className="flex gap-4">
         <VideoComponent
           onFileSelect={handleVideoFile}
