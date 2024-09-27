@@ -4,7 +4,7 @@ export const fetchEvent = async ({ eventId }: any) => {
   const token = localStorage.getItem("accessToken");
 
   const response = await axios.get(
-    `https://api.kafsco.com/api/v1/events/geteventbyid/${eventId}`,
+    `https://kafsbackend-106f.onrender.com/api/v1/events/geteventbyid/${eventId}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
