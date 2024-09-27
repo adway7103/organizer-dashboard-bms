@@ -217,6 +217,7 @@ const CreateAnAccount = () => {
               <FileDragNDrop
                 onFileSelect={handleFileSelect}
                 ClassName="p-4 border-gray-600 h-[150px] rounded-md"
+                title={"Organizer Logo"}
               />
 
               <div className="w-full">
