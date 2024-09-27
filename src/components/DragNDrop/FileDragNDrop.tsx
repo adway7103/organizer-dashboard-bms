@@ -9,6 +9,7 @@ interface FileDragNDropProps {
   ClassName?: string;
   posterUrl?: string;
   setProfileData?: any;
+  title?: string;
 }
 
 const FileDragNDrop: React.FC<FileDragNDropProps> = ({
@@ -16,6 +17,7 @@ const FileDragNDrop: React.FC<FileDragNDropProps> = ({
   ClassName = "",
   posterUrl,
   setProfileData,
+  title,
 }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -92,7 +94,9 @@ const FileDragNDrop: React.FC<FileDragNDropProps> = ({
             <span className="bg-black opacity-50 text-white p-1">
               <MdUpload style={{ fontSize: "3.3rem" }} />
             </span>
-            <h3 className="text-xl font-semibold">Event Image</h3>
+            <h3 className="text-xl font-semibold">
+              {title ? title : "Event Image"}
+            </h3>
             <p className="text-xs">
               Drag-drop or click here to choose an image.
             </p>
