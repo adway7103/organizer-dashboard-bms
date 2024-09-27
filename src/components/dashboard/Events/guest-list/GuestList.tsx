@@ -20,7 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../../ui/Table";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // import GuestListDialog from "./GuestListOptions";
 import NewGuestlist from "./NewGuestlist";
 import { fetchGuests } from "../../../../api/fetchGuests";
@@ -33,7 +33,7 @@ export type GuestList = {
 };
 
 export default function GuestList() {
-  //   const { eventId } = useParams<{ eventId: string }>();
+  const { eventId } = useParams<{ eventId: string }>();
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -46,7 +46,7 @@ export default function GuestList() {
 
   const fetchData = async () => {
     try {
-      const data = await fetchGuests();
+      const data = await fetchGuests({ eventId });
       const transformedData = data.map((guest: any) => ({
         id: guest._id,
         name: `${guest.fname} ${guest.lname}`,
@@ -195,9 +195,7 @@ export default function GuestList() {
                     colSpan={columns.length}
                     className="h-24 text-center text-black"
                   >
-                    <p className="font-light pt-2">
-                      No guestlist available
-                    </p>{" "}
+                    <p className="font-light pt-2">No guestlist available</p>{" "}
                   </TableCell>
                 </TableRow>
               )}
