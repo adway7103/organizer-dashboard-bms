@@ -21,7 +21,7 @@ interface Ticket {
   totalSeats: string;
   ticketType: string;
   isPriceThresholdApplicable: boolean;
-  priceThreshold: string;
+  priceThreshold: number;
   priceAfterThreshold: string;
   deductFeesFromTicketPrice: boolean;
   categoryPricePerPerson: string;
@@ -58,7 +58,7 @@ const Individual: React.FC = () => {
     totalSeats: "",
     ticketType: "",
     isPriceThresholdApplicable: false,
-    priceThreshold: "",
+    priceThreshold: 0,
     priceAfterThreshold: "",
     deductFeesFromTicketPrice: false,
     categoryPricePerPerson: "",
@@ -181,6 +181,7 @@ const Individual: React.FC = () => {
 
     const ticketData = {
       event: id,
+
       ticketCategories: [
         {
           categoryType: "IND",
@@ -188,8 +189,12 @@ const Individual: React.FC = () => {
           totalSeats: formData.totalSeats,
           ticketType: formData.ticketType,
           isPriceThresholdApplicable: formData.isPriceThresholdApplicable,
-          priceThreshold: formData.priceThreshold,
-          priceAfterThreshold: formData.priceAfterThreshold,
+          priceThreshold: formData.isPriceThresholdApplicable
+            ? formData.priceThreshold
+            : 0,
+          priceAfterThreshold: formData.isPriceThresholdApplicable
+            ? formData.priceAfterThreshold
+            : formData.categoryPricePerPerson,
           deductFeesFromTicketPrice: formData.deductFeesFromTicketPrice,
           categoryPricePerPerson: formData.categoryPricePerPerson,
           ticketSaleType: formData.ticketSaleType,
@@ -223,7 +228,7 @@ const Individual: React.FC = () => {
       totalSeats: "",
       ticketType: "",
       isPriceThresholdApplicable: false,
-      priceThreshold: "",
+      priceThreshold: 0,
       priceAfterThreshold: "",
       deductFeesFromTicketPrice: false,
       categoryPricePerPerson: "",
@@ -346,10 +351,8 @@ const Individual: React.FC = () => {
               }}
             />
             <p className="flex items-center text-xs md:text-sm">
-              Buyer Pays :{" "}
-                {" "}
-                {symbol}{formData.categoryPricePerPerson}{" "}
-              Per ticket
+              Buyer Pays : {symbol}
+              {formData.categoryPricePerPerson} Per ticket
             </p>
           </div>
         )}
