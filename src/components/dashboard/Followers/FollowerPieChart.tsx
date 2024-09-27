@@ -13,22 +13,12 @@ interface PieChartProps {
   newCustomers?: string;
   returningCustomers?: string;
   ageDistribution?: {
-    counts: {
-      "0-18": number;
-      "19-29": number;
-      "30-39": number;
-      "40-49": number;
-      "51+": number;
-      Unknown: number;
-    };
-    percentages: {
-      "0-18": string;
-      "19-29": string;
-      "30-39": string;
-      "40-49": string;
-      "51+": string;
-      Unknown: string;
-    };
+    "0-18": number;
+    "19-29": number;
+    "30-39": number;
+    "40-49": number;
+    "51+": number;
+    Unknown: number;
   };
 }
 
@@ -55,27 +45,27 @@ export function FollowerPieChart({
     chartData = [
       {
         ageGroup: "0-18",
-        visitors: ageDistribution.counts["0-18"],
+        visitors: ageDistribution["0-18"],
         fill: "#800080",
       },
       {
         ageGroup: "19-29",
-        visitors: ageDistribution.counts["19-29"],
+        visitors: ageDistribution["19-29"],
         fill: "#800080",
       },
       {
         ageGroup: "30-39",
-        visitors: ageDistribution.counts["30-39"],
+        visitors: ageDistribution["30-39"],
         fill: "#800080",
       },
       {
         ageGroup: "51+",
-        visitors: ageDistribution.counts["51+"],
+        visitors: ageDistribution["51+"],
         fill: "#800080",
       },
       {
         ageGroup: "Unknown",
-        visitors: ageDistribution.counts["Unknown"],
+        visitors: ageDistribution["Unknown"],
         fill: "#FFBB28",
       },
     ];
@@ -171,7 +161,7 @@ export function FollowerPieChart({
                       <span>
                         <img src={yellow} alt="" className="pr-1" />
                       </span>
-                      {ageDistribution?.percentages["Unknown"]}
+                      {ageDistribution?.["Unknown"]}%
                     </div>
                   </div>
                   <div className="flex gap-4 justify-between">
@@ -180,7 +170,7 @@ export function FollowerPieChart({
                       <span>
                         <img src={purple} alt="" className="pr-1" />
                       </span>
-                      {ageDistribution?.percentages["0-18"]}
+                      {ageDistribution?.["0-18"]}%
                     </div>
                   </div>
                   <div className="flex gap-4 justify-between">
@@ -189,7 +179,7 @@ export function FollowerPieChart({
                       <span>
                         <img src={purple} alt="" className="pr-1" />
                       </span>
-                      {ageDistribution?.percentages["19-29"]}
+                      {ageDistribution?.["19-29"]}%
                     </div>
                   </div>
                 </div>
@@ -200,7 +190,7 @@ export function FollowerPieChart({
                       <span>
                         <img src={purple} alt="" className="pr-1" />
                       </span>
-                      {ageDistribution?.percentages["30-39"]}
+                      {ageDistribution?.["30-39"]}%
                     </div>
                   </div>
                   <div className="flex gap-4 justify-between">
@@ -209,7 +199,7 @@ export function FollowerPieChart({
                       <span>
                         <img src={purple} alt="" className="pr-1" />
                       </span>
-                      {ageDistribution?.percentages["30-39"]}
+                      {ageDistribution?.["30-39"]}%
                     </div>
                   </div>
                   <div className="flex gap-4 justify-between">
@@ -218,7 +208,7 @@ export function FollowerPieChart({
                       <span>
                         <img src={purple} alt="" className="pr-1" />
                       </span>
-                      {ageDistribution?.percentages["51+"]}
+                      {ageDistribution?.["51+"]}%
                     </div>
                   </div>
                 </div>
