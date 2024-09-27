@@ -118,7 +118,9 @@ const EditEventForm: React.FC = () => {
             },
             isRep: fetchedEvent.isRep || false,
             periodicity: fetchedEvent.periodicity || "",
-            ageRestriction: fetchedEvent.ageRestriction || "",
+            ageRestriction: fetchedEvent.ageRestriction
+              ? fetchedEvent.ageRestriction.replace("+", "")
+              : "",
             trailerUrls: fetchedEvent.trailerUrls || [],
           });
           setTrailerUrl(fetchedEvent.trailerUrls || []); // Set trailer URLs if needed
