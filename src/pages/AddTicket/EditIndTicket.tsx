@@ -12,6 +12,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { updateTicket } from "../../api/updteTicketApi";
 import { fetchTicket } from "../../api/fetchTicket";
+import { formatCurrency } from "../../utils";
+import { fetchEvent } from "../../api/fetchEvent";
 
 interface Ticket {
   categoryType: string;
@@ -37,6 +39,14 @@ interface Ticket {
   saleEndTime?: Dayjs | null;
 }
 
+interface CheapestTicket {
+  currency: string;
+  amount: number;
+}
+
+interface CurrencyState {
+  cheapestTicket: CheapestTicket;
+}
 const EditIndTicket: React.FC = () => {
   const navigate = useNavigate();
   const { eventId, matrixId, id } = useParams();
@@ -66,6 +76,38 @@ const EditIndTicket: React.FC = () => {
     saleEndTime: null,
   });
 
+  const [currency, setCurrency] = useState<CurrencyState | null>(null);
+  const [symbol, setSymbol] = useState();
+
+  useEffect(() => {
+    if (currency) {
+      const symbol = currency.cheapestTicket.currency;
+      const formattedCurrency = formatCurrency(symbol);
+      setSymbol(formattedCurrency);
+    }
+  }, [currency]);
+
+  useEffect(() => {
+    const fetchEventById = async () => {
+      try {
+        const fetchedEvent = await fetchEvent({ eventId });
+
+        if (fetchedEvent) {
+          setCurrency({
+            cheapestTicket: {
+              currency: fetchedEvent.cheapestTicket?.currency || "",
+              amount: fetchedEvent.cheapestTicket?.amount || 0,
+            },
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch event", error);
+      }
+    };
+
+    fetchEventById();
+  }, [eventId]);
+
   useEffect(() => {
     const fetchAndSetTicket = async () => {
       try {
@@ -78,12 +120,19 @@ const EditIndTicket: React.FC = () => {
         const saleEndsDate =
           ticket.saleEnds !== "Invalid Date" ? dayjs(ticket.saleEnds) : null;
 
+        const ticketType =
+          parseFloat(ticket.categoryPricePerPerson) > 0 ? "Paid" : "Free";
+
+        const isPriceThresholdApplicable =
+          ticket.isPriceThresholdApplicable === true &&
+          parseFloat(ticket.priceAfterThreshold) > 0;
+
         setFormData({
           categoryType: ticket.categoryType,
           categoryName: ticket.categoryName,
           totalSeats: ticket.totalSeats.toString(),
-          ticketType: ticket.ticketType,
-          isPriceThresholdApplicable: formData.isPriceThresholdApplicable,
+          ticketType: ticketType,
+          isPriceThresholdApplicable: isPriceThresholdApplicable,
           priceThreshold: ticket.priceThreshold?.toString() || "",
           priceAfterThreshold: ticket.priceAfterThreshold?.toString() || "",
           deductFeesFromTicketPrice: ticket.deductFeesFromTicketPrice,
@@ -332,8 +381,8 @@ const EditIndTicket: React.FC = () => {
               }}
             />
             <p className="flex items-center text-xs md:text-sm">
-              Buyer Pays : <span> $ {formData.categoryPricePerPerson} </span>{" "}
-              Per ticket
+              Buyer Pays : {symbol}
+              {formData.categoryPricePerPerson} Per ticket
             </p>
           </div>
         )}

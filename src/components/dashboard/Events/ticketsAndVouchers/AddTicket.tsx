@@ -1,5 +1,5 @@
 import "../../../../pages/AddTicket/AddTicket.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -11,6 +11,8 @@ import { createTicket } from "../../../../api/createTicket";
 import toast from "react-hot-toast";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
+import { fetchEvent } from "../../../../api/fetchEvent";
+import { formatCurrency } from "../../../../utils";
 
 interface Ticket {
   event: string;
@@ -35,6 +37,15 @@ interface Ticket {
   saleStartsTime?: Dayjs | null;
   saleEndsDate?: Dayjs | null;
   saleEndTime?: Dayjs | null;
+}
+
+interface CheapestTicket {
+  currency: string;
+  amount: number;
+}
+
+interface CurrencyState {
+  cheapestTicket: CheapestTicket;
 }
 
 const AddTicket: React.FC = () => {
@@ -88,6 +99,38 @@ const AddTicket: React.FC = () => {
       };
     });
   };
+
+  const [currency, setCurrency] = useState<CurrencyState | null>(null);
+  const [symbol, setSymbol] = useState();
+
+  useEffect(() => {
+    if (currency) {
+      const symbol = currency.cheapestTicket.currency;
+      const formattedCurrency = formatCurrency(symbol);
+      setSymbol(formattedCurrency);
+    }
+  }, [currency]);
+
+  useEffect(() => {
+    const fetchEventById = async () => {
+      try {
+        const fetchedEvent = await fetchEvent({ eventId });
+
+        if (fetchedEvent) {
+          setCurrency({
+            cheapestTicket: {
+              currency: fetchedEvent.cheapestTicket?.currency || "",
+              amount: fetchedEvent.cheapestTicket?.amount || 0,
+            },
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch event", error);
+      }
+    };
+
+    fetchEventById();
+  }, [eventId]);
 
   const handleDateChange = (date: Dayjs | null, name: string) => {
     setFormData((prevData) => ({
@@ -316,8 +359,8 @@ const AddTicket: React.FC = () => {
               }}
             />
             <p className="flex items-center text-xs md:text-sm">
-              Buyer Pays : <span> $ {formData.categoryPricePerPerson} </span>{" "}
-              Per ticket
+              Buyer Pays : {symbol}
+              {formData.categoryPricePerPerson} Per ticket
             </p>
           </div>
         )}
