@@ -57,7 +57,7 @@ export function TicketTable() {
         matrixId: ticket.bookingMatrixId,
         id: ticket.ticketId,
         name: ticket.ticketName,
-        price: ticket.price ? `€ ${ticket.price}` : "Free",
+        price: ticket.price ? `${ticket.price}` : "Free",
         totalTickets: `${ticket.ticketSold}`,
         status: ticket.active,
       }));
