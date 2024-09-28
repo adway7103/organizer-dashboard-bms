@@ -230,7 +230,7 @@ const EventForm: React.FC = () => {
       venueAddress: eventInfo.venueAddress,
       venueLocation: eventInfo.venueLocation,
       refundPolicy: {
-        refundTimeframe: refundTimeframe || "",
+        refundTimeframe: refundTimeframe || "no",
         policyType: eventInfo.refundPolicy.policyType,
         allRefundsApproved: eventInfo.refundPolicy.allRefundsApproved,
       },
@@ -704,6 +704,32 @@ const EventForm: React.FC = () => {
                   />
                   <label htmlFor="refundOption1" className="text-sm ml-3">
                     No Refunds{" "}
+                  </label>
+                </div>
+
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id="refundOption2"
+                    name="refundTimeframe"
+                    value="24h"
+                    checked={refundTimeframe === "24h"}
+                    onChange={(e) => {
+                      setRefundTimeframe(e.target.value);
+                      setEventInfo({
+                        ...eventInfo,
+                        refundPolicy: {
+                          ...eventInfo.refundPolicy,
+                          refundTimeframe: e.target.value,
+                          policyType: true,
+                          allRefundsApproved: false,
+                        },
+                      });
+                    }}
+                    className="follow rounded w-6 h-4"
+                  />
+                  <label htmlFor="refundOption2" className="text-sm ml-3">
+                    24h{" "}
                   </label>
                 </div>
 
