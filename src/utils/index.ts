@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-export const baseUrl = "kafsbackend-106f.onrender.com"
+export const baseUrl = "api.kafsco.com"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
