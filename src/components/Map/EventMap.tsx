@@ -3,6 +3,7 @@ import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import "./EventMap.css";
 import { useEventContext } from "../../Contexts/CreateEventContext";
 
+//places component
 export default function Places() {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyAxh0ks8s9JDC182Ls7PUmTJ2ahN-azosU",
@@ -14,9 +15,10 @@ export default function Places() {
   return <MapComponent />;
 }
 
+//map component
 const MapComponent = () => {
-  const center = useMemo(() => ({ lat: -33.8688, lng: 151.2195 }), []);
   const { setEventInfo } = useEventContext();
+  const center = useMemo(() => ({ lat: -33.8688, lng: 151.2195 }), []); //default center
   const [selected, setSelected] = useState<{ lat: number; lng: number } | null>(
     null
   );
@@ -26,6 +28,7 @@ const MapComponent = () => {
     lng: number,
     venueAddress: any
   ) => {
+    console.log("handleLocationChange function", lat, lng, venueAddress); //log
     setSelected({ lat, lng });
     setEventInfo((prevState) => ({
       ...prevState,
@@ -51,6 +54,7 @@ const MapComponent = () => {
   );
 };
 
+//places auto complete component
 const PlacesAutocomplete = ({
   setLocation,
 }: {
@@ -68,57 +72,35 @@ const PlacesAutocomplete = ({
 
     const autocomplete = new google.maps.places.Autocomplete(input, {
       types: ["establishment"],
-      componentRestrictions: { country: [] },
       fields: ["name", "geometry", "formatted_address", "address_components"],
     });
 
-    const handlePlaceChanged = () => {
+    autocomplete.addListener("place_changed", () => {
       const place = autocomplete.getPlace();
       if (place.geometry) {
         const { lat, lng } = place.geometry.location!.toJSON();
-        const addressComponents = place.address_components || [];
-
-        const formattedAddressParts = place.formatted_address!.split(",");
-        const city = getAddressComponent(addressComponents, [
-          "locality",
-          "administrative_area_level_3",
-          "administrative_area_level_2",
-          "postal_town",
-          "sublocality",
-        ]);
-        const state = getAddressComponent(addressComponents, [
-          "administrative_area_level_1",
-        ]);
-        const country = getAddressComponent(addressComponents, ["country"]);
-        const zipcode =
-          getAddressComponent(addressComponents, ["postal_code"]) ||
-          "Not available";
-
-        const addressWithoutStateAndZip = formattedAddressParts
-          .slice(0, -2)
-          .join(", ")
-          .trim();
-
         const venueAddress = {
-          name: addressWithoutStateAndZip || formattedAddressParts[0].trim(),
-          city: city || "Unknown City",
-          state: state || "Unknown State",
-          country: country || "Unknown Country",
-          zipcode: zipcode,
+          name: place.name,
+          city: getAddressComponent(place.address_components, [
+            "locality",
+            "postal_town",
+          ]),
+          country: getAddressComponent(place.address_components, ["country"]),
+          zipcode:
+            getAddressComponent(place.address_components, ["postal_code"]) ||
+            "Not available",
         };
-        
+
         setLocation(lat, lng, venueAddress);
       }
-    };
-
-    autocomplete.addListener("place_changed", handlePlaceChanged);
+    });
 
     return () => {
       google.maps.event.clearInstanceListeners(autocomplete);
     };
   }, [setLocation]);
 
-  const getAddressComponent = (components: any, types: any) => {
+  const getAddressComponent = (components: any, types: string[]) => {
     for (const type of types) {
       const component = components.find((component: any) =>
         component.types.includes(type)
@@ -134,19 +116,16 @@ const PlacesAutocomplete = ({
     const inputValue = e.target.value;
     setAddress(inputValue);
 
-    const service = new google.maps.places.AutocompleteService();
     if (inputValue.length > 2) {
+      const service = new google.maps.places.AutocompleteService();
       service.getPlacePredictions(
         { input: inputValue, types: ["establishment"] },
         (predictions, status) => {
-          if (
-            status === google.maps.places.PlacesServiceStatus.OK &&
-            predictions
-          ) {
-            setPredictions(predictions);
-          } else {
-            setPredictions([]);
-          }
+          setPredictions(
+            status === google.maps.places.PlacesServiceStatus.OK && predictions
+              ? predictions
+              : []
+          );
         }
       );
     } else {
@@ -172,38 +151,26 @@ const PlacesAutocomplete = ({
           ],
         },
         (placeDetails, status) => {
+          console.log(placeDetails);
+          
           if (
             status === google.maps.places.PlacesServiceStatus.OK &&
             placeDetails
           ) {
             const { lat, lng } = placeDetails.geometry!.location!.toJSON();
-            const addressComponents = placeDetails.address_components || [];
-
-            const formattedAddressParts =
-              placeDetails.formatted_address!.split(",");
-            const city = getAddressComponent(addressComponents, [
-              "locality",
-              "administrative_area_level_3",
-              "administrative_area_level_2",
-              "postal_town",
-              "sublocality",
-            ]);
-            const country = getAddressComponent(addressComponents, ["country"]);
-            const zipcode =
-              getAddressComponent(addressComponents, ["postal_code"]) ||
-              "Not available";
-
-            const addressWithoutStateAndZip = formattedAddressParts
-              .slice(0, -2)
-              .join(", ")
-              .trim();
-
             const venueAddress = {
-              name:
-                addressWithoutStateAndZip || formattedAddressParts[0].trim(),
-              city: city || "Unknown City",
-              country: country || "Unknown Country",
-              zipcode: zipcode,
+              name: placeDetails.name,
+              city: getAddressComponent(placeDetails.address_components, [
+                "administrative_area_level_1",
+              ]),
+              country: getAddressComponent(placeDetails.address_components, [
+                "country",
+              ]),
+              zipcode:
+                getAddressComponent(placeDetails.address_components, [
+                  "postal_code",
+                  "postal_town",
+                ]) || "Not available",
             };
 
             setAddress(place.description);
