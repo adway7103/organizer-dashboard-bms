@@ -14,6 +14,15 @@ import { Loader2 } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { updateEvent } from "../../api/updateEvent";
 
+interface dataProps {
+  isPrivate: boolean;
+  entryCondition: boolean;
+  seperateBooking: boolean;
+  limitTotalTicket: boolean;
+  lastEntryTime: string;
+  eventStatus: string;
+}
+
 const EditEvent2Form: React.FC = () => {
   const navigate = useNavigate();
   const { eventId } = useParams();
@@ -36,39 +45,36 @@ const EditEvent2Form: React.FC = () => {
     setShowAdvancedSettings((prevState) => !prevState);
   };
 
-  const validateForm = () => {
-    return lastEntryDate && lastEntryTime;
-  };
+  // const validateForm = () => {
+  //   return lastEntryDate && lastEntryTime;
+  // };
 
   const handleOnSubmit = async (e: any, buttonType: string) => {
     e.preventDefault();
     setLoading(true);
     setLoadingButton(buttonType);
 
-    if (!validateForm()) {
-      toast.error("Last entry is required");
-      setLoading(false);
-      return;
-    }
+    // if (!validateForm()) {
+    //   toast.error("Last entry is required");
+    //   setLoading(false);
+    //   return;
+    // }
     const lastEntryTimeFormatted =
       lastEntryDate && lastEntryTime
         ? dayjs(lastEntryDate)
             .hour(dayjs(lastEntryTime).hour())
             .minute(dayjs(lastEntryTime).minute())
             .format("YYYY-MM-DD HH:mm")
-        : null;
+        : "";
 
-    const data: any = {
+    const data: dataProps = {
       isPrivate,
       entryCondition,
       seperateBooking,
       limitTotalTicket,
       lastEntryTime: lastEntryTimeFormatted, // Include formatted time
+      eventStatus: "Published",
     };
-
-    if (buttonType === "nextPage") {
-      data.eventStatus = "Published";
-    }
 
     try {
       await updateEvent(data, eventId);

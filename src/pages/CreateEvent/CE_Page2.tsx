@@ -14,6 +14,15 @@ import { Loader2 } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { updateEvent } from "../../api/updateEvent";
 
+interface dataProps {
+  isPrivate: boolean;
+  entryCondition: boolean;
+  seperateBooking: boolean;
+  limitTotalTicket: boolean;
+  lastEntryTime: string;
+  eventStatus: string;
+}
+
 const CE_Page2: React.FC = () => {
   const navigate = useNavigate();
   const { eventId } = useParams();
@@ -36,42 +45,38 @@ const CE_Page2: React.FC = () => {
     setShowAdvancedSettings((prevState) => !prevState);
   };
 
-  const validateForm = () => {
-    return lastEntryDate && lastEntryTime;
-  };
+  // const validateForm = () => {
+  //   return lastEntryDate && lastEntryTime;
+  // };
 
-  const handleOnSubmit = async (
-    e: any,
-    buttonType: string
-  ) => {
+  const handleOnSubmit = async (e: any, buttonType: string) => {
     e.preventDefault();
     setLoading(true);
     setLoadingButton(buttonType);
 
-    if (!validateForm()) {
-      toast.error("Last entry is required");
-      setLoading(false);
-      return;
-    }
+    console.log(buttonType);
+
+    // if (!validateForm()) {
+    //   toast.error("Last entry is required");
+    //   setLoading(false);
+    //   return;
+    // }
     const lastEntryTimeFormatted =
       lastEntryDate && lastEntryTime
         ? dayjs(lastEntryDate)
             .hour(dayjs(lastEntryTime).hour())
             .minute(dayjs(lastEntryTime).minute())
             .format("YYYY-MM-DD HH:mm")
-        : null;
+        : "";
 
-    const data: any = {
+    const data: dataProps = {
       isPrivate,
       entryCondition,
       seperateBooking,
       limitTotalTicket,
       lastEntryTime: lastEntryTimeFormatted, // Include formatted time
+      eventStatus: "Published",
     };
-
-    if (buttonType === "nextPage") {
-      data.eventStatus = "Published";
-    }
 
     try {
       await updateEvent(data, eventId);
@@ -248,7 +253,7 @@ const CE_Page2: React.FC = () => {
         <div>
           <button
             className={`px-10 flex flex-row items-center justify-center gap-4 bg-[#244f7a] hover:bg-black text-white font-bold py-2 rounded cursor-pointer}`}
-            onClick={(e) => handleOnSubmit(e, "/events")}
+            onClick={(e) => handleOnSubmit(e, "/live-events")}
           >
             PUBLISH EVENT{" "}
             {loading && <Loader2 className="size-4 animate-spin" />}
