@@ -41,7 +41,8 @@ export interface EventInfo {
   eventStart?: string;
   eventEnd?: string;
   ageRestriction: string;
-  trailerUrls:string[];
+  trailerUrls: string[];
+  includePlatformInCartFees: boolean;
 }
 
 interface EventContextProps {
@@ -77,7 +78,8 @@ const defaultEventInfo: EventInfo = {
   eventStart: "",
   eventEnd: "",
   ageRestriction: "",
-  trailerUrls:[],
+  trailerUrls: [],
+  includePlatformInCartFees: true
 };
 
 const EventContext = createContext<EventContextProps | undefined>(undefined);

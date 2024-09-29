@@ -8,7 +8,6 @@ interface TicketData {
     categoryName: string;
     totalSeats: string;
     ticketType: string;
-    deductFeesFromTicketPrice: boolean;
     categoryPricePerPerson: string;
     ticketSaleType: string;
     saleStarts: string;

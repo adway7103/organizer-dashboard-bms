@@ -23,7 +23,6 @@ interface Ticket {
   isPriceThresholdApplicable: boolean;
   priceThreshold: string;
   priceAfterThreshold: string;
-  deductFeesFromTicketPrice: boolean;
   categoryPricePerPerson: string;
   ticketSaleType: string;
   saleStarts: string;
@@ -60,7 +59,6 @@ const AddTicket: React.FC = () => {
     isPriceThresholdApplicable: false,
     priceThreshold: "",
     priceAfterThreshold: "",
-    deductFeesFromTicketPrice: false,
     categoryPricePerPerson: "",
     ticketSaleType: "",
     saleStarts: "",
@@ -202,7 +200,6 @@ const AddTicket: React.FC = () => {
           isPriceThresholdApplicable: formData.isPriceThresholdApplicable,
           priceThreshold: formData.priceThreshold,
           priceAfterThreshold: formData.priceAfterThreshold,
-          deductFeesFromTicketPrice: formData.deductFeesFromTicketPrice,
           categoryPricePerPerson: formData.categoryPricePerPerson,
           ticketSaleType: formData.ticketSaleType,
           saleStarts: saleStart,
@@ -237,7 +234,6 @@ const AddTicket: React.FC = () => {
       isPriceThresholdApplicable: false,
       priceThreshold: "",
       priceAfterThreshold: "",
-      deductFeesFromTicketPrice: false,
       categoryPricePerPerson: "",
       ticketSaleType: "",
       saleStarts: "",
@@ -451,23 +447,7 @@ const AddTicket: React.FC = () => {
             />
           </div>
         )}
-
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            id="deductFees"
-            name="deductFeesFromTicketPrice"
-            checked={formData.deductFeesFromTicketPrice}
-            onChange={handleChange}
-            className="follow rounded mx-0 w-6 h-4"
-          />
-          <label
-            htmlFor="deductFees"
-            className="col-span-1 text-lg font-medium ml-2"
-          >
-            Deduct Fees from Ticket Price
-          </label>
-        </div>
+        
         <div className="grid gap-4">
           <label
             htmlFor="saleOption"
