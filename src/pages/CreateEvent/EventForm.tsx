@@ -276,7 +276,7 @@ const EventForm: React.FC = () => {
         organizer: "",
         ageRestriction: "",
         trailerUrls: [],
-        includePlatformInCartFees: false,
+        includePlatformInCartFees: true,
       });
     } catch (error: any) {
       console.error(error);

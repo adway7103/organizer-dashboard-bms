@@ -79,7 +79,7 @@ const defaultEventInfo: EventInfo = {
   eventEnd: "",
   ageRestriction: "",
   trailerUrls: [],
-  includePlatformInCartFees: false
+  includePlatformInCartFees: true
 };
 
 const EventContext = createContext<EventContextProps | undefined>(undefined);
