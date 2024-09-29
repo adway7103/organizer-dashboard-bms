@@ -86,12 +86,11 @@ const EventForm: React.FC = () => {
   // };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (name === "duration") {
-      const numericValue = value.replace(/[^\d]/g, ""); // Extract numeric value
+    const { name, value , checked, type} = e.target;
+    if (type === "checkbox") {
       setEventInfo((prevEventInfo) => ({
         ...prevEventInfo,
-        [name]: `${numericValue}h`, // Append "h" to the numeric value
+        [name]: checked,
       }));
     } else {
       setEventInfo((prevEventInfo) => ({
@@ -238,6 +237,7 @@ const EventForm: React.FC = () => {
       periodicity: eventInfo.periodicity,
       ageRestriction: eventInfo.ageRestriction || "N/A",
       trailerUrls: trailerUrl,
+      includePlatformInCartFees: eventInfo.includePlatformInCartFees,
     };
 
     try {
@@ -276,6 +276,7 @@ const EventForm: React.FC = () => {
         organizer: "",
         ageRestriction: "",
         trailerUrls: [],
+        includePlatformInCartFees: false,
       });
     } catch (error: any) {
       console.error(error);
@@ -628,6 +629,23 @@ const EventForm: React.FC = () => {
 
       <div>
         <Places />
+      </div>
+
+      <div className="flex items-center">
+        <input
+          type="checkbox"
+          id="includePlatformInCartFees"
+          name="includePlatformInCartFees"
+          checked={eventInfo.includePlatformInCartFees}
+          onChange={handleChange}
+          className="follow rounded mx-0 w-6 h-4"
+        />
+        <label
+          htmlFor="deductFees"
+          className="col-span-1 text-lg ml-2"
+        >
+          Deduct Fees from Ticket Price
+        </label>
       </div>
 
       <div className="flex items-center">

@@ -122,6 +122,8 @@ const EditEventForm: React.FC = () => {
               ? fetchedEvent.ageRestriction.replace("+", "")
               : "",
             trailerUrls: fetchedEvent.trailerUrls || [],
+            includePlatformInCartFees: fetchedEvent.includePlatformInCartFees,
+
           });
           setTrailerUrl(fetchedEvent.trailerUrls || []); // Set trailer URLs if needed
           setRefundTimeframe(fetchedEvent.refundPolicy?.refundTimeframe || ""); // Set refund timeframe if needed
@@ -135,12 +137,11 @@ const EditEventForm: React.FC = () => {
   }, [eventId, setEventInfo]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (name === "duration") {
-      const numericValue = value.replace(/[^\d]/g, ""); // Extract numeric value
+    const { name, value , checked, type} = e.target;
+    if (type === "checkbox") {
       setEventInfo((prevEventInfo) => ({
         ...prevEventInfo,
-        [name]: `${numericValue}h`, // Append "h" to the numeric value
+        [name]: checked,
       }));
     } else {
       setEventInfo((prevEventInfo) => ({
@@ -258,6 +259,7 @@ const EditEventForm: React.FC = () => {
       ageRestriction: eventInfo.ageRestriction,
       trailerUrls: trailerUrl,
       organizer: eventInfo.organizer,
+      includePlatformInCartFees: eventInfo.includePlatformInCartFees,
     };
 
     try {
@@ -617,6 +619,23 @@ const EditEventForm: React.FC = () => {
 
       <div>
         <Places />
+      </div>
+
+      <div className="flex items-center">
+        <input
+          type="checkbox"
+          id="includePlatformInCartFees"
+          name="includePlatformInCartFees"
+          checked={eventInfo.includePlatformInCartFees}
+          onChange={handleChange}
+          className="follow rounded mx-0 w-6 h-4"
+        />
+        <label
+          htmlFor="deductFees"
+          className="col-span-1 text-lg ml-2"
+        >
+          Deduct Fees from Ticket Price
+        </label>
       </div>
 
       <div className="flex items-center">
