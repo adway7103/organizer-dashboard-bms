@@ -12,8 +12,6 @@ import { fetchEventOverview } from "../../../../api/fetchEventOverview";
 import HomeContainerCard from "../../HomeContainerCard";
 
 interface EventOverviewResponse {
-  statusCode: number;
-  message: string;
   event: {
     title: string;
     posterUrl: string;
@@ -25,6 +23,7 @@ interface EventOverviewResponse {
   totalTicketSold: number;
   interestedPeople: string;
   revenue: string;
+  shareUrl:string;
   pageViewCount: number;
   tickets: {
     ticketName: string;
@@ -39,13 +38,13 @@ interface EventOverviewResponse {
     price: string;
     date: string;
   }[];
-  checklist:{
-    atLeastOneTicket:boolean;
-    eventLive:boolean;
-    connectRepNetwork:boolean;
-    promoCodeCreated:boolean;
-    trackingLinkCreated:boolean;
-  }
+  checklist: {
+    atLeastOneTicket: boolean;
+    eventLive: boolean;
+    connectRepNetwork: boolean;
+    promoCodeCreated: boolean;
+    trackingLinkCreated: boolean;
+  };
 }
 
 const EventOverview = () => {
@@ -104,7 +103,7 @@ const EventOverview = () => {
             />
           </div>
           <div className="max-sm:pl-2 max-sm:mt-4 p-2 lg:p-10 pr-2">
-            <CheckListCard eventOverviewData={eventOverviewData?.checklist}/>
+            <CheckListCard eventOverviewData={eventOverviewData?.checklist} />
           </div>
         </div>
         <div className="flex flex-wrap max-sm:justify-center max-sm:mt-4 gap-6 p-2 ml-8 mr-8">
@@ -131,6 +130,7 @@ const EventOverview = () => {
           <EventTraficAndShareButton
             className="bg-[#6076a0] text-xl"
             heading="Share"
+            shareUrl={eventOverviewData?.shareUrl}
           />
         </div>
         {/* <div className="ml-8 mr-28 mt-8 sm:mt-4">
@@ -169,13 +169,48 @@ export default EventOverview;
 //   );
 // };
 
-const EventTraficAndShareButton = ({ heading, className, eventId }: any) => {
+interface Props {
+  heading: string;
+  className: string;
+  eventId?: string;
+  shareUrl?: string;
+}
+const EventTraficAndShareButton = ({
+  heading,
+  className,
+  eventId,
+  shareUrl,
+}: Props) => {  
   const navigate = useNavigate();
   const handleClick = () => {
     if (heading === "Event traffic") {
-      console.log("eventId", eventId);
-
       navigate(`/event-traffic/${eventId}`);
+    }
+    else if (heading === "Share") {
+      shareEvent(shareUrl);
+    }
+  };
+
+  const shareEvent = (url?: string) => {
+    if (navigator.share && url) {
+      navigator
+        .share({
+          title: 'Check out this event!',
+          url: url,
+        })
+        .catch((error) => console.log('Error sharing:', error));
+    } else {
+      copyToClipboard(url);
+    }
+  };
+
+  const copyToClipboard = (url?: string) => {
+    if (url) {
+      navigator.clipboard.writeText(url).then(() => {
+        alert('Link copied to clipboard!');
+      }).catch((error) => {
+        console.error('Could not copy text: ', error);
+      });
     }
   };
   return (
