@@ -123,7 +123,6 @@ const EditEventForm: React.FC = () => {
               : "",
             trailerUrls: fetchedEvent.trailerUrls || [],
             includePlatformInCartFees: fetchedEvent.includePlatformInCartFees,
-
           });
           setTrailerUrl(fetchedEvent.trailerUrls || []); // Set trailer URLs if needed
           setRefundTimeframe(fetchedEvent.refundPolicy?.refundTimeframe || ""); // Set refund timeframe if needed
@@ -137,7 +136,7 @@ const EditEventForm: React.FC = () => {
   }, [eventId, setEventInfo]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value , checked, type} = e.target;
+    const { name, value, checked, type } = e.target;
     if (type === "checkbox") {
       setEventInfo((prevEventInfo) => ({
         ...prevEventInfo,
@@ -630,10 +629,7 @@ const EditEventForm: React.FC = () => {
           onChange={handleChange}
           className="follow rounded mx-0 w-6 h-4"
         />
-        <label
-          htmlFor="deductFees"
-          className="col-span-1 text-lg ml-2"
-        >
+        <label htmlFor="deductFees" className="col-span-1 text-lg ml-2">
           Deduct Fees from Ticket Price
         </label>
       </div>
@@ -720,6 +716,32 @@ const EditEventForm: React.FC = () => {
                     type="radio"
                     id="refundOption2"
                     name="refundTimeframe"
+                    value="24h"
+                    checked={refundTimeframe === "24h"}
+                    onChange={(e) => {
+                      setRefundTimeframe(e.target.value);
+                      setEventInfo({
+                        ...eventInfo,
+                        refundPolicy: {
+                          ...eventInfo.refundPolicy,
+                          refundTimeframe: e.target.value,
+                          policyType: true,
+                          allRefundsApproved: false,
+                        },
+                      });
+                    }}
+                    className="follow rounded w-6 h-4"
+                  />
+                  <label htmlFor="refundOption2" className="text-sm ml-3">
+                    24h{" "}
+                  </label>
+                </div>
+
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id="refundOption3"
+                    name="refundTimeframe"
                     value="48h"
                     checked={refundTimeframe === "48h"}
                     onChange={(e) => {
@@ -736,7 +758,7 @@ const EditEventForm: React.FC = () => {
                     }}
                     className="follow rounded w-6 h-4"
                   />
-                  <label htmlFor="refundOption2" className="text-sm ml-3">
+                  <label htmlFor="refundOption3" className="text-sm ml-3">
                     48h{" "}
                   </label>
                 </div>
@@ -744,7 +766,7 @@ const EditEventForm: React.FC = () => {
                 <div className="flex items-center">
                   <input
                     type="radio"
-                    id="refundOption3"
+                    id="refundOption4"
                     name="refundTimeframe"
                     value="7d"
                     checked={refundTimeframe === "7d"}
@@ -762,7 +784,7 @@ const EditEventForm: React.FC = () => {
                     }}
                     className="follow rounded w-6 h-4"
                   />
-                  <label htmlFor="refundOption3" className="text-sm ml-3">
+                  <label htmlFor="refundOption4" className="text-sm ml-3">
                     7d{" "}
                   </label>
                 </div>
