@@ -21,6 +21,16 @@ interface EventData {
   ticketsSold: number;
   shareUrl: string;
 }
+interface TotalRevenue {
+  eventId: string,
+  eventName: string,
+  revenuePercentage: string
+}
+interface TotalTicket {
+  eventId: string,
+  eventName: string,
+  ticketsPercentage: string
+}
 
 export const EventHome = () => {
   const location = useLocation();
@@ -30,6 +40,8 @@ export const EventHome = () => {
   const isDraftEvents = location.pathname.includes("/drafted-events");
 
   const [events, setEvents] = useState<EventData[]>([]);
+  const [revenueDistribution, setRevenueDistribution] = useState<TotalRevenue[]>([]);
+  const [ticketsDistribution, setTicketDistribution] = useState<TotalTicket[]>([]);
 
   const fetchData = async () => {
     try {
@@ -54,7 +66,8 @@ export const EventHome = () => {
         shareUrl: event.shareUrl,
         ticketsSold: event.ticketsSold,
       }));
-
+      setTicketDistribution(response.ticketsDistribution)
+      setRevenueDistribution(response.revenueDistribution)
       setEvents(formattedEvents);
     } catch (error) {
       console.error("Failed to fetch events", error);
@@ -105,8 +118,8 @@ export const EventHome = () => {
       </h1>
       {!isDraftEvents && (
         <div className="flex flex-col md:flex-row lg:w-auto xl:w-auto gap-6 mt-6 max-sm:pr-4">
-          <Total heading={"Total Revenue"} />
-          <Total heading={"Total tickets sold"} />
+          <Total heading={"Total Revenue"} revenueDistribution={revenueDistribution}/>
+          <Total heading={"Total tickets sold"} ticketsDistribution={ticketsDistribution}/>
         </div>
       )}
 
