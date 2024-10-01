@@ -57,7 +57,7 @@ export function CustomerTable() {
         const customersData = await fetchCustomers();
         setCustomers(customersData.formattedCustomerList);
       } catch (err) {
-        console.log("Failed to fetch customers");
+        console.log(err);
       }
     };
 
