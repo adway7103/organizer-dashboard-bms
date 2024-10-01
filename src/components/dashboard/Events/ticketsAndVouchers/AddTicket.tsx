@@ -67,7 +67,7 @@ const AddTicket: React.FC = () => {
     minPersonAllowedPerBooking: "",
     maxPersonAllowedPerBooking: "",
     promoCode: false,
-    toggleVisibility: false,
+    toggleVisibility: true,
     saleStartsDate: null,
     saleStartsTime: null,
     saleEndsDate: null,
