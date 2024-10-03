@@ -27,7 +27,7 @@ const ParticipantsByTickets = ({ ticketData }: ParticipantsByTicketsProps) => {
   return (
     <HomeContainerCard className="h-auto border border-gray-300 rounded-3xl w-full">
       <div className="flex flex-col justify-center items-center">
-        <div className="font-semibold text-xl pt-4">
+        <div className="font-medium text-xl pt-4">
           Participants By Tickets
         </div>
       </div>
@@ -35,9 +35,9 @@ const ParticipantsByTickets = ({ ticketData }: ParticipantsByTicketsProps) => {
         <div className="pt-6">
           <SalesPieChart data={chartData} />
         </div>
-        <div className="max-sm:pl-6 pr-6">
+        <div className="max-sm:pl-6 pr-6 space-y-2">
           {ticketEntries.map(([ticketName, ticketInfo]) => (
-            <div key={ticketName} className="flex justify-between">
+            <div key={ticketName} className="flex gap-2 justify-between">
               <p>{ticketName}</p>
               <p>{ticketInfo?.count || "0"} </p>{" "}
             </div>

@@ -111,7 +111,7 @@ export const EventHome = () => {
 
   return (
     <div className="ml-4 sm:ml-8 sm:mr-16 min-w-[300px]">
-      <h1 className="text-3xl font-semibold pl-4">
+      <h1 className="text-3xl font-medium pl-4">
         {isLiveEvents && "Live Events"}
         {isPastEvents && "Past Events"}
         {isDraftEvents && "Drafted Events"}

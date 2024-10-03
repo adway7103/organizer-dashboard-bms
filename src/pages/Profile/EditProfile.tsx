@@ -255,7 +255,7 @@ const EditProfile = () => {
   return (
     <>
       <form>
-        <h1 className="text-2xl font-semibold md:ml-10">Edit Details</h1>
+        <h1 className="text-2xl font-medium md:ml-10">Edit Details</h1>
         <div className="mt-4 grid grid-cols-3 md:grid-cols-6 border-2 w-[80%] sm:ml-8 min-w-[300px] p-8 gap-8 rounded-3xl">
           <div className="col-span-6 max-md:space-y-6 md:col-span-4 flex flex-col justify-between">
             <TextField
@@ -433,13 +433,13 @@ const EditProfile = () => {
           <div className="col-span-6 flex justify-center items-center gap-6">
             <button
               onClick={handleDiscard}
-              className="flex flex-row items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-4 rounded"
+              className="flex flex-row items-center justify-center gap-4 bg-gray-100 text-black font-medium py-2 px-4 rounded"
             >
               DISCARD CHANGES
             </button>
             <button
               onClick={formSubmitHandler}
-              className="flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-bold py-2 px-4 rounded"
+              className="flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-medium py-2 px-4 rounded"
             >
               SAVE CHANGES{" "}
               {loading && <Loader2 className="size-4 animate-spin" />}

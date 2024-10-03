@@ -63,6 +63,40 @@ const EventForm: React.FC = () => {
   const [refundTimeframe, setRefundTimeframe] = useState("");
 
   useEffect(() => {
+    setEventInfo({
+      title: "",
+      organizer: "",
+      eventCategories: [],
+      genres: [],
+      description: "",
+      posterUrl: "",
+      cheapestTicket: {
+        currency: "",
+        amount: "",
+      },
+      eventStartDate: null,
+      eventStartTime: null,
+      eventEndDate: null,
+      eventEndTime: null,
+      eventMode: "offline",
+      venueAddress: { name: "", city: "", country: "", zipcode: "" },
+      venueLocation: { latitude: 0, longitude: 0 },
+      refundPolicy: {
+        refundTimeframe: "",
+        policyType: false,
+        allRefundsApproved: false,
+      },
+      isRep: false,
+      periodicity: "",
+      eventStart: "",
+      eventEnd: "",
+      ageRestriction: "",
+      trailerUrls: [],
+      includePlatformInCartFees: true,
+    });
+  }, []);
+
+  useEffect(() => {
     const fetchCategories = async () => {
       try {
         const fetchedCategories = await getCategories();
@@ -86,7 +120,7 @@ const EventForm: React.FC = () => {
   // };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value , checked, type} = e.target;
+    const { name, value, checked, type } = e.target;
     if (type === "checkbox") {
       setEventInfo((prevEventInfo) => ({
         ...prevEventInfo,
@@ -614,7 +648,7 @@ const EventForm: React.FC = () => {
           <label htmlFor="offline" className="mr-2">
             Offline
           </label>
-          <input
+          {/* <input
             id="online"
             type="radio"
             name="eventMode"
@@ -623,7 +657,7 @@ const EventForm: React.FC = () => {
             onChange={handleChange}
             required
           />
-          <label htmlFor="online">Online</label>
+          <label htmlFor="online">Online</label> */}
         </div>
       </div>
 
@@ -640,10 +674,7 @@ const EventForm: React.FC = () => {
           onChange={handleChange}
           className="follow rounded mx-0 w-6 h-4"
         />
-        <label
-          htmlFor="deductFees"
-          className="col-span-1 text-lg ml-2"
-        >
+        <label htmlFor="deductFees" className="col-span-1 text-lg ml-2">
           Deduct Fees from Ticket Price
         </label>
       </div>
@@ -670,7 +701,7 @@ const EventForm: React.FC = () => {
       </div>
 
       <div>
-        <h3 className="font-semibold text-xl mb-2">Refunds</h3>
+        <h3 className="font-medium text-xl mb-2">Refunds</h3>
         <div className="flex flex-col gap-2 ml-2">
           <div className="flex items-center">
             <input

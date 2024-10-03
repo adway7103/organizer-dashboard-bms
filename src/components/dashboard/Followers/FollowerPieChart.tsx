@@ -184,7 +184,7 @@ export function FollowerPieChart({
                   </div>
                 </div>
                 <div>
-                  <div className="flex gap-4 justify-between">
+                  <div className="flex gap-1 justify-between">
                     <div> 30-39 </div>
                     <div className="flex items-center">
                       <span>
@@ -193,7 +193,7 @@ export function FollowerPieChart({
                       {ageDistribution?.["30-39"]}%
                     </div>
                   </div>
-                  <div className="flex gap-4 justify-between">
+                  <div className="flex gap-1 justify-between">
                     <div> 40-49 </div>
                     <div className="flex items-center">
                       <span>
@@ -202,7 +202,7 @@ export function FollowerPieChart({
                       {ageDistribution?.["30-39"]}%
                     </div>
                   </div>
-                  <div className="flex gap-4 justify-between">
+                  <div className="flex gap-1 justify-between">
                     <div> 51+ </div>
                     <div className="flex items-center">
                       <span>

@@ -40,7 +40,7 @@ const Total = ({
           />
         </div>
         <div className="col-span-6 xl:px-5 flex flex-col justify-center items-center pb-2 ">
-          <div className="font-semibold text-xl pb-4">{heading}</div>
+          <div className="font-medium text-xl pb-4">{heading}</div>
           {heading === "Total Revenue" ? (
             <div className=" text-sm lg:pr-8 space-y-2">
               {revenueDistribution?.slice(0, 3).map((r: any, index: number) => (

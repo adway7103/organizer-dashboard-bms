@@ -78,8 +78,8 @@ const Profile = () => {
   ];
 
   return (
-    <section className="md:w-1/2 w-full md:px-5 mx-auto pb-10">
-      <h1 className="font-semibold text-2xl pb-4">Profile Details</h1>
+    <section className="md:w-1/2 w-full md:px-5 mx-auto pb-10 max-sm:pr-4 max-sm:pl-4">
+      <h1 className="font-medium text-2xl pb-4">Profile Details</h1>
       <div className="flex flex-col items-center gap-4 w-full p-5 border-2 rounded-2xl">
         {profileData?.logoUrl ? (
           <img

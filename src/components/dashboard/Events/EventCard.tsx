@@ -108,11 +108,11 @@ const EventCard = ({
       <div>
         <div className="flex justify-center sm:justify-between items-center">
           <div className="relative group w-full max-sm:pt-2">
-            <h1 className="text-[#A48A00] max-sm:text-center font-semibold text-[0.8rem] md:text-[0.9rem] lg:text-[1.1rem] 2xl:text-[1.4rem] pr-4 hover:line-clamp-none line-clamp-1 leading-tight">
+            <h1 className="text-[#A48A00] max-sm:text-center  text-[0.8rem] md:text-[0.9rem] lg:text-[1.1rem] 2xl:text-[1.4rem] pr-4 hover:line-clamp-none line-clamp-1 leading-tight">
               {/* < className="text-2xl font-semibold text-[#a28a02] text-center md:text-start"> */}
               {truncateTitle(title, 4)} {/* Shows only the first 3 words */}
             </h1>
-            <span className="sm:hidden block absolute top-0 left-0 z-10 hidden w-full bg-white rounded-lg text-[#A48A00] font-semibold text-[0.8rem] md:text-[0.9rem] lg:text-[1.1rem] 2xl:text-[1.4rem] pr-4 leading-tight whitespace-normal group-hover:block">
+            <span className="sm:hidden block absolute top-0 left-0 z-10 hidden w-full bg-white rounded-lg text-[#A48A00] text-[0.8rem] md:text-[0.9rem] lg:text-[1.1rem] 2xl:text-[1.4rem] pr-4 leading-tight whitespace-normal group-hover:block">
               {title} {/* Full title shown on hover */}
             </span>
           </div>
@@ -272,16 +272,16 @@ const EventCard = ({
           )}
         </div>
         <div
-          className="flex text-white text-lg space-x-2 mt-3"
+          className="flex max-md:justify-center text-white text-lg gap-2 space-x-1 mt-3"
           onClick={handlePreviewButton}
         >
-          <div className="text-[0.9rem] border bg-[#244f7a] px-8 py-1 rounded-md hover:shadow-lg">
+          <div className="text-[0.9rem] border bg-[#244f7a] px-6 md:px-7 py-1 rounded-md hover:shadow-lg">
             View Event
           </div>
           <div className="" onClick={(e) => e.stopPropagation()}>
             <TextBlast
               heading="Text Blast"
-              className="border bg-[#954b7c] px-7 sm:px-8 py-1 rounded-md text-[0.9rem] hover:shadow-lg cursor-pointer h-9 "
+              className="border bg-[#954b7c] px-8 md:px-7 py-1 rounded-md text-[0.9rem] hover:shadow-lg cursor-pointer h-9 "
               classStyle="h-auto shadow-none mt-0 sm:h-[0vh]"
             />{" "}
           </div>

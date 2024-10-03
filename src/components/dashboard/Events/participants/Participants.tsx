@@ -88,7 +88,7 @@ const Participants = () => {
 
   return (
     <div className="ml-4 sm:ml-8 sm:mr-20">
-      <h1 className="text-3xl text-[#9d487b] font-medium ml-8">
+      <h1 className="text-3xl text-[#9d487b] font-medium ml-4 sm:ml-8 max-sm:pr-4">
         {participantsData?.eventTitle}
       </h1>
       <div className="flex justify-between items-center mr-6 sm:mr-10 mt-6">

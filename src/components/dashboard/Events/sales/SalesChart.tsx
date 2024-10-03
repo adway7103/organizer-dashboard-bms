@@ -12,7 +12,7 @@ interface SalesOverTimeProps {
 const SalesOverTime = ({ monthlyData }: SalesOverTimeProps) => {
   const data = monthlyData?.map((item: any) => ({
     name: item.month, // Month on the X-axis
-    value: item.salesCount, // Sales count on the Y-axis
+    sales: item.salesCount, // Sales count on the Y-axis
   }));
   return (
     <div className="border relative bg-blue-box rounded-3xl shadow-xl flex flex-col gap-y-2 justify-center w-full items-center">
@@ -36,7 +36,7 @@ const SalesOverTime = ({ monthlyData }: SalesOverTimeProps) => {
         <CartesianGrid vertical horizontal={false} strokeOpacity={0.3} />
         <XAxis dataKey="name" tick={{ fill: "black" }} />
         <Tooltip />
-        <Area type="monotone" dataKey="value" stroke="#647aa1" fill="#647aa1" />
+        <Area type="monotone" dataKey="sales" stroke="#647aa1" fill="#647aa1" />
       </AreaChart>
     </div>
   );

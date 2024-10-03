@@ -60,12 +60,12 @@ const AddTicket: React.FC = () => {
     priceThreshold: "",
     priceAfterThreshold: "",
     categoryPricePerPerson: "",
-    ticketSaleType: "",
+    ticketSaleType: "setStart",
     saleStarts: "",
     saleEnds: "",
     additionalInfo: "",
-    minPersonAllowedPerBooking: "",
-    maxPersonAllowedPerBooking: "",
+    minPersonAllowedPerBooking: "1",
+    maxPersonAllowedPerBooking: "100",
     promoCode: false,
     toggleVisibility: true,
     saleStartsDate: null,
@@ -408,7 +408,7 @@ const AddTicket: React.FC = () => {
             <TextField
               id="priceThreshold"
               name="priceThreshold"
-              label="Price Threshold"
+              label="Number of tickets sold"
               type="number"
               placeholder="Enter threshold"
               variant="outlined"

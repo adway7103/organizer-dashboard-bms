@@ -18,7 +18,7 @@ const CountCard = ({ heading, count }: CountCardType) => {
               className="border border-black rounded-full bg-[#d8d8d8] p-1"
             />
           </div>
-          <div className="font-semibold text-xl">{heading}</div>
+          <div className="font-medium text-xl">{heading}</div>
         </div>
         <div className="text-[2rem] font-bold ">{count}</div>
       </div>

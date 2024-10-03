@@ -7,7 +7,7 @@ const CE_Page1 = () => {
         <span className="page-top bg-black"></span>
         <span className="page-top bg-neutral-300"></span>
       </div>
-      <h1 className="font-semibold text-2xl pb-4">Create Event</h1>
+      <h1 className="font-medium text-2xl pb-4">Create Event</h1>
       <EventForm />
     </>
   );

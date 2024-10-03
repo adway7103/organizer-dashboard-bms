@@ -16,7 +16,7 @@ const Total = ({ heading }: PropsType) => {
           <AffiliatePieChart />
         </div>
         <div className="xl:px-6 flex flex-col justify-center items-center pb-2 gap-y-4">
-          <div className="font-semibold text-xl">{heading}</div>
+          <div className="font-medium text-xl">{heading}</div>
           <div className="text-sm lg:pr-8 lg:pl-4 space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex justify-center items-center">

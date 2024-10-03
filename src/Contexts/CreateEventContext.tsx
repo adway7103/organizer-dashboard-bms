@@ -65,7 +65,7 @@ const defaultEventInfo: EventInfo = {
   eventStartTime: null,
   eventEndDate: null,
   eventEndTime: null,
-  eventMode: "",
+  eventMode: "offline",
   venueAddress: { name: "", city: "", country: "", zipcode: "" },
   venueLocation: { latitude: 0, longitude: 0 },
   refundPolicy: {

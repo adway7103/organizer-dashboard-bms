@@ -34,7 +34,7 @@ const EventGrid = ({
   return (
     <div>
       <div className=" flex sm:w-auto justify-between mt-10 pr-1">
-        <h1 className="text-2xl font-semibold px-4">Event list</h1>
+        <h1 className="text-2xl font-medium px-4">Event list</h1>
         <div className="flex flex-col md:flex-row md:justify-between gap-4 sm:flex-wrap sm:mr-6">
           <div className="max-sm:flex max-sm:justify-center max-sm:items-center">
             <span className="pr-2">Show</span>

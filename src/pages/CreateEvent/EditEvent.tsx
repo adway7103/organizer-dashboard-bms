@@ -68,8 +68,8 @@ const EditEventForm: React.FC = () => {
 
         if (Array.isArray(fetchedEvent.venueLocation?.coordinates)) {
           venueLocationFormatted = {
-            latitude: fetchedEvent.venueLocation.coordinates[1], // latitude
-            longitude: fetchedEvent.venueLocation.coordinates[0], // longitude
+            latitude: fetchedEvent.venueLocation.coordinates[0], // latitude
+            longitude: fetchedEvent.venueLocation.coordinates[1], // longitude
           };
         } else {
           // Assuming it's already in object format
@@ -603,7 +603,7 @@ const EditEventForm: React.FC = () => {
           <label htmlFor="offline" className="mr-2">
             Offline
           </label>
-          <input
+          {/* <input
             id="online"
             type="radio"
             name="eventMode"
@@ -612,12 +612,12 @@ const EditEventForm: React.FC = () => {
             onChange={handleChange}
             required
           />
-          <label htmlFor="online">Online</label>
+          <label htmlFor="online">Online</label> */}
         </div>
       </div>
 
       <div>
-        <Places />
+        <Places venueAddress={eventInfo.venueAddress} cordinates={eventInfo.venueLocation}/>
       </div>
 
       <div className="flex items-center">
@@ -656,7 +656,7 @@ const EditEventForm: React.FC = () => {
       </div>
 
       <div>
-        <h3 className="font-semibold text-xl mb-2">Refunds</h3>
+        <h3 className="font-medium text-xl mb-2">Refunds</h3>
         <div className="flex flex-col gap-2 ml-2">
           <div className="flex items-center">
             <input
@@ -861,7 +861,7 @@ const EditEvent = () => {
         <span className="page-top bg-black"></span>
         <span className="page-top bg-neutral-300"></span>
       </div>
-      <h1 className="font-semibold text-2xl pb-4">Edit Event</h1>
+      <h1 className="font-medium text-2xl pb-4">Edit Event</h1>
       <EditEventForm />
     </div>
   );
