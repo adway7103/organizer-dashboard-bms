@@ -48,21 +48,22 @@ export function TicketTable() {
   const [rowSelection, setRowSelection] = React.useState({});
   const [tickets, setTickets] = React.useState<Tickets[]>([]);
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetchEventOverview({ eventId });
+  const  fetchData= async () => {
+    const response = await fetchEventOverview({ eventId });
 
-      // Map API response to table data format
-      const transformedData = response.data.tickets.map((ticket: any) => ({
-        matrixId: ticket.bookingMatrixId,
-        id: ticket.ticketId,
-        name: ticket.ticketName,
-        price: ticket.price ? `${ticket.price}` : "Free",
-        totalTickets: `${ticket.ticketSold}`,
-        status: ticket.active,
-      }));
-      setTickets(transformedData);
-    };
+    // Map API response to table data format
+    const transformedData = response.data.tickets.map((ticket: any) => ({
+      matrixId: ticket.bookingMatrixId,
+      id: ticket.ticketId,
+      name: ticket.ticketName,
+      price: ticket.price ? `${ticket.price}` : "Free",
+      totalTickets: `${ticket.ticketSold}`,
+      status: ticket.active,
+    }));
+    setTickets(transformedData);
+  };
+
+  React.useEffect(() => {
     fetchData();
   }, [eventId]);
 
@@ -120,6 +121,7 @@ export function TicketTable() {
             id={row.original.id}
             matrixId={row.original.matrixId}
             onDelete={handleDeleteTicket}
+            fetchData={fetchData}
           />
         </div>
       ),
