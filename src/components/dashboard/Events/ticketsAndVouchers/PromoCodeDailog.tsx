@@ -5,7 +5,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { baseUrl } from "../../../../utils";
 
-
 interface Props {
   id: string;
   eventId?: string;
@@ -110,9 +109,7 @@ export default function PromoCodeDialog({ id, eventId, onDelete }: Props) {
           },
         }}
       >
-        {/* <Link to={`#`} state={{ from: location.pathname }}>
-          <MenuItem>Activate</MenuItem>
-        </Link> */}
+        <MenuItem>Toggle visibility</MenuItem>
         <MenuItem onClick={handleDelete}>Delete</MenuItem>
       </Menu>
     </div>
