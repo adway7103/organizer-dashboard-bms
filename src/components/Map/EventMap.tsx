@@ -4,7 +4,22 @@ import "./EventMap.css";
 import { useEventContext } from "../../Contexts/CreateEventContext";
 
 //places component
-export default function Places() {
+export default function Places({
+  venueAddress,
+  cordinates,
+}: {
+  venueAddress?: any;
+  cordinates?: any;
+}) {
+  const fullAddress = [
+    venueAddress?.name,
+    venueAddress?.city,
+    venueAddress?.zipcode,
+    venueAddress?.country,
+  ]
+    .filter(Boolean)
+    .join(", ");
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyAxh0ks8s9JDC182Ls7PUmTJ2ahN-azosU",
     libraries: ["places"],
@@ -12,16 +27,39 @@ export default function Places() {
 
   if (!isLoaded) return <div>Loading...</div>;
 
-  return <MapComponent />;
+  return <MapComponent fullAddress={fullAddress} coordinates={cordinates} />;
 }
 
 //map component
-const MapComponent = () => {
+const MapComponent = ({
+  fullAddress,
+  coordinates,
+}: {
+  fullAddress?: string;
+  coordinates: any;
+}) => {
+  console.log(coordinates);
+
   const { setEventInfo } = useEventContext();
-  const center = useMemo(() => ({ lat: -33.8688, lng: 151.2195 }), []); //default center
+  const defaultCenter = useMemo(() => ({ lat: -33.8688, lng: 151.2195 }), []);
+
+  const mapCenter = coordinates
+    ? { lat: coordinates.latitude, lng: coordinates.longitude }
+    : defaultCenter;
+
   const [selected, setSelected] = useState<{ lat: number; lng: number } | null>(
-    null
+    coordinates
+      ? { lat: coordinates.latitude, lng: coordinates.longitude }
+      : null
   );
+
+  useEffect(() => {
+    if (coordinates) {
+      setSelected({ lat: coordinates.latitude, lng: coordinates.longitude });
+    } else {
+      setSelected(null);
+    }
+  }, [coordinates]);
 
   const handleLocationChange = (
     lat: number,
@@ -40,12 +78,15 @@ const MapComponent = () => {
   return (
     <>
       <div className="places-container">
-        <PlacesAutocomplete setLocation={handleLocationChange} />
+        <PlacesAutocomplete
+          setLocation={handleLocationChange}
+          fullAddress={fullAddress}
+        />
       </div>
 
       <GoogleMap
         zoom={10}
-        center={selected || center}
+        center={selected || mapCenter}
         mapContainerClassName="map-container"
       >
         {selected && <Marker position={selected} />}
@@ -57,15 +98,21 @@ const MapComponent = () => {
 //places auto complete component
 const PlacesAutocomplete = ({
   setLocation,
+  fullAddress,
 }: {
   setLocation: (lat: number, lng: number, venueAddress: any) => void;
+  fullAddress?: string;
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(fullAddress || "");
   const [predictions, setPredictions] = useState<
     google.maps.places.AutocompletePrediction[]
   >([]);
-
+  useEffect(() => {
+    if (fullAddress) {
+      setAddress(fullAddress);
+    }
+  }, [fullAddress]);
   useEffect(() => {
     const input = inputRef.current;
     if (!input) return;
@@ -152,7 +199,7 @@ const PlacesAutocomplete = ({
         },
         (placeDetails, status) => {
           console.log(placeDetails);
-          
+
           if (
             status === google.maps.places.PlacesServiceStatus.OK &&
             placeDetails
