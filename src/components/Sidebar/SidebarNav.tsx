@@ -18,8 +18,8 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ item, isActive, onClick }) => {
     item.name === "Ticket and Vouchers" || item.name === "Events"
       ? "rounded-t-3xl py-3"
       : "rounded-3xl";
-  const navStyle = `flex items-center md:gap-x-4 px-4 sm:px-5 py-2 cursor-pointer ${borderRadiusClass} ${
-    isActive ? "active-sidebar" : ""
+  const navStyle = `hover:bg-[#60769D] flex items-center md:gap-x-4 px-4 sm:px-5 py-2 cursor-pointer ${borderRadiusClass} ${
+    isActive ? "active-sidebar" : "hover:rounded-3xl"
   }`;
 
   return (
@@ -35,7 +35,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ item, isActive, onClick }) => {
           ) : (
             <span className="sidebar-navigations text-xl">{item.icon}</span>
           )}
-          <span className="sidebar-navigations md:block hidden">
+          <span className="text-xl sidebar-navigations md:block hidden">
             {item.name}
           </span>
         </div>
@@ -55,7 +55,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ item, isActive, onClick }) => {
           ) : (
             <span className="sidebar-navigations text-xl">{item.icon}</span>
           )}
-          <span className="sidebar-navigations md:block hidden">
+          <span className="text-xl sidebar-navigations md:block hidden">
             {item.name}
           </span>
         </NavLink>
