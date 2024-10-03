@@ -96,7 +96,7 @@ const FileDragNDrop: React.FC<FileDragNDropProps> = ({
             <span className="bg-black opacity-50 text-white p-1">
               <MdUpload style={{ fontSize: "3.3rem" }} />
             </span>
-            <h3 className="text-xl font-semibold">
+            <h3 className="text-xl font-medium">
               {title ? title : "Event Image"}
             </h3>
             <p className="text-xs">
