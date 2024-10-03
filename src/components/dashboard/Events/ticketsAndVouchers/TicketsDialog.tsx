@@ -67,16 +67,11 @@ export default function TicketDailog({
       throw error;
     }
   };
-  const [toggleVisibility, setToggleVisibility] = React.useState<boolean>();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const ticket = await fetchTicket({ ticketId: id });
-
-    if (toggleVisibility === null) return;
-
     const toggleVisibilityField = !ticket.toggleVisibility;
-
     const ticketData = {
       ticketId: id,
       data: {
@@ -89,7 +84,6 @@ export default function TicketDailog({
       await updateTicket(ticketData);
       fetchData();
       toast.success("Ticket updated successfully");
-      setToggleVisibility(toggleVisibilityField);
     } catch (error: any) {
       const errorMessage =
         error.response?.data?.message || "Failed to update ticket";
