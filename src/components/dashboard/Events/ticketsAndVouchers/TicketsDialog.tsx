@@ -4,20 +4,24 @@ import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { baseUrl } from "../../../../utils";
+import toast from "react-hot-toast";
+import { fetchTicket } from "../../../../api/fetchTicket";
+import { updateTicket } from "../../../../api/updteTicketApi";
 
 interface Props {
   id: string;
   matrixId?: string;
   eventId?: string;
   onDelete: (id: string) => void;
+  fetchData: () => void;
 }
 export default function TicketDailog({
   id,
   matrixId,
   eventId,
   onDelete,
+  fetchData,
 }: Props) {
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -27,7 +31,6 @@ export default function TicketDailog({
   const handleClose = () => {
     setAnchorEl(null);
   };
-
 
   const isLiveEvent = location.pathname.startsWith("/live-events/");
   const isPastEvent = location.pathname.startsWith("/past-events/");
@@ -64,7 +67,35 @@ export default function TicketDailog({
       throw error;
     }
   };
+  const [toggleVisibility, setToggleVisibility] = React.useState<boolean>();
 
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const ticket = await fetchTicket({ ticketId: id });
+
+    if (toggleVisibility === null) return;
+
+    const toggleVisibilityField = !ticket.toggleVisibility;
+
+    const ticketData = {
+      ticketId: id,
+      data: {
+        toggleVisibility: toggleVisibilityField,
+      },
+      matrixId,
+    };
+
+    try {
+      await updateTicket(ticketData);
+      fetchData();
+      toast.success("Ticket updated successfully");
+      setToggleVisibility(toggleVisibilityField);
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message || "Failed to update ticket";
+      toast.error(errorMessage);
+    }
+  };
 
   return (
     <div>
@@ -106,7 +137,7 @@ export default function TicketDailog({
         }}
         sx={{
           "& .MuiPaper-root": {
-            backgroundColor: "#fffeff"
+            backgroundColor: "#fffeff",
           },
         }}
       >
@@ -116,7 +147,7 @@ export default function TicketDailog({
         >
           <MenuItem>Edit Ticket</MenuItem>
         </Link>
-        <MenuItem >Toggle visibility</MenuItem>
+        <MenuItem onClick={handleSubmit}>Toggle visibility</MenuItem>
         <MenuItem onClick={handleDelete}>Delete Ticket</MenuItem>
       </Menu>
     </div>
