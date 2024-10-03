@@ -399,23 +399,18 @@ const EditEventForm: React.FC = () => {
         onFileSelect={handleFileSelect}
         posterUrl={eventInfo.posterUrl}
       />
-      <div className="flex gap-4">
-        <VideoComponent
-          onFileSelect={handleVideoFile}
-          setTrailerUrl={setTrailerUrl}
-          videoUrl={trailerUrl[0]}
-        />
-        <VideoComponent
-          onFileSelect={handleVideoFile}
-          setTrailerUrl={setTrailerUrl}
-          videoUrl={trailerUrl[1]}
-        />
-        <VideoComponent
-          onFileSelect={handleVideoFile}
-          setTrailerUrl={setTrailerUrl}
-          videoUrl={trailerUrl[2]}
-        />
-      </div>
+<div className="mb-4 grid grid-cols-3 gap-2 xl:gap-10">
+  {[0, 1, 2].map((index) => (
+    <VideoComponent
+      key={index}
+      index={index} // Pass index
+      onFileSelect={handleVideoFile}
+      setTrailerUrl={setTrailerUrl}
+      videoUrl={trailerUrl[index] || null} // Render empty component if no video at index
+    />
+  ))}
+</div>
+
 
       {/* </div> */}
 
