@@ -98,7 +98,7 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
             <span className="bg-black opacity-50 text-white p-1">
               <MdUpload className="text-[3.3rem] sm:text-[3.3rem]" />
             </span>
-            <h3 className="text-xl font-semibold text-center">Event Stories</h3>
+            <h3 className="text-xl font-medium text-center">Event Stories</h3>
             <input
               type="file"
               name={`video-${index}`} // Unique name per input

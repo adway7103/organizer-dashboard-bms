@@ -447,19 +447,16 @@ const EventForm: React.FC = () => {
         onFileSelect={handleFileSelect}
         disclaimer={"Event image needs to be 1:3"}
       />
-      <div className="flex gap-4">
-        <VideoComponent
-          onFileSelect={handleVideoFile}
-          setTrailerUrl={setTrailerUrl}
-        />
-        <VideoComponent
-          onFileSelect={handleVideoFile}
-          setTrailerUrl={setTrailerUrl}
-        />
-        <VideoComponent
-          onFileSelect={handleVideoFile}
-          setTrailerUrl={setTrailerUrl}
-        />
+      <div className="mb-4 grid grid-cols-3 gap-2 xl:gap-10">
+        {[0, 1, 2].map((index) => (
+          <VideoComponent
+            key={index}
+            index={index} 
+            onFileSelect={handleVideoFile}
+            setTrailerUrl={setTrailerUrl}
+            videoUrl={trailerUrl[index] || null}
+          />
+        ))}
       </div>
 
       {/* </div> */}
