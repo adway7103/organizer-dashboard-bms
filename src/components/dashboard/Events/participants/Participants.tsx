@@ -121,7 +121,9 @@ const Participants = () => {
       </div>
       <div className="mt-10 sm:ml-4">
         <h1 className="text-2xl font-medium ml-8">Participants List</h1>
-        <ParticipantsTable />
+        <ParticipantsTable
+          participants={participantsData?.participants || []}
+        />
       </div>
     </div>
   );

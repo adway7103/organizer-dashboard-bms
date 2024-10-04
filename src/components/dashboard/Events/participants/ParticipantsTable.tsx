@@ -34,21 +34,21 @@ import {
 // };
 
 export type Tickets = {
-  id: string;
+  bookingId: string;
   fname: string;
   lname: string;
   age: string;
   gender: string;
-  ticketBoughtOn: string;
-  isFollowing: string;
+  orderDate: string;
+  isFollowing: boolean;
   entryTime: string;
 };
 
-const data: Tickets[] = [
- 
-];
-
-export function ParticipantsTable() {
+export function ParticipantsTable({
+  participants,
+}: {
+  participants: Tickets[];
+}) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -80,8 +80,14 @@ export function ParticipantsTable() {
   //     fetchData();
   //   }, []);
 
-
   const columns: ColumnDef<Tickets>[] = [
+    {
+      accessorKey: "bookingId",
+      header: "Booking Id",
+      cell: ({ row }) => (
+        <div className="text-black">{row.getValue("bookingId")}</div>
+      ),
+    },
     {
       accessorKey: "fname",
       header: "First Name",
@@ -111,20 +117,27 @@ export function ParticipantsTable() {
       ),
     },
     {
-      accessorKey: "ticketBoughtOn",
+      accessorKey: "orderDate",
       header: "Ticket bought on",
       cell: ({ row }) => (
-        <div className="text-black">{row.getValue("ticketBoughtOn")}</div>
+        <div className="text-black">{row.getValue("orderDate")}</div>
       ),
     },
     {
       accessorKey: "isFollowing",
-      header: "Is following",
-      cell: ({ row }) => (
-        <div className="bg-[#d4fdd3] text-center rounded-full py-1 px-4 text-black">
-          {row.getValue("isFollowing")}
-        </div>
-      ),
+      header: "Is Following",
+      cell: ({ row }) => {
+        const isFollowing = row.getValue("isFollowing");
+        return isFollowing ? (
+          <div className="bg-[#d4fdd3] text-center rounded-full py-1 px-4 text-black">
+            Yes
+          </div>
+        ) : (
+          <div className="bg-[#fdd3d3] text-center rounded-full py-1 px-4 text-black">
+            No
+          </div>
+        );
+      },
     },
     {
       accessorKey: "entryTime",
@@ -136,7 +149,7 @@ export function ParticipantsTable() {
   ];
 
   const table = useReactTable({
-    data,
+    data: participants,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
