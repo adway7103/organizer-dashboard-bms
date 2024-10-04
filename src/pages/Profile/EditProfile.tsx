@@ -254,9 +254,9 @@ const EditProfile = () => {
 
   return (
     <>
-      <form>
+      <form className="max-sm:pr-4 max-sm:pl-4">
         <h1 className="text-2xl font-medium md:ml-10">Edit Details</h1>
-        <div className="mt-4 grid grid-cols-3 md:grid-cols-6 border-2 w-[80%] sm:ml-8 min-w-[300px] p-8 gap-8 rounded-3xl">
+        <div className="mt-4 grid grid-cols-3 md:grid-cols-6 border-2 sm:w-[80%] sm:ml-8 min-w-[300px] p-8 gap-8 rounded-3xl">
           <div className="col-span-6 max-md:space-y-6 md:col-span-4 flex flex-col justify-between">
             <TextField
               id="eventName"
