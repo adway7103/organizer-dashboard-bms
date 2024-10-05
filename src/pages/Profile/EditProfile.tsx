@@ -39,7 +39,7 @@ const EditProfile = () => {
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
   >([]);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | string>("");
   const [eventCategories, setCategory] = useState<string[]>([]);
 
   const [name, setName] = useState<string>("");
@@ -109,7 +109,7 @@ const EditProfile = () => {
     setCategory(event.target.value as string[]);
   };
 
-  const handleFileSelect = (file: File | null) => {
+  const handleFileSelect = (file: File | string) => {
     setSelectedFile(file);
   };
 
@@ -122,7 +122,7 @@ const EditProfile = () => {
     const id = profileData.orgId;
     let imageUrl = profileData.logoUrl;
 
-    if (selectedFile) {
+    if (selectedFile && typeof selectedFile !== "string") {
       imageUrl = await uploadImage(selectedFile);
     }
 

@@ -14,7 +14,7 @@ import { createAccount } from "../../api/createAnAccount";
 const CreateAnAccount = () => {
   const { accountInfo, setAccountInfo } = useAccountContext();
   const [loading, setLoading] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | string>("");
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
   >([]);
@@ -57,7 +57,7 @@ const CreateAnAccount = () => {
     });
   };
 
-  const handleFileSelect = (file: File | null) => {
+  const handleFileSelect = (file: File | string) => {
     setSelectedFile(file);
   };
 
@@ -74,7 +74,7 @@ const CreateAnAccount = () => {
     try {
       let imageUrl = "";
 
-      if (selectedFile) {
+      if (selectedFile && typeof selectedFile !== "string") {
         imageUrl = await uploadImage(selectedFile);
       }
 
