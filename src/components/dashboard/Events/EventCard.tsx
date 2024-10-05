@@ -275,13 +275,13 @@ const EventCard = ({
           className="flex max-md:justify-center text-white text-lg gap-2 space-x-1 mt-3"
           onClick={handlePreviewButton}
         >
-          <div className="text-[0.9rem] border bg-[#244f7a] px-6 md:px-7 py-1 rounded-md hover:shadow-lg">
+          <div className="text-[0.9rem] border bg-[#244f7a] px-6 md:px-4 py-1 rounded-md hover:shadow-lg">
             View Event
           </div>
           <div className="" onClick={(e) => e.stopPropagation()}>
             <TextBlast
               heading="Text Blast"
-              className="border bg-[#954b7c] px-8 md:px-7 py-1 rounded-md text-[0.9rem] hover:shadow-lg cursor-pointer h-9 "
+              className="border bg-[#954b7c] px-8 md:px-4 py-1 rounded-md text-[0.9rem] hover:shadow-lg cursor-pointer h-9 "
               classStyle="h-auto shadow-none mt-0 sm:h-[0vh]"
             />{" "}
           </div>
