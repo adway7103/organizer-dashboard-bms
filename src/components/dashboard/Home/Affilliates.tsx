@@ -52,13 +52,13 @@ const Affilliates = ({
     },
   ];
   return (
-    <div className="grid sm:grid-cols-2 gap-4">
+    <div className="grid grid-cols-2 gap-4">
       {Data.map((item, index) => (
         <HomeContainerCard
           key={index}
           className="border border-gray-300 rounded-3xl shadow-md h-auto sm:h-[24vh] sm:flex sm:justify-center sm:items-center"
         >
-          <div className="flex sm:flex-col justify-between sm:justify-center items-center pl-8 pr-8 sm:pl-0 sm:pr-0 py-1 sm:py-0">
+          <div className="flex sm:flex-col justify-center items-center pl-8 pr-8 sm:pl-0 sm:pr-0 py-1 sm:py-0">
             <div className="flex flex-col justify-center items-center">
               <div className="flex sm:justify-center sm:items-center sm:gap-4">
                 <div
@@ -69,7 +69,7 @@ const Affilliates = ({
                 </div>
                 <p className="">{item.title}</p>
               </div>
-              <div className="text-[1.8rem] font-bold">{item.count}</div>
+              <div className="text-[1.8rem] font-medium">{item.count}</div>
             </div>
             {/* <div className="flex xl:p-2 justify-center items-center pt-6 sm:pt-0"> */}
             {/* <div className="text-xs sm:text-sm md:text-[0.7rem] lg:text-[0.7rem] px-2 py-1 bg-green-200 rounded-3xl text-black"> */}
