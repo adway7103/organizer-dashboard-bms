@@ -2,8 +2,6 @@ import { baseUrl } from "../utils";
 import axios from "axios";
 
 export const updatePaymentDetails = async ({ data, id }: any) => {
-  console.log(data);
-
   const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
