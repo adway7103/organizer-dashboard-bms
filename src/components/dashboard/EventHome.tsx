@@ -4,11 +4,12 @@ import EventGrid from "./Events/EventGrid";
 import Total from "./Events/Total";
 import { fetchPastEvents } from "../../api/fetchPastEvents";
 import { fetchLiveEvents } from "../../api/fetchLiveEvents";
-import axios from "axios";
-import toast from "react-hot-toast";
 import { fetchDraftedEvents } from "../../api/fetchDraftedEvents";
 import { updateEvent } from "../../api/updateEvent";
+import axios from "axios";
+import toast from "react-hot-toast";
 import { baseUrl } from "../../utils";
+import SkeletonComponent from "../Skeleton";
 
 interface EventData {
   eventId: string;
@@ -21,15 +22,17 @@ interface EventData {
   ticketsSold: number;
   shareUrl: string;
 }
+
 interface TotalRevenue {
-  eventId: string,
-  eventName: string,
-  revenuePercentage: string
+  eventId: string;
+  eventName: string;
+  revenuePercentage: string;
 }
+
 interface TotalTicket {
-  eventId: string,
-  eventName: string,
-  ticketsPercentage: string
+  eventId: string;
+  eventName: string;
+  ticketsPercentage: string;
 }
 
 export const EventHome = () => {
@@ -42,9 +45,11 @@ export const EventHome = () => {
   const [events, setEvents] = useState<EventData[]>([]);
   const [revenueDistribution, setRevenueDistribution] = useState<TotalRevenue[]>([]);
   const [ticketsDistribution, setTicketDistribution] = useState<TotalTicket[]>([]);
+  const [loading, setLoading] = useState(true);  // Add loading state
 
   const fetchData = async () => {
     try {
+      setLoading(true);  // Start loading
       let response;
       if (isLiveEvents) {
         response = await fetchLiveEvents();
@@ -52,7 +57,6 @@ export const EventHome = () => {
         response = await fetchPastEvents();
       } else {
         response = await fetchDraftedEvents();
-        console.log(response);
       }
 
       const formattedEvents = response.events.map((event: EventData) => ({
@@ -66,12 +70,12 @@ export const EventHome = () => {
         shareUrl: event.shareUrl,
         ticketsSold: event.ticketsSold,
       }));
-      setTicketDistribution(response.ticketsDistribution)
-      setRevenueDistribution(response.revenueDistribution)
+      setTicketDistribution(response.ticketsDistribution);
+      setRevenueDistribution(response.revenueDistribution);
       setEvents(formattedEvents);
+      setLoading(false);  // Stop loading
     } catch (error) {
       console.error("Failed to fetch events", error);
-      // toast.error("Failed to fetch events");
     }
   };
 
@@ -116,10 +120,20 @@ export const EventHome = () => {
         {isPastEvents && "Past Events"}
         {isDraftEvents && "Drafted Events"}
       </h1>
+      
       {!isDraftEvents && (
         <div className="flex flex-col md:flex-row lg:w-auto xl:w-auto gap-6 mt-6 max-sm:pr-4">
-          <Total heading={"Total Revenue"} revenueDistribution={revenueDistribution}/>
-          <Total heading={"Total tickets sold"} ticketsDistribution={ticketsDistribution}/>
+          {loading ? (
+            <>
+              <SkeletonComponent className="h-52 rounded-3xl"/> 
+              <SkeletonComponent className="h-52 rounded-3xl"/> 
+            </>
+          ) : (
+            <>
+              <Total heading={"Total Revenue"} revenueDistribution={revenueDistribution} />
+              <Total heading={"Total tickets sold"} ticketsDistribution={ticketsDistribution} />
+            </>
+          )}
         </div>
       )}
 
@@ -131,3 +145,5 @@ export const EventHome = () => {
     </div>
   );
 };
+
+
