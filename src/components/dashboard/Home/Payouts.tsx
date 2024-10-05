@@ -23,7 +23,7 @@ function Payouts({ payouts, nextPayouts }: PayoutsProps) {
         <div className="text-sm sm:text-lg sm:space-y-3">
           <p>Previous Payout</p>
           <div className="flex items-center justify-between">
-            <h1 className="text-[1.2rem] sm:text-[2rem] font-semibold ">
+            <h1 className="text-[1.2rem] sm:text-[2rem] font-medium ">
               {payouts}{" "}
             </h1>
             <span className="text-xs lg:text-[1rem] px-3 py-1 bg-green-300 rounded-md text-green-600 max-sm:ml-4">
@@ -34,7 +34,7 @@ function Payouts({ payouts, nextPayouts }: PayoutsProps) {
         <div className="text-sm sm:text-lg sm:space-y-4">
           <p>Next Payout</p>
           <div className="flex items-center justify-between">
-            <h1 className="text-[1.2rem] sm:text-[2rem] font-semibold">
+            <h1 className="text-[1.2rem] sm:text-[2rem] font-medium">
               {nextPayouts}{" "}
             </h1>
             <span className="text-xs lg:text-[1rem] bg-red-200 px-3 py-1 text-red-600 rounded-md max-sm:ml-4">

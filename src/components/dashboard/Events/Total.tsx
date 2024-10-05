@@ -41,56 +41,64 @@ const Total = ({
         </div>
         <div className="col-span-6 xl:px-5 flex flex-col justify-center items-center pb-2 ">
           <div className="font-medium text-xl pb-4">{heading}</div>
-          {heading === "Total Revenue" ? (
-            <div className=" text-sm lg:pr-8 space-y-2">
-              {revenueDistribution?.slice(0, 3).map((r: any, index: number) => (
-                <div className="flex items-center justify-between max-lg:px-4 max-lg:py-2 ">
-                  <div className="flex justify-center items-center">
-                    <img src={img} alt="" className="" />
 
-                    <div className="hover:line-clamp-none line-clamp-2 leading-tight pl-3 pr-14 sm:pr-10">
-                      {r.eventName}
+          {heading === "Total Revenue" ? (
+            <>
+              {revenueDistribution && revenueDistribution.length > 0 ? (
+                <div className=" text-sm lg:pr-8 space-y-2">
+                  {revenueDistribution.slice(0, 3).map((r: any, index: number) => (
+                    <div className="flex items-center justify-between max-lg:px-4 max-lg:py-2 " key={r.eventId}>
+                      <div className="flex justify-center items-center">
+                        <img src={img} alt="" className="" />
+                        <div className="hover:line-clamp-none line-clamp-2 leading-tight pl-3 pr-14 sm:pr-10">
+                          {r.eventName}
+                        </div>
+                      </div>
+                      <div className="w-8 flex justify-center items-center">
+                        <img
+                          src={colors[index % colors.length]}
+                          alt=""
+                          className="h-3 w-4"
+                        />
+                        <div className="pl-[4px] pr-12 sm:pr-4">{r.revenuePercentage}%</div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="w-8 flex justify-center  items-center">
-                    <img
-                      src={colors[index % colors.length]}
-                      alt=""
-                      className="h-3 w-4"
-                    />
-                    <div className="pl-[4px] pr-12 sm:pr-4">{r.revenuePercentage}%</div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              ) : (
+                <div className="text-sm text-gray-500">No data available</div>
+              )}
+            </>
+          ) : heading === "Total tickets sold" ? (
+            <>
+              {ticketsDistribution && ticketsDistribution.length > 0 ? (
+                <div className=" text-sm lg:pr-8 space-y-2">
+                  {ticketsDistribution.slice(0, 3).map((t: any, index: number) => (
+                    <div className="flex items-center justify-between max-lg:px-4 max-lg:py-2" key={t.eventId}>
+                      <div className="flex justify-center items-center">
+                        <img src={img} alt="" className="" />
+                        <div className="hover:line-clamp-none line-clamp-2 leading-tight pl-3 pr-14 sm:pr-10">
+                          {t.eventName}
+                        </div>
+                      </div>
+                      <div className="w-8 flex justify-center items-center">
+                        <img
+                          src={colors[index % colors.length]}
+                          alt=""
+                          className="h-3 w-3"
+                        />
+                        <div className="pl-[4px] pr-12 sm:pr-4">{t.ticketsPercentage}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-sm text-gray-500">No data available</div>
+              )}
+            </>
           ) : (
             <div></div>
           )}
-          {heading === "Total tickets sold" ? (
-            <div className=" text-sm lg:pr-8 space-y-2">
-              {ticketsDistribution?.slice(0, 3).map((t: any, index: number) => (
-                <div className="flex items-center justify-between max-lg:px-4 max-lg:py-2">
-                  <div className="flex justify-center items-center">
-                    <img src={img} alt="" className="" />
-
-                    <div className="hover:line-clamp-none line-clamp-2 leading-tight pl-3 pr-14 sm:pr-10">
-                      {t.eventName}
-                    </div>
-                  </div>
-                  <div className="w-8 flex justify-center  items-center">
-                    <img
-                      src={colors[index % colors.length]}
-                      alt=""
-                      className="h-3 w-3"
-                    />
-                    <div className="pl-[4px] pr-12 sm:pr-4">{t.ticketsPercentage}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div></div>
-          )}{" "}
         </div>
       </div>
     </HomeContainerCard>

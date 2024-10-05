@@ -11,6 +11,7 @@ import { fetchOrganizationProfile } from "../../api/fetchProfileApi.ts";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
+import SkeletonComponent from "../../components/Skeleton.tsx";
 interface EventCategory {
   categoryId: string;
   categoryName: string;
@@ -49,7 +50,7 @@ const EditProfile = () => {
   const [tiktokAccUrl, setTiktokAccUrl] = useState<string>("");
   const [orgWebsiteUrl, setOrgWebsiteUrl] = useState<string>("");
   const [about, setAbout] = useState<string>("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -96,6 +97,8 @@ const EditProfile = () => {
         }
       } catch (error) {
         console.error("Failed to fetch profile data", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -257,179 +260,194 @@ const EditProfile = () => {
       <form className="max-sm:pr-4 max-sm:pl-4">
         <h1 className="text-2xl font-medium md:ml-10">Edit Details</h1>
         <div className="mt-4 grid grid-cols-3 md:grid-cols-6 border-2 sm:w-[80%] sm:ml-8 min-w-[300px] p-8 gap-8 rounded-3xl">
-          <div className="col-span-6 max-md:space-y-6 md:col-span-4 flex flex-col justify-between">
-            <TextField
-              id="eventName"
-              name="title"
-              label="Name of the organization"
-              placeholder="Be clear and descriptive with the title that tells people what your event is about."
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              fullWidth
-              sx={{
-                "& .MuiInputBase-root": {
-                  height: "56px",
-                },
-                "& .MuiOutlinedInput-input": {
-                  padding: "16px",
-                },
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "darkgray", // Set border color to gray
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "darkgray", // Maintain gray border color on hover
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "darkgray", // Maintain gray border color when focused
-                  },
-                },
-              }}
-            />
-
-            <div className="md:grid grid-cols-2 gap-8 mb-3">
-              <div className="col-span-1">
-                <InputLabel id="phone-label">Phone</InputLabel>
-                <MuiTelInput
-                  name="phone"
-                  id="phone"
-                  defaultCountry="US"
-                  variant="outlined"
-                  value={phone}
-                  onChange={(e: any) => setPhone(e)}
-                  MenuProps={{
-                    PaperProps: {
-                      style: {
-                        maxHeight: 200,
-                        overflow: "auto",
-                        marginTop: "2px",
+          {loading ? (
+            <>
+              <SkeletonComponent className="h-screen w-96 hidden sm:block rounded-3xl" />
+              <SkeletonComponent className="h-screen w-96 hidden sm:block rounded-3xl" />
+              <SkeletonComponent className="h-screen w-96 hidden sm:block rounded-3xl" />
+              <SkeletonComponent className="h-screen w-96 hidden sm:block rounded-3xl" />
+              <SkeletonComponent className="h-screen w-72 hidden sm:block rounded-3xl" />
+              <div className="block sm:hidden">
+                <SkeletonComponent className="h-screen w-72 rounded-3xl" />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="col-span-6 max-md:space-y-6 md:col-span-4 flex flex-col justify-between">
+                <TextField
+                  id="eventName"
+                  name="title"
+                  label="Name of the organization"
+                  placeholder="Be clear and descriptive with the title that tells people what your event is about."
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  fullWidth
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      height: "56px",
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      padding: "16px",
+                    },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "darkgray", // Set border color to gray
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "darkgray", // Maintain gray border color on hover
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "darkgray", // Maintain gray border color when focused
                       },
                     },
                   }}
+                />
+
+                <div className="md:grid grid-cols-2 gap-8 mb-3">
+                  <div className="col-span-1">
+                    <InputLabel id="phone-label">Phone</InputLabel>
+                    <MuiTelInput
+                      name="phone"
+                      id="phone"
+                      defaultCountry="US"
+                      variant="outlined"
+                      value={phone}
+                      onChange={(e: any) => setPhone(e)}
+                      MenuProps={{
+                        PaperProps: {
+                          style: {
+                            maxHeight: 200,
+                            overflow: "auto",
+                            marginTop: "2px",
+                          },
+                        },
+                      }}
+                      sx={{
+                        height: "56px",
+                        borderRadius: "4px", // Same border radius as Select
+                        "& .MuiOutlinedInput-root": {
+                          height: "100%", // Ensure the root spans full height
+                          display: "flex",
+                          alignItems: "center",
+                          "& fieldset": {
+                            border: "none",
+                          },
+                          "&:hover fieldset": {
+                            border: "none",
+                          },
+                          "&.Mui-focused fieldset": {
+                            border: "none",
+                          },
+                          "& input": {
+                            lineHeight: "56px", // Align the text vertically
+                          },
+                          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "gray", // Keep the border color same when focused
+                          },
+                        },
+                      }}
+                    />
+                  </div>
+                  <div className="col-span-1 max-md:mt-4">
+                    <InputLabel id="category-label">Category</InputLabel>
+                    <Select
+                      labelId="category-label"
+                      id="category"
+                      name="eventCategories"
+                      multiple
+                      value={eventCategories}
+                      onChange={handleSelectChange}
+                      fullWidth
+                      MenuProps={{
+                        PaperProps: {
+                          style: {
+                            maxHeight: 200,
+                            overflow: "auto",
+                            borderRadius: "4px",
+                            marginTop: "2px",
+                          },
+                        },
+                      }}
+                      sx={{
+                        height: "56px",
+                        borderRadius: "4px", // Border radius for consistency
+                        ".MuiSelect-select": {
+                          padding: "10px",
+                        },
+                        ".MuiOutlinedInput-notchedOutline": {
+                          borderColor: "darkgray", // Darker border color
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "darkgray", // Keep border color same on hover
+                        },
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "darkgray", // Keep border color same when focused
+                        },
+                      }}
+                    >
+                      <MenuItem disabled value="">
+                        <em>Select category</em>
+                      </MenuItem>
+                      {categories.slice(1).map((category) => (
+                        <MenuItem
+                          key={category.categoryId}
+                          value={category.categoryId}
+                        >
+                          {category.categoryName}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </div>
+                </div>
+
+                <TextField
+                  id="description"
+                  name="description"
+                  label="Description"
+                  multiline
+                  rows={2}
+                  value={about}
+                  onChange={(e) => setAbout(e.target.value)}
+                  fullWidth
                   sx={{
-                    height: "56px",
-                    borderRadius: "4px", // Same border radius as Select
                     "& .MuiOutlinedInput-root": {
-                      height: "100%", // Ensure the root spans full height
-                      display: "flex",
-                      alignItems: "center",
                       "& fieldset": {
-                        border: "none",
+                        borderColor: "darkgray", // Set the default border color
                       },
                       "&:hover fieldset": {
-                        border: "none",
+                        borderColor: "darkgray", // Keep border color same on hover
                       },
                       "&.Mui-focused fieldset": {
-                        border: "none",
-                      },
-                      "& input": {
-                        lineHeight: "56px", // Align the text vertically
-                      },
-                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "gray", // Keep the border color same when focused
+                        borderColor: "darkgray", // Keep border color same when focused
                       },
                     },
                   }}
                 />
               </div>
-              <div className="col-span-1 max-md:mt-4">
-                <InputLabel id="category-label">Category</InputLabel>
-                <Select
-                  labelId="category-label"
-                  id="category"
-                  name="eventCategories"
-                  multiple
-                  value={eventCategories}
-                  onChange={handleSelectChange}
-                  fullWidth
-                  MenuProps={{
-                    PaperProps: {
-                      style: {
-                        maxHeight: 200,
-                        overflow: "auto",
-                        borderRadius: "4px",
-                        marginTop: "2px",
-                      },
-                    },
-                  }}
-                  sx={{
-                    height: "56px",
-                    borderRadius: "4px", // Border radius for consistency
-                    ".MuiSelect-select": {
-                      padding: "10px",
-                    },
-                    ".MuiOutlinedInput-notchedOutline": {
-                      borderColor: "darkgray", // Darker border color
-                    },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "darkgray", // Keep border color same on hover
-                    },
-                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "darkgray", // Keep border color same when focused
-                    },
-                  }}
-                >
-                  <MenuItem disabled value="">
-                    <em>Select category</em>
-                  </MenuItem>
-                  {categories.slice(1).map((category) => (
-                    <MenuItem
-                      key={category.categoryId}
-                      value={category.categoryId}
-                    >
-                      {category.categoryName}
-                    </MenuItem>
-                  ))}
-                </Select>
+
+              <div className="col-span-6 md:col-span-2 ">
+                <FileDragNDrop
+                  onFileSelect={handleFileSelect}
+                  ClassName="p-4 border-gray-400 rounded-md"
+                  posterUrl={profileData?.logoUrl}
+                  setProfileData={setProfileData}
+                />
               </div>
-            </div>
 
-            <TextField
-              id="description"
-              name="description"
-              label="Description"
-              multiline
-              rows={2}
-              value={about}
-              onChange={(e) => setAbout(e.target.value)}
-              fullWidth
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "darkgray", // Set the default border color
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "darkgray", // Keep border color same on hover
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "darkgray", // Keep border color same when focused
-                  },
-                },
-              }}
-            />
-          </div>
-
-          <div className="col-span-6 md:col-span-2 ">
-            <FileDragNDrop
-              onFileSelect={handleFileSelect}
-              ClassName="p-4 border-gray-400 rounded-md"
-              posterUrl={profileData?.logoUrl}
-              setProfileData={setProfileData}
-            />
-          </div>
-
-          <div className="col-span-6 max-md:space-y-4 md:grid grid-cols-3 md:gap-4 gap-2 w-full">
-            {socials.map((social, index) => (
-              <ProfileSocials
-                id={social.id}
-                key={index}
-                link={social.link}
-                site={social.site}
-                img={social.img}
-                handleLinkUpdate={handleLinkUpdate}
-              />
-            ))}
-          </div>
+              <div className="col-span-6 max-md:space-y-4 md:grid grid-cols-3 md:gap-4 gap-2 w-full">
+                {socials.map((social, index) => (
+                  <ProfileSocials
+                    id={social.id}
+                    key={index}
+                    link={social.link}
+                    site={social.site}
+                    img={social.img}
+                    handleLinkUpdate={handleLinkUpdate}
+                  />
+                ))}
+              </div>
+            </>
+          )}
           <div className="col-span-6 flex justify-center items-center gap-6">
             <button
               onClick={handleDiscard}
