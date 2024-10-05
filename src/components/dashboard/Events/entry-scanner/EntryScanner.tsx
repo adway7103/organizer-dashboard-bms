@@ -23,6 +23,7 @@ import AddNewEntryCode from "./AddNewEntryCode";
 import { useParams } from "react-router-dom";
 import { fetchScannerCode } from "../../../../api/fetchScannerCodeApi";
 import { useEffect, useState } from "react";
+import AddThirdPartyTicket from "./AddThirdPartyTickets";
 // import { Search } from "lucide-react";
 
 export type EntryScanner = {
@@ -114,7 +115,11 @@ export default function EntryScanner() {
       <h1 className="text-3xl text-[#9d487b] font-medium ml-8">{eventTitle}</h1>
       <div className="flex justify-between items-center mr-6 sm:mr-10 mt-2">
         <h1 className="text-xl font-medium ml-9">Entry Scanner</h1>
-        <AddNewEntryCode refetch={fetchData} />
+        <div className="flex gap-4">
+          {" "}
+          <AddThirdPartyTicket />
+          <AddNewEntryCode refetch={fetchData} />
+        </div>
       </div>{" "}
       <div className="bg-[#f8f8f8] sm:ml-8 mr-0 xl:mr-8 rounded-3xl min-w-[300px] mt-4 p-6">
         <h1 className="text-xl font-medium">Create CODE </h1>
