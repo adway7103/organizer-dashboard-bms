@@ -5,7 +5,7 @@ import { uploadImage } from "../../api/uploadImage";
 import { useEventContext } from "../../Contexts/CreateEventContext";
 
 interface FileDragNDropProps {
-  onFileSelect: (file: File | null) => void;
+  onFileSelect: (file: File | string) => void;
   ClassName?: string;
   posterUrl?: string;
   setProfileData?: any;
@@ -64,7 +64,7 @@ const FileDragNDrop: React.FC<FileDragNDropProps> = ({
 
   const deleteImg = () => {
     setImagePreview(null);
-    onFileSelect(null);
+    onFileSelect("");
 
     if (setProfileData) {
       setProfileData({ logoUrl: "" });
