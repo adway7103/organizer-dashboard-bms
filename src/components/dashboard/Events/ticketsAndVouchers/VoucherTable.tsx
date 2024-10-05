@@ -37,9 +37,11 @@ type PromoCodes = {
 export function VoucherTable({
   promoCodes,
   handleDeleteTicket,
+  refetch,
 }: {
   promoCodes: PromoCodes[];
   handleDeleteTicket: (id: string) => void;
+  refetch: () => void;
 }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -111,6 +113,8 @@ export function VoucherTable({
           <PromoCodeDialog
             id={row.original.id}
             onDelete={() => handleDeleteTicket(row.original.id)}
+            isExpired={row.getValue<boolean>("isExpired")}
+            refetch={refetch}
           />
         </div>
       ),

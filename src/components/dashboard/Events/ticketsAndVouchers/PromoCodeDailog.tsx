@@ -7,12 +7,16 @@ import { baseUrl } from "../../../../utils";
 
 interface Props {
   id: string;
-  eventId?: string;
   onDelete: (id: string) => void;
+  isExpired: boolean;
+  refetch: () => void;
 }
-export default function PromoCodeDialog({ id, eventId, onDelete }: Props) {
-  console.log(eventId);
-
+export default function PromoCodeDialog({
+  id,
+  onDelete,
+  isExpired,
+  refetch,
+}: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -64,6 +68,27 @@ export default function PromoCodeDialog({ id, eventId, onDelete }: Props) {
       throw error;
     }
   };
+  const handleToggleVisibility = async () => {
+    const token = localStorage.getItem("accessToken");
+    const isExpiredToggle = !isExpired;
+
+    try {
+      await axios.put(
+        `https://${baseUrl}/api/v1/promo-code/update/${id}`,
+        { isExpired: isExpiredToggle },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      refetch();
+      toast.success("Promo-code updated successfully");
+    } catch (error) {
+      console.error("Error updating promo code:", error);
+    }
+  };
 
   return (
     <div>
@@ -109,7 +134,7 @@ export default function PromoCodeDialog({ id, eventId, onDelete }: Props) {
           },
         }}
       >
-        <MenuItem>Toggle visibility</MenuItem>
+        <MenuItem onClick={handleToggleVisibility}>Toggle visibility</MenuItem>
         <MenuItem onClick={handleDelete}>Delete</MenuItem>
       </Menu>
     </div>

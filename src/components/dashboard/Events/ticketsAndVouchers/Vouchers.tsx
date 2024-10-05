@@ -50,7 +50,7 @@ const Vouchers = () => {
         <h1 className="text-xl font-medium ml-8 ">Vouchers</h1>
         <AddVoucher refetch={fetchData} />
       </div>{" "}
-      <VoucherTable promoCodes={promoCodes} handleDeleteTicket={handleDeleteTicket}/>
+      <VoucherTable promoCodes={promoCodes} handleDeleteTicket={handleDeleteTicket} refetch={fetchData}/>
     </div>
   );
 };
