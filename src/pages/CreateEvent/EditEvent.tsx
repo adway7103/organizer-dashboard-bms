@@ -33,7 +33,7 @@ const EditEventForm: React.FC = () => {
   const { eventId } = useParams();
   const navigate = useNavigate();
   const { eventInfo, setEventInfo } = useEventContext();
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | string>("");
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
@@ -41,7 +41,6 @@ const EditEventForm: React.FC = () => {
   console.log(selectedFile);
 
   const [trailerUrl, setTrailerUrl] = useState<any[]>([]);
-  const [accordionOpen, setAccordionOpen] = useState(false);
   const [refundTimeframe, setRefundTimeframe] = useState("");
 
   useEffect(() => {
@@ -193,11 +192,11 @@ const EditEventForm: React.FC = () => {
     .minute(dayjs(eventInfo.eventEndTime).minute())
     .format("YYYY-MM-DD HH:mm:ss");
 
-  const handleFileSelect = (file: File | null) => {
+  const handleFileSelect = (file: File | string) => {
     setSelectedFile(file);
   };
 
-  const handleVideoFile = (file: File | null) => {
+  const handleVideoFile = (file: File | string) => {
     setSelectedFile(file);
     // if (file) {
     //   const videoUrl = URL.createObjectURL(file);
@@ -406,7 +405,7 @@ const EditEventForm: React.FC = () => {
       index={index} // Pass index
       onFileSelect={handleVideoFile}
       setTrailerUrl={setTrailerUrl}
-      videoUrl={trailerUrl[index] || null} // Render empty component if no video at index
+      videoUrl={trailerUrl[index] || ""} // Render empty component if no video at index
     />
   ))}
 </div>
@@ -667,7 +666,6 @@ const EditEventForm: React.FC = () => {
                     policyType: e.target.checked,
                   },
                 });
-                setAccordionOpen(e.target.checked);
               }}
               className="follow rounded w-6 h-4 ml-[2px]"
             />
@@ -677,7 +675,7 @@ const EditEventForm: React.FC = () => {
             </label>
           </div>
 
-          {accordionOpen && (
+          {eventInfo.refundPolicy.policyType && eventInfo.refundPolicy.refundTimeframe === "" && (
             <div className="ml-6">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center">
@@ -805,7 +803,6 @@ const EditEventForm: React.FC = () => {
               }
               onClick={() => {
                 setRefundTimeframe("");
-                setAccordionOpen(false);
               }}
               className="follow rounded w-6 h-4"
             />

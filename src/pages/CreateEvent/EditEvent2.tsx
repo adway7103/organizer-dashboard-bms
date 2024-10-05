@@ -238,9 +238,9 @@ const EditEvent2Form: React.FC = () => {
             {loadingButton === "saveChanges" ? "Loading..." : "SAVE CHANGES"}
           </button>
         </div> */}
-        <Link to={"/drafted-events"}>
+        <Link to={"/dashboard"}>
           <button className="flex flex-row items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-10 rounded">
-            SAVE AS DRAFT
+            Cancel
           </button>
         </Link>
         <div>
@@ -248,8 +248,7 @@ const EditEvent2Form: React.FC = () => {
             className={`px-10 flex flex-row items-center justify-center gap-4 bg-[#244f7a] hover:bg-black text-white font-bold py-2 rounded cursor-pointer}`}
             onClick={(e) => handleOnSubmit(e, "/events")}
           >
-            PUBLISH EVENT{" "}
-            {loading && <Loader2 className="size-4 animate-spin" />}
+            Update {loading && <Loader2 className="size-4 animate-spin" />}
           </button>
         </div>
       </div>

@@ -51,7 +51,7 @@ interface OrganizerProfile {
 const EventForm: React.FC = () => {
   const navigate = useNavigate();
   const { eventInfo, setEventInfo } = useEventContext();
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | string>("");
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState<string | null>(null);
   const [categories, setCategories] = useState<
@@ -177,11 +177,11 @@ const EventForm: React.FC = () => {
     .minute(dayjs(eventInfo.eventEndTime).minute())
     .format("YYYY-MM-DD HH:mm:ss");
 
-  const handleFileSelect = (file: File | null) => {
+  const handleFileSelect = (file: File | string) => {
     setSelectedFile(file);
   };
 
-  const handleVideoFile = (file: File | null) => {
+  const handleVideoFile = (file: File | string) => {
     setSelectedFile(file);
     // if (file) {
     //   const videoUrl = URL.createObjectURL(file);
@@ -724,7 +724,7 @@ const EventForm: React.FC = () => {
             </label>
           </div>
 
-          {accordionOpen && (
+          {accordionOpen && eventInfo.refundPolicy.policyType && (
             <div className="ml-6">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center">

@@ -4,8 +4,8 @@ import { uploadImage } from "../../api/uploadImage";
 
 interface VideoComponentProps {
   index: number; // Add index prop
-  onFileSelect: (file: File | null, index: number) => void; // Pass index to onFileSelect
-  setTrailerUrl: React.Dispatch<React.SetStateAction<string[]>>;
+  onFileSelect: (file: File | string, index: number) => void; 
+  setTrailerUrl: any;
   videoUrl?: string;
 }
 
@@ -16,10 +16,10 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
   videoUrl,
 }) => {
   console.log(videoUrl);
-  
-  const [videoPreview, setVideoPreview] = useState<string | null>(null);
+
+  const [videoPreview, setVideoPreview] = useState<string | "">("");
   const [uploading, setUploading] = useState<boolean>(false);
-  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [uploadError, setUploadError] = useState<string | "">("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -49,12 +49,12 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
     onFileSelect(file, index); // Pass index to onFileSelect
 
     setUploading(true);
-    setUploadError(null);
+    setUploadError("");
     try {
       const contentUrl = await uploadImage(file); // This should return the URL of the uploaded video
-      setTrailerUrl((prevUrls) => {
+      setTrailerUrl((prevUrls:any) => {
         const updatedUrls = [...prevUrls];
-        updatedUrls[index] = contentUrl; // Correct index is updated here
+        updatedUrls[index] = contentUrl || ""; // Correct index is updated here
         return updatedUrls;
       });
     } catch (error) {
@@ -72,13 +72,13 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
   }, [videoUrl]);
 
   const deleteVideo = () => {
-    setVideoPreview(null);
-    setTrailerUrl((prevUrls) => {
+    setVideoPreview("");
+    setTrailerUrl((prevUrls:any) => {
       const updatedUrls = [...prevUrls];
       updatedUrls[index] = ""; // Clear specific index
       return updatedUrls;
     });
-    onFileSelect(null, index); // Clear file selection for the given index
+    onFileSelect("", index); // Clear file selection for the given index
   };
 
   const deleteButton = videoPreview ? "block" : "hidden";
