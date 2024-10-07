@@ -21,6 +21,8 @@ import {
 } from "../../../ui/Table";
 import { useState } from "react";
 import { Search } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { downloadOrders } from "../../../../api/downloadSalesData";
 
 export type Bookings = {
   bookingId?: string;
@@ -34,11 +36,14 @@ export type Bookings = {
 export function SalesTable({ bookings }: { bookings: Bookings[] }) {
   const [pageIndex, setPageIndex] = useState(0);
   const pageSize = 10;
+  const { eventId } = useParams<{ eventId: string }>();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-
+  const handleExportButton = async () => {
+    await downloadOrders({ eventId });
+  };
   const columns: ColumnDef<Bookings>[] = [
     {
       accessorKey: "bookingId",
@@ -142,7 +147,10 @@ export function SalesTable({ bookings }: { bookings: Bookings[] }) {
             />
           </div>
           <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4">
-            <button className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full hover:shadow-lg">
+            <button
+              className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full hover:shadow-lg"
+              onClick={handleExportButton}
+            >
               Export
               <svg
                 width="20"
