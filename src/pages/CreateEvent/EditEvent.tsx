@@ -28,6 +28,7 @@ import VideoComponent from "../../components/DragNDrop/VideoComponent";
 import { fetchEvent } from "../../api/fetchEvent.ts";
 import { updateEvent } from "../../api/updateEvent.ts";
 import { fetchOrganizationProfile } from "../../api/fetchProfileApi.ts";
+import { CircularProgress } from "@mui/material";
 
 const EditEventForm: React.FC = () => {
   const { eventId } = useParams();
@@ -39,6 +40,7 @@ const EditEventForm: React.FC = () => {
     { categoryId: string; categoryName: string }[]
   >([]);
   console.log(selectedFile);
+  const [accordionOpen, setAccordionOpen] = useState(false);
 
   const [trailerUrl, setTrailerUrl] = useState<any[]>([]);
   const [refundTimeframe, setRefundTimeframe] = useState("");
@@ -60,6 +62,7 @@ const EditEventForm: React.FC = () => {
 
   useEffect(() => {
     const fetchEventById = async () => {
+      setLoading(true);
       try {
         const fetchedEvent = await fetchEvent({ eventId });
 
@@ -128,6 +131,8 @@ const EditEventForm: React.FC = () => {
         }
       } catch (error) {
         console.error("Failed to fetch event", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -297,123 +302,124 @@ const EditEventForm: React.FC = () => {
 
   return (
     <form className="event-form flex flex-col gap-5 pb-10">
-      <TextField
-        id="eventName"
-        name="title"
-        label="Event Name"
-        placeholder="Be clear and descriptive with the title that tells people what your event is about."
-        value={eventInfo.title}
-        onChange={handleChange}
-        fullWidth
-        required
-        sx={{
-          "& .MuiInputBase-root": {
-            height: "56px",
-          },
-          "& .MuiOutlinedInput-input": {
-            padding: "16px",
-          },
-        }}
-      />
-
-      <div>
-        <InputLabel id="category-label">Category</InputLabel>
-        <Select
-          labelId="category-label"
-          id="category"
-          name="eventCategories"
-          value={eventInfo.eventCategories}
-          onChange={handleSelectChange}
-          fullWidth
-          required
-          multiple
-          open={dropdownOpen}
-          onOpen={() => setDropdownOpen(true)}
-          onClose={() => setDropdownOpen(false)}
-          MenuProps={{
-            PaperProps: {
-              style: {
-                maxHeight: 200,
-                overflow: "auto",
-                borderRadius: "4px",
-                marginTop: "2px",
+      {loading ? ( // Conditional rendering for loading state
+        <div className="flex justify-center items-center h-[100vh]">
+          <CircularProgress/>
+        </div>
+      ) : (
+        <>
+          <TextField
+            id="eventName"
+            name="title"
+            label="Event Name"
+            placeholder="Be clear and descriptive with the title that tells people what your event is about."
+            value={eventInfo.title}
+            onChange={handleChange}
+            fullWidth
+            required
+            sx={{
+              "& .MuiInputBase-root": {
+                height: "56px",
               },
-            },
-          }}
-          sx={{
-            height: "56px",
-            ".MuiSelect-select": {
-              padding: "10px",
-            },
-            ".MuiOutlinedInput-notchedOutline": {
-              borderColor: "gray",
-            },
-            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: "blue",
-            },
-          }}
-        >
-          <MenuItem disabled value="">
-            <em>Select category</em>
-          </MenuItem>
-          {categories.slice(1).map((category) => (
-            <MenuItem key={category.categoryId} value={category.categoryId}>
-              {category.categoryName}
-            </MenuItem>
-          ))}
-        </Select>
-      </div>
-
-      <div>
-        <InputLabel id="periodicity-label">Periodicity (optional)</InputLabel>
-        <Select
-          labelId="periodicity-label"
-          id="periodicity"
-          name="periodicity"
-          value={eventInfo.periodicity}
-          onChange={handleSelectChange}
-          fullWidth
-          required
-        >
-          <MenuItem value="daily">Daily</MenuItem>
-          <MenuItem value="weekly">Weekly</MenuItem>
-          <MenuItem value="monthly">Monthly</MenuItem>
-        </Select>
-      </div>
-
-      <TextField
-        id="description"
-        name="description"
-        label="Description"
-        required
-        multiline
-        rows={2}
-        placeholder="Grab people's attention with a short description about your event."
-        value={eventInfo.description}
-        onChange={handleChange}
-      />
-
-      {/* <div> */}
-      <FileDragNDrop
-        onFileSelect={handleFileSelect}
-        posterUrl={eventInfo.posterUrl}
-      />
-<div className="mb-4 grid grid-cols-3 gap-2 xl:gap-10">
-  {[0, 1, 2].map((index) => (
-    <VideoComponent
-      key={index}
-      index={index} // Pass index
-      onFileSelect={handleVideoFile}
-      setTrailerUrl={setTrailerUrl}
-      videoUrl={trailerUrl[index] || ""} // Render empty component if no video at index
-    />
-  ))}
-</div>
-
-
-      {/* </div> */}
-
-      {/* <Autocomplete
+              "& .MuiOutlinedInput-input": {
+                padding: "16px",
+              },
+            }}
+          />
+          <div>
+            <InputLabel id="category-label">Category</InputLabel>
+            <Select
+              labelId="category-label"
+              id="category"
+              name="eventCategories"
+              value={eventInfo.eventCategories}
+              onChange={handleSelectChange}
+              fullWidth
+              required
+              multiple
+              open={dropdownOpen}
+              onOpen={() => setDropdownOpen(true)}
+              onClose={() => setDropdownOpen(false)}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 200,
+                    overflow: "auto",
+                    borderRadius: "4px",
+                    marginTop: "2px",
+                  },
+                },
+              }}
+              sx={{
+                height: "56px",
+                ".MuiSelect-select": {
+                  padding: "10px",
+                },
+                ".MuiOutlinedInput-notchedOutline": {
+                  borderColor: "gray",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "blue",
+                },
+              }}
+            >
+              <MenuItem disabled value="">
+                <em>Select category</em>
+              </MenuItem>
+              {categories.slice(1).map((category) => (
+                <MenuItem key={category.categoryId} value={category.categoryId}>
+                  {category.categoryName}
+                </MenuItem>
+              ))}
+            </Select>
+          </div>
+          <div>
+            <InputLabel id="periodicity-label">
+              Periodicity (optional)
+            </InputLabel>
+            <Select
+              labelId="periodicity-label"
+              id="periodicity"
+              name="periodicity"
+              value={eventInfo.periodicity}
+              onChange={handleSelectChange}
+              fullWidth
+              required
+            >
+              <MenuItem value="daily">Daily</MenuItem>
+              <MenuItem value="weekly">Weekly</MenuItem>
+              <MenuItem value="monthly">Monthly</MenuItem>
+            </Select>
+          </div>
+          <TextField
+            id="description"
+            name="description"
+            label="Description"
+            required
+            multiline
+            rows={2}
+            placeholder="Grab people's attention with a short description about your event."
+            value={eventInfo.description}
+            onChange={handleChange}
+          />
+          {/* <div> */}
+          <FileDragNDrop
+            onFileSelect={handleFileSelect}
+            posterUrl={eventInfo.posterUrl}
+          />
+          <div className="mb-4 grid grid-cols-3 gap-2 xl:gap-10">
+            {[0, 1, 2].map((index) => (
+              <VideoComponent
+                key={index}
+                index={index} // Pass index
+                onFileSelect={handleVideoFile}
+                setTrailerUrl={setTrailerUrl}
+                videoUrl={trailerUrl[index] || ""} // Render empty component if no video at index
+              />
+            ))}
+          </div>
+          {/* </div> */}
+          {/* <Autocomplete
         multiple
         id="genres"
         options={tagsOptions}
@@ -431,101 +437,97 @@ const EditEventForm: React.FC = () => {
           })
         }
       /> */}
-
-      <Autocomplete
-        id="genres"
-        options={tagsOptions}
-        getOptionLabel={(option) => option.title}
-        renderInput={(params) => (
-          <TextField {...params} label="Add Tags" required />
-        )}
-        value={
-          tagsOptions.find((option) =>
-            eventInfo.genres.includes(option.title)
-          ) || null
-        }
-        onChange={(_, newValue) =>
-          setEventInfo({
-            ...eventInfo,
-            genres: newValue ? [newValue.title] : [], // Handle single selection
-          })
-        }
-      />
-      <div>
-        <InputLabel id="currency-label">Currency</InputLabel>
-        <Select
-          labelId="currency-label"
-          id="currency"
-          name="currency"
-          value={eventInfo.cheapestTicket.currency}
-          onChange={handleSelectChange}
-          fullWidth
-          required
-        >
-          <MenuItem value="INR">INR</MenuItem>
-          <MenuItem value="USD">USD</MenuItem>
-          <MenuItem value="AED">AED</MenuItem>
-          <MenuItem value="EUR">EUR</MenuItem>
-        </Select>
-      </div>
-
-      <div>
-        <label
-          htmlFor="eventStart"
-          className="flex space-x-2 text-lg font-medium pb-2"
-        >
-          Event Starts
-        </label>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <div className="flex items-center space-x-5">
-            <DatePicker
-              className="w-1/2"
-              value={eventInfo.eventStartDate}
-              onChange={(newValue) =>
-                handleDateChange(newValue, "eventStartDate")
-              }
-            />
-            <p className="font-medium">at</p>
-            <TimePicker
-              className="w-1/2"
-              value={eventInfo.eventStartTime}
-              onChange={(newValue) =>
-                handleDateChange(newValue, "eventStartTime")
-              }
-            />
+          <Autocomplete
+            id="genres"
+            options={tagsOptions}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField {...params} label="Add Tags" required />
+            )}
+            value={
+              tagsOptions.find((option) =>
+                eventInfo.genres.includes(option.title)
+              ) || null
+            }
+            onChange={(_, newValue) =>
+              setEventInfo({
+                ...eventInfo,
+                genres: newValue ? [newValue.title] : [], // Handle single selection
+              })
+            }
+          />
+          <div>
+            <InputLabel id="currency-label">Currency</InputLabel>
+            <Select
+              labelId="currency-label"
+              id="currency"
+              name="currency"
+              value={eventInfo.cheapestTicket.currency}
+              onChange={handleSelectChange}
+              fullWidth
+              required
+            >
+              <MenuItem value="INR">INR</MenuItem>
+              <MenuItem value="USD">USD</MenuItem>
+              <MenuItem value="AED">AED</MenuItem>
+              <MenuItem value="EUR">EUR</MenuItem>
+            </Select>
           </div>
-        </LocalizationProvider>
-      </div>
-
-      <div>
-        <label
-          htmlFor="eventEnd"
-          className="flex space-x-2 text-lg font-medium pb-2"
-        >
-          Event Ends
-        </label>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <div className="flex items-center w-full space-x-5">
-            <DatePicker
-              className="w-1/2"
-              value={eventInfo.eventEndDate}
-              onChange={(newValue) =>
-                handleDateChange(newValue, "eventEndDate")
-              }
-            />
-            <p className="font-medium">at</p>
-            <TimePicker
-              className="w-1/2"
-              value={eventInfo.eventEndTime}
-              onChange={(newValue) =>
-                handleDateChange(newValue, "eventEndTime")
-              }
-            />
+          <div>
+            <label
+              htmlFor="eventStart"
+              className="flex space-x-2 text-lg font-medium pb-2"
+            >
+              Event Starts
+            </label>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <div className="flex items-center space-x-5">
+                <DatePicker
+                  className="w-1/2"
+                  value={eventInfo.eventStartDate}
+                  onChange={(newValue) =>
+                    handleDateChange(newValue, "eventStartDate")
+                  }
+                />
+                <p className="font-medium">at</p>
+                <TimePicker
+                  className="w-1/2"
+                  value={eventInfo.eventStartTime}
+                  onChange={(newValue) =>
+                    handleDateChange(newValue, "eventStartTime")
+                  }
+                />
+              </div>
+            </LocalizationProvider>
           </div>
-        </LocalizationProvider>
-      </div>
-
-      {/* <div>
+          <div>
+            <label
+              htmlFor="eventEnd"
+              className="flex space-x-2 text-lg font-medium pb-2"
+            >
+              Event Ends
+            </label>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <div className="flex items-center w-full space-x-5">
+                <DatePicker
+                  className="w-1/2"
+                  value={eventInfo.eventEndDate}
+                  onChange={(newValue) =>
+                    handleDateChange(newValue, "eventEndDate")
+                  }
+                />
+                <p className="font-medium">at</p>
+                <TimePicker
+                  className="w-1/2"
+                  value={eventInfo.eventEndTime}
+                  onChange={(newValue) =>
+                    handleDateChange(newValue, "eventEndTime")
+                  }
+                />
+              </div>
+            </LocalizationProvider>
+          </div>
+          {/* <div>
         <label
           htmlFor="eventStart"
           className="flex space-x-2 text-lg font-medium pb-2"
@@ -550,54 +552,52 @@ const EditEventForm: React.FC = () => {
           }}
         />
       </div> */}
-
-      <div>
-        <label
-          htmlFor="eventStart"
-          className="flex space-x-2 text-lg font-medium pb-2"
-        >
-          Age Limit
-        </label>
-        <TextField
-          id="ageLimit"
-          name="ageRestriction"
-          placeholder="Enter Age Limit"
-          value={eventInfo.ageRestriction}
-          onChange={handleChange}
-          type="text"
-          fullWidth
-          sx={{
-            "& .MuiInputBase-root": {
-              height: "56px",
-            },
-            "& .MuiOutlinedInput-input": {
-              padding: "16px",
-            },
-          }}
-        />
-      </div>
-
-      <div className="location">
-        <label
-          htmlFor="location-search"
-          className="flex space-x-2 text-lg font-medium pb-2"
-        >
-          Location
-        </label>
-        <div className="flex gap-1 items-center pb-3">
-          <input
-            id="offline"
-            type="radio"
-            name="eventMode"
-            value="offline"
-            checked={eventInfo.eventMode === "offline"}
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="offline" className="mr-2">
-            Offline
-          </label>
-          {/* <input
+          <div>
+            <label
+              htmlFor="eventStart"
+              className="flex space-x-2 text-lg font-medium pb-2"
+            >
+              Age Limit
+            </label>
+            <TextField
+              id="ageLimit"
+              name="ageRestriction"
+              placeholder="Enter Age Limit"
+              value={eventInfo.ageRestriction}
+              onChange={handleChange}
+              type="text"
+              fullWidth
+              sx={{
+                "& .MuiInputBase-root": {
+                  height: "56px",
+                },
+                "& .MuiOutlinedInput-input": {
+                  padding: "16px",
+                },
+              }}
+            />
+          </div>
+          <div className="location">
+            <label
+              htmlFor="location-search"
+              className="flex space-x-2 text-lg font-medium pb-2"
+            >
+              Location
+            </label>
+            <div className="flex gap-1 items-center pb-3">
+              <input
+                id="offline"
+                type="radio"
+                name="eventMode"
+                value="offline"
+                checked={eventInfo.eventMode === "offline"}
+                onChange={handleChange}
+                required
+              />
+              <label htmlFor="offline" className="mr-2">
+                Offline
+              </label>
+              {/* <input
             id="online"
             type="radio"
             name="eventMode"
@@ -607,216 +607,216 @@ const EditEventForm: React.FC = () => {
             required
           />
           <label htmlFor="online">Online</label> */}
-        </div>
-      </div>
-
-      <div>
-        <Places venueAddress={eventInfo.venueAddress} cordinates={eventInfo.venueLocation}/>
-      </div>
-
-      <div className="flex items-center">
-        <input
-          type="checkbox"
-          id="includePlatformInCartFees"
-          name="includePlatformInCartFees"
-          checked={eventInfo.includePlatformInCartFees}
-          onChange={handleChange}
-          className="follow rounded mx-0 w-6 h-4"
-        />
-        <label htmlFor="deductFees" className="col-span-1 text-lg ml-2">
-          Deduct Fees from Ticket Price
-        </label>
-      </div>
-
-      <div className="flex items-center">
-        <input
-          type="checkbox"
-          id="repEvent"
-          name="repEvent"
-          checked={eventInfo.isRep}
-          onChange={(e) =>
-            setEventInfo({ ...eventInfo, isRep: e.target.checked })
-          }
-          className="follow rounded mx-0 w-6 h-4"
-        />
-        <div className="ml-3">
-          <label htmlFor="repEvent" className="text-xl">
-            Rep this Event
-          </label>
-          <p className="text-xs">
-            Set commission per ticket will be added in add ticket page
-          </p>
-        </div>
-      </div>
-
-      <div>
-        <h3 className="font-medium text-xl mb-2">Refunds</h3>
-        <div className="flex flex-col gap-2 ml-2">
+            </div>
+          </div>
+          <div>
+            <Places
+              venueAddress={eventInfo.venueAddress}
+              cordinates={eventInfo.venueLocation}
+            />
+          </div>
           <div className="flex items-center">
             <input
-              type="radio"
-              id="eventPolicy"
-              name="eventPolicy"
-              checked={eventInfo.refundPolicy.policyType}
-              onChange={(e) => {
-                setEventInfo({
-                  ...eventInfo,
-                  refundPolicy: {
-                    ...eventInfo.refundPolicy,
-                    policyType: e.target.checked,
-                  },
-                });
-              }}
-              className="follow rounded w-6 h-4 ml-[2px]"
+              type="checkbox"
+              id="includePlatformInCartFees"
+              name="includePlatformInCartFees"
+              checked={eventInfo.includePlatformInCartFees}
+              onChange={handleChange}
+              className="follow rounded mx-0 w-6 h-4"
             />
-            <label htmlFor="eventPolicy" className="text-sm ml-3">
-              Set your policy (no refunds, refunds approved 24h/48h before event
-              date/ send approval to organizer for each refund)
+            <label htmlFor="deductFees" className="col-span-1 text-lg ml-2">
+              Deduct Fees from Ticket Price
             </label>
           </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="repEvent"
+              name="repEvent"
+              checked={eventInfo.isRep}
+              onChange={(e) =>
+                setEventInfo({ ...eventInfo, isRep: e.target.checked })
+              }
+              className="follow rounded mx-0 w-6 h-4"
+            />
+            <div className="ml-3">
+              <label htmlFor="repEvent" className="text-xl">
+                Rep this Event
+              </label>
+              <p className="text-xs">
+                Set commission per ticket will be added in add ticket page
+              </p>
+            </div>
+          </div>
+          <div>
+            <h3 className="font-medium text-xl mb-2">Refunds</h3>
+            <div className="flex flex-col gap-2 ml-2">
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="policyType"
+                  name="eventPolicy"
+                  checked={eventInfo.refundPolicy.policyType}
+                  onChange={(e) => {
+                    setEventInfo({
+                      ...eventInfo,
+                      refundPolicy: {
+                        ...eventInfo.refundPolicy,
+                        policyType: e.target.checked,
+                        allRefundsApproved: false,
+                      },
+                    });
+                    onclick = () => setAccordionOpen(true);
+                  }}
+                  className="follow rounded w-6 h-4 ml-[2px]"
+                />
+                <label htmlFor="eventPolicy" className="text-sm ml-3">
+                  Set your policy (no refunds, refunds approved 24h/48h before
+                  event date/ send approval to organizer for each refund)
+                </label>
+              </div>
 
-          {eventInfo.refundPolicy.policyType && eventInfo.refundPolicy.refundTimeframe === "" && (
-            <div className="ml-6">
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    id="refundOption1"
-                    name="refundTimeframe"
-                    value="no"
-                    checked={refundTimeframe === "no"}
-                    onChange={(e) => {
-                      setRefundTimeframe(e.target.value);
-                      setEventInfo({
-                        ...eventInfo,
-                        refundPolicy: {
-                          ...eventInfo.refundPolicy,
-                          refundTimeframe: e.target.value,
-                          policyType: true,
-                          allRefundsApproved: false,
-                        },
-                      });
-                    }}
-                    className="follow rounded w-6 h-4"
-                  />
-                  <label htmlFor="refundOption1" className="text-sm ml-3">
-                    No Refunds{" "}
-                  </label>
-                </div>
+              {accordionOpen && eventInfo.refundPolicy.policyType && (
+                <div className="ml-6">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        id="policyType"
+                        name="eventPolicy"
+                        value="no"
+                        checked={refundTimeframe === "no"}
+                        onChange={(e) => {
+                          setRefundTimeframe(e.target.value);
+                          setEventInfo({
+                            ...eventInfo,
+                            refundPolicy: {
+                              ...eventInfo.refundPolicy,
+                              refundTimeframe: e.target.value,
+                              policyType: true,
+                              allRefundsApproved: false,
+                            },
+                          });
+                        }}
+                        className="follow rounded w-6 h-4"
+                      />
+                      <label htmlFor="refundOption1" className="text-sm ml-3">
+                        No Refunds{" "}
+                      </label>
+                    </div>
 
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    id="refundOption2"
-                    name="refundTimeframe"
-                    value="24h"
-                    checked={refundTimeframe === "24h"}
-                    onChange={(e) => {
-                      setRefundTimeframe(e.target.value);
-                      setEventInfo({
-                        ...eventInfo,
-                        refundPolicy: {
-                          ...eventInfo.refundPolicy,
-                          refundTimeframe: e.target.value,
-                          policyType: true,
-                          allRefundsApproved: false,
-                        },
-                      });
-                    }}
-                    className="follow rounded w-6 h-4"
-                  />
-                  <label htmlFor="refundOption2" className="text-sm ml-3">
-                    24h{" "}
-                  </label>
-                </div>
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        id="refundOption2"
+                        name="refundTimeframe"
+                        value="24h"
+                        checked={refundTimeframe === "24h"}
+                        onChange={(e) => {
+                          setRefundTimeframe(e.target.value);
+                          setEventInfo({
+                            ...eventInfo,
+                            refundPolicy: {
+                              ...eventInfo.refundPolicy,
+                              refundTimeframe: e.target.value,
+                              policyType: true,
+                              allRefundsApproved: false,
+                            },
+                          });
+                        }}
+                        className="follow rounded w-6 h-4"
+                      />
+                      <label htmlFor="refundOption2" className="text-sm ml-3">
+                        24h{" "}
+                      </label>
+                    </div>
 
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    id="refundOption3"
-                    name="refundTimeframe"
-                    value="48h"
-                    checked={refundTimeframe === "48h"}
-                    onChange={(e) => {
-                      setRefundTimeframe(e.target.value);
-                      setEventInfo({
-                        ...eventInfo,
-                        refundPolicy: {
-                          ...eventInfo.refundPolicy,
-                          refundTimeframe: e.target.value,
-                          policyType: true,
-                          allRefundsApproved: false,
-                        },
-                      });
-                    }}
-                    className="follow rounded w-6 h-4"
-                  />
-                  <label htmlFor="refundOption3" className="text-sm ml-3">
-                    48h{" "}
-                  </label>
-                </div>
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        id="refundOption3"
+                        name="refundTimeframe"
+                        value="48h"
+                        checked={refundTimeframe === "48h"}
+                        onChange={(e) => {
+                          setRefundTimeframe(e.target.value);
+                          setEventInfo({
+                            ...eventInfo,
+                            refundPolicy: {
+                              ...eventInfo.refundPolicy,
+                              refundTimeframe: e.target.value,
+                              policyType: true,
+                              allRefundsApproved: false,
+                            },
+                          });
+                        }}
+                        className="follow rounded w-6 h-4"
+                      />
+                      <label htmlFor="refundOption3" className="text-sm ml-3">
+                        48h{" "}
+                      </label>
+                    </div>
 
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    id="refundOption4"
-                    name="refundTimeframe"
-                    value="7d"
-                    checked={refundTimeframe === "7d"}
-                    onChange={(e) => {
-                      setRefundTimeframe(e.target.value);
-                      setEventInfo({
-                        ...eventInfo,
-                        refundPolicy: {
-                          ...eventInfo.refundPolicy,
-                          refundTimeframe: e.target.value,
-                          policyType: true,
-                          allRefundsApproved: false,
-                        },
-                      });
-                    }}
-                    className="follow rounded w-6 h-4"
-                  />
-                  <label htmlFor="refundOption4" className="text-sm ml-3">
-                    7d{" "}
-                  </label>
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        id="refundOption4"
+                        name="refundTimeframe"
+                        value="7d"
+                        checked={refundTimeframe === "7d"}
+                        onChange={(e) => {
+                          setRefundTimeframe(e.target.value);
+                          setEventInfo({
+                            ...eventInfo,
+                            refundPolicy: {
+                              ...eventInfo.refundPolicy,
+                              refundTimeframe: e.target.value,
+                              policyType: true,
+                              allRefundsApproved: false,
+                            },
+                          });
+                        }}
+                        className="follow rounded w-6 h-4"
+                      />
+                      <label htmlFor="refundOption4" className="text-sm ml-3">
+                        7d{" "}
+                      </label>
+                    </div>
+                  </div>
                 </div>
+              )}
+
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="allRefundsApproved"
+                  name="eventPolicy"
+                  checked={eventInfo.refundPolicy.allRefundsApproved}
+                  onChange={(e) =>
+                    setEventInfo({
+                      ...eventInfo,
+                      refundPolicy: {
+                        ...eventInfo.refundPolicy,
+                        allRefundsApproved: e.target.checked,
+                        policyType: false,
+                      },
+                    })
+                  }
+                  onClick={() => {
+                    setRefundTimeframe("");
+                    setAccordionOpen(false);
+                  }}
+                  className="follow rounded w-6 h-4"
+                />
+                <label htmlFor="allRefundsApproved" className="text-sm ml-3">
+                  All refunds are approved.
+                </label>
               </div>
             </div>
-          )}
-
-          <div className="flex items-center">
-            <input
-              type="radio"
-              id="allRefundsApproved"
-              name="eventPolicy"
-              checked={eventInfo.refundPolicy.allRefundsApproved}
-              onChange={(e) =>
-                setEventInfo({
-                  ...eventInfo,
-                  refundPolicy: {
-                    ...eventInfo.refundPolicy,
-                    allRefundsApproved: e.target.checked,
-                    policyType: false,
-                  },
-                })
-              }
-              onClick={() => {
-                setRefundTimeframe("");
-              }}
-              className="follow rounded w-6 h-4"
-            />
-            <label htmlFor="allRefundsApproved" className="text-sm ml-3">
-              All refunds are approved.
-            </label>
           </div>
-        </div>
-      </div>
-
-      <hr />
-
-      <div className="flex flex-wrap gap-5 md:justify-normal justify-center">
-        {/* <div>
+          <hr />
+          <div className="flex flex-wrap gap-5 md:justify-normal justify-center">
+            {/* <div>
           <button
             disabled={!validateForm() || loading}
             className={`flex justify-center items-center gap-4 event-form-btn ${
@@ -827,21 +827,23 @@ const EditEventForm: React.FC = () => {
             {loadingButton === "saveChanges" ? "Loading..." : "Save Changes"}
           </button>
         </div> */}
-        <Link to={"/live-events"}>
-          <button className="flex flex-row items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-10 rounded">
-            CANCEL
-          </button>
-        </Link>
-        <div>
-          <button
-            className={`flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-bold py-2 px-10 rounded`}
-            onClick={(e) => handleOnSubmit(e)}
-          >
-            NEXT PAGE
-            {loading && <Loader2 className="size-4 animate-spin" />}
-          </button>
-        </div>
-      </div>
+            <Link to={"/live-events"}>
+              <button className="flex flex-row items-center justify-center gap-4 bg-gray-100 text-black font-bold py-2 px-10 rounded">
+                CANCEL
+              </button>
+            </Link>
+            <div>
+              <button
+                className={`flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-bold py-2 px-10 rounded`}
+                onClick={(e) => handleOnSubmit(e)}
+              >
+                NEXT PAGE
+                {loading && <Loader2 className="size-4 animate-spin" />}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </form>
   );
 };

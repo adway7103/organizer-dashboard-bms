@@ -703,7 +703,7 @@ const EventForm: React.FC = () => {
           <div className="flex items-center">
             <input
               type="radio"
-              id="eventPolicy"
+              id="policyType"
               name="eventPolicy"
               checked={eventInfo.refundPolicy.policyType}
               onChange={(e) => {
@@ -712,6 +712,7 @@ const EventForm: React.FC = () => {
                   refundPolicy: {
                     ...eventInfo.refundPolicy,
                     policyType: e.target.checked,
+                    allRefundsApproved:false
                   },
                 });
                 setAccordionOpen(e.target.checked);
