@@ -7,7 +7,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  // getPaginationRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -21,8 +21,7 @@ import {
   TableRow,
 } from "../../../ui/Table";
 import PromoCodeDialog from "./PromoCodeDailog";
-// import { IoTicketOutline } from "react-icons/io5";
-// import { Search } from "lucide-react";
+import { Search } from "lucide-react";
 
 type PromoCodes = {
   id: string;
@@ -43,6 +42,8 @@ export function VoucherTable({
   handleDeleteTicket: (id: string) => void;
   refetch: () => void;
 }) {
+  const [pageIndex, setPageIndex] = React.useState(0);
+  const pageSize = 10;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -127,7 +128,7 @@ export function VoucherTable({
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    // getPaginationRowModel: getPaginationRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
@@ -137,28 +138,32 @@ export function VoucherTable({
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
     },
   });
-
+  const pageCount = Math.ceil(promoCodes.length / pageSize);
   return (
     <div className="min-w-[300px] w-full p-2 sm:p-4">
       <div className="rounded-3xl px-6 border-2">
         <div className="flex flex-col sm:flex-row justify-between items-center lg:p-2 lg:px-4 gap-4 sm:gap-0">
-          {/* <div className="relative flex items-center w-full sm:w-auto">
+          <div className="relative flex items-center w-full sm:w-auto">
             <Search className="absolute left-4 text-gray-400 pointer-events-none" />
             <input
               value={
-                (table.getColumn("fName")?.getFilterValue() as string) ?? ""
+                (table.getColumn("promoId")?.getFilterValue() as string) ?? ""
               }
               onChange={(event) =>
-                table.getColumn("fName")?.setFilterValue(event.target.value)
+                table.getColumn("promoId")?.setFilterValue(event.target.value)
               }
               className="w-full sm:w-auto !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm lg:w-80"
               placeholder="Search"
             />
-          </div> */}
-          {/* <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4"> */}
-          {/* <button className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full">
+          </div>
+          <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4">
+            <button className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full">
               Export
               <svg
                 width="20"
@@ -173,8 +178,8 @@ export function VoucherTable({
                   fillOpacity="0.66"
                 />
               </svg>
-            </button> */}
-          {/* </div> */}
+            </button>
+          </div>
         </div>
         <div className="p-4">
           <Table>
@@ -222,6 +227,21 @@ export function VoucherTable({
               )}
             </TableBody>
           </Table>
+          <div className="flex justify-center mt-4">
+            {Array.from({ length: pageCount }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => setPageIndex(i)}
+                className={`px-2 m-3 rounded ${
+                  pageIndex === i
+                    ? "text-white border-2 bg-[#6076a0] rounded-xl"
+                    : "text-black"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>

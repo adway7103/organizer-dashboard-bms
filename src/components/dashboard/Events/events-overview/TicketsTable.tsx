@@ -24,7 +24,7 @@ import { IoTicketOutline } from "react-icons/io5";
 import TicketDailog from "../ticketsAndVouchers/TicketsDialog";
 import { fetchEventOverview } from "../../../../api/fetchEventOverview";
 import { useParams } from "react-router-dom";
-// import { Search } from "lucide-react";
+import { Search } from "lucide-react";
 
 export type Tickets = {
   matrixId: string;
@@ -38,6 +38,8 @@ export type Tickets = {
 
 export function TicketTable() {
   const { eventId } = useParams<{ eventId: string }>();
+  const [pageIndex, setPageIndex] = React.useState(0);
+  const pageSize = 10;
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -48,7 +50,7 @@ export function TicketTable() {
   const [rowSelection, setRowSelection] = React.useState({});
   const [tickets, setTickets] = React.useState<Tickets[]>([]);
 
-  const  fetchData= async () => {
+  const fetchData = async () => {
     const response = await fetchEventOverview({ eventId });
 
     // Map API response to table data format
@@ -144,28 +146,32 @@ export function TicketTable() {
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
     },
   });
-
+  const pageCount = Math.ceil(tickets.length / pageSize);
   return (
     <div className="min-w-[300px] w-full p-2 sm:p-4">
       <div className="rounded-3xl px-6 border-2">
         <div className="flex flex-col sm:flex-row justify-between items-center lg:p-2 lg:px-4 gap-4 sm:gap-0">
-          {/* <div className="relative flex items-center w-full sm:w-auto">
+          <div className="relative flex items-center w-full sm:w-auto">
             <Search className="absolute left-4 text-gray-400 pointer-events-none" />
             <input
               value={
-                (table.getColumn("fName")?.getFilterValue() as string) ?? ""
+                (table.getColumn("name")?.getFilterValue() as string) ?? ""
               }
               onChange={(event) =>
-                table.getColumn("fName")?.setFilterValue(event.target.value)
+                table.getColumn("name")?.setFilterValue(event.target.value)
               }
               className="w-full sm:w-auto !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm lg:w-80"
               placeholder="Search"
             />
-          </div> */}
-          {/* <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4"> */}
-          {/* <button className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full">
+          </div>
+          <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4">
+            <button className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full">
               Export
               <svg
                 width="20"
@@ -180,8 +186,8 @@ export function TicketTable() {
                   fillOpacity="0.66"
                 />
               </svg>
-            </button> */}
-          {/* </div> */}
+            </button>
+          </div>
         </div>
         <div className="p-4">
           <Table>
@@ -232,6 +238,21 @@ export function TicketTable() {
               )}
             </TableBody>
           </Table>
+          <div className="flex justify-center mt-4">
+            {Array.from({ length: pageCount }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => setPageIndex(i)}
+                className={`px-2 m-3 rounded ${
+                  pageIndex === i
+                    ? "text-white border-2 bg-[#6076a0] rounded-xl"
+                    : "text-black"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  //   getPaginationRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -21,10 +21,10 @@ import {
   TableRow,
 } from "../../../ui/Table";
 import { useParams } from "react-router-dom";
-// import GuestListDialog from "./GuestListOptions";
 import NewGuestlist from "./NewGuestlist";
 import { fetchGuests } from "../../../../api/fetchGuests";
-// import { Search } from "lucide-react";
+import SkeletonComponent from "../../../Skeleton";
+import { Search } from "lucide-react";
 
 export type GuestList = {
   id: string;
@@ -34,7 +34,8 @@ export type GuestList = {
 
 export default function GuestList() {
   const { eventId } = useParams<{ eventId: string }>();
-
+  const [pageIndex, setPageIndex] = React.useState(0);
+  const pageSize = 10;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -103,7 +104,7 @@ export default function GuestList() {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    // getPaginationRowModel: getPaginationRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
@@ -113,33 +114,43 @@ export default function GuestList() {
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
     },
   });
+  const pageCount = Math.ceil(guests.length / pageSize);
 
   return (
     <div className="min-w-[300px] w-full p-2 sm:p-4">
-      <h1 className="text-3xl text-[#9d487b] font-medium ml-8">{title}</h1>
+      {!title ? (
+        <SkeletonComponent className="rounded-3xl" />
+      ) : (
+        <h1 className="text-3xl text-[#9d487b] font-medium ml-8">{title}</h1>
+      )}
       <div className="flex justify-between items-center mr-6 sm:mr-10 mt-6">
         <h1 className="text-xl font-medium ml-9">Guest List</h1>
+
         <NewGuestlist refetch={fetchData} />
       </div>{" "}
       <div className="rounded-3xl px-6 border-2 mt-8">
         <div className="flex flex-col sm:flex-row justify-between items-center lg:p-2 lg:px-4 gap-4 sm:gap-0">
-          {/* <div className="relative flex items-center w-full sm:w-auto">
+          <div className="relative flex items-center w-full sm:w-auto">
             <Search className="absolute left-4 text-gray-400 pointer-events-none" />
             <input
               value={
-                (table.getColumn("fName")?.getFilterValue() as string) ?? ""
+                (table.getColumn("name")?.getFilterValue() as string) ?? ""
               }
               onChange={(event) =>
-                table.getColumn("fName")?.setFilterValue(event.target.value)
+                table.getColumn("name")?.setFilterValue(event.target.value)
               }
               className="w-full sm:w-auto !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm lg:w-80"
               placeholder="Search"
             />
-          </div> */}
-          {/* <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4"> */}
-          {/* <button className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full">
+          </div>
+          <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4">
+            <button className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full">
               Export
               <svg
                 width="20"
@@ -154,8 +165,8 @@ export default function GuestList() {
                   fillOpacity="0.66"
                 />
               </svg>
-            </button> */}
-          {/* </div> */}
+            </button>
+          </div>
         </div>
         <div className="p-4">
           <Table>
@@ -203,6 +214,21 @@ export default function GuestList() {
               )}
             </TableBody>
           </Table>
+          <div className="flex justify-center mt-4">
+            {Array.from({ length: pageCount }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => setPageIndex(i)}
+                className={`px-2 m-3 rounded ${
+                  pageIndex === i
+                    ? "text-white border-2 bg-[#6076a0] rounded-xl"
+                    : "text-black"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
