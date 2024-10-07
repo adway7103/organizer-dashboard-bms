@@ -1,7 +1,7 @@
 interface CountComponentProps {
-  image: string;
-  text: string;
-  num:  any;
+  image?: string;
+  text?: string;
+  num?:  any;
 }
 const CountComponent = ({ image, text, num }: CountComponentProps) => {
   return (

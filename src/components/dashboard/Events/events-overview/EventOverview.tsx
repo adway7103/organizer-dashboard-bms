@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchEventOverview } from "../../../../api/fetchEventOverview";
 import HomeContainerCard from "../../HomeContainerCard";
+import SkeletonComponent from "../../../Skeleton";
 
 interface EventOverviewResponse {
   event: {
@@ -23,7 +24,7 @@ interface EventOverviewResponse {
   totalTicketSold: number;
   interestedPeople: string;
   revenue: string;
-  shareUrl:string;
+  shareUrl: string;
   pageViewCount: number;
   tickets: {
     ticketName: string;
@@ -51,6 +52,7 @@ const EventOverview = () => {
   const { eventId } = useParams<{ eventId: string }>();
   const [eventOverviewData, setEventOverviewData] =
     useState<EventOverviewResponse>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const data = [
     {
@@ -73,6 +75,7 @@ const EventOverview = () => {
 
   useEffect(() => {
     const getEventOverview = async () => {
+      setLoading(true);
       try {
         if (eventId) {
           const response = await fetchEventOverview({ eventId });
@@ -80,6 +83,8 @@ const EventOverview = () => {
         }
       } catch (error) {
         console.error("Failed to fetch event overview:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -94,27 +99,39 @@ const EventOverview = () => {
         </h1>
         <div className="xl:flex">
           <div className="pt-10 pl-2 max-sm:pr-2 lg:pl-10">
-            <EventCard
-              posterUrl={eventOverviewData?.event.posterUrl}
-              city={eventOverviewData?.event.city}
-              date={eventOverviewData?.event.date}
-              day={eventOverviewData?.event.day}
-              time={eventOverviewData?.event.time}
-            />
+            {loading ? (
+              <SkeletonComponent className="h-[270px] min-w-[300px] sm:w-[520px] rounded-3xl" />
+            ) : (
+              <EventCard
+                posterUrl={eventOverviewData?.event.posterUrl}
+                city={eventOverviewData?.event.city}
+                date={eventOverviewData?.event.date}
+                day={eventOverviewData?.event.day}
+                time={eventOverviewData?.event.time}
+              />
+            )}
           </div>
           <div className="max-sm:pl-2 max-sm:mt-4 p-2 lg:p-10 pr-2">
-            <CheckListCard eventOverviewData={eventOverviewData?.checklist} />
+            {loading ? (
+              <SkeletonComponent className="h-[270px] min-w-[300px] sm:w-[520px] rounded-3xl" />
+            ) : (
+              <CheckListCard eventOverviewData={eventOverviewData?.checklist} />
+            )}
           </div>
         </div>
         <div className="flex flex-wrap max-sm:justify-center max-sm:mt-4 gap-6 p-2 ml-8 mr-8">
-          {data.map((i, index) => (
-            <CountComponent
-              key={index}
-              image={i.image}
-              text={i.text}
-              num={i.num}
-            />
-          ))}
+          {loading ? (
+            <SkeletonComponent className="h-60"/>
+          ) : (
+            data.map((i, index) => (
+              <CountComponent
+                key={index}
+                image={i.image}
+                text={i.text}
+                num={i.num}
+              />
+            ))
+          )}
         </div>
         <div className="grid min-w-[300px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pl-2 pr-2 sm:ml-8 sm:mr-28 mt-4">
           <TextBlast className="bg-[#954b7c]" />
@@ -180,13 +197,12 @@ const EventTraficAndShareButton = ({
   className,
   eventId,
   shareUrl,
-}: Props) => {  
+}: Props) => {
   const navigate = useNavigate();
   const handleClick = () => {
     if (heading === "Event traffic") {
       navigate(`/event-traffic/${eventId}`);
-    }
-    else if (heading === "Share") {
+    } else if (heading === "Share") {
       shareEvent(shareUrl);
     }
   };
@@ -195,10 +211,10 @@ const EventTraficAndShareButton = ({
     if (navigator.share && url) {
       navigator
         .share({
-          title: 'Check out this event!',
+          title: "Check out this event!",
           url: url,
         })
-        .catch((error) => console.log('Error sharing:', error));
+        .catch((error) => console.log("Error sharing:", error));
     } else {
       copyToClipboard(url);
     }
@@ -206,11 +222,14 @@ const EventTraficAndShareButton = ({
 
   const copyToClipboard = (url?: string) => {
     if (url) {
-      navigator.clipboard.writeText(url).then(() => {
-        alert('Link copied to clipboard!');
-      }).catch((error) => {
-        console.error('Could not copy text: ', error);
-      });
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          alert("Link copied to clipboard!");
+        })
+        .catch((error) => {
+          console.error("Could not copy text: ", error);
+        });
     }
   };
   return (
