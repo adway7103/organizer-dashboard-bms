@@ -699,7 +699,7 @@ const EventForm: React.FC = () => {
 
       <div>
         <h3 className="font-medium text-xl mb-2">Refunds</h3>
-        <div className="flex flex-col gap-2 ml-2">
+        <div className="flex flex-col gap-2">
           <div className="flex items-center">
             <input
               type="radio"
@@ -717,7 +717,7 @@ const EventForm: React.FC = () => {
                 });
                 setAccordionOpen(e.target.checked);
               }}
-              className="follow rounded w-6 h-4 ml-[2px]"
+              className="follow rounded w-6 h-4 ml-[3px]"
             />
             <label htmlFor="eventPolicy" className="text-sm ml-3">
               Set your policy (no refunds, refunds approved 24h/48h before event
