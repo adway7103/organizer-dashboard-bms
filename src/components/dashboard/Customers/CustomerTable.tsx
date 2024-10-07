@@ -21,8 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../ui/Table";
-import { fetchCustomers } from "../../../api/fetchCustomersApi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // import Message from "../Affiliates/Message";
 
 export type Follower = {
@@ -38,10 +37,9 @@ export type Follower = {
   affiliationStatus: string;
 };
 
-export function CustomerTable() {
+export function CustomerTable({customers}:{customers:Follower[]}) {
   const [pageIndex, setPageIndex] = useState(0);
   const pageSize = 10;
-  const [customers, setCustomers] = useState([]);
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -50,19 +48,6 @@ export function CustomerTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-
-  useEffect(() => {
-    const getCustomers = async () => {
-      try {
-        const customersData = await fetchCustomers();
-        setCustomers(customersData.formattedCustomerList);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getCustomers();
-  }, []);
 
   const columns: ColumnDef<Follower>[] = [
     {

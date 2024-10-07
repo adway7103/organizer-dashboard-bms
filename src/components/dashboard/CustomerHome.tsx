@@ -5,6 +5,7 @@ import CustomerChart from "./Customers/CustomerChart";
 import { CustomerTable } from "./Customers/CustomerTable";
 import FollowerPieChart from "./Followers/FollowerPieChart";
 import { fetchCustomers } from "../../api/fetchCustomersApi";
+import SkeletonComponent from "../Skeleton";
 
 interface MonthlyBookingData {
   month: string;
@@ -41,31 +42,41 @@ const CustomerHome = () => {
     MonthlyBookingData[]
   >([]);
   const [ageDistribution, setAgeDistribution] = useState<AgeDistribution>();
+  const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetchCustomers();
-
-      setMonthlyBookingData(response.monthlyBookingData);
-      setTotalCustomers(response.totalCustomers);
-      setGenderDistribution({
-        male: parseFloat(response.genderDistribution.male.replace("%", "")),
-        female: parseFloat(response.genderDistribution.female.replace("%", "")),
-        unknown: parseFloat(
-          response.genderDistribution.unknown.replace("%", "")
-        ),
-      });
-      setAgeDistribution({
-        unknown: response.ageDistribution.unknown.percentage,
-        "0-18": response.ageDistribution["0-18"].percentage,
-        "18-19": response.ageDistribution["18-19"].percentage,
-        "20-24": response.ageDistribution["20-24"].percentage,
-        "25-29": response.ageDistribution["25-29"].percentage,
-        "30-39": response.ageDistribution["30-39"].percentage,
-        "40-49": response.ageDistribution["40-49"].percentage,
-        "50-59": response.ageDistribution["50-59"].percentage,
-        "60+": response.ageDistribution["60+"].percentage,
-      });
+      try {
+        const response = await fetchCustomers();
+        setMonthlyBookingData(response.monthlyBookingData);
+        setTotalCustomers(response.totalCustomers);
+        setGenderDistribution({
+          male: parseFloat(response.genderDistribution.male.replace("%", "")),
+          female: parseFloat(
+            response.genderDistribution.female.replace("%", "")
+          ),
+          unknown: parseFloat(
+            response.genderDistribution.unknown.replace("%", "")
+          ),
+        });
+        setCustomers(response.formattedCustomerList)
+        setAgeDistribution({
+          unknown: response.ageDistribution.unknown.percentage,
+          "0-18": response.ageDistribution["0-18"].percentage,
+          "18-19": response.ageDistribution["18-19"].percentage,
+          "20-24": response.ageDistribution["20-24"].percentage,
+          "25-29": response.ageDistribution["25-29"].percentage,
+          "30-39": response.ageDistribution["30-39"].percentage,
+          "40-49": response.ageDistribution["40-49"].percentage,
+          "50-59": response.ageDistribution["50-59"].percentage,
+          "60+": response.ageDistribution["60+"].percentage,
+        });
+        setLoading(false); // Set loading to false once data is fetched
+      } catch (error) {
+        console.error("Error fetching customer data:", error);
+        setLoading(false); // Stop loading even in case of an error
+      }
     };
 
     fetchData();
@@ -91,31 +102,51 @@ const CustomerHome = () => {
       <div className="grid grid-cols-6 xl:grid-cols-10 gap-4 my-3 pr-4">
         <div className="col-span-6 md:col-span-2 xl:col-span-2">
           <div>
-            <CountCard heading={"Customers"} count={totalCustomers} />
+            {loading ? (
+              <SkeletonComponent className="h-auto sm:h-[22vh] rounded-3xl" />
+            ) : (
+              <CountCard heading={"Customers"} count={totalCustomers} />
+            )}
           </div>
           <div>
-            <TextBlast className="bg-[#954b7c]" />
+            {loading ? (
+              <SkeletonComponent className="mt-4 h-auto sm:h-[10vh] rounded-3xl" />
+            ) : (
+              <TextBlast className="bg-[#954b7c]" />
+            )}
           </div>
         </div>
         <div className="col-span-6 md:col-span-4 xl:col-span-4">
-          <CustomerChart monthlyBookingData={monthlyBookingData} />
+          {loading ? (
+            <SkeletonComponent className="h-[40vh] rounded-3xl" />
+          ) : (
+            <CustomerChart monthlyBookingData={monthlyBookingData} />
+          )}
         </div>
         <div className="col-span-6 md:col-span-3 xl:col-span-2">
-          <FollowerPieChart
-            heading={"Attendees By Gender"}
-            male={genderDistribution?.male || 0}
-            female={genderDistribution?.female || 0}
-            unknownGender={genderDistribution?.unknown || 0}
-          />
+          {loading ? (
+            <SkeletonComponent className="h-[40vh] rounded-3xl" />
+          ) : (
+            <FollowerPieChart
+              heading={"Attendees By Gender"}
+              male={genderDistribution?.male || 0}
+              female={genderDistribution?.female || 0}
+              unknownGender={genderDistribution?.unknown || 0}
+            />
+          )}
         </div>
         <div className="col-span-6 md:col-span-3 xl:col-span-2">
-          <FollowerPieChart
-            heading={"Attendees By Age"}
-            ageDistribution={ageDistributionPercentages}
-          />
+          {loading ? (
+            <SkeletonComponent className="h-auto sm:h-[40vh] rounded-3xl" />
+          ) : (
+            <FollowerPieChart
+              heading={"Attendees By Age"}
+              ageDistribution={ageDistributionPercentages}
+            />
+          )}
         </div>
       </div>
-      <CustomerTable />
+      <CustomerTable customers={customers}/>
     </div>
   );
 };
