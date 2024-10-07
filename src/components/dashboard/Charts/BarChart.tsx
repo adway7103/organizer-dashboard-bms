@@ -81,6 +81,7 @@ const BarChartHome = ({ data }: BarChartHomeProps) => {
           />
           <Tooltip
             cursor={{ fill: "transparent" }} // Make the hover effect transparent
+            formatter={(value: number) => [`Revenue ${value}`]} // Customize tooltip label
           />{" "}
           <Bar
             dataKey="totalRevenue"

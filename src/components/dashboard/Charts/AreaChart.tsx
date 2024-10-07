@@ -93,8 +93,10 @@ function AreaChartHome({
             }}
           />
           <YAxis axisLine={false} tick={false} />
-          <Tooltip />
-          <Area
+          <Tooltip
+            cursor={{ fill: "transparent" }} 
+            formatter={(value: number) => [`Tickets Sold ${value}`]} 
+          />{" "}          <Area
             type="linear"
             dataKey="totalTickets"
             stroke="#8884d8"

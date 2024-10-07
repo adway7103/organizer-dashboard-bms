@@ -121,7 +121,7 @@ export function FollowerPieChart({
       <div>
         <CardFooter className="">
           {heading === "Attendees By Gender" && (
-            <div className="flex items-center justify-between gap-8">
+            <div className="flex items-center justify-between gap-4">
               <div className="text-xs">
                 <div className="text-center">Female</div>
                 <div className="flex items-center">
