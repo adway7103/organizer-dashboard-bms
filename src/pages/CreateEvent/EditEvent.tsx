@@ -40,7 +40,12 @@ const EditEventForm: React.FC = () => {
     { categoryId: string; categoryName: string }[]
   >([]);
   console.log(selectedFile);
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  // const [accordionOpen, setAccordionOpen] = useState(false);
+  // useEffect(() => {
+  //   if (eventInfo.refundPolicy.policyType) {
+  //     setAccordionOpen(true);
+  //   }
+  // }, [eventInfo.refundPolicy.policyType]);
 
   const [trailerUrl, setTrailerUrl] = useState<any[]>([]);
   const [refundTimeframe, setRefundTimeframe] = useState("");
@@ -304,7 +309,7 @@ const EditEventForm: React.FC = () => {
     <form className="event-form flex flex-col gap-5 pb-10">
       {loading ? ( // Conditional rendering for loading state
         <div className="flex justify-center items-center h-[100vh]">
-          <CircularProgress/>
+          <CircularProgress />
         </div>
       ) : (
         <>
@@ -666,7 +671,7 @@ const EditEventForm: React.FC = () => {
                         allRefundsApproved: false,
                       },
                     });
-                    onclick = () => setAccordionOpen(true);
+                    // setAccordionOpen(true);
                   }}
                   className="follow rounded w-6 h-4 ml-[2px]"
                 />
@@ -676,16 +681,18 @@ const EditEventForm: React.FC = () => {
                 </label>
               </div>
 
-              {accordionOpen && eventInfo.refundPolicy.policyType && (
+              {eventInfo.refundPolicy.policyType  && (
                 <div className="ml-6">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center">
                       <input
                         type="radio"
-                        id="policyType"
-                        name="eventPolicy"
+                        id="refundOption1"
+                        name="refundTimeframe"
                         value="no"
-                        checked={refundTimeframe === "no"}
+                        checked={
+                          eventInfo.refundPolicy.refundTimeframe === "no"
+                        }
                         onChange={(e) => {
                           setRefundTimeframe(e.target.value);
                           setEventInfo({
@@ -711,7 +718,9 @@ const EditEventForm: React.FC = () => {
                         id="refundOption2"
                         name="refundTimeframe"
                         value="24h"
-                        checked={refundTimeframe === "24h"}
+                        checked={
+                          eventInfo.refundPolicy.refundTimeframe === "24h"
+                        }
                         onChange={(e) => {
                           setRefundTimeframe(e.target.value);
                           setEventInfo({
@@ -737,7 +746,9 @@ const EditEventForm: React.FC = () => {
                         id="refundOption3"
                         name="refundTimeframe"
                         value="48h"
-                        checked={refundTimeframe === "48h"}
+                        checked={
+                          eventInfo.refundPolicy.refundTimeframe === "48h"
+                        }
                         onChange={(e) => {
                           setRefundTimeframe(e.target.value);
                           setEventInfo({
@@ -763,7 +774,9 @@ const EditEventForm: React.FC = () => {
                         id="refundOption4"
                         name="refundTimeframe"
                         value="7d"
-                        checked={refundTimeframe === "7d"}
+                        checked={
+                          eventInfo.refundPolicy.refundTimeframe === "7d"
+                        }
                         onChange={(e) => {
                           setRefundTimeframe(e.target.value);
                           setEventInfo({
@@ -804,7 +817,7 @@ const EditEventForm: React.FC = () => {
                   }
                   onClick={() => {
                     setRefundTimeframe("");
-                    setAccordionOpen(false);
+                    // setAccordionOpen(false);
                   }}
                   className="follow rounded w-6 h-4"
                 />
