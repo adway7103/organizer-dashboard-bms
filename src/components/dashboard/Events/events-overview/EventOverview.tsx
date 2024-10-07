@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { fetchEventOverview } from "../../../../api/fetchEventOverview";
 import HomeContainerCard from "../../HomeContainerCard";
 import SkeletonComponent from "../../../Skeleton";
+import { Bookings } from "./RecentOrderTable";
 
 interface EventOverviewResponse {
   event: {
@@ -52,6 +53,8 @@ const EventOverview = () => {
   const { eventId } = useParams<{ eventId: string }>();
   const [eventOverviewData, setEventOverviewData] =
     useState<EventOverviewResponse>();
+  const [bookings, setBookings] = useState<Bookings[]>([]);
+
   const [loading, setLoading] = useState<boolean>(false);
 
   const data = [
@@ -79,6 +82,16 @@ const EventOverview = () => {
       try {
         if (eventId) {
           const response = await fetchEventOverview({ eventId });
+          const transformedData = response.data.bookings.map(
+            (booking: any) => ({
+              bookingId: booking.bookingId,
+              name: booking.ticketName,
+              totalQuantity: `${booking.totalQuantity}`,
+              price: booking.price ? `€ ${booking.price}` : "Free",
+              date: booking.date,
+            })
+          );
+          setBookings(transformedData);
           setEventOverviewData(response.data);
         }
       } catch (error) {
@@ -121,7 +134,7 @@ const EventOverview = () => {
         </div>
         <div className="flex flex-wrap max-sm:justify-center max-sm:mt-4 gap-6 p-2 ml-8 mr-8">
           {loading ? (
-            <SkeletonComponent className="h-60"/>
+            <SkeletonComponent className="h-60" />
           ) : (
             data.map((i, index) => (
               <CountComponent
@@ -159,7 +172,7 @@ const EventOverview = () => {
         </div>
         <div className="sm:ml-8 sm:mr-24 mt-12">
           <h1 className="text-2xl font-medium ml-8">Recent Orders</h1>
-          <RecentOrdersTable />
+          <RecentOrdersTable bookings={bookings} />
         </div>
       </div>
     </div>

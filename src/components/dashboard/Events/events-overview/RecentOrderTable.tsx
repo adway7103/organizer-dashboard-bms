@@ -19,9 +19,8 @@ import {
   TableHeader,
   TableRow,
 } from "../../../ui/Table";
-import { fetchEventOverview } from "../../../../api/fetchEventOverview";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Search } from "lucide-react";
 import { downloadOrders } from "../../../../api/downloadSalesData";
 
@@ -33,7 +32,7 @@ export type Bookings = {
   date: string;
 };
 
-export function RecentOrdersTable() {
+export function RecentOrdersTable({ bookings }: { bookings: Bookings[] }) {
   const [pageIndex, setPageIndex] = useState(0);
   const pageSize = 10;
   const { eventId } = useParams<{ eventId: string }>();
@@ -42,26 +41,9 @@ export function RecentOrdersTable() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-  const [bookings, setBookings] = useState<Bookings[]>([]);
   const handleExportButton = async () => {
     await downloadOrders({ eventId });
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetchEventOverview({ eventId });
-
-      const transformedData = response.data.bookings.map((booking: any) => ({
-        bookingId: booking.bookingId,
-        name: booking.ticketName,
-        totalQuantity: `${booking.totalQuantity}`,
-        price: booking.price ? `€ ${booking.price}` : "Free",
-        date: booking.date,
-      }));
-      setBookings(transformedData);
-    };
-    fetchData();
-  }, [eventId]);
 
   const columns: ColumnDef<Bookings>[] = [
     {
