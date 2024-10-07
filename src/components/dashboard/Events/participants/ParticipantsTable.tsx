@@ -20,20 +20,10 @@ import {
   TableHeader,
   TableRow,
 } from "../../../ui/Table";
-// import { IoTicketOutline } from "react-icons/io5";
-// import { Search } from "lucide-react";
+import { useState } from "react";
+import { Search } from "lucide-react";
 
-// export type Tickets = {
-//   id: string;
-//   name: string;
-//   price: string;
-//   totalTickets: string;
-//   commission: string;
-//   status: string;
-//   matrixId: string;
-// };
-
-export type Tickets = {
+export type ParticipantsProps = {
   bookingId: string;
   fname: string;
   lname: string;
@@ -47,8 +37,10 @@ export type Tickets = {
 export function ParticipantsTable({
   participants,
 }: {
-  participants: Tickets[];
+  participants: ParticipantsProps[];
 }) {
+  const [pageIndex, setPageIndex] = useState(0);
+  const pageSize = 10;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -56,31 +48,8 @@ export function ParticipantsTable({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  //   const [tickets, setTickets] = React.useState<Tickets[]>([]);
 
-  //   React.useEffect(() => {
-  //     const fetchData = async () => {
-  //       const response = await fetchTickets();
-  //       const matrixId = response.data.matrix._id;
-
-  //       const transformedData = response.data.matrix.ticketCategories.map(
-  //         (ticket: any) => ({
-  //           id: ticket._id,
-  //           name: ticket.categoryName,
-  //           price: ticket.categoryPricePerPerson
-  //             ? `$ ${ticket.categoryPricePerPerson}`
-  //             : "Free",
-  //           totalTickets: ticket.totalSeats.toString(),
-  //           matrixId: matrixId,
-  //         })
-  //       );
-  //       setTickets(transformedData);
-  //       console.log(transformedData);
-  //     };
-  //     fetchData();
-  //   }, []);
-
-  const columns: ColumnDef<Tickets>[] = [
+  const columns: ColumnDef<ParticipantsProps>[] = [
     {
       accessorKey: "bookingId",
       header: "Booking Id",
@@ -164,14 +133,19 @@ export function ParticipantsTable({
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
     },
   });
+  const pageCount = Math.ceil(participants.length / pageSize);
 
   return (
     <div className="min-w-[300px] w-full sm:p-4 max-sm:pr-4 max-sm:pt-4">
       <div className="rounded-3xl px-6 border-2">
         <div className="flex flex-col sm:flex-row justify-between items-center lg:p-2 lg:px-4 gap-4 sm:gap-0">
-          {/* <div className="relative flex items-center w-full sm:w-auto">
+          <div className="relative flex items-center w-full sm:w-auto">
             <Search className="absolute left-4 text-gray-400 pointer-events-none" />
             <input
               value={
@@ -183,9 +157,9 @@ export function ParticipantsTable({
               className="w-full sm:w-auto !pl-14 !h-12 !rounded-full !bg-[#E6E6E682] py-3 pl-10 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm lg:w-80"
               placeholder="Search"
             />
-          </div> */}
-          {/* <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4"> */}
-          {/* <button className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full">
+          </div>
+          <div className="flex w-full sm:w-auto items-center justify-center sm:justify-end gap-4 sm:gap-1 lg:gap-4">
+            <button className="flex items-center gap-2 sm:gap-5 px-4 py-2 bg-[#E6E6E682] rounded-full">
               Export
               <svg
                 width="20"
@@ -200,8 +174,8 @@ export function ParticipantsTable({
                   fillOpacity="0.66"
                 />
               </svg>
-            </button> */}
-          {/* </div> */}
+            </button>
+          </div>
         </div>
         <div className="p-4">
           <Table>
@@ -249,6 +223,21 @@ export function ParticipantsTable({
               )}
             </TableBody>
           </Table>
+          <div className="flex justify-center mt-4">
+            {Array.from({ length: pageCount }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => setPageIndex(i)}
+                className={`px-2 m-3 rounded ${
+                  pageIndex === i
+                    ? "text-white border-2 bg-[#6076a0] rounded-xl"
+                    : "text-black"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
