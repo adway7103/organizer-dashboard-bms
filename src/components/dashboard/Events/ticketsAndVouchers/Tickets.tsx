@@ -39,7 +39,11 @@ const Tickets = () => {
   return (
     <div className="ml-2 sm:ml-8 sm:mr-24">
       <h1 className="text-3xl text-[#9d487b] font-medium ml-8">
-        {loading ? <SkeletonComponent /> : eventOverviewData?.event.title}
+        {loading ? (
+          <SkeletonComponent className="rounded-3xl" />
+        ) : (
+          eventOverviewData?.event.title
+        )}
       </h1>
       <div className="flex justify-between items-center mr-6 sm:mr-10 mt-6">
         <h1 className="text-xl font-medium ml-8 ">Tickets</h1>

@@ -24,6 +24,7 @@ import { useParams } from "react-router-dom";
 import { fetchScannerCode } from "../../../../api/fetchScannerCodeApi";
 import { useEffect, useState } from "react";
 import AddThirdPartyTicket from "./AddThirdPartyTickets";
+import SkeletonComponent from "../../../Skeleton";
 // import { Search } from "lucide-react";
 
 export type EntryScanner = {
@@ -112,7 +113,13 @@ export default function EntryScanner() {
 
   return (
     <div className="min-w-[300px] w-full p-2 sm:p-4">
-      <h1 className="text-3xl text-[#9d487b] font-medium ml-8">{eventTitle}</h1>
+      {!eventTitle ? (
+        <SkeletonComponent className="rounded-3xl" />
+      ) : (
+        <h1 className="text-3xl text-[#9d487b] font-medium ml-8">
+          {eventTitle}
+        </h1>
+      )}
       <div className="flex justify-between items-center mr-6 sm:mr-10 mt-2">
         <h1 className="text-xl font-medium ml-9">Entry Scanner</h1>
         <div className="flex gap-4">

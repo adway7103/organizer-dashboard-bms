@@ -5,16 +5,7 @@ import FollowerPieChart from "./Followers/FollowerPieChart";
 import { FollowerTable } from "./Followers/FollowerTable";
 import { fetchFollowers } from "../../api/fetchFollowersApi";
 import { useEffect, useState } from "react";
-
-// interface FollowerList {
-//   fname: string;
-//   lname: string;
-//   age: number;
-//   email: string;
-//   followedOn: string;
-//   eventsAttended: number;
-//   affiliationStatus: string;
-// }
+import SkeletonComponent from "../Skeleton";
 
 interface AttendeesByGender {
   male: number;
@@ -47,24 +38,42 @@ const FollowerHome = () => {
       <h2 className="font-medium text-[2rem] px-4">Followers</h2>
       <div className="grid grid-cols-6 xl:grid-cols-10 gap-4 my-3 pr-4">
         <div className="col-span-6 md:col-span-2 xl:col-span-2">
-          <CountCard heading={"Followers"} count={totalFollowers} />
-          <TextBlast className="bg-[#954b7c]" />
+          {!totalFollowers ? (
+            <SkeletonComponent className="h-auto sm:h-[22vh] rounded-3xl" />
+          ) : (
+            <CountCard heading={"Followers"} count={totalFollowers} />
+          )}
+          {!totalFollowers ? (
+            <SkeletonComponent className="h-auto sm:h-[10vh] mt-4 rounded-3xl" />
+          ) : (
+            <TextBlast className="bg-[#954b7c]" />
+          )}
         </div>
         <div className="col-span-6 md:col-span-4 xl:col-span-4">
-          <FollowerChart followersPerMonth={followersPerMonth} />
+          {!followersPerMonth ? (
+            <SkeletonComponent className="h-[40vh] rounded-3xl" />
+          ) : (
+            <FollowerChart followersPerMonth={followersPerMonth} />
+          )}
         </div>
         <div className="col-span-6 md:col-span-3 xl:col-span-2">
-          <FollowerPieChart
-            heading={"Attendees By Gender"}
-            male={genderPercentage?.male || 0}
-            female={genderPercentage?.female || 0}
-            unknownGender={genderPercentage?.unknown || 0}
-          />
+          {!followersPerMonth ? (
+            <SkeletonComponent className="h-auto sm:h-[40vh] rounded-3xl" />
+          ) : (
+            <FollowerPieChart
+              heading={"Attendees By Gender"}
+              male={genderPercentage?.male || 0}
+              female={genderPercentage?.female || 0}
+              unknownGender={genderPercentage?.unknown || 0}
+            />
+          )}
         </div>
         <div className="col-span-6 md:col-span-3 xl:col-span-2">
-          <FollowerPieChart
-            heading={"Attendees By Age"}
-          />
+          {!followersPerMonth ? (
+            <SkeletonComponent className="h-auto sm:h-[40vh] rounded-3xl" />
+          ) : (
+            <FollowerPieChart heading={"Attendees By Age"} />
+          )}
         </div>
       </div>
       <FollowerTable />

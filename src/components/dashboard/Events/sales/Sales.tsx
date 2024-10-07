@@ -8,6 +8,7 @@ import ParticipantsByTickets from "./ParticipantsByTickets";
 import SalesOverTime from "./SalesChart";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import SkeletonComponent from "../../../Skeleton";
 interface TicketData {
   count: number;
   percentage: string;
@@ -57,47 +58,83 @@ const Sales = () => {
   return (
     <>
       <h1 className="text-3xl text-[#9d487b] font-medium ml-8 sm:ml-16">
-        {eventData?.eventTitle}
+        {!eventData ? (
+          <SkeletonComponent className="rounded-3xl" />
+        ) : (
+          eventData?.eventTitle
+        )}
       </h1>
       <div className="ml-8 sm:ml-12 mt-6">
         <h1 className="text-2xl font-medium sm:ml-6">Sales</h1>
       </div>{" "}
       <div className="bg-[#f8f8f8] ml-2 sm:ml-8 md:ml-6 mr-2 2xl:mr-8 rounded-3xl pt-6 mt-4">
         <div className="ml-4 mr-4 md:ml-12 md:mr-24 grid gap-6 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
-          <Card
-            heading={"Net revenue"}
-            icon={img}
-            data={eventData?.netRevenue}
-          />
-          <Card
-            heading={"Ticket revenue"}
-            icon={img}
-            data={eventData?.ticketRevenue}
-          />
-          <Card
-            heading={"Total numbers of orders"}
-            icon={img1}
-            data={eventData?.totalOrders}
-          />
-          <Card
-            heading={"Rep payments"}
-            icon={img2}
-            data={eventData?.repPayments}
-          />
-          <Card
-            heading={"Ticket sold"}
-            icon={img3}
-            data={eventData?.ticketSold}
-          />
-          <Card
-            heading={"Tickets transferred"}
-            icon={img3}
-            data={eventData?.ticketTransferred}
-          />
+          {!eventData ? (
+            <SkeletonComponent className="w-full p-4 rounded-3xl" />
+          ) : (
+            <Card
+              heading={"Net revenue"}
+              icon={img}
+              data={eventData?.netRevenue}
+            />
+          )}
+          {!eventData ? (
+            <SkeletonComponent className="w-full p-4 rounded-3xl" />
+          ) : (
+            <Card
+              heading={"Ticket revenue"}
+              icon={img}
+              data={eventData?.ticketRevenue}
+            />
+          )}
+          {!eventData ? (
+            <SkeletonComponent className="w-full p-4 rounded-3xl" />
+          ) : (
+            <Card
+              heading={"Total numbers of orders"}
+              icon={img1}
+              data={eventData?.totalOrders}
+            />
+          )}
+          {!eventData ? (
+            <SkeletonComponent className="w-full p-4 rounded-3xl" />
+          ) : (
+            <Card
+              heading={"Rep payments"}
+              icon={img2}
+              data={eventData?.repPayments}
+            />
+          )}
+          {!eventData ? (
+            <SkeletonComponent className="w-full p-4 rounded-3xl" />
+          ) : (
+            <Card
+              heading={"Ticket sold"}
+              icon={img3}
+              data={eventData?.ticketSold}
+            />
+          )}
+          {!eventData ? (
+            <SkeletonComponent className="w-full p-4 rounded-3xl" />
+          ) : (
+            <Card
+              heading={"Tickets transferred"}
+              icon={img3}
+              data={eventData?.ticketTransferred}
+            />
+          )}
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 ml-4 mr-4 md:ml-12 md:mr-24 gap-4 mt-6">
-          <ParticipantsByTickets ticketData={eventData?.ticketData || {}} />
-          <SalesOverTime monthlyData={eventData?.monthlyData} />
+          {!eventData ? (
+            <SkeletonComponent className="h-60 rounded-3xl w-full" />
+          ) : (
+            <ParticipantsByTickets ticketData={eventData?.ticketData || {}} />
+          )}
+          {!eventData ? (
+            <SkeletonComponent className="h-60 rounded-3xl w-full" />
+          ) : (
+            <SalesOverTime monthlyData={eventData?.monthlyData} />
+          )}
         </div>
         <div className="md:ml-8 md:mr-16 md:pr-4">
           <h1 className="ml-8 mt-10 text-2xl font-medium">Orders</h1>
