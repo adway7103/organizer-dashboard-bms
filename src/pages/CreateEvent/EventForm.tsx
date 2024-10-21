@@ -225,6 +225,9 @@ const EventForm: React.FC = () => {
     fetchProfile();
   }, []);
 
+  const [uploadingStory, setUploadingStory] = useState(false);
+  
+
   const handleOnSubmit = async (e: any, buttonType: string) => {
     e.preventDefault();
     setLoading(true);
@@ -451,11 +454,12 @@ const EventForm: React.FC = () => {
         {[0, 1, 2].map((index) => (
           <VideoComponent
             key={index}
-            index={index} 
+            index={index}
             onFileSelect={handleVideoFile}
             setTrailerUrl={setTrailerUrl}
-            videoUrl={trailerUrl[index] || null}
-          />
+            videoUrl={trailerUrl[index] || ""}
+            setUploadingStory={setUploadingStory} 
+            />
         ))}
       </div>
 
@@ -712,7 +716,7 @@ const EventForm: React.FC = () => {
                   refundPolicy: {
                     ...eventInfo.refundPolicy,
                     policyType: e.target.checked,
-                    allRefundsApproved:false
+                    allRefundsApproved: false,
                   },
                 });
                 setAccordionOpen(e.target.checked);
@@ -885,8 +889,11 @@ const EventForm: React.FC = () => {
         </Link>
         <div>
           <button
-            className={`flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-bold py-2 px-10 rounded`}
+            className={`flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-bold py-2 px-10 rounded ${
+              uploadingStory ? "opacity-50 cursor-not-allowed" : ""
+            }`}
             onClick={(e) => handleOnSubmit(e, "nextPage")}
+            disabled={uploadingStory}
           >
             NEXT PAGE
             {loading && <Loader2 className="size-4 animate-spin" />}

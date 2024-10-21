@@ -39,6 +39,7 @@ const EditEventForm: React.FC = () => {
   const [categories, setCategories] = useState<
     { categoryId: string; categoryName: string }[]
   >([]);
+  const [uploadingStory, setUploadingStory] = useState(false);
   console.log(selectedFile);
   // const [accordionOpen, setAccordionOpen] = useState(false);
   // useEffect(() => {
@@ -420,6 +421,7 @@ const EditEventForm: React.FC = () => {
                 onFileSelect={handleVideoFile}
                 setTrailerUrl={setTrailerUrl}
                 videoUrl={trailerUrl[index] || ""} // Render empty component if no video at index
+                setUploadingStory={setUploadingStory}
               />
             ))}
           </div>
@@ -681,7 +683,7 @@ const EditEventForm: React.FC = () => {
                 </label>
               </div>
 
-              {eventInfo.refundPolicy.policyType  && (
+              {eventInfo.refundPolicy.policyType && (
                 <div className="ml-6">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center">
@@ -847,8 +849,11 @@ const EditEventForm: React.FC = () => {
             </Link>
             <div>
               <button
-                className={`flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-bold py-2 px-10 rounded`}
+                className={`flex flex-row items-center justify-center gap-4 bg-[#244f7a] text-white font-bold py-2 px-10 rounded ${
+                  uploadingStory ? "opacity-50 cursor-not-allowed" : ""
+                }`}
                 onClick={(e) => handleOnSubmit(e)}
+                disabled={uploadingStory}
               >
                 NEXT PAGE
                 {loading && <Loader2 className="size-4 animate-spin" />}

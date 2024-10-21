@@ -1,12 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, SetStateAction, Dispatch } from "react";
 import { MdUpload, MdDeleteForever } from "react-icons/md";
 import { uploadImage } from "../../api/uploadImage";
 
 interface VideoComponentProps {
   index: number; // Add index prop
-  onFileSelect: (file: File | string, index: number) => void; 
+  onFileSelect: (file: File | string, index: number) => void;
   setTrailerUrl: any;
   videoUrl?: string;
+  setUploadingStory: Dispatch<SetStateAction<boolean>>; // Fix this type
 }
 
 const VideoComponent: React.FC<VideoComponentProps> = ({
@@ -14,8 +15,8 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
   onFileSelect,
   setTrailerUrl,
   videoUrl,
+  setUploadingStory,
 }) => {
-  console.log(videoUrl);
 
   const [videoPreview, setVideoPreview] = useState<string | "">("");
   const [uploading, setUploading] = useState<boolean>(false);
@@ -49,10 +50,11 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
     onFileSelect(file, index); // Pass index to onFileSelect
 
     setUploading(true);
+    setUploadingStory(true)
     setUploadError("");
     try {
       const contentUrl = await uploadImage(file); // This should return the URL of the uploaded video
-      setTrailerUrl((prevUrls:any) => {
+      setTrailerUrl((prevUrls: any) => {
         const updatedUrls = [...prevUrls];
         updatedUrls[index] = contentUrl || ""; // Correct index is updated here
         return updatedUrls;
@@ -62,6 +64,7 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
       setUploadError("Failed to upload video. Please try again.");
     } finally {
       setUploading(false);
+      setUploadingStory(false)
     }
   };
 
@@ -73,7 +76,7 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
 
   const deleteVideo = () => {
     setVideoPreview("");
-    setTrailerUrl((prevUrls:any) => {
+    setTrailerUrl((prevUrls: any) => {
       const updatedUrls = [...prevUrls];
       updatedUrls[index] = ""; // Clear specific index
       return updatedUrls;
