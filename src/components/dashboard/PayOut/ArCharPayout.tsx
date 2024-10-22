@@ -12,7 +12,7 @@ const ArCharPayout = ({ color, heading }: ArCharPayoutProps) => {
     <div className="flex border justify-between items-center h-[220px] bg-blue-box rounded-3xl shadow-xl p-6">
       <div className="flex flex-col h-full justify-around">
         <p className="text-2xl font-medium">{heading}</p>
-        <p className="font-bold text-3xl text-[#60769D]">$0</p>
+        <p className="font-bold text-3xl text-[#60769D]">0</p>
 
         <p className="text-sm">All past events</p>
       </div>

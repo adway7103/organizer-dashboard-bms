@@ -288,7 +288,7 @@ const EventCard = ({
         </div>
         <div className="flex justify-between border-t mt-3 pt-1 text-sm">
           <p>Revenue</p>
-          <p>$ {revenue}</p>
+          <p>{revenue}</p>
         </div>
         <div className="flex justify-between pt-1 text-sm">
           <p>Tickets Sold</p>
