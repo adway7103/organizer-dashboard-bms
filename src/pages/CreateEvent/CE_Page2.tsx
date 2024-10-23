@@ -15,10 +15,10 @@ import { useParams } from "react-router-dom";
 import { updateEvent } from "../../api/updateEvent";
 
 interface dataProps {
-  isPrivate: boolean;
-  entryCondition: boolean;
-  seperateBooking: boolean;
-  limitTotalTicket: boolean;
+  isPrivate?: boolean;
+  entryCondition?: boolean;
+  seperateBooking?: boolean;
+  limitTotalTicket?: boolean;
   lastEntryTime: string;
   eventStatus: string;
 }
@@ -30,9 +30,9 @@ const CE_Page2: React.FC = () => {
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(true);
 
   const [entryCondition, setEntryCondition] = useState(false);
-  const [isPrivate, setIsPrivate] = useState(false);
-  const [seperateBooking, setSeperateBooking] = useState(false);
-  const [limitTotalTicket, setLimitTotalTicket] = useState(false);
+  // const [isPrivate, setIsPrivate] = useState(false);
+  // const [seperateBooking, setSeperateBooking] = useState(false);
+  // const [limitTotalTicket, setLimitTotalTicket] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState<string | null>(null);
@@ -70,10 +70,10 @@ const CE_Page2: React.FC = () => {
         : "";
 
     const data: dataProps = {
-      isPrivate,
+      // isPrivate,
       entryCondition,
-      seperateBooking,
-      limitTotalTicket,
+      // seperateBooking,
+      // limitTotalTicket,
       lastEntryTime: lastEntryTimeFormatted, // Include formatted time
       eventStatus: "Published",
     };
@@ -152,58 +152,53 @@ const CE_Page2: React.FC = () => {
 
       {showAdvancedSettings && (
         <div className="flex flex-col gap-1.5 mb-5">
-          <h3 className="font-semibold">Entry Requirements</h3>
-          <div>
-            <label
-              htmlFor="eventStart"
-              className="flex space-x-2 text-lg font-medium pb-2"
-            >
-              Last Entry{" "}
-            </label>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <div className="flex items-center space-x-5">
-                <DatePicker
-                  className="w-1/2"
-                  value={lastEntryDate}
-                  onChange={(newValue) =>
-                    handleDateChange(newValue, "lastEntryDate")
-                  }
-                />
-                <p className="font-medium">at</p>
-                <TimePicker
-                  className="w-1/2"
-                  value={lastEntryTime}
-                  onChange={(newValue) =>
-                    handleDateChange(newValue, "lastEntryTime")
-                  }
-                />
-              </div>
-            </LocalizationProvider>
+          {/* <h3 className="font-semibold">Entry Requirements</h3> */}
+
+          <div className="">
+            <div className="flex gap-1">
+              <input
+                type="checkbox"
+                name="entryCondition"
+                id="entryCondition"
+                className="follow rounded mx-0 w-6 h-4 mt-[7px]"
+                checked={entryCondition}
+                onChange={(e) => setEntryCondition(e.target.checked)}
+              />
+              <label htmlFor="entryCondition"></label>
+              <label
+                htmlFor="eventStart"
+                className="flex space-x-2 text-lg font-medium pb-2"
+              >
+                Last Entry{" "}
+              </label>
+            </div>
+
+            {entryCondition ? (
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <div className="flex items-center space-x-5">
+                  <DatePicker
+                    className="w-1/2"
+                    value={lastEntryDate}
+                    onChange={(newValue) =>
+                      handleDateChange(newValue, "lastEntryDate")
+                    }
+                  />
+                  <p className="font-medium">at</p>
+                  <TimePicker
+                    className="w-1/2"
+                    value={lastEntryTime}
+                    onChange={(newValue) =>
+                      handleDateChange(newValue, "lastEntryTime")
+                    }
+                  />
+                </div>
+              </LocalizationProvider>
+            ) : (
+              <div></div>
+            )}
           </div>
 
-          <div className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              name="entryCondition"
-              id="entryCondition"
-              className="follow rounded mx-0 w-6 h-4"
-              checked={entryCondition}
-              onChange={(e) => setEntryCondition(e.target.checked)}
-            />
-            <label htmlFor="entryCondition">Entry Conditions</label>
-          </div>
-          <h3 className="font-semibold">Ticket Requirements</h3>
-          <div className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              name="eventIsPrivate"
-              id="eventIsPrivate"
-              className="follow rounded mx-0 w-6 h-4"
-              checked={isPrivate}
-              onChange={(e) => setIsPrivate(e.target.checked)}
-            />
-            <label htmlFor="eventIsPrivate">Event is private</label>
-          </div>
+          {/* <h3 className="font-semibold">Ticket Requirements</h3>
           <div className="flex items-center gap-3">
             <input
               type="checkbox"
@@ -216,8 +211,8 @@ const CE_Page2: React.FC = () => {
             <label htmlFor="separateBooking">
               Separate bookings of purchases of multiple tickets
             </label>
-          </div>
-          <div className="flex items-center gap-3">
+          </div> */}
+          {/* <div className="flex items-center gap-3">
             <input
               type="checkbox"
               name="limitTotal"
@@ -229,7 +224,7 @@ const CE_Page2: React.FC = () => {
             <label htmlFor="limitTotal">
               Limit total number of tickets that can be purchased for this event
             </label>
-          </div>
+          </div> */}
         </div>
       )}
 
