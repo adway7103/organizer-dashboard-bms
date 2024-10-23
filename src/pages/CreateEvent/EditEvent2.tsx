@@ -61,6 +61,10 @@ const EditEvent2Form: React.FC = () => {
           const formattedDate = dayjs(lastDate);
           const formattedTime = dayjs(lastTime, "HH:mm");
 
+          console.log(formattedDate);
+          console.log(formattedTime);
+          
+
           setLastEntryDate(formattedDate);
           setLastEntryTime(formattedTime);
         }
