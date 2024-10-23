@@ -51,19 +51,6 @@ const EditEvent2Form: React.FC = () => {
       setLoading(true);
       try {
         const fetchedEvent = await fetchEvent({ eventId });
-
-        let venueLocationFormatted;
-
-        if (Array.isArray(fetchedEvent.venueLocation?.coordinates)) {
-          venueLocationFormatted = {
-            latitude: fetchedEvent.venueLocation.coordinates[0], // latitude
-            longitude: fetchedEvent.venueLocation.coordinates[1], // longitude
-          };
-        } else {
-          // Assuming it's already in object format
-          venueLocationFormatted = fetchedEvent.venueLocation;
-        }
-
         if (fetchedEvent) {
           setEntryCondition(fetchedEvent.entryCondition);
           setIsPrivate(fetchedEvent.isPrivate);
