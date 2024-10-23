@@ -55,7 +55,7 @@ export function TicketTable() {
           id: ticket._id,
           name: ticket.categoryName,
           price: ticket.categoryPricePerPerson
-            ? `$ ${ticket.categoryPricePerPerson}`
+            ? `${ticket.categoryPricePerPerson}`
             : "Free",
           totalTickets: ticket.totalSeats.toString(),
           matrixId: matrixId,

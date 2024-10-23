@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import toast from "react-hot-toast";
@@ -13,6 +13,7 @@ import dayjs, { Dayjs } from "dayjs"; // Import Dayjs
 import { Loader2 } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { updateEvent } from "../../api/updateEvent";
+import { fetchEvent } from "../../api/fetchEvent";
 
 interface dataProps {
   isPrivate: boolean;
@@ -44,6 +45,47 @@ const EditEvent2Form: React.FC = () => {
   const toggleAdvancedSettings = () => {
     setShowAdvancedSettings((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    const fetchEventById = async () => {
+      setLoading(true);
+      try {
+        const fetchedEvent = await fetchEvent({ eventId });
+
+        let venueLocationFormatted;
+
+        if (Array.isArray(fetchedEvent.venueLocation?.coordinates)) {
+          venueLocationFormatted = {
+            latitude: fetchedEvent.venueLocation.coordinates[0], // latitude
+            longitude: fetchedEvent.venueLocation.coordinates[1], // longitude
+          };
+        } else {
+          // Assuming it's already in object format
+          venueLocationFormatted = fetchedEvent.venueLocation;
+        }
+
+        if (fetchedEvent) {
+          setEntryCondition(fetchedEvent.entryCondition);
+          setIsPrivate(fetchedEvent.isPrivate);
+          setSeperateBooking(fetchedEvent.seperateBooking);
+          setLimitTotalTicket(fetchedEvent.limitTotalTicket);
+          const [lastDate, lastTime] = fetchedEvent.lastEntryTime.split(" ");
+
+          const formattedDate = dayjs(lastDate);
+          const formattedTime = dayjs(lastTime, "HH:mm");
+
+          setLastEntryDate(formattedDate);
+          setLastEntryTime(formattedTime);
+        }
+      } catch (error) {
+        console.error("Failed to fetch event", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEventById();
+  }, [eventId]);
 
   // const validateForm = () => {
   //   return lastEntryDate && lastEntryTime;
