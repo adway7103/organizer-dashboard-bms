@@ -21,7 +21,7 @@ const Vouchers = () => {
   const fetchData = async () => {
     const response = await fetchAllPromoCodes({ eventId });
 
-    const transformedData = response.map((promo: any) => ({
+    const transformedData = response.coupons.map((promo: any) => ({
       id: promo._id,
       promoId: promo.promoId,
       discountType: promo.discountType,
@@ -38,9 +38,7 @@ const Vouchers = () => {
   }, [eventId]);
 
   const handleDeleteTicket = (id: string) => {
-    setPromoCodes((prevCode) =>
-      prevCode.filter((code) => code.id !== id)
-    );
+    setPromoCodes((prevCode) => prevCode.filter((code) => code.id !== id));
   };
 
   return (
@@ -50,7 +48,11 @@ const Vouchers = () => {
         <h1 className="text-xl font-medium ml-8 ">Vouchers</h1>
         <AddVoucher refetch={fetchData} />
       </div>{" "}
-      <VoucherTable promoCodes={promoCodes} handleDeleteTicket={handleDeleteTicket} refetch={fetchData}/>
+      <VoucherTable
+        promoCodes={promoCodes}
+        handleDeleteTicket={handleDeleteTicket}
+        refetch={fetchData}
+      />
     </div>
   );
 };
