@@ -59,7 +59,7 @@ export const EventHome = () => {
         response = await fetchDraftedEvents();
       }
 
-      const formattedEvents = response.events.map((event: EventData) => ({
+      const formattedEvents = response?.events?.map((event: EventData) => ({
         eventId: event.eventId,
         title: event.title,
         posterUrl: event.posterUrl,

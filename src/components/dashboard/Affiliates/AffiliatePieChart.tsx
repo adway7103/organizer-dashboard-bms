@@ -8,12 +8,9 @@ export function AffiliatePieChart({
   ticketsDistribution,
   heading,
 }: any) {
-  console.log(revenueDistribution);
-  console.log(ticketsDistribution);
-
   const chartData = React.useMemo(() => {
     if (heading === "Total Revenue") {
-      return revenueDistribution.map((r: any, index: number) => ({
+      return revenueDistribution?.map((r: any, index: number) => ({
         name: r.eventName,
         value: parseFloat(r.revenuePercentage) || 0,
         fill:
@@ -26,7 +23,7 @@ export function AffiliatePieChart({
             : "#800080",
       }));
     } else if (heading === "Total tickets sold") {
-      return ticketsDistribution.map((t: any, index: number) => ({
+      return ticketsDistribution?.map((t: any, index: number) => ({
         name: t.eventName,
         value: parseFloat(t.ticketsPercentage) || 0,
         fill:
@@ -41,10 +38,9 @@ export function AffiliatePieChart({
     }
     return [];
   }, [heading, revenueDistribution, ticketsDistribution]);
-  console.log("Chart Data:", chartData);
 
   const total = React.useMemo(() => {
-    return chartData.reduce((acc: any, curr: any) => acc + curr.value, 0);
+    return chartData?.reduce((acc: any, curr: any) => acc + curr.value, 0);
   }, [chartData]);
 
   return (
