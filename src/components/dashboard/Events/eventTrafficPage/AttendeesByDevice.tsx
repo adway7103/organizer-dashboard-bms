@@ -19,14 +19,18 @@ function AttendeesByDevicePie({
   laptop = { number: 0, percentage: "0.00%" },
 }: PieChartProps) {
   const chartData = [
-    { device: "Mobile", visitors: mobile.number, fill: "#800080" },
-    { device: "Tablet", visitors: tablet.number, fill: "#FFBB28" },
-    { device: "Laptop", visitors: laptop.number, fill: "#8e854b" },
+    { device: "Mobile", visitors: Number(mobile?.number), fill: "#800080" },
+    { device: "Tablet", visitors: Number(tablet?.number), fill: "#FFBB28" },
+    { device: "Laptop", visitors: Number(laptop?.number), fill: "#8e854b" },
   ];
 
   const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc: number, curr) => acc + curr.visitors, 0);
+    return chartData.reduce(
+      (acc: number, curr) => Number(acc) + Number(curr.visitors),
+      0
+    );
   }, [chartData]);
+
   return (
     <Card className="h-auto sm:h-[36vh] bg-transparent shadow-none rounded border border-gray-300 flex flex-col justify-between sm:justify-center items-center max-sm:py-4">
       <div className="sm:col-span-1">
@@ -84,7 +88,7 @@ function AttendeesByDevicePie({
                 <span>
                   <img src={yellow} alt="" className="pr-1" />
                 </span>
-                {mobile.percentage}{" "}
+                {mobile.percentage}%{" "}
               </div>
             </div>
             <div className="text-xs">
@@ -93,7 +97,7 @@ function AttendeesByDevicePie({
                 <span>
                   <img src={purple} alt="" className="pr-1" />
                 </span>
-                {tablet.percentage}{" "}
+                {tablet.percentage}%{" "}
               </div>
             </div>
             <div className="text-xs">
@@ -102,7 +106,7 @@ function AttendeesByDevicePie({
                 <span>
                   <img src={extra} alt="" className="pr-1" />
                 </span>
-                {laptop.percentage}{" "}
+                {laptop.percentage}%{" "}
               </div>
             </div>
           </div>

@@ -15,16 +15,19 @@ function NewOrReturningCustomerPie({
   newCustomer,
   width = 120,
 }: Props) {
-  const returningNumber = returning ? parseInt(returning.num, 10) : 0;
-  const newCustomerNumber = newCustomer ? parseInt(newCustomer.num, 10) : 0;
+  // const returningNumber = returning ? parseInt(returning.num, 10) : 0;
+  // const newCustomerNumber = newCustomer ? parseInt(newCustomer.num, 10) : 0;
 
   let chartData: any = [
-    { gender: "new", visitors: newCustomerNumber, fill: "#800080" },
-    { gender: "returning", visitors: returningNumber, fill: "#FFBB28" },
+    { gender: "new", visitors: Number(newCustomer?.num), fill: "#800080" },
+    { gender: "returning", visitors: Number(returning?.num), fill: "#FFBB28" },
   ];
   const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc: any, curr: any) => acc + curr.visitors, 0);
-  }, []);
+    return chartData.reduce(
+      (acc: any, curr: any) => Number(acc) + Number(curr.visitors),
+      0
+    );
+  }, [chartData]);
   return (
     <Card className="h-auto sm:h-[36vh] bg-transparent shadow-none rounded border border-gray-300 flex flex-col justify-between sm:justify-center items-center max-sm:py-4">
       <div className="sm:col-span-1">
@@ -81,7 +84,7 @@ function NewOrReturningCustomerPie({
                 <span>
                   <img src={yellow} alt="" className="pr-1" />
                 </span>
-                {returning?.percentage}{" "}
+                {returning?.percentage}%{" "}
               </div>
             </div>
             <div className="text-xs">
@@ -90,7 +93,7 @@ function NewOrReturningCustomerPie({
                 <span>
                   <img src={purple} alt="" className="pr-1" />
                 </span>
-                {newCustomer?.percentage}{" "}
+                {newCustomer?.percentage}%{" "}
               </div>
             </div>
           </div>
