@@ -245,8 +245,10 @@ const EventCard = ({
           )}
 
           {!isDraftEvents ? (
-            <div className="border bg-[#ededed] px-4 py-1 rounded-full hover:shadow-lg"               onClick={handleTrackLiveClick}
->
+            <div
+              className="border bg-[#ededed] px-4 py-1 rounded-full hover:shadow-lg"
+              onClick={handleTrackLiveClick}
+            >
               <div className="flex gap-1">
                 Track
                 <div>

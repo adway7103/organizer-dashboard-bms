@@ -12,7 +12,7 @@ export function AffiliatePieChart({
     if (heading === "Total Revenue") {
       return revenueDistribution?.map((r: any, index: number) => ({
         name: r.eventName,
-        value: parseFloat(r.revenuePercentage) || 0,
+        value: parseFloat(r.totalRevenue) || 0,
         fill:
           index === 0
             ? "#0088FE"

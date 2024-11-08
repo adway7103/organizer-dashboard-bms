@@ -71,7 +71,7 @@ export const EventHome = () => {
         ticketsSold: event.ticketsSold,
       }));
       setTicketDistribution(response.ticketsDistribution);
-      setRevenueDistribution(response.revenueDistribution);
+      setRevenueDistribution(response.eventPercentageDistribution);
       setEvents(formattedEvents);
       setLoading(false);  // Stop loading
     } catch (error) {
