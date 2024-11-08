@@ -6,13 +6,14 @@ import img4 from "../../../../../public/conversionRate.png";
 import CountComponent from "./CountComponent";
 import TrafficChart from "./TrafficChart";
 // import PageVisitByChannels from "./PageVisitByChannels";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Dayjs } from "dayjs";
-import { TextField } from "@mui/material";
+// import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { Dayjs } from "dayjs";
+// import { TextField } from "@mui/material";
 import AttendeesByDevicePie from "./AttendeesByDevice";
 import { fetchEventTraffic } from "../../../../api/fetchEventTrafficApi";
 import NewOrReturningCustomerPie from "./NewOrReturningPie";
+import { useParams } from "react-router-dom";
 
 interface EventTrafficResponse {
   pageViews: number;
@@ -51,9 +52,11 @@ interface EventTrafficResponse {
 }
 
 const EventTraffic = () => {
-  const [formData, setFormData] = useState({
-    startDate: null,
-  });
+  const { eventId } = useParams();
+
+  // const [formData, setFormData] = useState({
+  //   startDate: null,
+  // });
   const [eventTrafficData, setEventTrafficData] =
     useState<EventTrafficResponse | null>(null);
 
@@ -80,19 +83,19 @@ const EventTraffic = () => {
     },
   ];
   const fetchData = async () => {
-    const response = await fetchEventTraffic();
+    const response = await fetchEventTraffic({ eventId });
     setEventTrafficData(response);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-  const handleDateChange = (date: Dayjs | null, name: string) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: date,
-    }));
-  };
+  // const handleDateChange = (date: Dayjs | null, name: string) => {
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: date,
+  //   }));
+  // };
 
   return (
     <div className="sm:ml-12 sm:mr-28 space-y-8 min-w-[300px]">
@@ -110,11 +113,12 @@ const EventTraffic = () => {
 
       <div>
         <div className="grid lg:grid-cols-3 gap-x-6 max-lg:space-y-8">
-          <div className="col-span-2 lg:h-[550px] flex flex-col md:justify-between">
+          {/* <div className="col-span-2 lg:h-[550px] flex flex-col md:justify-between"> */}
+          <div className="col-span-2 lg:h-[450px] flex flex-col md:justify-between">
             <div>
               <TrafficChart data={eventTrafficData?.monthlyViewData} />
             </div>
-            <div>
+            {/* <div>
               <div className="font-medium mb-3 text-2xl mt-6">
                 Filter by Date
               </div>
@@ -186,7 +190,7 @@ const EventTraffic = () => {
                   </LocalizationProvider>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           {/* <div className="col-span-1">
             <PageVisitByChannels />
@@ -201,7 +205,6 @@ const EventTraffic = () => {
             tablet={eventTrafficData?.attendeeByDevice.tablet}
             laptop={eventTrafficData?.attendeeByDevice.laptop}
           />
-          ;
         </div>
         <div>
           <NewOrReturningCustomerPie
