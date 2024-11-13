@@ -282,6 +282,7 @@ const EventCard = ({
           </div>
           <div className="" onClick={(e) => e.stopPropagation()}>
             <TextBlast
+              event={eventId}
               heading="Text Blast"
               className="border bg-[#954b7c] px-8 md:px-4 py-1 rounded-md text-[0.9rem] hover:shadow-lg cursor-pointer h-9 "
               classStyle="h-auto shadow-none mt-0 sm:h-[0vh]"
