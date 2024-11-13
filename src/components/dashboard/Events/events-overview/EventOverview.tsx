@@ -51,6 +51,7 @@ interface EventOverviewResponse {
 
 const EventOverview = () => {
   const { eventId } = useParams<{ eventId: string }>();
+
   const [eventOverviewData, setEventOverviewData] =
     useState<EventOverviewResponse>();
   const [bookings, setBookings] = useState<Bookings[]>([]);
@@ -147,11 +148,14 @@ const EventOverview = () => {
           )}
         </div>
         <div className="grid min-w-[300px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pl-2 pr-2 sm:ml-8 sm:mr-28 mt-4">
-          <TextBlast className="bg-[#954b7c]" />
+          <TextBlast
+            className="bg-[#954b7c]"
+            heading="Text Blast"
+          />
           <EventTraficAndShareButton
-            eventId={eventId}
             className="bg-[#6076a0]"
             heading="Event traffic"
+            eventId={eventId}
           />
           {/* <TextBlast
             className="bg-[#6076a0]"
