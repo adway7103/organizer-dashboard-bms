@@ -1,16 +1,19 @@
 import { Dialog, DialogContent } from "@mui/material";
 import HomeContainerCard from "../../HomeContainerCard";
 import React, { useState } from "react";
-
 import FileDragNDrop from "./DragAndDropCsv";
+import { useParams } from "react-router-dom";
+import { uploadCsv } from "../../../../api/uploadCsvApi";
+import { toast } from "react-hot-toast";
 
 const UploadThirdPartyTicket = ({
   handleFirstDialogClose,
 }: {
   handleFirstDialogClose: any;
 }) => {
+  const { eventId } = useParams();
   const [open, setOpen] = useState(false);
-
+  const [csvFile, setCsvFile] = useState();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -18,6 +21,24 @@ const UploadThirdPartyTicket = ({
   const handleClose = () => {
     setOpen(false);
     handleFirstDialogClose(false);
+  };
+
+  const uploadCsvFunction = async () => {
+    const loadingToastId = toast.loading("Uploading...");
+
+    try {
+      const response = await uploadCsv({ csvFile, eventId });
+      toast.dismiss(loadingToastId);
+
+      if (response.status === 200) {
+        toast.success(response.message);
+        handleClose();
+      }
+    } catch (error: any) {
+      console.error(error);
+      toast.dismiss(loadingToastId);
+      toast.error(error.response?.data?.message || "Failed to upload file");
+    }
   };
 
   return (
@@ -55,7 +76,7 @@ const UploadThirdPartyTicket = ({
           </div>
 
           <div>
-            <FileDragNDrop />
+            <FileDragNDrop setCsvFile={setCsvFile} />
           </div>
         </DialogContent>
 
@@ -66,7 +87,10 @@ const UploadThirdPartyTicket = ({
           >
             BACK
           </button>
-          <button className="sm:w-48 bg-[#244f7a] text-white max-sm:text-xs px-4 py-2 rounded-lg">
+          <button
+            className="sm:w-48 bg-[#244f7a] text-white max-sm:text-xs px-4 py-2 rounded-lg"
+            onClick={uploadCsvFunction}
+          >
             UPLOAD TICKETS
           </button>
         </div>

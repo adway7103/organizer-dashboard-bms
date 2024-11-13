@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import "../../../DragNDrop/FileDragNDrop.css";
 import { MdUpload, MdDeleteForever } from "react-icons/md";
 
-const FileDragNDrop = () => {
+const FileDragNDrop = ({ setCsvFile }: any) => {
   const [filePreview, setFilePreview] = useState<string | null>(null); // To handle file preview (file name)
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -15,19 +15,22 @@ const FileDragNDrop = () => {
     e.preventDefault();
     e.stopPropagation();
     const file = e.dataTransfer.files[0];
-    setFilePreview(file.name); // Show the file name
+
+    setFilePreview(file.name);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];    
+    const file = e.target.files?.[0];
     if (file) {
-      setFilePreview(file.name); // Show the file name
+      setFilePreview(file.name); 
+
+      setCsvFile(file);
     }
   };
 
   const deleteFile = () => {
     setFilePreview(null);
-    fileInputRef.current!.value = ""; // Clear the file input
+    fileInputRef.current!.value = "";
   };
 
   return (
@@ -52,7 +55,7 @@ const FileDragNDrop = () => {
               name="file"
               id="file"
               hidden
-              accept=".csv"
+              accept=".csv, .xls, .xlsx"
               onChange={handleFileChange}
               ref={fileInputRef}
             />
@@ -60,7 +63,10 @@ const FileDragNDrop = () => {
         ) : (
           <div className="file-preview-wrapper flex items-center gap-4">
             <div className="file-preview">
-              <p className="font-medium text-lg">{filePreview}</p> {/* Display file name */}
+              <p className="font-medium text-lg w-96 break-words">
+                {filePreview}
+              </p>{" "}
+              {/* Display file name */}
             </div>
             <div
               className="delete-btn text-2xl cursor-pointer"
