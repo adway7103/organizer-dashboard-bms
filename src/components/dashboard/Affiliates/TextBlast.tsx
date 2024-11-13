@@ -6,14 +6,17 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { textBlast } from "../../../api/textBlastApi";
+import { EventTextBlast } from "../../../api/textBlastApi";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 interface Props {
   className?: string;
   heading?: string;
   classStyle?: string;
+  event?: string;
 }
-const TextBlast = ({ className, heading, classStyle }: Props) => {
+const TextBlast = ({ className, heading, classStyle, event }: Props) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -33,7 +36,7 @@ const TextBlast = ({ className, heading, classStyle }: Props) => {
           onClick={handleClickOpen}
           className={`flex h-16 justify-center items-center pl-4 text-[1rem] border border-gray-700 rounded-full text-white cursor-pointer ${className}`}
         >
-          {heading ? heading : "Send A Text Blast"}{" "}
+          {heading}{" "}
         </div>
       </HomeContainerCard>
       <Dialog
@@ -54,6 +57,7 @@ const TextBlast = ({ className, heading, classStyle }: Props) => {
                 heading={"Send via Email"}
                 type="email"
                 closeParentDialog={handleClose}
+                event={event}
               />
               <SendComponent
                 heading={"Send via WhatsApp"}
@@ -82,18 +86,22 @@ interface SendComponentProps {
   heading: string;
   type: "email" | "whatsapp";
   closeParentDialog: () => void;
+  event?: string;
 }
 
 const SendComponent = ({
   heading,
   type,
   closeParentDialog,
+  event,
 }: SendComponentProps) => {
+  const { eventId } = useParams();
+
   const [open, setOpen] = React.useState(false);
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
-  const [attendeesChecked, setAttendeesChecked] = useState(false);
-  const [followersChecked, setFollowersChecked] = useState(false);
+  // const [attendeesChecked, setAttendeesChecked] = useState(false);
+  // const [followersChecked, setFollowersChecked] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -103,20 +111,39 @@ const SendComponent = ({
     setOpen(false);
   };
 
+  const customers = location.pathname.startsWith("/customers");
+  const followers = location.pathname.startsWith("/followers");
+
+  const endPoint = customers ? "customer" : followers ? "followers" : "";
+
   const handleSend = async () => {
     try {
+      if (!subject || !description) {
+        toast.error("Subject and description cannot be empty.");
+        return;
+      }
+
       if (type === "email") {
-        await textBlast({ subject, description });
-        handleClose();
-        closeParentDialog();
-        toast.success("Text Blast sent successfully");
+        if (!endPoint && eventId) {
+          await EventTextBlast({ subject, description }, eventId);
+          toast.success("Text Blast sent successfully");
+        } else if (!eventId && event) {
+          await EventTextBlast({ subject, description }, event);
+          toast.success("Text Blast sent successfully");
+        } else {
+          await textBlast({ subject, description }, endPoint);
+          toast.success("Text Blast sent successfully");
+        }
       } else if (type === "whatsapp") {
         console.log("Sending WhatsApp:", { subject, description });
+        toast.success("WhatsApp message sent successfully");
       }
+
       handleClose();
+      closeParentDialog();
     } catch (error) {
       console.error("Error sending text blast:", error);
-      toast.error("Failed to send the text blast. Please try again.");
+      toast.error("Failed to send the message. Please try again.");
     }
   };
 
@@ -197,7 +224,7 @@ const SendComponent = ({
                   }}
                 />
               </div>
-              <div className="flex gap-6 items-center">
+              {/* <div className="flex gap-6 items-center">
                 <label className="flex items-center gap-2">
                   <input
                     type="checkbox"
@@ -214,7 +241,7 @@ const SendComponent = ({
                   />
                   Followers
                 </label>
-              </div>
+              </div> */}
             </div>
           </div>
         </DialogContent>
