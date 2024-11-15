@@ -23,7 +23,7 @@ export function AffiliatePieChart({
             : "#800080",
       }));
     } else if (heading === "Total tickets sold") {
-      return ticketsDistribution?.map((t: any, index: number) => ({
+      return ticketsDistribution?.slice(0, 3)?.map((t: any, index: number) => ({
         name: t.eventName,
         value: parseFloat(t.ticketsPercentage) || 0,
         fill:
@@ -42,6 +42,8 @@ export function AffiliatePieChart({
   const total = React.useMemo(() => {
     return chartData?.reduce((acc: any, curr: any) => acc + curr.value, 0);
   }, [chartData]);
+
+  console.log(total);
 
   return (
     <Card className="h-auto bg-none shadow-none rounded">
