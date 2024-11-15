@@ -12,12 +12,23 @@ export function AffiliatePieChart({ revenuePerEvent }: any) {
     revenuePerEvent?.percentageDistribution.slice(0, 2);
 
   const chartData = [
-    { browser: firstTwoPercentageDistribution[0].eventName, visitors: firstTwoPercentageDistribution[0].totalRevenue, fill: "#0088FE" },
-    { browser: firstTwoPercentageDistribution[1].eventName, visitors: firstTwoPercentageDistribution[1].totalRevenue, fill: "#800080" },
+    {
+      browser: firstTwoPercentageDistribution[0]?.eventName,
+      visitors: firstTwoPercentageDistribution[0]?.totalRevenue || 0,
+      fill: "#0088FE",
+    },
+    {
+      browser: firstTwoPercentageDistribution[1]?.eventName,
+      visitors: firstTwoPercentageDistribution[1]?.totalRevenue || 0,
+      fill: "#800080",
+    },
   ];
-  
+
   const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
+    return chartData.reduce(
+      (acc, curr) => Number(acc) + Number(curr?.visitors),
+      0
+    );
   }, []);
 
   return (
@@ -60,7 +71,7 @@ export function AffiliatePieChart({ revenuePerEvent }: any) {
                             y={viewBox.cy}
                             className="text-2xl font-bold"
                           >
-                            {totalVisitors.toLocaleString()}
+                            {Number(totalVisitors)}
                           </tspan>
                         </text>
                       );
