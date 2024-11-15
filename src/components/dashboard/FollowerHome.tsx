@@ -46,7 +46,7 @@ const FollowerHome = () => {
           {!totalFollowers ? (
             <SkeletonComponent className="h-auto sm:h-[10vh] mt-4 rounded-3xl" />
           ) : (
-            <TextBlast className="bg-[#954b7c]" />
+            <TextBlast className="bg-[#954b7c]" heading="Send A Text Blast"/>
           )}
         </div>
         <div className="col-span-6 md:col-span-4 xl:col-span-4">

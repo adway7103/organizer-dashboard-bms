@@ -60,7 +60,7 @@ const CustomerHome = () => {
             response.genderDistribution.unknown.replace("%", "")
           ),
         });
-        setCustomers(response.formattedCustomerList)
+        setCustomers(response.formattedCustomerList);
         setAgeDistribution({
           unknown: response.ageDistribution.unknown.percentage,
           "0-18": response.ageDistribution["0-18"].percentage,
@@ -112,7 +112,7 @@ const CustomerHome = () => {
             {loading ? (
               <SkeletonComponent className="mt-4 h-auto sm:h-[10vh] rounded-3xl" />
             ) : (
-              <TextBlast className="bg-[#954b7c]" />
+              <TextBlast className="bg-[#954b7c]" heading="Send A Text Blast" />
             )}
           </div>
         </div>
@@ -146,7 +146,7 @@ const CustomerHome = () => {
           )}
         </div>
       </div>
-      <CustomerTable customers={customers}/>
+      <CustomerTable customers={customers} />
     </div>
   );
 };
