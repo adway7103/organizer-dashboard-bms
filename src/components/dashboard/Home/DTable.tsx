@@ -18,17 +18,25 @@ const DTable = ({ data }: any) => {
           </tr>
         </thead>
         <tbody>
-          {data?.map((data: any, index: any) => {
-            return (
-              <TableRow
-                key={index}
-                event={data.title}
-                img={data.posterUrl}
-                date={data.date}
-                venueAddress={data.venueAddress}
-              />
-            );
-          })}
+        {data?.length === 0 ? (
+            <tr>
+              <td colSpan={3} className="text-center py-20">
+                No Live Events
+              </td>
+            </tr>
+          ) : (
+            data?.map((data: any, index: any) => {
+              return (
+                <TableRow
+                  key={index}
+                  event={data.title}
+                  img={data.posterUrl}
+                  date={data.date}
+                  venueAddress={data.venueAddress}
+                />
+              );
+            })
+          )}
         </tbody>
       </table>
     </div>

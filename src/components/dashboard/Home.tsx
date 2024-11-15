@@ -84,7 +84,7 @@ const Home = () => {
             <SkeletonComponent className="h-[50vh] rounded-3xl" />
           ) : (
             <>
-              <PieChartComponent />
+              <PieChartComponent revenuePerEvent={data?.revenuePerEvent}/>
             </>
           )}{" "}
         </div>
