@@ -43,8 +43,6 @@ export function AffiliatePieChart({
     return chartData?.reduce((acc: any, curr: any) => acc + curr.value, 0);
   }, [chartData]);
 
-  console.log(total);
-
   return (
     <Card className="h-auto bg-none shadow-none rounded">
       <div className="sm:col-span-1">
