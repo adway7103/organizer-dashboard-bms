@@ -120,16 +120,16 @@ export default function EntryScanner() {
           {eventTitle}
         </h1>
       )}
-      <div className="flex justify-between items-center mr-6 sm:mr-10 mt-2">
-        <h1 className="text-xl font-medium ml-9">Entry Scanner</h1>
-        <div className="flex gap-4">
+      <div className="sm:flex justify-between items-center max-sm:ml-6 sm:mr-10 mt-2">
+        <h1 className="text-xl font-medium ml-2 sm:ml-9">Entry Scanner</h1>
+        <div className="max-sm:w-48 sm:flex gap-4">
           {" "}
           <AddThirdPartyTicket />
           <AddNewEntryCode refetch={fetchData} />
         </div>
       </div>{" "}
       <div className="bg-[#f8f8f8] sm:ml-8 mr-0 xl:mr-8 rounded-3xl min-w-[300px] mt-4 p-6">
-        <h1 className="text-xl font-medium">Create CODE </h1>
+        <h1 className="text-xl font-medium">Create CODE</h1>
         <h4 className="pl-[3px] mt-2">
           Use codes for each of your door managers so they can admit guests
           using the Entry Manager app.
